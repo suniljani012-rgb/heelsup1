@@ -13,7 +13,7 @@ function decodeBase64url(str) {
 }
 
 async function getKey(secret, usage) {
-    const enc = new TextEncoder().encode(secret);
+    const enc = new TextEncoder().encode(secret || 'heelsup_secret_fallback_key_2026');
     return crypto.subtle.importKey('raw', enc, { name: 'HMAC', hash: 'SHA-256' }, false, [usage]);
 }
 

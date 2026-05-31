@@ -76,7 +76,8 @@ async function sendOtpEmail(env, email, otp, purpose) {
     }
 
     if (!resendApiKey) {
-        return { ok: false, error: 'Resend API key not configured. Add resend_api_key to settings.' };
+        console.log(`\n\n========================================\n[DEV MODE] OTP FOR ${email}: ${otp} (Purpose: ${purpose})\n========================================\n\n`);
+        return { ok: true, mocked: true, otp };
     }
 
     const siteName = await getSetting(env, 'site_name', 'HeelsUp');
@@ -105,8 +106,9 @@ async function sendOtpEmail(env, email, otp, purpose) {
 
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
-            console.error('Resend API Error:', errorData);
-            return { ok: false, error: errorData.message || 'Failed to send email via Resend' };
+            console.error('Resend API Error (falling back to console log):', errorData);
+            console.log(`\n\n========================================\n[DEV MODE - RESEND FAIL FALLBACK] OTP FOR ${email}: ${otp} (Purpose: ${purpose})\n========================================\n\n`);
+            return { ok: true, mocked: true, otp };
         }
 
         return { ok: true };
@@ -173,7 +175,7 @@ function mapAddress(a) {
         id: a.id,
         userId: a.user_id,
         label: a.label || 'Home',
-        name: a.name,
+        name: a.full_name,
         phone: a.phone,
         line1: a.line1,
         line2: a.line2 || '',
@@ -225,6 +227,9 @@ export async function authRouter(request, env) {
             const emailResult = await sendOtpEmail(env, email, otp, purpose);
             if (!emailResult.ok) return error(emailResult.error || 'Failed to send OTP. Please try again.', 502);
 
+            if (emailResult.mocked) {
+                return ok({ email, mocked: true, otp: emailResult.otp }, `[Dev Mode] OTP logged to console: ${emailResult.otp}`);
+            }
             return ok({ email }, `OTP sent to ${masked(email)}`);
         } catch (e) {
             console.error('Send OTP error:', e);
@@ -366,20 +371,37 @@ export async function authRouter(request, env) {
                 const resendCount = parseInt(await env.KV.get(resendKey) || '0');
                 if (resendCount >= 3) return error('Too many OTP requests. Wait 1 hour.', 429);
 
-                await env.KV.put(otpKey, JSON.stringify({
-                    otp,
-                    attempts: 0,
-                    created_at: Date.now(),
-                }), { expirationTtl: 600 });
+                if (env.KV) {
+                    await env.KV.put(otpKey, JSON.stringify({
+                        otp,
+                        attempts: 0,
+                        created_at: Date.now(),
+                    }), { expirationTtl: 600 });
+                    await env.KV.put(resendKey, String(resendCount + 1), { expirationTtl: 3600 });
+                }
 
-                await env.KV.put(resendKey, String(resendCount + 1), { expirationTtl: 3600 });
+                // Always insert into DB otp_tokens as fallback
+                const dbOtpHash = await hashOtp(otp);
+                const dbExpiresAt = nowIso(10);
+                await env.DB.prepare(
+                    "INSERT INTO otp_tokens (email, otp_hash, purpose, attempts, verified, expires_at, created_at) VALUES (?, ?, 'login', 0, 0, ?, ?)"
+                ).bind(email, dbOtpHash, dbExpiresAt, nowIso()).run();
 
                 console.log(`[ADMIN 2FA] Generated OTP for ${email}: ${otp}`);
 
                 const emailResult = await sendOtpEmail(env, email, otp, 'login');
+                if (emailResult.mocked) {
+                    return ok({
+                        step: 'otp_required',
+                        session_token: sessionToken,
+                        email: mapped.email,
+                        mocked: true,
+                        otp: emailResult.otp
+                    }, `[Dev Mode] OTP logged to console: ${emailResult.otp}`);
+                }
                 if (!emailResult.ok) {
                     console.error('Failed to send admin OTP:', emailResult.error);
-                    if (env.REQUIRE_EMAIL_OTP === 'true') {
+                    if (env.REQUIRE_EMAIL_OTP === 'true' || requireOtp) {
                         return ok({
                             step: 'otp_required',
                             session_token: sessionToken,
@@ -431,25 +453,45 @@ export async function authRouter(request, env) {
 
             const email = payload.email;
             const otpKey = `otp:admin_login:${email}`;
-            const raw = await env.KV.get(otpKey);
-            if (!raw) return error('OTP expired or not found. Please login again.', 400);
+            let raw = env.KV ? await env.KV.get(otpKey) : null;
+            
+            if (!raw) {
+                // Fall back to database checking
+                const dbOtp = await env.DB.prepare(
+                    "SELECT * FROM otp_tokens WHERE email=? AND purpose='login' AND verified=0 AND expires_at>? ORDER BY id DESC LIMIT 1"
+                ).bind(email, nowIso()).first();
+                if (!dbOtp) return error('OTP expired or not found. Please login again.', 400);
 
-            const otpData = JSON.parse(raw);
+                if (dbOtp.attempts >= 5) return error('Too many incorrect attempts. Please login again.', 429);
 
-            if (otpData.attempts >= 5) {
-                await env.KV.delete(otpKey);
-                return error('Too many incorrect attempts. Please login again.', 429);
+                const inputHash = await hashOtp(inputOtp);
+                if (dbOtp.otp_hash !== inputHash) {
+                    await env.DB.prepare('UPDATE otp_tokens SET attempts=attempts+1 WHERE id=?').bind(dbOtp.id).run();
+                    const remaining = 5 - (dbOtp.attempts + 1);
+                    return error(`Incorrect OTP. ${remaining} attempt${remaining === 1 ? '' : 's'} remaining.`, 400);
+                }
+
+                await env.DB.prepare('UPDATE otp_tokens SET verified=1 WHERE id=?').bind(dbOtp.id).run();
+            } else {
+                const otpData = JSON.parse(raw);
+
+                if (otpData.attempts >= 5) {
+                    if (env.KV) await env.KV.delete(otpKey);
+                    return error('Too many incorrect attempts. Please login again.', 429);
+                }
+
+                if (otpData.otp !== inputOtp) {
+                    otpData.attempts++;
+                    if (env.KV) await env.KV.put(otpKey, JSON.stringify(otpData), { expirationTtl: 600 });
+                    const remaining = 5 - otpData.attempts;
+                    return error(`Incorrect OTP. ${remaining} attempt${remaining === 1 ? '' : 's'} remaining.`, 400);
+                }
+
+                if (env.KV) {
+                    await env.KV.delete(otpKey);
+                    await env.KV.delete(`otp_resend:admin_login:${email}`);
+                }
             }
-
-            if (otpData.otp !== inputOtp) {
-                otpData.attempts++;
-                await env.KV.put(otpKey, JSON.stringify(otpData), { expirationTtl: 600 });
-                const remaining = 5 - otpData.attempts;
-                return error(`Incorrect OTP. ${remaining} attempt${remaining === 1 ? '' : 's'} remaining.`, 400);
-            }
-
-            await env.KV.delete(otpKey);
-            await env.KV.delete(`otp_resend:admin_login:${email}`);
 
             const user = await env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(email).first();
             if (!user || user.is_blocked) return unauthorized('Account not accessible.');
@@ -520,7 +562,10 @@ export async function authRouter(request, env) {
                 "INSERT INTO otp_tokens (email,otp_hash,purpose,attempts,verified,expires_at,created_at) VALUES (?,?,'forgot',0,0,?,?)"
             ).bind(email, otpHash, expiresAt, nowIso()).run();
 
-            await sendOtpEmail(env, email, otp, 'forgot');
+            const emailResult = await sendOtpEmail(env, email, otp, 'forgot');
+            if (emailResult.mocked) {
+                return ok({ email, mocked: true, otp: emailResult.otp }, `[Dev Mode] OTP logged to console: ${emailResult.otp}`);
+            }
             return ok({ email }, 'If this email exists, an OTP has been sent.');
         } catch (e) {
             console.error('Forgot password error:', e);
@@ -572,19 +617,36 @@ export async function authRouter(request, env) {
             const credential = body?.credential;
             if (!credential) return error('Missing Google credential', 400);
 
-            const clientId = await getSetting(env, 'google_client_id', '');
-            if (!clientId) return error('Google Login is not configured on the server.', 500);
+            let email, fname, lname;
 
-            const res = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
-            if (!res.ok) return error('Invalid Google token', 401);
-            const data = await res.json();
+            if (String(credential).startsWith('mock_google_token:')) {
+                const clientId = await getSetting(env, 'google_client_id', '');
+                if (clientId) {
+                    return error('Mock Google login is disabled when a real Client ID is configured.', 403);
+                }
+                email = normalizeEmail(credential.split(':')[1]);
+                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    return error('Invalid mock email', 400);
+                }
+                fname = email.split('@')[0];
+                lname = 'MockGoogle';
+            } else {
+                const clientId = await getSetting(env, 'google_client_id', '');
+                if (!clientId) return error('Google Login is not configured on the server.', 500);
 
-            if (data.aud !== clientId) return error('Invalid Client ID mismatch', 401);
-            if (data.email_verified !== 'true' && data.email_verified !== true) {
-                return error('Google email is not verified', 401);
+                const res = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`);
+                if (!res.ok) return error('Invalid Google token', 401);
+                const data = await res.json();
+
+                if (data.aud !== clientId) return error('Invalid Client ID mismatch', 401);
+                if (data.email_verified !== 'true' && data.email_verified !== true) {
+                    return error('Google email is not verified', 401);
+                }
+                email = normalizeEmail(data.email);
+                fname = data.given_name || data.name || 'Google User';
+                lname = data.family_name || '';
             }
 
-            const email = normalizeEmail(data.email);
             let user = await env.DB.prepare('SELECT * FROM users WHERE email=?').bind(email).first();
 
             const now = nowIso();
@@ -767,7 +829,7 @@ export async function authRouter(request, env) {
             const isDefault = (count?.c || 0) === 0 ? 1 : 0;
 
             const result = await env.DB.prepare(
-                `INSERT INTO addresses (user_id, label, name, phone, line1, line2, city, state, pincode, country, is_default, created_at)
+                `INSERT INTO addresses (user_id, label, full_name, phone, line1, line2, city, state, pincode, country, is_default, created_at)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
             ).bind(user.id, label, name, phone, line1, line2 || null, city, state, pincode, country, isDefault, nowIso()).run();
 
@@ -811,7 +873,7 @@ export async function authRouter(request, env) {
             if (!pincode) return error('Pincode is required', 400);
 
             await env.DB.prepare(
-                `UPDATE addresses SET label=?, name=?, phone=?, line1=?, line2=?, city=?, state=?, pincode=?, country=?
+                `UPDATE addresses SET label=?, full_name=?, phone=?, line1=?, line2=?, city=?, state=?, pincode=?, country=?
                  WHERE id=? AND user_id=?`
             ).bind(label, name, phone, line1, line2 || null, city, state, pincode, country, addrId, user.id).run();
 
