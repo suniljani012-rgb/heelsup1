@@ -1,0 +1,1748 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Reports â€” HeelsUp Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #8b6914;
+            --gold-light: #fef9f0;
+            --bg: #f8fafc;
+            --sidebar: #0f172a;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --success-bg: #d1fae5;
+            --danger: #ef4444;
+            --danger-bg: #fee2e2;
+            --warning: #f59e0b;
+            --warning-bg: #fef3c7;
+            --info: #3b82f6;
+            --info-bg: #dbeafe;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --admin-card-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        /* Layout */
+        .wrap {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--sidebar);
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 62px;
+        }
+
+        .sidebar-logo {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: .95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .nav-label {
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: #475569;
+            padding: 13px 18px 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            color: #94a3b8;
+            font-size: .83rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: #1e293b;
+            color: var(--gold);
+            border-left-color: var(--gold);
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: .83rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #64748b;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .05);
+            color: #94a3b8;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: all .2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 240px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* Topbar */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: #64748b;
+            display: none;
+        }
+
+        .btn-menu:hover {
+            background: #f1f5f9;
+        }
+
+        @media(max-width:900px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* Buttons */
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: var(--card);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Main Content */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 32px;
+            flex: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media(max-width: 768px) {
+            .content {
+                padding: 20px;
+                gap: 16px;
+            }
+        }
+
+        /* Advanced Hero */
+        .report-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: var(--radius-lg);
+            padding: 32px 40px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .report-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 50%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 70%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .report-hero-content {
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(201, 169, 110, 0.2);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .report-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .report-hero p {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            max-width: 400px;
+        }
+
+        .hero-stats {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            z-index: 1;
+        }
+
+        .hero-stat-box {
+            text-align: right;
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .hero-stat-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .hero-stat-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+        }
+
+        @media(max-width: 768px) {
+            .report-hero {
+                padding: 24px;
+            }
+
+            .hero-stats {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 24px;
+            }
+
+            .hero-stat-box {
+                text-align: left;
+            }
+
+            .report-hero h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Modern KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media(max-width: 1200px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 640px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .kpi-card {
+            background: var(--card);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .kpi-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .kpi-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .kpi-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .icon-blue {
+            background: var(--info-bg);
+            color: var(--info);
+        }
+
+        .icon-green {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .icon-purple {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .icon-gold {
+            background: var(--gold-light);
+            color: var(--gold-dark);
+        }
+
+        .kpi-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .kpi-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .trend-up {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .kpi-desc {
+            color: var(--text-muted);
+        }
+
+        /* Chart Sections */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        @media(max-width: 1024px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--card);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--gold);
+            font-size: 1rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .doughnut-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Data Grids Row */
+        .data-grid-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media(max-width: 1400px) {
+            .data-grid-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .funnel-card {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media(max-width: 900px) {
+            .data-grid-row {
+                grid-template-columns: 1fr;
+            }
+
+            .funnel-card {
+                grid-column: auto;
+            }
+        }
+
+        /* Advanced Table */
+        .table-responsive {
+            overflow-x: auto;
+            margin: -10px -24px -24px -24px;
+            padding: 10px 24px 24px 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 500px;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            background: rgba(248, 250, 252, 0.5);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        .prod-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .prod-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .prod-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .prod-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .prod-cat {
+            font-size: 0.75rem;
+            color: var(--gold-dark);
+            background: var(--gold-light);
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            width: fit-content;
+            font-weight: 600;
+        }
+
+        .amt-cell {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        /* Progress Bars (Geo) */
+        .geo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .geo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .geo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .geo-val {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+            transition: width 1s ease-out;
+        }
+
+        /* Advanced Funnel */
+        .funnel-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .funnel-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 36px;
+            bottom: -12px;
+            width: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .f-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            z-index: 1;
+        }
+
+        .f-icon.active {
+            border-color: var(--gold);
+            color: var(--gold-dark);
+            background: var(--gold-light);
+        }
+
+        .f-content {
+            flex: 1;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .f-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .f-stats {
+            text-align: right;
+        }
+
+        .f-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .f-rate {
+            font-size: 0.75rem;
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: flex-end;
+        }
+
+        /* Returns Summary Bottom */
+        .returns-banner {
+            background: #fff;
+            border: 1px solid var(--danger-bg);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .returns-banner::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--danger);
+        }
+
+        @media(max-width: 900px) {
+            .returns-banner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 500px) {
+            .returns-banner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ret-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ret-lbl {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .ret-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .ret-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Utilities */
+        .loading-spinner {
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            grid-column: 1/-1;
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            color: var(--gold);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 99;
+        }
+
+        .error-state {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--danger);
+            font-size: 0.9rem;
+            background: var(--danger-bg);
+            border-radius: 8px;
+            border: 1px dashed var(--danger);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+
+    <div class="wrap">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">H</div>
+                <div>
+                    <div style="font-size:0.95rem;font-weight:700;color:#f8fafc;letter-spacing:0.02em">HeelsUp</div>
+                    <div
+                        style="font-size:0.65rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px">
+                        Admin Panel</div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">Main</div>
+                <a class="nav-item" href="admin.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-label">Catalogue</div>
+                <a class="nav-item" href="admin-products.html"><i class="fa-solid fa-box"></i> Products</a>
+                <a class="nav-item" href="admin-categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a class="nav-item" href="admin-collections.html"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a class="nav-item" href="admin-inventory.html"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-label">Sales & Customers</div>
+                <a class="nav-item" href="admin-orders.html"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+                <a class="nav-item" href="admin-customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+                <a class="nav-item" href="admin-coupons.html"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a class="nav-item" href="admin-reviews.html"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a class="nav-item" href="admin-orders.html?tab=exchange"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a class="nav-item" href="admin-pos.html"><i class="fa-solid fa-cash-register"></i> POS / Offline
+                    Sales</a>
+
+                <div class="nav-label">Marketing & Content</div>
+                <a class="nav-item" href="admin-banners.html"><i class="fa-solid fa-image"></i> Banners</a>
+                <a class="nav-item" href="admin-blog.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a class="nav-item" href="admin-pages.html"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a class="nav-item" href="admin-notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+                <div class="nav-label">Reports</div>
+                <a class="nav-item active" href="admin-reports.html"><i class="fa-solid fa-chart-pie"></i> Reports</a>
+                <a class="nav-item" href="admin-analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+                <div class="nav-label">System</div>
+                <a class="nav-item" href="admin-shipping.html"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a class="nav-item" href="admin-taxes.html"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a class="nav-item" href="admin-staff.html"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a class="nav-item" href="admin-settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="s-avatar" id="s-avatar">A</div>
+                    <div>
+                        <div class="s-name" id="s-name">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <button class="btn-menu" id="menuBtn" onclick="toggleSidebar()"><i
+                        class="fa-solid fa-bars-staggered"></i></button>
+                <div class="topbar-title">Business Reports</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')">
+                        <i class="fa-solid fa-store"></i> View Store
+                    </button>
+                </div>
+            </header>
+
+            <section class="content">
+
+                <!-- Advanced Hero -->
+                <div class="report-hero">
+                    <div class="report-hero-content">
+                        <div class="hero-badge">
+                            <div class="pulse-dot"></div> Live Database Sync
+                        </div>
+                        <h2>Performance Overview</h2>
+                        <p id="repDateRange">Loading live report timeline...</p>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat-box">
+                            <div class="hero-stat-label">Total Revenue</div>
+                            <div class="hero-stat-val" id="hero-rev"><i class="fa-solid fa-circle-notch fa-spin"
+                                    style="font-size: 1.5rem"></i></div>
+                            <div class="hero-stat-trend" id="hero-trend">
+                                <i class="fa-solid fa-chart-simple"></i> Calculated dynamically
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Total Orders</div>
+                            <div class="kpi-icon icon-blue"><i class="fa-solid fa-bag-shopping"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpi-orders">...</div>
+                        <div class="kpi-footer">
+                            <span class="trend-up"><i class="fa-solid fa-check-circle"></i></span>
+                            <span class="kpi-desc">Successfully placed</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Registered Customers</div>
+                            <div class="kpi-icon icon-green"><i class="fa-solid fa-users"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpi-customers">...</div>
+                        <div class="kpi-footer">
+                            <span class="trend-up"><i class="fa-solid fa-user-check"></i></span>
+                            <span class="kpi-desc">Active accounts</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Avg. Order Value</div>
+                            <div class="kpi-icon icon-purple"><i class="fa-solid fa-receipt"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpi-aov">...</div>
+                        <div class="kpi-footer">
+                            <span class="trend-up"><i class="fa-solid fa-calculator"></i></span>
+                            <span class="kpi-desc">Revenue per order</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Active Products</div>
+                            <div class="kpi-icon icon-gold"><i class="fa-solid fa-box-open"></i></div>
+                        </div>
+                        <div class="kpi-value" id="kpi-products">...</div>
+                        <div class="kpi-footer">
+                            <span class="trend-up"><i class="fa-solid fa-tags"></i></span>
+                            <span class="kpi-desc">Live in catalogue</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="chart-row">
+                    <!-- Line Chart -->
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-chart-area"></i> Revenue Trend</div>
+                        </div>
+                        <div class="chart-container" id="lineChartContainer">
+                            <div class="loading-spinner" id="lineChartLoader"><i class="fa-solid fa-circle-notch"></i>
+                                Processing timelines...</div>
+                            <canvas id="revenueChart" style="display:none;"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Doughnut Chart -->
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-wallet"></i> Payment Methods</div>
+                        </div>
+                        <div class="doughnut-container" id="doughnutChartContainer">
+                            <div class="loading-spinner" id="doughnutChartLoader"><i
+                                    class="fa-solid fa-circle-notch"></i> Analyzing payments...</div>
+                            <canvas id="paymentChart" style="display:none;"></canvas>
+                        </div>
+                        <div id="paymentLegend" style="margin-top:20px; display:flex; flex-direction:column; gap:8px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Grids Row -->
+                <div class="data-grid-row">
+                    <!-- Top Products Table -->
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-ranking-star"></i> Top Performing Products
+                            </div>
+                            <a href="admin-products.html" class="card-action">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th style="text-align:right">Units Sold</th>
+                                        <th style="text-align:right">Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topProductsBody">
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="loading-spinner"><i class="fa-solid fa-circle-notch"></i>
+                                                Ranking products...</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Geo Data -->
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-map-location-dot"></i> Revenue by City</div>
+                        </div>
+                        <div class="geo-list" id="geoListContainer">
+                            <div class="loading-spinner"><i class="fa-solid fa-circle-notch"></i> Mapping orders...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Funnel -->
+                    <div class="chart-card funnel-card">
+                        <div class="card-header">
+                            <div class="card-title"><i class="fa-solid fa-filter"></i> Checkout Funnel</div>
+                            <span style="font-size:0.75rem; color:var(--text-muted)">Order Status Metrics</span>
+                        </div>
+                        <div class="funnel-container" id="funnelContainer">
+                            <div class="loading-spinner"><i class="fa-solid fa-circle-notch"></i> Tracking
+                                conversions...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Returns Banner -->
+                <div class="returns-banner" id="returnsBanner">
+                    <div
+                        style="grid-column: 1/-1; display:flex; align-items:center; justify-content:center; height: 100px;">
+                        <div class="loading-spinner" style="padding:0"><i class="fa-solid fa-circle-notch"></i>
+                            Processing return requests...</div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- App Logic -->
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+  <script src="admin-enterprise.js"></script>
+
+    <script>
+        // UI Helpers
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            const o = document.getElementById('mobOverlay');
+            s.classList.toggle('open');
+            o.style.display = s.classList.contains('open') ? 'block' : 'none';
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('mobOverlay').style.display = 'none';
+        }
+        function doLogout() { HeelsUpAuth.clearSession(); window.location = 'login.html'; }
+
+        // Chart instances
+        let revenueChartInstance = null;
+        let paymentChartInstance = null;
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const user = HeelsUpAuth.getUser();
+                if (!user || user.role !== 'admin') {
+                    window.location = 'login.html?redirect=admin-reports.html';
+                }
+                const uname = (user?.firstName || user?.first_name || 'Admin');
+                document.getElementById('s-avatar').textContent = uname.charAt(0).toUpperCase();
+                document.getElementById('s-name').textContent = uname;
+
+                // Set Header Date
+                const now = new Date();
+                const thirtyDaysAgo = new Date(now);
+                thirtyDaysAgo.setDate(now.getDate() - 30);
+
+                const fmtDate = (d) => d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
+                document.getElementById('repDateRange').textContent = `Reporting Period: All Time`;
+
+                // Chart.js defaults
+                Chart.defaults.font.family = "'Inter', sans-serif";
+                Chart.defaults.color = '#64748b';
+                Chart.defaults.scale.grid.color = '#f1f5f9';
+
+                // Fetch Data
+                loadAdvancedReports();
+            } catch (e) {
+                console.error("Initialization failed", e);
+            }
+        });
+
+        async function loadAdvancedReports() {
+            try {
+                // Fetch all data concurrently
+                const [ordersRes, productsData, customersRes, returnsRes] = await Promise.all([
+                    HeelsUpAuth.api('/api/admin/orders').catch(() => ({ orders: [] })),
+                    HeelsUpAuth.api('/api/admin/products').catch(() => ([])),
+                    HeelsUpAuth.api('/api/admin/customers').catch(() => ({ customers: [] })),
+                    HeelsUpAuth.api('/api/admin/returns').catch(() => ({ returns: [] }))
+                ]);
+
+                const orders = Array.isArray(ordersRes) ? ordersRes : (ordersRes.orders || []);
+                const products = Array.isArray(productsData) ? productsData : (productsData.products || []);
+                const customers = Array.isArray(customersRes) ? customersRes : (customersRes.customers || []);
+                const returns = Array.isArray(returnsRes) ? returnsRes : (returnsRes.returns || []);
+
+                // Filter valid completed orders for revenue
+                const validOrders = orders.filter(o => o.order_status !== 'cancelled' && o.order_status !== 'returned');
+
+                // 1. Calculate Core KPIs
+                let totalRevenue = 0;
+                validOrders.forEach(o => totalRevenue += parseFloat(o.total_amount || 0));
+
+                const aov = validOrders.length > 0 ? (totalRevenue / validOrders.length) : 0;
+
+                // Format Currency efficiently
+                const fmtCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
+
+                // Update DOM KPIs
+                document.getElementById('hero-rev').textContent = fmtCurrency(totalRevenue);
+                document.getElementById('kpi-orders').textContent = orders.length.toLocaleString('en-IN');
+                document.getElementById('kpi-customers').textContent = customers.length.toLocaleString('en-IN');
+                document.getElementById('kpi-aov').textContent = fmtCurrency(aov);
+                document.getElementById('kpi-products').textContent = products.filter(p => p.active !== false && p.active !== 0).length.toLocaleString('en-IN');
+
+                // 2. Render Charts
+                renderRevenueChart(validOrders);
+                renderPaymentChart(validOrders);
+
+                // 3. Render Data Grids
+                renderTopProducts(products, validOrders);
+                renderGeoData(validOrders);
+                renderFunnel(orders);
+                renderReturnsSummary(returns, orders.length, totalRevenue);
+
+            } catch (err) {
+                console.error("Error generating reports:", err);
+                const errHtml = '<div class="error-state"><i class="fa-solid fa-triangle-exclamation" style="font-size:2rem;margin-bottom:10px"></i><br>Failed to process report data. Please check database connection.</div>';
+                document.getElementById('lineChartContainer').innerHTML = errHtml;
+                document.getElementById('topProductsBody').innerHTML = `<tr><td colspan="3">${errHtml}</td></tr>`;
+            }
+        }
+
+        function renderRevenueChart(orders) {
+            document.getElementById('lineChartLoader').style.display = 'none';
+            const canvas = document.getElementById('revenueChart');
+            canvas.style.display = 'block';
+
+            if (orders.length === 0) {
+                canvas.parentElement.innerHTML = '<div style="padding:40px;text-align:center;color:#94a3b8">No order data available for timeline.</div>';
+                return;
+            }
+
+            // Group by Date 
+            const dailyData = {};
+            orders.forEach(o => {
+                let d = new Date();
+                if (o.created_at) d = new Date(o.created_at);
+                const dateStr = d.toISOString().split('T')[0];
+                const amt = parseFloat(o.total_amount || 0);
+                dailyData[dateStr] = (dailyData[dateStr] || 0) + amt;
+            });
+
+            // Sort dates
+            const sortedDates = Object.keys(dailyData).sort();
+
+            let labels = [];
+            let dataPoints = [];
+
+            // True live data parsing (No synthetic backfill)
+            sortedDates.forEach(dateStr => {
+                const d = new Date(dateStr);
+                labels.push(d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }));
+                dataPoints.push(dailyData[dateStr]);
+            });
+
+            const ctx = canvas.getContext('2d');
+
+            // Create Gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(201, 169, 110, 0.4)');
+            gradient.addColorStop(1, 'rgba(201, 169, 110, 0.0)');
+
+            if (revenueChartInstance) revenueChartInstance.destroy();
+
+            revenueChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Revenue (â‚¹)',
+                        data: dataPoints,
+                        borderColor: '#c9a96e',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#c9a96e',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.2 // Smooth curves
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleFont: { size: 13, family: 'Inter' },
+                            bodyFont: { size: 14, weight: 'bold', family: 'Inter' },
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function (context) {
+                                    return 'â‚¹' + context.parsed.y.toLocaleString('en-IN');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            border: { display: false },
+                            ticks: {
+                                callback: function (value) {
+                                    if (value >= 100000) return 'â‚¹' + (value / 100000).toFixed(1) + 'L';
+                                    if (value >= 1000) return 'â‚¹' + (value / 1000).toFixed(0) + 'K';
+                                    return 'â‚¹' + value;
+                                }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        }
+                    },
+                    interaction: { mode: 'index', intersect: false }
+                }
+            });
+        }
+
+        function renderPaymentChart(orders) {
+            document.getElementById('doughnutChartLoader').style.display = 'none';
+            const canvas = document.getElementById('paymentChart');
+            const legendWrap = document.getElementById('paymentLegend');
+
+            if (orders.length === 0) {
+                canvas.style.display = 'none';
+                legendWrap.innerHTML = '<div style="text-align:center;color:#94a3b8">No payment data.</div>';
+                return;
+            }
+
+            canvas.style.display = 'block';
+
+            // Group by payment method
+            const pMap = {};
+            orders.forEach(o => {
+                const method = o.payment_method || 'Online Payment';
+                pMap[method] = (pMap[method] || 0) + parseFloat(o.total_amount || 0);
+            });
+
+            const labels = Object.keys(pMap).map(k => k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
+            const data = Object.values(pMap);
+            const total = data.reduce((a, b) => a + b, 0);
+
+            // HeelsUp Brand Palette for Chart
+            const bgColors = ['#c9a96e', '#0f172a', '#3b82f6', '#10b981', '#f59e0b'];
+
+            const ctx = canvas.getContext('2d');
+            if (paymentChartInstance) paymentChartInstance.destroy();
+
+            paymentChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: bgColors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const val = context.parsed;
+                                    const pct = Math.round((val / total) * 100);
+                                    return ` â‚¹${val.toLocaleString('en-IN')} (${pct}%)`;
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'custom_center_text',
+                    beforeDraw: function (chart) {
+                        const width = chart.width, height = chart.height, ctx = chart.ctx;
+                        ctx.restore();
+                        const fontSize = (height / 114).toFixed(2);
+                        ctx.font = "bold " + fontSize + "em Inter";
+                        ctx.textBaseline = "middle";
+                        ctx.fillStyle = "#0f172a";
+                        const text = labels.length + " Types",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 2;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }]
+            });
+
+            // Custom HTML Legend
+            let legendHtml = '';
+            labels.forEach((lbl, i) => {
+                const color = bgColors[i % bgColors.length];
+                const val = data[i];
+                const pct = Math.round((val / total) * 100);
+
+                let fmtVal = 'â‚¹' + val.toLocaleString('en-IN');
+                if (val >= 100000) fmtVal = 'â‚¹' + (val / 100000).toFixed(2) + 'L';
+                else if (val >= 1000) fmtVal = 'â‚¹' + (val / 1000).toFixed(1) + 'K';
+
+                legendHtml += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.875rem;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="width:12px; height:12px; border-radius:3px; background:${color}"></span>
+                            <span style="font-weight:500; color:var(--text)">${lbl}</span>
+                        </div>
+                        <div style="display:flex; gap:12px;">
+                            <span style="color:var(--text-muted)">${pct}%</span>
+                            <span style="font-weight:700; width:60px; text-align:right">${fmtVal}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            legendWrap.innerHTML = legendHtml;
+        }
+
+        function renderTopProducts(products, orders) {
+            const tbody = document.getElementById('topProductsBody');
+
+            // Map strictly from real DB sales_count or price
+            let sortedProducts = [...products].sort((a, b) => {
+                const salesA = parseInt(a.sales_count || 0);
+                const salesB = parseInt(b.sales_count || 0);
+                return salesB - salesA;
+            });
+
+            const top5 = sortedProducts.slice(0, 5);
+
+            if (top5.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:30px;color:var(--text-muted)">No products available.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = top5.map(p => {
+                const img = p.image_url ? p.image_url : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44"><rect width="44" height="44" fill="%23f1f5f9"/></svg>';
+                const sales = parseInt(p.sales_count || 0);
+                const estRev = sales * parseFloat(p.price || 0);
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="prod-cell">
+                                <img src="${escapeHtml(img)}" class="prod-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'44\\' height=\\'44\\'><rect width=\\'44\\' height=\\'44\\' fill=\\'%23f1f5f9\\'/></svg>'">
+                                <div class="prod-info">
+                                    <div class="prod-name">${escapeHtml(p.name)}</div>
+                                    <div class="prod-cat">${escapeHtml(p.category || 'General')}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="text-align:right; font-weight:600; color:var(--text-muted)">${sales}</td>
+                        <td style="text-align:right" class="amt-cell">â‚¹${estRev.toLocaleString('en-IN')}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderGeoData(orders) {
+            const container = document.getElementById('geoListContainer');
+            const cityMap = {};
+
+            orders.forEach(o => {
+                if (o.city) {
+                    const city = o.city.trim().charAt(0).toUpperCase() + o.city.trim().slice(1).toLowerCase();
+                    const amt = parseFloat(o.total_amount || 0);
+                    cityMap[city] = (cityMap[city] || 0) + amt;
+                }
+            });
+
+            const sortedCities = Object.keys(cityMap).map(k => ({ city: k, amount: cityMap[k] })).sort((a, b) => b.amount - a.amount).slice(0, 5);
+
+            if (sortedCities.length === 0) {
+                container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-muted)">Not enough geo data.</div>';
+                return;
+            }
+
+            const maxAmt = sortedCities[0].amount;
+
+            container.innerHTML = sortedCities.map((item) => {
+                const pct = Math.max(5, Math.round((item.amount / maxAmt) * 100)); // Min 5% for visual bar
+
+                let fmtAmt = 'â‚¹' + item.amount.toLocaleString('en-IN');
+                if (item.amount >= 100000) fmtAmt = 'â‚¹' + (item.amount / 100000).toFixed(2) + 'L';
+                else if (item.amount >= 1000) fmtAmt = 'â‚¹' + (item.amount / 1000).toFixed(1) + 'K';
+
+                return `
+                    <div class="geo-item">
+                        <div class="geo-header">
+                            <span>${escapeHtml(item.city)}</span>
+                            <span class="geo-val">${fmtAmt}</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width:0%" data-target-width="${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Trigger animation
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(el => {
+                    el.style.width = el.getAttribute('data-target-width');
+                });
+            }, 100);
+        }
+
+        function renderFunnel(allLiveOrders) {
+            const container = document.getElementById('funnelContainer');
+
+            if (allLiveOrders.length === 0) {
+                container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-muted)">Waiting for data to build funnel.</div>';
+                return;
+            }
+
+            // Real Funnel calculated perfectly based on actual Live Order Statuses
+            let totalPlaced = allLiveOrders.length;
+            let totalPaid = 0;
+            let totalConfirmed = 0;
+            let totalShipped = 0;
+            let totalDelivered = 0;
+
+            allLiveOrders.forEach(o => {
+                const s = (o.order_status || '').toLowerCase();
+                const p = (o.payment_status || '').toLowerCase();
+
+                // Logical progression in a real ecommerce database
+                if (p === 'paid' || p === 'success' || s !== 'cancelled') totalPaid++;
+                if (s === 'confirmed' || s === 'shipped' || s === 'delivered') totalConfirmed++;
+                if (s === 'shipped' || s === 'delivered') totalShipped++;
+                if (s === 'delivered') totalDelivered++;
+            });
+
+            const steps = [
+                { icon: 'fa-bag-shopping', label: 'Orders Placed', val: totalPlaced },
+                { icon: 'fa-credit-card', label: 'Payment Success', val: totalPaid },
+                { icon: 'fa-box-open', label: 'Confirmed / Processing', val: totalConfirmed },
+                { icon: 'fa-truck-fast', label: 'Shipped', val: totalShipped },
+                { icon: 'fa-check-double', label: 'Successfully Delivered', val: totalDelivered, isFinal: true }
+            ];
+
+            container.innerHTML = steps.map((s, index) => {
+                let rateHtml = '';
+                if (index > 0) {
+                    const prevVal = steps[index - 1].val;
+                    const dropRate = prevVal > 0 ? Math.round((s.val / prevVal) * 100) : 0;
+                    rateHtml = `<div class="f-rate">${dropRate}% from prev</div>`;
+                }
+
+                return `
+                    <div class="funnel-step">
+                        <div class="f-icon ${s.isFinal ? 'active' : ''}"><i class="fa-solid ${s.icon}"></i></div>
+                        <div class="f-content" style="${s.isFinal ? 'border-color:var(--gold); background:var(--gold-light)' : ''}">
+                            <div class="f-label">${s.label}</div>
+                            <div class="f-stats">
+                                <div class="f-val">${s.val.toLocaleString('en-IN')}</div>
+                                ${rateHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderReturnsSummary(returns, totalOrders, totalRev) {
+            const container = document.getElementById('returnsBanner');
+
+            if (returns.length === 0 && totalOrders === 0) {
+                container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted)">No returns data available yet.</div>';
+                return;
+            }
+
+            const reqCount = returns.length;
+            const approved = returns.filter(r => r.status === 'approved');
+            const pending = returns.filter(r => r.status === 'pending');
+
+            const reqPct = totalOrders > 0 ? ((reqCount / totalOrders) * 100).toFixed(1) : 0;
+            const appRate = reqCount > 0 ? ((approved.length / reqCount) * 100).toFixed(1) : 0;
+
+            let totalRefunds = 0;
+            approved.forEach(r => totalRefunds += parseFloat(r.refund_amount || 0));
+
+            const refundPct = totalRev > 0 ? ((totalRefunds / totalRev) * 100).toFixed(1) : 0;
+
+            container.innerHTML = `
+                <div class="ret-box">
+                    <div class="ret-lbl">Return Requests</div>
+                    <div class="ret-val">${reqCount}</div>
+                    <div class="ret-desc" style="color:var(--danger)">${reqPct}% of total orders</div>
+                </div>
+                <div class="ret-box">
+                    <div class="ret-lbl">Approved</div>
+                    <div class="ret-val" style="color:var(--success)">${approved.length}</div>
+                    <div class="ret-desc">${appRate}% approval rate</div>
+                </div>
+                <div class="ret-box">
+                    <div class="ret-lbl">Pending Action</div>
+                    <div class="ret-val" style="color:var(--warning)">${pending.length}</div>
+                    <div class="ret-desc">Awaiting admin review</div>
+                </div>
+                <div class="ret-box">
+                    <div class="ret-lbl">Refund Impact</div>
+                    <div class="ret-val" style="color:var(--danger)">â‚¹${Math.round(totalRefunds).toLocaleString('en-IN')}</div>
+                    <div class="ret-desc">${refundPct}% of total revenue</div>
+                </div>
+            `;
+        }
+
+        // Utils
+        function escapeHtml(unsafe) {
+            return String(unsafe || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+
+</html>

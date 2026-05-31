@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms & Conditions | HeelsUp – Ladies Footwear & Bags</title>
+    <meta name="description"
+        content="HeelsUp Terms & Conditions. Read our terms of service, purchase agreement and usage policies before shopping." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://heelsup.in/policy/terms.html" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+
+    <style>
+        .policy-hero {
+            background: linear-gradient(135deg, #0d0d0d 0%, #0a1a0a 50%, #0d0d0d 100%);
+            padding: 80px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .policy-hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 110, 0.07);
+            pointer-events: none;
+        }
+
+        .policy-hero-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .policy-hero-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(201, 169, 110, 0.12);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            margin: 0 auto 20px;
+        }
+
+        .policy-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .policy-hero h1 em {
+            color: var(--color-primary-light);
+            font-style: italic;
+        }
+
+        .policy-hero-sub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .policy-last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-primary-light);
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 100px;
+            padding: 6px 14px;
+            margin-top: 20px;
+        }
+
+        .policy-body {
+            padding: 80px 0;
+            background: var(--bg-page);
+        }
+
+        .policy-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .policy-toc {
+            position: sticky;
+            top: calc(var(--navbar-height) + 24px);
+            background: var(--color-white);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .policy-toc-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .policy-toc-list {
+            list-style: none;
+        }
+
+        .policy-toc-list li {
+            margin-bottom: 4px;
+        }
+
+        .policy-toc-list a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 7px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .policy-toc-list a:hover,
+        .policy-toc-list a.active {
+            color: var(--color-primary);
+            background: var(--color-primary-glow);
+        }
+
+        .policy-toc-list a i {
+            font-size: 9px;
+            color: var(--color-primary);
+            opacity: 0.6;
+        }
+
+        .policy-content h2 {
+            font-family: var(--font-heading);
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 48px 0 16px;
+            padding-top: 12px;
+        }
+
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .policy-content h2 .section-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--color-primary-glow);
+            border: 1px solid var(--color-primary-light);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            margin-right: 10px;
+            font-family: var(--font-body);
+        }
+
+        .policy-content p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .policy-content ul {
+            padding-left: 0;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        .policy-content ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .policy-content ul li::before {
+            content: '→';
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .term-block {
+            background: var(--color-white);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--color-primary-light);
+            transition: border-left-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .term-block:hover {
+            border-left-color: var(--color-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .term-block h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .term-block p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fefcf5, #faf6ec);
+            border: 1px solid var(--color-primary-light);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .warning-box {
+            background: #fef9f9;
+            border: 1px solid #f5c6cb;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+        }
+
+        .warning-box p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .contact-card {
+            background: var(--color-dark);
+            border-radius: 20px;
+            padding: 36px;
+            margin-top: 48px;
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .contact-card-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 500;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+            text-decoration: none
+        }
+
+        @media(max-width:1024px) {
+            .policy-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-toc {
+                position: static;
+            }
+        }
+
+        @media(max-width:768px) {
+            .policy-body {
+                padding: 48px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar" id="topbar">
+        <div class="topbar-marquee">
+            <span class="topbar-text">🎉 <strong>NEW ARRIVALS</strong> — Summer Collection is Live!</span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-text">🚚 FREE Shipping above <strong>₹799</strong></span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-text">🏷️ Use code <strong>HEELS10</strong> for 10% off</span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-text">🎉 <strong>NEW ARRIVALS</strong> — Summer Collection is Live!</span>
+        </div>
+        <button class="topbar-close" id="topbar-close">✕</button>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="../index.html" class="navbar-logo"><span
+                        class="navbar-logo-text">Heels<span>Up</span></span></a>
+                <ul class="navbar-menu">
+                    <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item">
+                        <a href="../shop.html" class="nav-link">Shop <i class="fa-solid fa-chevron-down"
+                                style="font-size:9px;opacity:0.6"></i></a>
+                        <div class="nav-dropdown">
+                            <a href="../category.html?cat=heels"><span class="nav-dropdown-icon">👠</span> Heels</a>
+                            <a href="../category.html?cat=flats"><span class="nav-dropdown-icon">🥿</span> Flats</a>
+                            <a href="../category.html?cat=sandals"><span class="nav-dropdown-icon">👡</span> Sandals</a>
+                            <a href="../category.html?cat=bags"><span class="nav-dropdown-icon">👜</span> Bags</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="../category.html?cat=new" class="nav-link">New Arrivals</a></li>
+                    <li class="nav-item"><a href="../category.html?cat=sale" class="nav-link"
+                            style="color:var(--color-accent)"><i class="fa-solid fa-fire" style="font-size:0.8rem"></i>
+                            Sale</a></li>
+                    <li class="nav-item"><a href="../about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="../contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="navbar-actions">
+                    <a href="../wishlist.html" class="nav-icon-btn"><i class="fa-regular fa-heart"></i></a>
+                    <a href="../profile.html" class="nav-icon-btn"><i class="fa-regular fa-user"></i></a>
+                    <button class="nav-icon-btn" id="cart-open-btn"><i class="fa-solid fa-bag-shopping"></i><span
+                            class="nav-badge" id="cart-count">0</span></button>
+                    <button class="navbar-hamburger" id="hamburger-btn"><span class="hamburger-line"></span><span
+                            class="hamburger-line"></span><span class="hamburger-line"></span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-backdrop" id="mobile-backdrop"></div>
+        <div class="mobile-menu-panel">
+            <div class="mobile-menu-header">
+                <span class="navbar-logo-text">Heels<span style="color:var(--color-primary)">Up</span></span>
+                <button id="mobile-menu-close"
+                    style="font-size:1.3rem;color:var(--text-muted);cursor:pointer;background:none;border:none">✕</button>
+            </div>
+            <div class="mobile-menu-body">
+                <a href="../index.html">🏠 Home</a>
+                <a href="../shop.html">🛍️ Shop All</a>
+                <a href="../category.html?cat=heels">👠 Heels</a>
+                <a href="../category.html?cat=sandals">👡 Sandals</a>
+                <a href="../category.html?cat=bags">👜 Bags</a>
+                <a href="../category.html?cat=sale" style="color:var(--color-accent)">🔥 Sale</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="policy-hero">
+        <div class="container">
+            <div class="policy-hero-inner">
+                <div class="policy-hero-icon"><i class="fa-solid fa-file-lines"></i></div>
+                <h1>Terms &amp; <em>Conditions</em></h1>
+                <p class="policy-hero-sub">HeelsUp use karne se pehle yeh terms zaroor padho. Yeh aur aapke dono ke liye
+                    important hain.</p>
+                <div class="policy-last-updated"><i class="fa-regular fa-calendar"></i> Last Updated: January 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <div style="background:var(--color-white);border-bottom:1px solid var(--border-color)">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb-item"><a href="../index.html">Home</a></div>
+                <span class="breadcrumb-sep"><i class="fa-solid fa-chevron-right" style="font-size:8px"></i></span>
+                <div class="breadcrumb-item active">Terms &amp; Conditions</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="policy-body">
+        <div class="container">
+            <div class="policy-layout">
+
+                <aside class="policy-toc">
+                    <div class="policy-toc-title">Table of Contents</div>
+                    <ul class="policy-toc-list">
+                        <li><a href="#acceptance"><i class="fa-solid fa-chevron-right"></i> Acceptance</a></li>
+                        <li><a href="#account"><i class="fa-solid fa-chevron-right"></i> Account Terms</a></li>
+                        <li><a href="#orders"><i class="fa-solid fa-chevron-right"></i> Orders & Payments</a></li>
+                        <li><a href="#pricing"><i class="fa-solid fa-chevron-right"></i> Pricing & Offers</a></li>
+                        <li><a href="#shipping"><i class="fa-solid fa-chevron-right"></i> Shipping</a></li>
+                        <li><a href="#ip"><i class="fa-solid fa-chevron-right"></i> Intellectual Property</a></li>
+                        <li><a href="#conduct"><i class="fa-solid fa-chevron-right"></i> Prohibited Conduct</a></li>
+                        <li><a href="#liability"><i class="fa-solid fa-chevron-right"></i> Liability</a></li>
+                        <li><a href="#governing"><i class="fa-solid fa-chevron-right"></i> Governing Law</a></li>
+                        <li><a href="#contact"><i class="fa-solid fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </aside>
+
+                <div class="policy-content">
+
+                    <div id="acceptance">
+                        <div class="highlight-box">
+                            <p><strong style="color:var(--color-primary-dark)">📋 Simple version:</strong> HeelsUp.in
+                                use karke aap in terms se agree karte ho. Agar koi term samajh nahi aaya — WhatsApp
+                                karo, hum explain karenge. Yeh terms aur aapke rights protect karte hain.</p>
+                        </div>
+
+                        <h2><span class="section-num">1</span> Acceptance of Terms</h2>
+                        <p>Yeh Terms & Conditions ("Terms") HeelsUp aur aapke beech ek legally binding agreement hai.
+                            Website access ya use karke, ya koi bhi purchase karke, aap automatically in terms se agree
+                            karte hain.</p>
+                        <p>Agar aap 18 saal se kam age ke hain, please apne parent ya guardian ke supervision mein
+                            shopping karein. Hamari services 13+ age ke users ke liye designed hain.</p>
+                    </div>
+
+                    <div id="account">
+                        <h2><span class="section-num">2</span> Account Terms</h2>
+                        <p>HeelsUp account create karne ke liye:</p>
+                        <ul>
+                            <li>Accurate aur complete information provide karna zaroori hai</li>
+                            <li>Account security aapki responsibility hai — strong password use karo</li>
+                            <li>Account kisi aur ke saath share mat karo</li>
+                            <li>Suspicious activity immediately report karo: hello@heelsup.in</li>
+                            <li>Ek person sirf ek account rakh sakta hai</li>
+                        </ul>
+                        <div class="term-block">
+                            <h4>Account Termination</h4>
+                            <p>HeelsUp reserve karta hai right ki kisi bhi account ko terminate kare bina notice diye
+                                agar Terms violation ho ya fraudulent activity detect ho.</p>
+                        </div>
+                    </div>
+
+                    <div id="orders">
+                        <h2><span class="section-num">3</span> Orders & Payments</h2>
+
+                        <div class="term-block">
+                            <h4>Order Placement</h4>
+                            <p>Order place karna ek purchase offer hai. HeelsUp confirm karne ya cancel karne ka right
+                                rakhta hai. Order confirmation email/SMS milne par hi order confirmed mana jaayega.</p>
+                        </div>
+                        <div class="term-block">
+                            <h4>Payment Methods</h4>
+                            <p>Hum accept karte hain: UPI (PhonePe, GPay, Paytm), Credit/Debit Cards (Visa, Mastercard,
+                                RuPay), Net Banking, aur Cash on Delivery (selected pincodes). EMI available on orders
+                                above ₹1,999.</p>
+                        </div>
+                        <div class="term-block">
+                            <h4>Order Cancellation</h4>
+                            <p>Order dispatch hone se pehle cancel kiya ja sakta hai. Dispatch ke baad return policy
+                                apply hogi. COD orders cancel karne ke liye WhatsApp par immediately contact karo.</p>
+                        </div>
+                        <div class="term-block">
+                            <h4>Failed Payments</h4>
+                            <p>Payment failure hone par order automatically cancel ho jaata hai. Payment deduct hua to
+                                3-5 business days mein auto-refund process hoga.</p>
+                        </div>
+                    </div>
+
+                    <div id="pricing">
+                        <h2><span class="section-num">4</span> Pricing & Offers</h2>
+                        <ul>
+                            <li>All prices Indian Rupees (INR) mein hain aur GST inclusive hain</li>
+                            <li>Prices bina notice ke change ho sakte hain (market conditions ke hisaab se)</li>
+                            <li>Order place karne ke waqt jo price tha wohi final hoga</li>
+                            <li>Coupon codes sirf specified validity period tak valid hain</li>
+                            <li>Ek order par sirf ek coupon apply hoga</li>
+                            <li>Pricing errors ke case mein HeelsUp order cancel karne ka right rakhta hai</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <p><strong>Sale Offers:</strong> Sale prices limited time ke liye hain. "Up to X% off" ka
+                                matlab hai kuch selected products par maximum discount — poore collection par nahi.
+                                Advertised offers withdrawal ka right HeelsUp rakhta hai.</p>
+                        </div>
+                    </div>
+
+                    <div id="shipping">
+                        <h2><span class="section-num">5</span> Shipping Terms</h2>
+                        <ul>
+                            <li>Free shipping: ₹799+ ke orders par pan-India</li>
+                            <li>Standard delivery: 3–7 business days (city to city vary karta hai)</li>
+                            <li>Jodhpur same-day delivery: select orders ke liye (check availability)</li>
+                            <li>Delivery dates estimated hain — guarantee nahi ki ja sakti</li>
+                            <li>Incorrect address dene par re-delivery charges applicable</li>
+                            <li>Parcel refuse karna order cancellation maana jaayega</li>
+                        </ul>
+                        <div class="term-block">
+                            <h4>Delivery Attempt</h4>
+                            <p>3 delivery attempts ke baad parcel warehouse return ho sakta hai. Re-delivery ke liye
+                                shipping charges applicable honge. 15 days mein collect nahi kiya to order cancel ho
+                                jaayega aur refund COD ke liye nahi milega.</p>
+                        </div>
+                    </div>
+
+                    <div id="ip">
+                        <h2><span class="section-num">6</span> Intellectual Property</h2>
+                        <p>HeelsUp website ki sabhi content — images, logos, product descriptions, brand name, design —
+                            HeelsUp ki intellectual property hai ya licensed hai.</p>
+                        <ul>
+                            <li>Content copy, reproduce ya distribute karna prohibited hai</li>
+                            <li>HeelsUp brand name commercial use ke liye unauthorized hai</li>
+                            <li>Product images personally pin/save kar sakte hain — commercial use nahi</li>
+                            <li>Reviews aur UGC content post karke aap HeelsUp ko usage rights dete hain</li>
+                        </ul>
+                    </div>
+
+                    <div id="conduct">
+                        <h2><span class="section-num">7</span> Prohibited Conduct</h2>
+                        <p>Website use karte waqt yeh activities strictly prohibited hain:</p>
+                        <ul>
+                            <li>False, misleading ya fraudulent orders place karna</li>
+                            <li>Multiple fake accounts banana discount/offer abuse ke liye</li>
+                            <li>Automated tools, bots ya scripts use karna</li>
+                            <li>Defamatory, abusive ya threatening behavior</li>
+                            <li>Spamming reviews ya fake testimonials post karna</li>
+                            <li>Website security bypass karne ki koshish karna</li>
+                            <li>Competitor intelligence gathering ke liye systematic data scraping</li>
+                        </ul>
+                        <div class="warning-box">
+                            <p>⚠️ <strong>Violation consequences:</strong> In activities ke result mein account
+                                permanent ban, pending orders cancel, aur legal action ho sakta hai. Fraud cases police
+                                complaint ke saath handle kiye jaayenge.</p>
+                        </div>
+                    </div>
+
+                    <div id="liability">
+                        <h2><span class="section-num">8</span> Limitation of Liability</h2>
+                        <p>HeelsUp maximum liability product purchase price tak limited hai. Hum liable nahi hain:</p>
+                        <ul>
+                            <li>Indirect, incidental ya consequential damages ke liye</li>
+                            <li>Third-party courier delays ya losses ke liye</li>
+                            <li>Force majeure events (natural disasters, strikes, etc.)</li>
+                            <li>Customer द्वारा incorrect information provide karne se hone wale losses</li>
+                            <li>Unauthorized account access (agar customer negligence se hua ho)</li>
+                        </ul>
+                        <p>HeelsUp best efforts karta hai ki website hamesha available aur accurate ho, lekin 100%
+                            uptime ya error-free operation guarantee nahi di ja sakti.</p>
+                    </div>
+
+                    <div id="governing">
+                        <h2><span class="section-num">9</span> Governing Law & Disputes</h2>
+                        <p>Yeh Terms Indian law ke under governed hain. Jurisdiction:</p>
+                        <ul>
+                            <li>Disputes Jodhpur, Rajasthan ki courts mein resolve honge</li>
+                            <li>Pehle hum friendly resolution try karenge</li>
+                            <li>Unresolved disputes arbitration ke through settle honge</li>
+                            <li>Consumer disputes Consumer Forum mein file kiye ja sakte hain</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <p><strong>Humari preference:</strong> Legal action aakhri resort hai. Koi bhi issue pehle
+                                WhatsApp ya email par discuss karo — hum genuinely solve karna chahte hain. 90%+ issues
+                                friendly resolution se solve ho jaate hain.</p>
+                        </div>
+                    </div>
+
+                    <div id="contact">
+                        <div class="contact-card">
+                            <h3>Terms ke baare mein <em style="color:var(--color-primary-light)">Koi Sawaal?</em></h3>
+                            <p>Legal language confusing lagti hai? Hum simple Hindi/English mein explain kar denge. Koi
+                                bhi doubt clear karo purchase se pehle.</p>
+                            <div class="contact-card-btns">
+                                <a href="https://wa.me/919xxxxxxxxx" class="btn btn-primary" target="_blank"><i
+                                        class="fa-brands fa-whatsapp"></i> WhatsApp Karo</a>
+                                <a href="mailto:hello@heelsup.in" class="btn btn-white"><i
+                                        class="fa-solid fa-envelope"></i> Email Karo</a>
+                            </div>
+                            <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3)">HeelsUp · Jodhpur,
+                                Rajasthan, India · hello@heelsup.in</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top grid grid-4">
+                <div>
+                    <div style="font-family:var(--font-display);font-size:1.6rem;color:#fff;margin-bottom:12px">
+                        Heels<span style="color:var(--color-primary)">Up</span></div>
+                    <p class="footer-tagline">Jodhpur se India tak — stylish ladies footwear & bags ka sabse trusted
+                        naam.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/heelsup.in" class="footer-social-link"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://facebook.com/heelsup.in" class="footer-social-link"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://wa.me/919xxxxxxxxx" class="footer-social-link"><i
+                                class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-col-title">Quick Links</div>
+                    <ul class="footer-links">
+                        <li><a href="../shop.html" class="footer-link">Shop All</a></li>
+                        <li><a href="../category.html?cat=new" class="footer-link">New Arrivals</a></li>
+                        <li><a href="../about.html" class="footer-link">About Us</a></li>
+                        <li><a href="../contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Policies</div>
+                    <ul class="footer-links">
+                        <li><a href="returns.html" class="footer-link">Return Policy</a></li>
+                        <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="footer-link" style="color:var(--color-primary-light)">Terms &
+                                Conditions</a></li>
+                        <li><a href="../faq.html" class="footer-link">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Contact</div>
+                    <a href="https://wa.me/919xxxxxxxxx" class="footer-link"><i class="fa-brands fa-whatsapp"
+                            style="color:var(--color-primary)"></i> +91 9XXXXXXXXX</a>
+                    <a href="mailto:hello@heelsup.in" class="footer-link" style="margin-top:8px"><i
+                            class="fa-solid fa-envelope" style="color:var(--color-primary)"></i> hello@heelsup.in</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 HeelsUp. All rights reserved. Made with ❤️ in Jodhpur.</p>
+                <div class="footer-bottom-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a
+                        href="returns.html">Returns</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+    <a href="https://wa.me/919xxxxxxxxx" class="whatsapp-float"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <script>
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+        document.getElementById('topbar-close')?.addEventListener('click', () => { const tb = document.getElementById('topbar'); tb.style.height = '0'; tb.style.overflow = 'hidden'; tb.style.padding = '0'; });
+        const hamburger = document.getElementById('hamburger-btn'), mobileMenu = document.getElementById('mobile-menu');
+        hamburger?.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+        document.getElementById('mobile-backdrop')?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
+        document.getElementById('mobile-menu-close')?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
+        const sections = document.querySelectorAll('[id]'), tocLinks = document.querySelectorAll('.policy-toc-list a');
+        window.addEventListener('scroll', () => { let c = ''; sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) c = s.id; }); tocLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + c); }); });
+        const cart = JSON.parse(localStorage.getItem('heelsup_cart') || '[]');
+        document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
+    </script>
+</body>
+
+</html>

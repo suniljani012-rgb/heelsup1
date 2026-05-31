@@ -1,0 +1,1056 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers â€” HeelsUp Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #8b6914;
+            --bg: #f1f5f9;
+            --sidebar: #0f172a;
+            --card: #fff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --muted: #64748b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar {
+            background: var(--sidebar);
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 62px;
+        }
+
+        .sidebar-logo {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: .95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .nav-label {
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: #475569;
+            padding: 13px 18px 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            color: #94a3b8;
+            font-size: .83rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: #1e293b;
+            color: var(--gold);
+            border-left-color: var(--gold);
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: .83rem;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--gold);
+            color: #0f172a;
+            font-size: .6rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 20px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #64748b;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .05);
+            color: #94a3b8;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: all .2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 240px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: #64748b;
+            display: none;
+        }
+
+        .btn-menu:hover {
+            background: #f1f5f9;
+        }
+
+        @media(max-width:900px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            padding: 24px;
+            flex: 1;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .page-header-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .page-header-left p {
+            font-size: .85rem;
+            color: var(--muted);
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            margin-bottom: 20px;
+        }
+
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: .8rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 10px 8px 32px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .83rem;
+            transition: all .2s;
+            background: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, .1);
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .83rem;
+            background: #f8fafc;
+            transition: all .2s;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .83rem;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 9px 12px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f8fafc;
+            transition: background .15s;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody td {
+            padding: 11px 12px;
+            vertical-align: middle;
+        }
+
+        .tbl-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .tbl-sub {
+            font-size: .72rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .act-cell {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .badge-admin {
+            background: rgba(201, 169, 110, .15);
+            color: var(--gold-dark);
+        }
+
+        .badge-customer {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: all .2s;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: .76rem;
+            border-radius: 7px;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            transition: all .2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-edit {
+            background: #f0f9ff;
+            color: #0284c7;
+        }
+
+        .btn-edit:hover {
+            background: #0284c7;
+            color: #fff;
+        }
+
+        .btn-del {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .btn-del:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .83rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 240px;
+        }
+
+        .toast.success {
+            border-left: 4px solid #22c55e;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: .87rem;
+        }
+
+        .loading-spinner i {
+            font-size: 1.8rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 16px;
+            justify-content: center;
+        }
+
+        .pg-btn {
+            padding: 6px 13px;
+            border-radius: 7px;
+            border: 1.5px solid var(--border);
+            font-size: .79rem;
+            color: #64748b;
+            background: #fff;
+            transition: all .2s;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .pg-btn:hover:not(:disabled) {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pg-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 998;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="wrap">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">H</div>
+                <div>
+                    <div style="font-size:.87rem;font-weight:700;color:#f1f5f9">HeelsUp</div>
+                    <div style="font-size:.62rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em">Admin Panel
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-label">Main</div>
+                <a class="nav-item" href="admin.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-label">Catalogue</div>
+                <a class="nav-item" href="admin-products.html"><i class="fa-solid fa-box"></i> Products</a>
+                <a class="nav-item" href="admin-categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a class="nav-item" href="admin-collections.html"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a class="nav-item" href="admin-inventory.html"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-label">Sales & Customers</div>
+                <a class="nav-item" href="admin-orders.html"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+                <a class="nav-item active" href="admin-customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+                <a class="nav-item" href="admin-coupons.html"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a class="nav-item" href="admin-reviews.html"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a class="nav-item" href="admin-orders.html?tab=exchange"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a class="nav-item" href="admin-pos.html"><i class="fa-solid fa-cash-register"></i> POS / Offline
+                    Sales</a>
+
+                <div class="nav-label">Marketing & Content</div>
+                <a class="nav-item" href="admin-banners.html"><i class="fa-solid fa-image"></i> Banners</a>
+                <a class="nav-item" href="admin-blog.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a class="nav-item" href="admin-pages.html"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a class="nav-item" href="admin-notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+                <div class="nav-label">Reports</div>
+                <a class="nav-item" href="admin-reports.html"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a class="nav-item" href="admin-analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+                <div class="nav-label">System</div>
+                <a class="nav-item" href="admin-shipping.html"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a class="nav-item" href="admin-taxes.html"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a class="nav-item" href="admin-staff.html"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a class="nav-item" href="admin-settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="s-avatar" id="s-avatar">A</div>
+                    <div>
+                        <div class="s-name" id="s-name">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <button class="btn-menu" id="menuBtn" onclick="toggleSidebar()"><i
+                        class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Customers</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')"><i
+                            class="fa-solid fa-store"></i> View Store</button>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h2>Customer Directory</h2>
+                        <p>Manage and view your registered store customers and administrators.</p>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-outline" onclick="openOfferModal()">
+                            <i class="fa-solid fa-paper-plane"></i> Send Offer
+                        </button>
+                        <button class="btn btn-primary" onclick="loadCustomers()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="filter-bar">
+                        <div class="search-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" class="search-input" id="custSearch"
+                                placeholder="Search by name, email, or phone..." oninput="filterCustomers()">
+                        </div>
+                        <select class="filter-select" id="roleFilter" onchange="filterCustomers()">
+                            <option value="">All Roles</option>
+                            <option value="customer">Customer</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div style="overflow-x:auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer Details</th>
+                                    <th>Contact Information</th>
+                                    <th>Joined Date</th>
+                                    <th>Account Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Loading
+                                            customers...</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="customersPagination"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Offer Modal -->
+    <div id="offerModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color:#fff; margin:10% auto; padding:20px; border-radius:8px; width:400px; max-width:90%;">
+            <h3 style="margin-top:0;">Send Broadcast Offer</h3>
+            <p style="font-size:13px; color:#666; margin-bottom:20px;">This will send a promotional email to all registered customers.</p>
+            <div style="margin-bottom:15px;">
+                <label style="display:block; font-size:12px; margin-bottom:5px;">Offer Title</label>
+                <input type="text" id="offerTitle" class="form-control" placeholder="e.g. Summer Sale is Here!" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="margin-bottom:15px;">
+                <label style="display:block; font-size:12px; margin-bottom:5px;">Message</label>
+                <textarea id="offerMessage" class="form-control" rows="4" placeholder="e.g. Get 20% off all heels this weekend." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;"></textarea>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="display:block; font-size:12px; margin-bottom:5px;">Discount Code (Optional)</label>
+                <input type="text" id="offerCode" class="form-control" placeholder="e.g. SUMMER20" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                <button class="btn btn-outline" onclick="closeOfferModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitOffer()" id="submitOfferBtn">Send Offer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+  <script src="admin-enterprise.js"></script>
+    <script>
+        // â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        let allCustomers = [];
+        let filteredCustomers = [];
+        const PAGE = 12;
+        let currentPg = 1;
+
+        // â”€â”€ AUTH & SETUP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        try {
+            const user = HeelsUpAuth.getUser();
+            if (!user || user.role !== 'admin') {
+                window.location = 'login.html?redirect=admin-customers.html';
+            }
+            const uname = (user?.firstName || user?.first_name || 'Admin');
+            document.getElementById('s-avatar').textContent = uname.charAt(0).toUpperCase();
+            document.getElementById('s-name').textContent = uname;
+        } catch (e) {
+            console.error("Auth initialization failed", e);
+        }
+
+        // â”€â”€ SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            s.classList.toggle('open');
+            document.getElementById('mobOverlay').style.display = s.classList.contains('open') ? 'block' : 'none';
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('mobOverlay').style.display = 'none';
+        }
+
+        function doLogout() {
+            try { HeelsUpAuth.clearSession(); } catch (e) { }
+            window.location = 'login.html';
+        }
+
+        // â”€â”€ UTILITIES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function showToast(msg, type = 'success') {
+            const c = document.getElementById('toastWrap');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            const icon = type === 'error' ? 'fa-circle-xmark' : 'fa-circle-check';
+            t.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+            c.appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0';
+                t.style.transition = 'opacity .3s';
+                setTimeout(() => t.remove(), 300);
+            }, 4000);
+        }
+
+        function esc(s) {
+            return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function fmtDate(d) {
+            if (!d) return 'â€”';
+            return new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        // â”€â”€ DATA FETCHING & FILTERING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        async function loadCustomers() {
+            document.getElementById('customersTableBody').innerHTML = '<tr><td colspan="5"><div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Loading customers...</div></td></tr>';
+            try {
+                const data = await HeelsUpAuth.api('/api/admin/customers');
+                const rawUsers = data.customers || data || [];
+                // User requirement: staff should not show in customer list
+                allCustomers = rawUsers.filter(u => u.role !== 'admin');
+                
+                filterCustomers();
+            } catch (e) {
+                console.error('API Error:', e);
+                showToast(e.message || 'Failed to load customers', 'error');
+                document.getElementById('customersTableBody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#ef4444">Failed to load data. Please check your connection.</td></tr>';
+            }
+        }
+
+        function filterCustomers() {
+            const q = document.getElementById('custSearch').value.toLowerCase();
+            const role = document.getElementById('roleFilter').value;
+
+            filteredCustomers = allCustomers.filter(c => {
+                const nameStr = ((c.first_name || '') + ' ' + (c.last_name || '')).toLowerCase();
+                const emailStr = (c.email || '').toLowerCase();
+                const phoneStr = (c.phone || '').toLowerCase();
+
+                const matchesSearch = !q || nameStr.includes(q) || emailStr.includes(q) || phoneStr.includes(q);
+                const matchesRole = !role || c.role === role;
+
+                return matchesSearch && matchesRole;
+            });
+
+            currentPg = 1;
+            renderCustomers();
+        }
+
+        // â”€â”€ RENDERING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function renderCustomers() {
+            const start = (currentPg - 1) * PAGE;
+            const page = filteredCustomers.slice(start, start + PAGE);
+            const tbody = document.getElementById('customersTableBody');
+
+            if (!page.length) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#94a3b8">No customers found.</td></tr>';
+                renderPagination('customersPagination', filteredCustomers.length, currentPg, p => { currentPg = p; renderCustomers(); });
+                return;
+            }
+
+            tbody.innerHTML = page.map(c => {
+                const fullName = (c.first_name || '') + ' ' + (c.last_name || '');
+                const displayRole = c.role || 'customer';
+                const roleBadgeClass = displayRole === 'admin' ? 'badge-admin' : 'badge-customer';
+
+                // Toggle admin actions based on current role
+                let roleToggleBtn = '';
+                if (displayRole !== 'admin') {
+                    roleToggleBtn = `<button class="btn-icon btn-edit" onclick="updateCustomerRole(${c.id}, 'admin')" title="Make Admin"><i class="fa-solid fa-shield-halved"></i></button>`;
+                } else {
+                    roleToggleBtn = `<button class="btn-icon btn-outline" onclick="updateCustomerRole(${c.id}, 'customer')" title="Remove Admin Privilege"><i class="fa-solid fa-user-shield"></i></button>`;
+                }
+
+                const blockBtnColor = c.is_blocked ? 'var(--success)' : 'var(--warning)';
+                const blockBtnIcon = c.is_blocked ? 'fa-unlock' : 'fa-ban';
+                const blockBtnTitle = c.is_blocked ? 'Unblock Customer' : 'Block Customer';
+
+                return `<tr>
+                    <td>
+                        <div class="tbl-name">${esc(fullName.trim() || 'Unknown User')}</div>
+                        <div class="tbl-sub">ID: #${c.id || 'â€”'}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: .83rem; color: var(--text);">${esc(c.email || 'â€”')}</div>
+                        <div class="tbl-sub">${esc(c.phone || 'â€”')}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: .83rem; color: var(--text);">${fmtDate(c.created_at)}</div>
+                    </td>
+                    <td>
+                        <span class="badge ${roleBadgeClass}">${esc(displayRole)}</span>
+                        ${c.is_blocked ? '<span class="badge" style="background:#fef2f2;color:#dc2626">Blocked</span>' : ''}
+                    </td>
+                    <td>
+                        <div class="act-cell">
+                            ${roleToggleBtn}
+                            <button class="btn-icon btn-outline" style="color:${blockBtnColor}" onclick="toggleBlockCustomer(${c.id}, ${c.is_blocked ? 'false' : 'true'})" title="${blockBtnTitle}"><i class="fa-solid ${blockBtnIcon}"></i></button>
+                            <button class="btn-icon btn-del" onclick="deleteCustomer(${c.id})" title="Delete Customer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+
+            renderPagination('customersPagination', filteredCustomers.length, currentPg, p => { currentPg = p; renderCustomers(); });
+        }
+
+        // â”€â”€ ACTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        async function updateCustomerRole(id, newRole) {
+            if (!confirm(`Set this user as ${newRole}?`)) return;
+            try {
+                await HeelsUpAuth.api(`/api/admin/customers/${id}/role`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ role: newRole })
+                });
+                showToast(`Role updated to ${newRole}!`);
+                allCustomers = []; // force reload
+                loadCustomers(); // refresh
+            } catch (e) {
+                showToast(e.message || 'Failed', 'error');
+            }
+        }
+
+        async function deleteCustomer(id) {
+            if (!confirm('Warning: Are you sure you want to permanently delete this customer account? This action cannot be undone.')) return;
+
+            try {
+                await HeelsUpAuth.api(`/api/admin/customers/${id}`, { method: 'DELETE' });
+                showToast('Customer deleted successfully!');
+
+                // Update local array & re-render
+                allCustomers = allCustomers.filter(c => c.id !== id);
+                filterCustomers();
+            } catch (e) {
+                showToast(e.message || 'Error deleting customer', 'error');
+            }
+        }
+
+        async function toggleBlockCustomer(id, block) {
+            const actionStr = block ? 'block' : 'unblock';
+            if (!confirm(`Are you sure you want to ${actionStr} this customer?`)) return;
+            try {
+                await HeelsUpAuth.api(`/api/admin/customers/${id}/block`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ blocked: block })
+                });
+                showToast(`Customer ${actionStr}ed successfully!`);
+                allCustomers = [];
+                loadCustomers();
+            } catch(e) {
+                showToast(e.message || `Error ${actionStr}ing customer`, 'error');
+            }
+        }
+
+        // â”€â”€ PAGINATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function renderPagination(elId, total, page, onPageCallback) {
+            const pages = Math.ceil(total / PAGE);
+            const el = document.getElementById(elId);
+
+            if (pages <= 1) {
+                el.innerHTML = '';
+                return;
+            }
+
+            el.innerHTML = `
+                <button class="pg-btn" onclick="(${onPageCallback.toString()})(${page - 1})" ${page <= 1 ? 'disabled' : ''}>â€¹ Prev</button>
+                <span class="pg-info">Page <strong>${page}</strong> of <strong>${pages}</strong></span>
+                <button class="pg-btn" onclick="(${onPageCallback.toString()})(${page + 1})" ${page >= pages ? 'disabled' : ''}>Next â€º</button>
+            `;
+        }
+
+        // â”€â”€ OFFER MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function openOfferModal() {
+            document.getElementById('offerTitle').value = '';
+            document.getElementById('offerMessage').value = '';
+            document.getElementById('offerCode').value = '';
+            document.getElementById('offerModal').style.display = 'block';
+        }
+
+        function closeOfferModal() {
+            document.getElementById('offerModal').style.display = 'none';
+        }
+
+        async function submitOffer() {
+            const title = document.getElementById('offerTitle').value.trim();
+            const message = document.getElementById('offerMessage').value.trim();
+            const code = document.getElementById('offerCode').value.trim();
+
+            if (!title || !message) {
+                showToast('Please enter an offer title and message', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('submitOfferBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/admin/send-offer', {
+                    method: 'POST',
+                    headers: HeelsUpAuth.headers(),
+                    body: JSON.stringify({ title, message, discount_code: code || null })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    showToast(data.message || 'Offer broadcast initiated!', 'success');
+                    closeOfferModal();
+                } else {
+                    throw new Error(data.error || 'Failed to send offer');
+                }
+            } catch (err) {
+                showToast(err.message, 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // â”€â”€ INITIALIZATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        document.addEventListener('DOMContentLoaded', loadCustomers);
+    </script>
+</body>
+
+</html>

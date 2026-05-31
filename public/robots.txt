@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# Block admin pages from indexing
+Disallow: /admin.html
+Disallow: /admin-*.html
+Disallow: /api/
+
+# Block cart and checkout
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /orders.html
+Disallow: /profile.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /forgot-password.html
+Disallow: /reset-password.html
+
+# Allow important pages
+Allow: /index.html
+Allow: /shop.html
+Allow: /category.html
+Allow: /product.html
+Allow: /search.html
+Allow: /blog.html
+Allow: /blog-post.html
+Allow: /about.html
+Allow: /contact.html
+Allow: /faq.html
+Allow: /policy/
+
+Sitemap: https://heelsup.in/sitemap.xml

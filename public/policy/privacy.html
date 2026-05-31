@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy | HeelsUp – Ladies Footwear & Bags</title>
+    <meta name="description"
+        content="HeelsUp privacy policy. Learn how we collect, use and protect your personal data. Your privacy is our priority." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://heelsup.in/policy/privacy.html" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+
+    <style>
+        .policy-hero {
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a0a1a 50%, #0d0d0d 100%);
+            padding: 80px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .policy-hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 110, 0.07);
+            pointer-events: none;
+        }
+
+        .policy-hero-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .policy-hero-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(201, 169, 110, 0.12);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            margin: 0 auto 20px;
+        }
+
+        .policy-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .policy-hero h1 em {
+            color: var(--color-primary-light);
+            font-style: italic;
+        }
+
+        .policy-hero-sub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .policy-last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-primary-light);
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            border-radius: 100px;
+            padding: 6px 14px;
+            margin-top: 20px;
+        }
+
+        .policy-body {
+            padding: 80px 0;
+            background: var(--bg-page);
+        }
+
+        .policy-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .policy-toc {
+            position: sticky;
+            top: calc(var(--navbar-height) + 24px);
+            background: var(--color-white);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .policy-toc-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .policy-toc-list {
+            list-style: none;
+        }
+
+        .policy-toc-list li {
+            margin-bottom: 4px;
+        }
+
+        .policy-toc-list a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 7px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .policy-toc-list a:hover,
+        .policy-toc-list a.active {
+            color: var(--color-primary);
+            background: var(--color-primary-glow);
+        }
+
+        .policy-toc-list a i {
+            font-size: 9px;
+            color: var(--color-primary);
+            opacity: 0.6;
+        }
+
+        .policy-content h2 {
+            font-family: var(--font-heading);
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 48px 0 16px;
+            padding-top: 12px;
+        }
+
+        .policy-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .policy-content h2 .section-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--color-primary-glow);
+            border: 1px solid var(--color-primary-light);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            margin-right: 10px;
+            font-family: var(--font-body);
+        }
+
+        .policy-content p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .policy-content ul {
+            padding-left: 0;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        .policy-content ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .policy-content ul li::before {
+            content: '•';
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: -2px;
+            flex-shrink: 0;
+        }
+
+        .data-card {
+            background: var(--color-white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            box-shadow: var(--shadow-xs);
+            transition: box-shadow 0.25s ease;
+        }
+
+        .data-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .data-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--color-primary-glow);
+            border: 1px solid var(--color-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .data-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .data-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .right-item {
+            background: var(--color-light);
+            border-radius: 12px;
+            padding: 18px 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .right-item-icon {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .right-item h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .right-item p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fefcf5, #faf6ec);
+            border: 1px solid var(--color-primary-light);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .contact-card {
+            background: var(--color-dark);
+            border-radius: 20px;
+            padding: 36px;
+            margin-top: 48px;
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .contact-card-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 500;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+            text-decoration: none
+        }
+
+        @media(max-width:1024px) {
+            .policy-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-toc {
+                position: static;
+            }
+
+            .rights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:768px) {
+            .policy-body {
+                padding: 48px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar" id="topbar">
+        <div class="topbar-marquee">
+            <span class="topbar-text">🎉 <strong>NEW ARRIVALS</strong> — Summer Collection is Live!</span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-text">🚚 FREE Shipping above <strong>₹799</strong></span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-text">🏷️ Use code <strong>HEELS10</strong> for 10% off</span>
+            <span class="topbar-dot"></span>
+            <span class="topbar-text">🎉 <strong>NEW ARRIVALS</strong> — Summer Collection is Live!</span>
+        </div>
+        <button class="topbar-close" id="topbar-close">✕</button>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="../index.html" class="navbar-logo">
+                    <span class="navbar-logo-text">Heels<span>Up</span></span>
+                </a>
+                <ul class="navbar-menu">
+                    <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item">
+                        <a href="../shop.html" class="nav-link">Shop <i class="fa-solid fa-chevron-down"
+                                style="font-size:9px;opacity:0.6"></i></a>
+                        <div class="nav-dropdown">
+                            <a href="../category.html?cat=heels"><span class="nav-dropdown-icon">👠</span> Heels</a>
+                            <a href="../category.html?cat=flats"><span class="nav-dropdown-icon">🥿</span> Flats</a>
+                            <a href="../category.html?cat=sandals"><span class="nav-dropdown-icon">👡</span> Sandals</a>
+                            <a href="../category.html?cat=bags"><span class="nav-dropdown-icon">👜</span> Bags</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="../category.html?cat=new" class="nav-link">New Arrivals</a></li>
+                    <li class="nav-item"><a href="../category.html?cat=sale" class="nav-link"
+                            style="color:var(--color-accent)"><i class="fa-solid fa-fire" style="font-size:0.8rem"></i>
+                            Sale</a></li>
+                    <li class="nav-item"><a href="../about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="../contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="navbar-actions">
+                    <a href="../wishlist.html" class="nav-icon-btn"><i class="fa-regular fa-heart"></i></a>
+                    <a href="../profile.html" class="nav-icon-btn"><i class="fa-regular fa-user"></i></a>
+                    <button class="nav-icon-btn" id="cart-open-btn"><i class="fa-solid fa-bag-shopping"></i><span
+                            class="nav-badge" id="cart-count">0</span></button>
+                    <button class="navbar-hamburger" id="hamburger-btn"><span class="hamburger-line"></span><span
+                            class="hamburger-line"></span><span class="hamburger-line"></span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-backdrop" id="mobile-backdrop"></div>
+        <div class="mobile-menu-panel">
+            <div class="mobile-menu-header">
+                <span class="navbar-logo-text">Heels<span style="color:var(--color-primary)">Up</span></span>
+                <button id="mobile-menu-close"
+                    style="font-size:1.3rem;color:var(--text-muted);cursor:pointer;background:none;border:none">✕</button>
+            </div>
+            <div class="mobile-menu-body">
+                <a href="../index.html">🏠 Home</a>
+                <a href="../shop.html">🛍️ Shop All</a>
+                <a href="../category.html?cat=heels">👠 Heels</a>
+                <a href="../category.html?cat=sandals">👡 Sandals</a>
+                <a href="../category.html?cat=bags">👜 Bags</a>
+                <a href="../category.html?cat=sale" style="color:var(--color-accent)">🔥 Sale</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="policy-hero">
+        <div class="container">
+            <div class="policy-hero-inner">
+                <div class="policy-hero-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h1>Privacy <em>Policy</em></h1>
+                <p class="policy-hero-sub">Aapka data aapka hai. Hum sirf itna collect karte hain jitna aapki shopping
+                    experience ke liye zaruri ho.</p>
+                <div class="policy-last-updated"><i class="fa-regular fa-calendar"></i> Last Updated: January 2025</div>
+            </div>
+        </div>
+    </section>
+
+    <div style="background:var(--color-white);border-bottom:1px solid var(--border-color)">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb-item"><a href="../index.html">Home</a></div>
+                <span class="breadcrumb-sep"><i class="fa-solid fa-chevron-right" style="font-size:8px"></i></span>
+                <div class="breadcrumb-item active">Privacy Policy</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POLICY BODY -->
+    <section class="policy-body">
+        <div class="container">
+            <div class="policy-layout">
+
+                <aside class="policy-toc">
+                    <div class="policy-toc-title">Table of Contents</div>
+                    <ul class="policy-toc-list">
+                        <li><a href="#intro"><i class="fa-solid fa-chevron-right"></i> Introduction</a></li>
+                        <li><a href="#data-collect"><i class="fa-solid fa-chevron-right"></i> Data We Collect</a></li>
+                        <li><a href="#how-use"><i class="fa-solid fa-chevron-right"></i> How We Use Data</a></li>
+                        <li><a href="#sharing"><i class="fa-solid fa-chevron-right"></i> Data Sharing</a></li>
+                        <li><a href="#cookies"><i class="fa-solid fa-chevron-right"></i> Cookies</a></li>
+                        <li><a href="#security"><i class="fa-solid fa-chevron-right"></i> Data Security</a></li>
+                        <li><a href="#rights"><i class="fa-solid fa-chevron-right"></i> Your Rights</a></li>
+                        <li><a href="#children"><i class="fa-solid fa-chevron-right"></i> Children's Privacy</a></li>
+                        <li><a href="#changes"><i class="fa-solid fa-chevron-right"></i> Policy Changes</a></li>
+                        <li><a href="#contact"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+                    </ul>
+                </aside>
+
+                <div class="policy-content">
+
+                    <div id="intro">
+                        <div class="highlight-box">
+                            <p><strong style="color:var(--color-primary-dark)">📋 Summary:</strong> HeelsUp ("hum",
+                                "humari company") aapki personal information ki privacy ko seriously leta hai. Yeh
+                                policy explain karti hai ki hum kya data collect karte hain, kyun collect karte hain,
+                                aur aap apna data kaise control kar sakte hain. Agar koi sawaal ho — hume directly
+                                WhatsApp karo.</p>
+                        </div>
+
+                        <h2><span class="section-num">1</span> Introduction</h2>
+                        <p>Yeh Privacy Policy HeelsUp (heelsup.in) dwara collect ki jaane wali information ko describe
+                            karti hai jab aap hamari website visit karte hain ya hamse koi product purchase karte hain.
+                            Is policy ko carefully read karo taaki samjho ki hum aapki information kaise handle karte
+                            hain.</p>
+                        <p>Hamari website use karke aap is Privacy Policy ki terms se agree karte hain. Agar aap agree
+                            nahi karte, please hamari website use nahi karein.</p>
+                    </div>
+
+                    <div id="data-collect">
+                        <h2><span class="section-num">2</span> Data We Collect</h2>
+                        <p>Hum different types ki information collect karte hain:</p>
+
+                        <div class="data-card">
+                            <div class="data-card-icon"><i class="fa-solid fa-user"></i></div>
+                            <div>
+                                <h4>Personal Information</h4>
+                                <p>Naam, email address, phone number, delivery address — jo aap account create karte
+                                    waqt ya order place karte waqt provide karte hain.</p>
+                            </div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-card-icon"><i class="fa-solid fa-credit-card"></i></div>
+                            <div>
+                                <h4>Payment Information</h4>
+                                <p>Payment details encrypted form mein process hoti hain. Hum aapke full card numbers
+                                    store nahi karte — yeh secure payment gateways (Razorpay, Paytm) handle karte hain.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <div>
+                                <h4>Usage Data</h4>
+                                <p>Browser type, IP address, pages visited, time spent — anonymous analytics data jo
+                                    website improve karne ke liye use hoti hai.</p>
+                            </div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-card-icon"><i class="fa-solid fa-comments"></i></div>
+                            <div>
+                                <h4>Communication Data</h4>
+                                <p>WhatsApp messages, emails, aur customer support conversations — better service
+                                    provide karne ke liye.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="how-use">
+                        <h2><span class="section-num">3</span> How We Use Your Data</h2>
+                        <p>Aapka data inke liye use hota hai:</p>
+                        <ul>
+                            <li>Orders process karna aur delivery coordinate karna</li>
+                            <li>Account manage karna aur password reset support dena</li>
+                            <li>Order updates, shipping notifications aur delivery alerts bhejana</li>
+                            <li>Customer service aur return/exchange queries handle karna</li>
+                            <li>New arrivals, sale offers aur discount codes share karna (opt-in)</li>
+                            <li>Website experience personalize karna</li>
+                            <li>Fraud prevention aur security maintain karna</li>
+                            <li>Legal obligations fulfill karna (GST, financial records)</li>
+                        </ul>
+                    </div>
+
+                    <div id="sharing">
+                        <h2><span class="section-num">4</span> Data Sharing</h2>
+                        <p>Hum aapka data third parties ko <strong>sell nahi karte</strong>. Data sirf in circumstances
+                            mein share hota hai:</p>
+                        <ul>
+                            <li><strong>Delivery Partners:</strong> Delhivery, BlueDart, DTDC — delivery complete karne
+                                ke liye naam aur address share hota hai</li>
+                            <li><strong>Payment Gateways:</strong> Razorpay, Paytm — secure payment processing ke liye
+                            </li>
+                            <li><strong>Analytics Services:</strong> Google Analytics — anonymous website traffic data
+                            </li>
+                            <li><strong>Legal Requirements:</strong> Court orders ya government requests par (jo
+                                applicable Indian law ke under ho)</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <p><strong>🔒 Hum promise karte hain:</strong> Aapka personal data kabhi bhi advertisers,
+                                data brokers, ya unrelated third parties ko share nahi kiya jaayega. Aapki information
+                                sirf aapki order complete karne ke liye use hoti hai.</p>
+                        </div>
+                    </div>
+
+                    <div id="cookies">
+                        <h2><span class="section-num">5</span> Cookies</h2>
+                        <p>Hamari website cookies use karti hai — small files jo aapke browser mein save hoti hain. Yeh
+                            cart, wishlist aur login session maintain karne ke liye important hain.</p>
+                        <ul>
+                            <li><strong>Essential Cookies:</strong> Cart aur session data — website properly kaam nahi
+                                karegi bina inke</li>
+                            <li><strong>Analytics Cookies:</strong> Google Analytics — website traffic samajhne ke liye
+                                (anonymous)</li>
+                            <li><strong>Marketing Cookies:</strong> Facebook Pixel — relevant ads dikhane ke liye
+                                (opt-out available)</li>
+                        </ul>
+                        <p>Browser settings se aap cookies disable kar sakte hain, lekin isse kuch website features kaam
+                            karna band ho sakte hain.</p>
+                    </div>
+
+                    <div id="security">
+                        <h2><span class="section-num">6</span> Data Security</h2>
+                        <p>Aapka data secure rakhne ke liye hum yeh measures use karte hain:</p>
+                        <ul>
+                            <li>SSL/TLS encryption — website aur servers ke beech data transfer ke liye</li>
+                            <li>Secure payment processing through PCI-DSS compliant gateways</li>
+                            <li>Regular security audits aur vulnerability checks</li>
+                            <li>Limited staff access — sirf zaruri employees aapka data dekh sakte hain</li>
+                            <li>Data breach notification — agar koi breach ho to hum immediately inform karenge</li>
+                        </ul>
+                        <p style="font-size:13px;color:var(--text-muted)">Note: Internet par 100% security guarantee
+                            nahi di ja sakti. Hum best practices follow karte hain lekin data transmission inherently
+                            risky hai.</p>
+                    </div>
+
+                    <div id="rights">
+                        <h2><span class="section-num">7</span> Your Rights</h2>
+                        <p>Indian data protection laws ke under, aapke yeh rights hain:</p>
+                        <div class="rights-grid">
+                            <div class="right-item">
+                                <div class="right-item-icon">👁️</div>
+                                <h4>Access</h4>
+                                <p>Hum se request kar sakte hain ki humne aapke baare mein kya data collect kiya hai.
+                                </p>
+                            </div>
+                            <div class="right-item">
+                                <div class="right-item-icon">✏️</div>
+                                <h4>Correction</h4>
+                                <p>Galat ya incomplete information correct/update kara sakte hain.</p>
+                            </div>
+                            <div class="right-item">
+                                <div class="right-item-icon">🗑️</div>
+                                <h4>Deletion</h4>
+                                <p>Account aur data delete karne ki request kar sakte hain (legal obligations ke subject
+                                    to).</p>
+                            </div>
+                            <div class="right-item">
+                                <div class="right-item-icon">📵</div>
+                                <h4>Opt-Out</h4>
+                                <p>Marketing emails aur notifications se unsubscribe kar sakte hain anytime.</p>
+                            </div>
+                            <div class="right-item">
+                                <div class="right-item-icon">📦</div>
+                                <h4>Portability</h4>
+                                <p>Apna data machine-readable format mein export karne ki request kar sakte hain.</p>
+                            </div>
+                            <div class="right-item">
+                                <div class="right-item-icon">🚫</div>
+                                <h4>Object</h4>
+                                <p>Kisi specific purpose ke liye data processing object kar sakte hain.</p>
+                            </div>
+                        </div>
+                        <p>In rights exercise karne ke liye <a href="mailto:hello@heelsup.in"
+                                style="color:var(--color-primary);font-weight:600">hello@heelsup.in</a> par email karo
+                            ya WhatsApp karo. Hum 30 days mein respond karenge.</p>
+                    </div>
+
+                    <div id="children">
+                        <h2><span class="section-num">8</span> Children's Privacy</h2>
+                        <p>HeelsUp 13 years se kam umra ke children ka data knowingly collect nahi karta. Hamari
+                            services adults aur teenagers (13+) ke liye designed hain.</p>
+                        <p>Agar aap parent ya guardian hain aur believe karte hain ki aapke child ka data collect hua
+                            hai — please immediately <a href="mailto:hello@heelsup.in"
+                                style="color:var(--color-primary);font-weight:600">hello@heelsup.in</a> par contact
+                            karo. Hum promptly delete karenge.</p>
+                    </div>
+
+                    <div id="changes">
+                        <h2><span class="section-num">9</span> Policy Changes</h2>
+                        <p>Hum is Privacy Policy ko update kar sakte hain jab zarurat ho. Major changes ke liye:</p>
+                        <ul>
+                            <li>Website par notice post kiya jaayega</li>
+                            <li>Registered users ko email notification bheja jaayega</li>
+                            <li>Effective date update ki jaayegi (page ke top par)</li>
+                        </ul>
+                        <p>Changes ke baad bhi website use karna automatically updated policy accept maana jaata hai.
+                        </p>
+                    </div>
+
+                    <div id="contact">
+                        <div class="contact-card">
+                            <h3>Privacy <em style="color:var(--color-primary-light)">Concerns?</em></h3>
+                            <p>Koi bhi privacy related sawaal ya complaint hai? Hum seriously lete hain aur 48 hours
+                                mein respond karte hain.</p>
+                            <div class="contact-card-btns">
+                                <a href="mailto:hello@heelsup.in" class="btn btn-primary"><i
+                                        class="fa-solid fa-envelope"></i> Email Us</a>
+                                <a href="https://wa.me/919xxxxxxxxx" class="btn btn-white" target="_blank"><i
+                                        class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                            </div>
+                            <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3)">Data Protection
+                                Officer · HeelsUp, Jodhpur, Rajasthan · hello@heelsup.in</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top grid grid-4">
+                <div>
+                    <div style="font-family:var(--font-display);font-size:1.6rem;color:#fff;margin-bottom:12px">
+                        Heels<span style="color:var(--color-primary)">Up</span></div>
+                    <p class="footer-tagline">Jodhpur se India tak — stylish ladies footwear & bags ka sabse trusted
+                        naam.</p>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/heelsup.in" class="footer-social-link"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://facebook.com/heelsup.in" class="footer-social-link"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://wa.me/919xxxxxxxxx" class="footer-social-link"><i
+                                class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="footer-col-title">Quick Links</div>
+                    <ul class="footer-links">
+                        <li><a href="../shop.html" class="footer-link">Shop All</a></li>
+                        <li><a href="../category.html?cat=new" class="footer-link">New Arrivals</a></li>
+                        <li><a href="../about.html" class="footer-link">About Us</a></li>
+                        <li><a href="../contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Policies</div>
+                    <ul class="footer-links">
+                        <li><a href="returns.html" class="footer-link">Return Policy</a></li>
+                        <li><a href="privacy.html" class="footer-link" style="color:var(--color-primary-light)">Privacy
+                                Policy</a></li>
+                        <li><a href="terms.html" class="footer-link">Terms & Conditions</a></li>
+                        <li><a href="../faq.html" class="footer-link">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Contact</div>
+                    <a href="https://wa.me/919xxxxxxxxx" class="footer-link"><i class="fa-brands fa-whatsapp"
+                            style="color:var(--color-primary)"></i> +91 9XXXXXXXXX</a>
+                    <a href="mailto:hello@heelsup.in" class="footer-link" style="margin-top:8px"><i
+                            class="fa-solid fa-envelope" style="color:var(--color-primary)"></i> hello@heelsup.in</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 HeelsUp. All rights reserved. Made with ❤️ in Jodhpur.</p>
+                <div class="footer-bottom-links">
+                    <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="returns.html">Returns</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+    <a href="https://wa.me/919xxxxxxxxx" class="whatsapp-float"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <script>
+        window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+        document.getElementById('topbar-close')?.addEventListener('click', () => { const tb = document.getElementById('topbar'); tb.style.height = '0'; tb.style.overflow = 'hidden'; tb.style.padding = '0'; });
+        const hamburger = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        hamburger?.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+        document.getElementById('mobile-backdrop')?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
+        document.getElementById('mobile-menu-close')?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); });
+        const sections = document.querySelectorAll('[id]');
+        const tocLinks = document.querySelectorAll('.policy-toc-list a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+            tocLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+        });
+        const cart = JSON.parse(localStorage.getItem('heelsup_cart') || '[]');
+        document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
+    </script>
+</body>
+
+</html>

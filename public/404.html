@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found – HeelsUp</title>
+  <!--
+  ============================================================
+  PAGE: 404.html
+  PURPOSE: Jab koi galat URL pe aaye toh yeh "Page Not Found" page dikhega.
+           Har e-commerce site ke liye yeh MANDATORY hai — bina iske broken links
+           customers ko blank/ugly error dikhati hai.
+
+  YE PAGE KYA KAREGA:
+  - Friendly, on-brand "404" message dikhao (harsh nahi, funny/warm tone)
+  - Helpful links: Homepage / Shop / Contact Us
+  - Search bar bhi de sakte ho — "Ye try karo"
+  - Suggested popular categories dikhao
+  - Server-side bhi configure karna hoga (Cloudflare Workers mein)
+
+  IMPORTANT — SERVER CONFIGURATION:
+  Cloudflare Workers ke wrangler.toml mein ya backend/src/index.js mein
+  404 responses ke liye is page ka path set karna hoga:
+  e.g.  [site] → not_found_handling = "single-page-application"
+  ya manual: if (!response.ok) return fetch('/404.html')
+
+  URL PATTERN:
+  /404.html (directly access bhi ho sakta hai, ya server 404 pe redirect karega)
+
+  NOTE:
+  - <meta name="robots" content="noindex"> — Google ise index na kare
+  ============================================================
+  -->
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Page-specific styles yahan likhna */
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+
+  <main>
+    <!-- TODO: Ye cheezein banani hain:
+      1. Big stylish "404" text (var(--fd), gold color)
+      2. Friendly message: "Yeh page toh kho gaya! 👠"
+         Subtext: "Lagta hai yahan kuch nahi hai — chalo kuch aur dhundhte hain!"
+      3. Search bar — "Kya dhundh rahe the?"
+      4. Quick links:
+         - 🏠 Homepage
+         - 🛍️ Shop All
+         - 📞 Contact Us
+      5. Popular categories row (heels, bags, sandals, sale)
+      6. Optionally — a cute illustrated shoe/404 graphic (SVG)
+    -->
+    <p style="text-align:center; padding: 4rem; font-family: var(--fb); color: var(--text-3);">
+      404.html — Abhi khaali hai, code likhna baaki hai.
+    </p>
+  </main>
+
+  <!-- FOOTER -->
+
+
+  <script src="/js/wishlist.js"></script>
+</body></html>

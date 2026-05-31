@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Settings — HeelsUp Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ═══════════════════════════════════════════════════
+     DESIGN TOKENS — HeelsUp Brand Palette
+  ═══════════════════════════════════════════════════ */
+    :root {
+      /* Primary */
+      --primary: #F29F67;
+      --primary-lt: #fcd5b5;
+      --primary-dk: #c97a3e;
+      --primary-glow: rgba(242, 159, 103, .18);
+      --navy: #1E1E2C;
+      --navy-lt: #2a2a3d;
+
+      /* Supporting */
+      --blue: #3B8FF3;
+      --teal: #34B1AA;
+      --yellow: #E0B50F;
+      --green: #22c55e;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+
+      /* Semantic aliases */
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --warning: #E0B50F;
+      --warning-light: #fefce8;
+      --danger: #f43f5e;
+      --danger-light: #fff1f2;
+      --info: #3B8FF3;
+      --info-light: #eff6ff;
+
+      /* Layout */
+      --sidebar-bg: #1E1E2C;
+      --sidebar-w: 256px;
+      --topbar-h: 60px;
+      --bg: #f2f4f8;
+      --surface: #ffffff;
+      --surface-2: #f7f8fc;
+      --border: #e4e8f0;
+      --text: #1E1E2C;
+      --text-2: #3a3a50;
+      --muted: #64748b;
+      --muted-lt: #94a3b8;
+
+      /* Typography — Open Sans first, system fallbacks */
+      --font: 'Open Sans', Arial, Helvetica, sans-serif;
+      --font-mono: 'Courier New', Courier, monospace;
+
+      /* Radii */
+      --r-sm: 6px;
+      --r-md: 10px;
+      --r-lg: 14px;
+      --r-xl: 20px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, .07), 0 1px 2px rgba(0, 0, 0, .05);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, .08), 0 2px 6px rgba(0, 0, 0, .05);
+      --shadow-lg: 0 12px 36px rgba(0, 0, 0, .12), 0 4px 12px rgba(0, 0, 0, .06);
+      --shadow-brand: 0 8px 24px rgba(242, 159, 103, .30);
+
+      /* Motion */
+      --ease: cubic-bezier(.4, 0, .2, 1);
+      --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+      --transition: 200ms var(--ease);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font);
+      font-size: inherit
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: var(--font)
+    }
+
+    /* ═══ LAYOUT ═══ */
+    .wrap {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100vh
+    }
+
+    @media(max-width:900px) {
+      .wrap {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ═══ SIDEBAR ═══ */
+    .sidebar {
+      background: var(--sidebar-bg);
+      color: #94a3b8;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-right: 1px solid rgba(255, 255, 255, .04)
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 3px
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, .08);
+      border-radius: 2px
+    }
+
+    .sidebar-brand {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 60px
+    }
+
+    /* Logo image container */
+    .sb-logo-wrap {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dk));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(242, 159, 103, .28)
+    }
+
+    .sb-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain
+    }
+
+    .sb-logo-wrap .sb-logo-fallback {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.02em
+    }
+
+    .sb-brand-text {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: .01em
+    }
+
+    .sb-brand-sub {
+      font-size: .6rem;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-top: 1px
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 8px 0
+    }
+
+    .nav-label {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #334155;
+      padding: 14px 16px 5px
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 16px;
+      color: #64748b;
+      font-size: .8rem;
+      font-weight: 500;
+      border-left: 2.5px solid transparent;
+      transition: var(--transition);
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, .04);
+      color: #cbd5e1
+    }
+
+    .nav-item.active {
+      background: rgba(242, 159, 103, .09);
+      color: var(--primary);
+      border-left-color: var(--primary)
+    }
+
+    .nav-item i {
+      width: 15px;
+      text-align: center;
+      font-size: .78rem;
+      flex-shrink: 0
+    }
+
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, .05)
+    }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 8px
+    }
+
+    .s-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dk));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: .75rem
+    }
+
+    .s-name {
+      font-size: .78rem;
+      font-weight: 700;
+      color: #e2e8f0
+    }
+
+    .s-role {
+      font-size: .62rem;
+      color: #475569
+    }
+
+    .btn-logout {
+      width: 100%;
+      padding: 7px;
+      border-radius: var(--r-md);
+      background: rgba(255, 255, 255, .04);
+      color: #64748b;
+      font-size: .75rem;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      justify-content: center;
+      transition: var(--transition)
+    }
+
+    .btn-logout:hover {
+      background: rgba(244, 63, 94, .12);
+      color: #f87171
+    }
+
+    @media(max-width:900px) {
+      .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+        transition: left .3s var(--ease);
+        width: var(--sidebar-w)
+      }
+
+      .sidebar.open {
+        left: 0
+      }
+    }
+
+    /* ═══ TOPBAR ═══ */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: var(--topbar-h);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .topbar-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .topbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn-menu {
+      padding: 7px;
+      border-radius: var(--r-sm);
+      color: var(--muted);
+      display: none;
+      align-items: center;
+      justify-content: center
+    }
+
+    .btn-menu:hover {
+      background: var(--surface-2)
+    }
+
+    @media(max-width:900px) {
+      .btn-menu {
+        display: flex
+      }
+    }
+
+    /* ═══ MAIN ═══ */
+    .main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden
+    }
+
+    .content {
+      padding: 28px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 1360px;
+      margin: 0 auto;
+      width: 100%
+    }
+
+    @media(max-width:768px) {
+      .content {
+        padding: 18px
+      }
+    }
+
+    /* ═══ PAGE HEADER ═══ */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 4px
+    }
+
+    .page-header h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -.02em
+    }
+
+    .page-header p {
+      font-size: .83rem;
+      color: var(--muted)
+    }
+
+    /* ═══ SETTINGS GRID ═══ */
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 24px;
+      align-items: flex-start
+    }
+
+    @media(max-width:900px) {
+      .settings-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ═══ SETTINGS NAV ═══ */
+    .settings-nav {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: sticky;
+      top: 72px
+    }
+
+    .settings-nav-item {
+      padding: 10px 14px;
+      border-radius: var(--r-md);
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition)
+    }
+
+    .settings-nav-item i {
+      font-size: .85rem;
+      width: 18px;
+      text-align: center
+    }
+
+    .settings-nav-item:hover {
+      background: var(--surface-2);
+      color: var(--text)
+    }
+
+    .settings-nav-item.active {
+      background: rgba(242, 159, 103, .1);
+      color: var(--primary-dk)
+    }
+
+    .settings-nav-item.active i {
+      color: var(--primary)
+    }
+
+    .settings-nav-sep {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 0
+    }
+
+    /* ═══ PANELS ═══ */
+    .panel {
+      display: none
+    }
+
+    .panel.active {
+      display: block;
+      animation: fadeUp .25s var(--ease)
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* ═══ CARD ═══ */
+    .card {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 18px
+    }
+
+    .card-header {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .card-header h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 4px
+    }
+
+    .card-header h3 i {
+      color: var(--primary)
+    }
+
+    .card-header p {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    .card-body {
+      padding: 22px
+    }
+
+    /* ═══ FORM ═══ */
+    .form-group {
+      margin-bottom: 18px
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px
+    }
+
+    @media(max-width:600px) {
+      .form-row {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .form-label {
+      display: block;
+      font-size: .67rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .07em
+    }
+
+    .form-input,
+    .form-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-md);
+      font-size: .85rem;
+      color: var(--text);
+      background: var(--surface-2);
+      transition: var(--transition)
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      border-color: var(--primary);
+      outline: none;
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(242, 159, 103, .12)
+    }
+
+    .form-hint {
+      font-size: .72rem;
+      color: var(--muted-lt);
+      margin-top: 5px;
+      line-height: 1.5
+    }
+
+    .form-hint code {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: .7rem;
+      font-family: var(--font-mono)
+    }
+
+    .input-group {
+      display: flex;
+      gap: 6px
+    }
+
+    .input-addon {
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      background: var(--surface-2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-md);
+      font-size: .88rem;
+      color: var(--muted);
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0
+    }
+
+    /* ═══ TOGGLE ═══ */
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      gap: 16px
+    }
+
+    .toggle-row+.toggle-row {
+      border-top: 1px solid var(--border)
+    }
+
+    .toggle-info h4 {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px
+    }
+
+    .toggle-info p {
+      font-size: .77rem;
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0
+    }
+
+    .toggle-track {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #cbd5e1;
+      transition: .35s;
+      border-radius: 34px
+    }
+
+    .toggle-track:before {
+      position: absolute;
+      content: '';
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background: #fff;
+      transition: .35s;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .15)
+    }
+
+    input:checked+.toggle-track {
+      background: var(--primary)
+    }
+
+    input:checked+.toggle-track:before {
+      transform: translateX(20px)
+    }
+
+    /* ═══ ALERT ═══ */
+    .alert {
+      padding: 14px 16px;
+      border-radius: var(--r-md);
+      display: flex;
+      gap: 10px;
+      font-size: .8rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      align-items: flex-start;
+      border: 1px solid transparent
+    }
+
+    .alert i {
+      font-size: .95rem;
+      flex-shrink: 0;
+      margin-top: 2px
+    }
+
+    .alert-info {
+      background: var(--info-light);
+      color: #1e3a8a;
+      border-color: #bfdbfe
+    }
+
+    .alert-info i {
+      color: var(--blue)
+    }
+
+    .alert-warning {
+      background: var(--warning-light);
+      color: #713f12;
+      border-color: #fde68a
+    }
+
+    .alert-warning i {
+      color: var(--yellow)
+    }
+
+    .alert-danger {
+      background: var(--danger-light);
+      color: #9f1239;
+      border-color: #fecdd3
+    }
+
+    .alert-danger i {
+      color: var(--rose)
+    }
+
+    /* ═══ BUTTONS ═══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: var(--r-md);
+      font-size: .8rem;
+      font-weight: 700;
+      transition: var(--transition);
+      font-family: var(--font);
+      cursor: pointer;
+      border: none;
+      justify-content: center;
+      letter-spacing: .01em
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dk));
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(242, 159, 103, .3)
+    }
+
+    .btn-primary:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-brand)
+    }
+
+    .btn-primary:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      background: var(--surface)
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary)
+    }
+
+    .btn-danger {
+      background: var(--danger-light);
+      color: var(--danger);
+      border: 1.5px solid #fecdd3
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger)
+    }
+
+    .btn-teal {
+      background: rgba(52, 177, 170, .1);
+      color: var(--teal);
+      border: 1.5px solid rgba(52, 177, 170, .3)
+    }
+
+    .btn-teal:hover {
+      background: var(--teal);
+      color: #fff
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: .75rem;
+      border-radius: var(--r-sm)
+    }
+
+    /* ═══ ACTION BLOCKS (security zone) ═══ */
+    .action-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--surface-2);
+      padding: 14px 16px;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      margin-bottom: 10px
+    }
+
+    .action-block-title {
+      font-size: .83rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px
+    }
+
+    .action-block-sub {
+      font-size: .73rem;
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    /* ═══ TOAST ═══ */
+    .toast-wrap {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 7px
+    }
+
+    .toast {
+      background: #1E1E2C;
+      color: #fff;
+      padding: 11px 16px;
+      border-radius: var(--r-md);
+      font-size: .78rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+      animation: toastIn .3s var(--ease-spring);
+      min-width: 240px;
+      max-width: 340px
+    }
+
+    .toast.success {
+      border-left: 3px solid var(--green)
+    }
+
+    .toast.error {
+      border-left: 3px solid var(--rose)
+    }
+
+    .toast.warning {
+      border-left: 3px solid var(--yellow)
+    }
+
+    .toast.info {
+      border-left: 3px solid var(--blue)
+    }
+
+    .toast-close {
+      margin-left: auto;
+      opacity: .5;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 2px
+    }
+
+    .toast-close:hover {
+      opacity: 1
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    /* ═══ LOADING ═══ */
+    .loading-card {
+      background: var(--surface);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px
+    }
+
+    .loading-spinner i {
+      font-size: 1.8rem;
+      color: var(--primary);
+      animation: spin 1s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* ═══ MOB OVERLAY ═══ */
+    .mob-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 30, 44, .55);
+      backdrop-filter: blur(4px);
+      z-index: 99
+    }
+
+    /* ═══ CONFIRM MODAL ═══ */
+    .modal-bd {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .6);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px
+    }
+
+    .modal-bd.show {
+      display: flex
+    }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--r-xl);
+      padding: 28px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      animation: modalIn .3s var(--ease-spring)
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(.94) translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0)
+      }
+    }
+
+    .modal-icon {
+      font-size: 2.8rem;
+      margin-bottom: 14px
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px
+    }
+
+    .modal-message {
+      color: var(--muted);
+      font-size: .82rem;
+      margin-bottom: 22px;
+      line-height: 1.6
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #nprogress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--primary), var(--yellow));
+      z-index: 9999;
+      transition: width .3s var(--ease);
+      opacity: 1
+    }
+
+    /* ═══ SECTION DIVIDER ═══ */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Progress Bar -->
+  <div id="nprogress" style="width:0"></div>
+
+  <!-- Toast -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <!-- Mobile overlay -->
+  <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+
+  <!-- Confirm Modal -->
+  <div class="modal-bd" id="confirmModal">
+    <div class="modal">
+      <div class="modal-icon" id="confirmIcon"><i class="fa-solid fa-triangle-exclamation"
+          style="color:var(--rose)"></i></div>
+      <div class="modal-title" id="confirmTitle">Are you sure?</div>
+      <div class="modal-message" id="confirmMessage">This action cannot be undone.</div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button>
+        <button class="btn btn-danger" id="confirmActionBtn">Yes, Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="sb-logo-wrap">
+          <img src="logo.png" alt="HeelsUp Logo"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <span class="sb-logo-fallback" style="display:none">H</span>
+        </div>
+        <div>
+          <div class="sb-brand-text">HeelsUp</div>
+          <div class="sb-brand-sub">Admin Panel</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a class="nav-item" href="admin.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+
+        <div class="nav-label">Catalogue</div>
+        <a class="nav-item" href="admin-products.html"><i class="fa-solid fa-box"></i> Products</a>
+        <a class="nav-item" href="admin-categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+        <a class="nav-item" href="admin-collections.html"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+        <a class="nav-item" href="admin-inventory.html"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+        <div class="nav-label">Sales & Customers</div>
+        <a class="nav-item" href="admin-orders.html"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+        <a class="nav-item" href="admin-customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+        <a class="nav-item" href="admin-coupons.html"><i class="fa-solid fa-ticket"></i> Coupons</a>
+        <a class="nav-item" href="admin-reviews.html"><i class="fa-solid fa-star"></i> Reviews</a>
+        <a class="nav-item" href="admin-orders.html?tab=exchange"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+        <a class="nav-item" href="admin-pos.html"><i class="fa-solid fa-cash-register"></i> POS / Offline Sales</a>
+
+        <div class="nav-label">Marketing & Content</div>
+        <a class="nav-item" href="admin-banners.html"><i class="fa-solid fa-image"></i> Banners</a>
+        <a class="nav-item" href="admin-blog.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+        <a class="nav-item" href="admin-pages.html"><i class="fa-solid fa-file-lines"></i> Pages</a>
+        <a class="nav-item" href="admin-notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+        <div class="nav-label">Reports</div>
+        <a class="nav-item" href="admin-reports.html"><i class="fa-solid fa-chart-pie"></i> Reports</a>
+        <a class="nav-item" href="admin-analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+        <div class="nav-label">System</div>
+        <a class="nav-item" href="admin-shipping.html"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+        <a class="nav-item" href="admin-taxes.html"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+        <a class="nav-item" href="admin-staff.html"><i class="fa-solid fa-users-gear"></i> Staff</a>
+        <a class="nav-item active" href="admin-settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="s-avatar" id="s-avatar">A</div>
+          <div>
+            <div class="s-name" id="s-name">Admin</div>
+            <div class="s-role">Super Admin</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="doLogout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- ══ MAIN ══ -->
+    <main class="main">
+      <header class="topbar">
+        <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div class="topbar-title">System Settings</div>
+        <div class="topbar-right">
+          <button class="btn btn-outline btn-sm" onclick="loadSettings()">
+            <i class="fa-solid fa-rotate-right"></i> Sync Live Data
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="window.open('index.html','_blank')">
+            <i class="fa-solid fa-store"></i> View Store
+          </button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="page-header">
+          <div>
+            <h2>Store Settings</h2>
+            <p>Manage integrations, security, authentication, and core business preferences securely.</p>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+
+          <!-- Settings Nav -->
+          <div class="settings-nav">
+            <div class="settings-nav-item active" onclick="showPanel('razorpay',this)">
+              <i class="fa-solid fa-credit-card"></i> Razorpay
+            </div>
+            <div class="settings-nav-item" onclick="showPanel('otp',this)">
+              <i class="fa-solid fa-shield-halved"></i> OTP & Auth
+            </div>
+            <div class="settings-nav-item" onclick="showPanel('shipping',this)">
+              <i class="fa-solid fa-truck-fast"></i> Shipping Limits
+            </div>
+            <div class="settings-nav-item" onclick="showPanel('store',this)">
+              <i class="fa-solid fa-store"></i> Store Info
+            </div>
+            <div class="settings-nav-sep"></div>
+            <div class="settings-nav-item" onclick="showPanel('security',this)">
+              <i class="fa-solid fa-lock"></i> Security
+            </div>
+            <div class="settings-nav-item" onclick="showPanel('maintenance',this)">
+              <i class="fa-solid fa-wrench"></i> Maintenance
+            </div>
+          </div>
+
+          <!-- Panels Wrapper -->
+          <div id="panels-wrapper" style="display:none">
+
+            <!-- ── RAZORPAY ── -->
+            <div class="panel active" id="panel-razorpay">
+              <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i>
+                <div>Razorpay keys are stored securely. Obtain your live keys from
+                  <a href="https://dashboard.razorpay.com" target="_blank"
+                    style="color:#1d4ed8;font-weight:700;text-decoration:underline">
+                    Razorpay Dashboard → Settings → API Keys
+                  </a>.
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-key"></i> Razorpay Configuration</h3>
+                  <p>These credentials enable payment processing on the storefront checkout.</p>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label">Razorpay Key ID</label>
+                    <input type="text" class="form-input" id="razorpay_key_id"
+                      placeholder="rzp_live_xxxxxxxxxxxxxxxxxx" />
+                    <div class="form-hint">Must begin with <code>rzp_live_</code> or <code>rzp_test_</code></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Razorpay Key Secret</label>
+                    <div class="input-group">
+                      <input type="password" class="form-input" id="razorpay_key_secret"
+                        placeholder="Enter secret key…" />
+                      <button class="btn btn-outline" type="button" onclick="toggleSecret('razorpay_key_secret',this)"
+                        style="padding:0 14px;flex-shrink:0">
+                        <i class="fa-regular fa-eye"></i>
+                      </button>
+                    </div>
+                    <div class="form-hint">Private server-side key required for verifying webhook signatures.</div>
+                  </div>
+                  <div class="form-group" style="max-width:280px">
+                    <label class="form-label">Operation Mode</label>
+                    <select class="form-select" id="razorpay_mode">
+                      <option value="live">🟢 Live Mode (Real Transactions)</option>
+                      <option value="test">🟡 Test Mode (Simulated Gateway)</option>
+                    </select>
+                  </div>
+                  <div id="rz-error" class="alert alert-danger" style="display:none;margin-top:10px">
+                    <i class="fa-solid fa-circle-exclamation"></i><span id="rz-error-msg"></span>
+                  </div>
+                  <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn btn-primary" onclick="saveSection('razorpay')" id="btn-save-razorpay">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Configuration
+                    </button>
+                    <button class="btn btn-outline" onclick="testLiveAPI('razorpay')" id="btn-test-razorpay">
+                      <i class="fa-solid fa-plug-circle-check"></i> Test API Connection
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── OTP / AUTH ── -->
+            <div class="panel" id="panel-otp">
+              <div class="card">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-envelope-open-text"></i> OTP Mailer Settings</h3>
+                  <p>Integrate Google Apps Script to handle outbound transactional emails for authentication.</p>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label class="form-label">Apps Script Web App URL</label>
+                    <input type="url" class="form-input" id="otp_script_url"
+                      placeholder="https://script.google.com/macros/s/.../exec" />
+                    <div class="form-hint">Ensure the script is published to execute as you and accessible by 'Anyone'.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Google OAuth Client ID</label>
+                    <input type="text" class="form-input" id="google_client_id"
+                      placeholder="e.g. 1234-xyz.apps.googleusercontent.com" />
+                    <div class="form-hint">Used for "Continue with Google" login. Leave blank to disable Google Auth.</div>
+                  </div>
+                  <div class="form-group" style="max-width:220px">
+                    <label class="form-label">OTP Expiry Timeline</label>
+                    <div class="input-group">
+                      <input type="number" class="form-input" id="otp_expiry_minutes" min="2" max="60"
+                        placeholder="10" />
+                      <span class="input-addon">Minutes</span>
+                    </div>
+                  </div>
+                  <div class="section-divider"></div>
+                  <div class="toggle-row">
+                    <div class="toggle-info">
+                      <h4>Mandatory Email Verification</h4>
+                      <p>Users must verify their email with an OTP before order checkout or account creation.</p>
+                    </div>
+                    <label class="toggle"><input type="checkbox" id="require_email_otp" />
+                      <div class="toggle-track"></div>
+                    </label>
+                  </div>
+                  <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn btn-primary" onclick="saveSection('otp')" id="btn-save-otp">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Auth Rules
+                    </button>
+                    <button class="btn btn-outline" onclick="testLiveAPI('otp')" id="btn-test-otp">
+                      <i class="fa-solid fa-paper-plane"></i> Send Test Verification
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── SHIPPING LIMITS ── -->
+            <div class="panel" id="panel-shipping">
+              <div class="card">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-truck-fast"></i> Order Shipping Defaults</h3>
+                  <p>Establish basic global shipping thresholds applied when complex zone rates aren't met.</p>
+                </div>
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Free Shipping Threshold</label>
+                      <div class="input-group">
+                        <span class="input-addon">₹</span>
+                        <input type="number" class="form-input" id="shipping_free_above" min="0" placeholder="499" />
+                      </div>
+                      <div class="form-hint">Carts exceeding this value get standard free shipping.</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Base Flat Rate Charge</label>
+                      <div class="input-group">
+                        <span class="input-addon">₹</span>
+                        <input type="number" class="form-input" id="shipping_standard_charge" min="0"
+                          placeholder="49" />
+                      </div>
+                      <div class="form-hint">Default delivery fee for sub-threshold orders.</div>
+                    </div>
+                  </div>
+                  <div style="margin-top:8px">
+                    <button class="btn btn-primary" onclick="saveSection('shipping')" id="btn-save-shipping">
+                      <i class="fa-solid fa-floppy-disk"></i> Update Thresholds
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── STORE INFO ── -->
+            <div class="panel" id="panel-store">
+              <div class="card">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-store"></i> Brand & Business Data</h3>
+                  <p>Information displayed on storefront, invoice receipts, and automated email templates.</p>
+                </div>
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Store Registered Name</label>
+                      <input type="text" class="form-input" id="site_name" placeholder="e.g. HeelsUp Boutique" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Support Helpline</label>
+                      <input type="text" class="form-input" id="support_phone" placeholder="+91 99999 00000" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Primary Support Email</label>
+                    <input type="email" class="form-input" id="site_email" placeholder="support@brand.com" />
+                    <div class="form-hint">Also functions as the receiving address for system alerts and critical
+                      updates.</div>
+                  </div>
+                  <div id="store-error" class="alert alert-danger" style="display:none;margin-top:10px">
+                    <i class="fa-solid fa-circle-exclamation"></i><span id="store-error-msg"></span>
+                  </div>
+                  <div style="margin-top:8px">
+                    <button class="btn btn-primary" onclick="saveSection('store')" id="btn-save-store">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Business Info
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── SECURITY ── -->
+            <div class="panel" id="panel-security">
+              <div class="card">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-shield-halved"></i> System Security Policies</h3>
+                  <p>Configure brute-force protection and manage active authentications.</p>
+                </div>
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Brute-Force Attempt Limit</label>
+                      <input type="number" class="form-input" id="max_login_attempts" min="3" max="20"
+                        placeholder="5" />
+                      <div class="form-hint">Failed attempts before IP/account temporary block.</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Block Duration</label>
+                      <div class="input-group">
+                        <input type="number" class="form-input" id="lockout_duration_minutes" min="5" max="1440"
+                          placeholder="30" />
+                        <span class="input-addon">Mins</span>
+                      </div>
+                      <div class="form-hint">Automatic unblock timeline.</div>
+                    </div>
+                  </div>
+                  <div style="margin-top:8px">
+                    <button class="btn btn-primary" onclick="saveSection('security')" id="btn-save-security">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Security Policies
+                    </button>
+                  </div>
+
+                  <div class="section-divider" style="margin:24px 0"></div>
+                  <div
+                    style="font-size:.83rem;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+                    <i class="fa-solid fa-triangle-exclamation" style="color:var(--rose)"></i>
+                    Emergency Actions
+                  </div>
+
+                  <div class="action-block">
+                    <div>
+                      <div class="action-block-title">Clear Active Sessions</div>
+                      <div class="action-block-sub">Immediately invalidate all active user tokens globally. This will
+                        log you out as well.</div>
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="triggerAction('sessions')" style="flex-shrink:0">
+                      <i class="fa-solid fa-ban"></i> Terminate Sessions
+                    </button>
+                  </div>
+
+                  <div class="action-block">
+                    <div>
+                      <div class="action-block-title">Reset Rate Limits</div>
+                      <div class="action-block-sub">Clear the database cache of all locked accounts and blocked IPs.
+                      </div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="triggerAction('locks')"
+                      style="flex-shrink:0;color:var(--rose);border-color:var(--rose)">
+                      <i class="fa-solid fa-unlock-keyhole"></i> Clear Blocklist
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── MAINTENANCE ── -->
+            <div class="panel" id="panel-maintenance">
+              <div class="card">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-wrench"></i> Store Maintenance</h3>
+                  <p>Control public access during inventory updates or system upgrades.</p>
+                </div>
+                <div class="card-body">
+                  <div class="alert alert-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div><strong>Critical Impact:</strong> Enabling maintenance blocks all non-admin traffic and
+                      displays a "We'll be back soon" overlay. Active shopping carts may be lost.</div>
+                  </div>
+                  <div class="toggle-row"
+                    style="background:var(--surface-2);padding:18px;border-radius:var(--r-md);border:1px solid var(--border)">
+                    <div class="toggle-info">
+                      <h4 style="font-size:.9rem">Enable Maintenance Mode</h4>
+                      <p style="margin-top:3px">Take the entire storefront offline immediately.</p>
+                    </div>
+                    <label class="toggle" style="transform:scale(1.15)">
+                      <input type="checkbox" id="maintenance_mode" />
+                      <div class="toggle-track"></div>
+                    </label>
+                  </div>
+                  <div style="margin-top:20px">
+                    <button class="btn btn-primary" onclick="saveSection('maintenance')" id="btn-save-maintenance">
+                      <i class="fa-solid fa-power-off"></i> Apply System State
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /panels-wrapper -->
+
+          <!-- Loading state -->
+          <div id="settings-loading" class="loading-card">
+            <div class="loading-spinner">
+              <i class="fa-solid fa-circle-notch"></i>
+              <div style="font-weight:700;color:var(--text);font-size:.85rem">Synchronizing Settings…</div>
+              <div style="font-size:.75rem;color:var(--muted)">Establishing secure connection to database</div>
+            </div>
+          </div>
+
+        </div><!-- /settings-grid -->
+      </section>
+    </main>
+  </div>
+
+  <script src="app-config.js"></script>
+  <script src="app-auth.js"></script>
+  <script>
+    /* ═══════════════════════════════════════════════════
+       SETTINGS ENGINE — Enterprise Grade
+    ═══════════════════════════════════════════════════ */
+    let liveSettings = {};
+
+    // ── PROGRESS ──────────────────────────────────────
+    const Progress = {
+      el: document.getElementById('nprogress'),
+      start() { this.el.style.width = '30%'; this.el.style.opacity = '1' },
+      done() { this.el.style.width = '100%'; setTimeout(() => { this.el.style.opacity = '0'; setTimeout(() => { this.el.style.width = '0'; this.el.style.opacity = '1' }, 300) }, 200) }
+    };
+
+    // ── AUTH ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const user = HeelsUpAuth.getUser();
+        if (!user || user.role !== 'admin') {
+          window.location = 'login.html?redirect=admin-settings.html';
+          return;
+        }
+        const uname = user.firstName || user.first_name || 'Admin';
+        document.getElementById('s-avatar').textContent = uname.charAt(0).toUpperCase();
+        document.getElementById('s-name').textContent = uname;
+        loadSettings();
+      } catch (e) {
+        showToast('Authentication failure. Please re-login.', 'error');
+      }
+    });
+
+    // ── SIDEBAR ───────────────────────────────────────
+    function toggleSidebar() {
+      const s = document.getElementById('sidebar');
+      const o = document.getElementById('mobOverlay');
+      s.classList.toggle('open');
+      o.style.display = s.classList.contains('open') ? 'block' : 'none';
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('mobOverlay').style.display = 'none';
+    }
+    function doLogout() {
+      if (confirm('Logout from admin panel?')) {
+        HeelsUpAuth.clearSession();
+        window.location = 'login.html';
+      }
+    }
+
+    // ── TOAST ─────────────────────────────────────────
+    function showToast(msg, type = 'success', dur = 4000) {
+      const wrap = document.getElementById('toastWrap');
+      const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' };
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      t.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span>${msg}</span><span class="toast-close" onclick="this.parentNode.remove()">✕</span>`;
+      wrap.appendChild(t);
+      setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(30px)'; t.style.transition = 'all .3s'; setTimeout(() => t.remove(), 300); }, dur);
+    }
+
+    // ── CONFIRM MODAL ─────────────────────────────────
+    let confirmCb = null;
+    function openConfirmModal(title, msg, cb, isDanger = true) {
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmMessage').textContent = msg;
+      const btn = document.getElementById('confirmActionBtn');
+      btn.className = isDanger ? 'btn btn-danger' : 'btn btn-primary';
+      const iconEl = document.getElementById('confirmIcon');
+      iconEl.innerHTML = isDanger
+        ? '<i class="fa-solid fa-triangle-exclamation" style="color:var(--rose)"></i>'
+        : '<i class="fa-solid fa-circle-question" style="color:var(--blue)"></i>';
+      confirmCb = cb;
+      document.getElementById('confirmModal').classList.add('show');
+    }
+    function closeConfirmModal() {
+      document.getElementById('confirmModal').classList.remove('show');
+      confirmCb = null;
+    }
+    document.getElementById('confirmActionBtn').addEventListener('click', () => {
+      if (confirmCb) confirmCb();
+      closeConfirmModal();
+    });
+    document.getElementById('confirmModal').addEventListener('click', function (e) {
+      if (e.target === this) closeConfirmModal();
+    });
+
+    // ── PANEL NAV ─────────────────────────────────────
+    function showPanel(id, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.settings-nav-item').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // ── FORM UTILS ────────────────────────────────────
+    function toggleSecret(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+      }
+    }
+    function validateEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+    function showInlineError(wrapperId, msgId, msg) {
+      const w = document.getElementById(wrapperId);
+      if (w) { w.style.display = 'flex'; document.getElementById(msgId).textContent = msg; }
+    }
+    function hideInlineError(wrapperId) {
+      const w = document.getElementById(wrapperId); if (w) w.style.display = 'none';
+    }
+
+    // ── LOAD SETTINGS ─────────────────────────────────
+    async function loadSettings() {
+      Progress.start();
+      document.getElementById('settings-loading').style.display = 'flex';
+      document.getElementById('panels-wrapper').style.display = 'none';
+
+      try {
+        const data = await HeelsUpAuth.api('/api/admin/settings');
+        liveSettings = data.settings || data || {};
+
+        // Razorpay
+        document.getElementById('razorpay_key_id').value = liveSettings.razorpay_key_id || '';
+        document.getElementById('razorpay_key_secret').value = liveSettings.razorpay_key_secret || '';
+        document.getElementById('razorpay_mode').value = liveSettings.razorpay_mode || 'test';
+
+        // OTP
+        document.getElementById('otp_script_url').value = liveSettings.otp_script_url || '';
+        document.getElementById('google_client_id').value = liveSettings.google_client_id || '';
+        document.getElementById('otp_expiry_minutes').value = liveSettings.otp_expiry_minutes || '10';
+        document.getElementById('require_email_otp').checked = !!liveSettings.require_email_otp;
+
+        // Shipping
+        document.getElementById('shipping_free_above').value = liveSettings.shipping_free_above || '499';
+        document.getElementById('shipping_standard_charge').value = liveSettings.shipping_standard_charge || '49';
+
+        // Store
+        document.getElementById('site_name').value = liveSettings.site_name || '';
+        document.getElementById('support_phone').value = liveSettings.support_phone || '';
+        document.getElementById('site_email').value = liveSettings.site_email || '';
+
+        // Security
+        document.getElementById('max_login_attempts').value = liveSettings.max_login_attempts || '5';
+        document.getElementById('lockout_duration_minutes').value = liveSettings.lockout_duration_minutes || '30';
+
+        // Maintenance
+        document.getElementById('maintenance_mode').checked = !!liveSettings.maintenance_mode;
+
+        document.getElementById('settings-loading').style.display = 'none';
+        document.getElementById('panels-wrapper').style.display = 'block';
+        Progress.done();
+
+      } catch (err) {
+        Progress.done();
+        showToast('Failed to load settings. Check connection.', 'error');
+        document.getElementById('settings-loading').innerHTML = `
+      <div style="text-align:center;padding:40px 20px">
+        <i class="fa-solid fa-server" style="font-size:2.2rem;color:var(--rose);display:block;margin-bottom:14px"></i>
+        <div style="font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:6px">Connection Failed</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:18px">Unable to load secure configurations from server.</div>
+        <button class="btn btn-outline btn-sm" onclick="loadSettings()">
+          <i class="fa-solid fa-rotate-right"></i> Retry
+        </button>
+      </div>`;
+      }
+    }
+
+    // ── SAVE SECTION ──────────────────────────────────
+    async function saveSection(section) {
+      const btn = document.getElementById(`btn-save-${section}`);
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+
+      // Hide any inline errors first
+      hideInlineError('rz-error');
+      hideInlineError('store-error');
+
+      let payload = {};
+      try {
+        if (section === 'razorpay') {
+          const keyId = document.getElementById('razorpay_key_id').value.trim();
+          const mode = document.getElementById('razorpay_mode').value;
+          if (mode === 'live' && keyId && !keyId.startsWith('rzp_live_')) {
+            throw new Error('Live mode requires a key starting with rzp_live_');
+          }
+          payload = {
+            razorpay_key_id: keyId,
+            razorpay_key_secret: document.getElementById('razorpay_key_secret').value.trim(),
+            razorpay_mode: mode
+          };
+        } else if (section === 'otp') {
+          payload = {
+            otp_script_url: document.getElementById('otp_script_url').value.trim(),
+            google_client_id: document.getElementById('google_client_id').value.trim(),
+            otp_expiry_minutes: parseInt(document.getElementById('otp_expiry_minutes').value) || 10,
+            require_email_otp: document.getElementById('require_email_otp').checked
+          };
+        } else if (section === 'shipping') {
+          const fa = parseInt(document.getElementById('shipping_free_above').value);
+          const sc = parseInt(document.getElementById('shipping_standard_charge').value);
+          if (fa < 0 || sc < 0) throw new Error('Shipping values cannot be negative.');
+          payload = { shipping_free_above: fa || 0, shipping_standard_charge: sc || 0 };
+        } else if (section === 'store') {
+          const email = document.getElementById('site_email').value.trim();
+          if (email && !validateEmail(email)) throw new Error('Invalid email format.');
+          payload = {
+            site_name: document.getElementById('site_name').value.trim(),
+            support_phone: document.getElementById('support_phone').value.trim(),
+            site_email: email
+          };
+        } else if (section === 'security') {
+          const maxAtt = parseInt(document.getElementById('max_login_attempts').value);
+          if (maxAtt < 1) throw new Error('Attempt limit must be at least 1.');
+          payload = {
+            max_login_attempts: maxAtt || 5,
+            lockout_duration_minutes: parseInt(document.getElementById('lockout_duration_minutes').value) || 30
+          };
+        } else if (section === 'maintenance') {
+          payload = { maintenance_mode: document.getElementById('maintenance_mode').checked };
+        }
+
+        await HeelsUpAuth.api('/api/admin/settings', { method: 'PUT', body: JSON.stringify(payload) });
+        liveSettings = { ...liveSettings, ...payload };
+        showToast('Settings saved successfully!', 'success');
+
+      } catch (e) {
+        // Show inline error for relevant panels
+        if (section === 'razorpay') showInlineError('rz-error', 'rz-error-msg', e.message || 'Failed to save');
+        else if (section === 'store') showInlineError('store-error', 'store-error-msg', e.message || 'Failed to save');
+        else showToast(e.message || 'Failed to save settings.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    }
+
+    // ── TEST API ──────────────────────────────────────
+    async function testLiveAPI(type) {
+      const btn = document.getElementById(`btn-test-${type}`);
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Testing…';
+
+      try {
+        if (type === 'razorpay') {
+          const keyId = document.getElementById('razorpay_key_id').value.trim();
+          const secret = document.getElementById('razorpay_key_secret').value.trim();
+          if (!keyId || !secret) throw new Error('Key ID and Secret are required for testing.');
+          if (!keyId.startsWith('rzp_')) throw new Error('Key must start with rzp_ format.');
+          const resp = await HeelsUpAuth.api('/api/admin/settings/test/razorpay', {
+            method: 'POST', body: JSON.stringify({ razorpay_key_id: keyId, razorpay_key_secret: secret })
+          });
+          if (resp.success) showToast('Razorpay connection established successfully!', 'success');
+          else throw new Error(resp.message || 'Razorpay API test failed.');
+        } else if (type === 'otp') {
+          const url = document.getElementById('otp_script_url').value.trim();
+          if (!url) throw new Error('Script URL is required for testing.');
+          if (!url.includes('script.google.com/macros/')) throw new Error('Invalid Google Apps Script URL format.');
+          const resp = await HeelsUpAuth.api('/api/admin/settings/test/otp', {
+            method: 'POST', body: JSON.stringify({ otp_script_url: url })
+          });
+          if (resp.success) showToast('Test OTP email sent successfully!', 'success');
+          else throw new Error(resp.message || 'Mailer test failed.');
+        }
+      } catch (err) {
+        showToast(err.message || 'API test failed.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    }
+
+    // ── EMERGENCY ACTIONS ─────────────────────────────
+    function triggerAction(actionType) {
+      if (actionType === 'sessions') {
+        openConfirmModal(
+          'Terminate Global Sessions',
+          'DANGER: This forces immediate invalidation of all user authentication tokens including yours. You will be instantly logged out. Proceed?',
+          async () => {
+            try {
+              await HeelsUpAuth.api('/api/admin/settings/clear-sessions', { method: 'POST' });
+              showToast('All sessions terminated. Logging out…', 'warning');
+              setTimeout(() => { HeelsUpAuth.clearSession(); window.location = 'login.html'; }, 1500);
+            } catch (e) { showToast('Failed to clear sessions.', 'error'); }
+          },
+          true
+        );
+      } else if (actionType === 'locks') {
+        openConfirmModal(
+          'Clear Rate-Limit Blocklist',
+          'Are you sure you want to unlock all IP addresses and accounts currently restricted by brute-force protection?',
+          async () => {
+            try {
+              await HeelsUpAuth.api('/api/admin/settings/clear-locks', { method: 'POST' });
+              showToast('Security blocklist cleared successfully.', 'success');
+            } catch (e) { showToast('Failed to clear blocklist.', 'error'); }
+          },
+          false
+        );
+      }
+    }
+
+    // ── KEYBOARD SHORTCUTS ────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeConfirmModal();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Products – HeelsUp</title>
+  <!--
+  ============================================================
+  PAGE: compare.html
+  PURPOSE: Customer 2-3 products side-by-side compare kar sake — feature, price, size, rating.
+
+  YE PAGE KYA KAREGA:
+  - URL me product IDs honge (e.g. ?ids=prod-001,prod-002,prod-003)
+  - Side-by-side comparison table:
+    | Feature       | Product A  | Product B  | Product C  |
+    | Image         | [img]      | [img]      | [img]      |
+    | Name          | Block Heel | Flat Sandal| Wedge      |
+    | Price         | ₹1,499     | ₹899       | ₹1,299     |
+    | Rating        | ⭐ 4.5     | ⭐ 4.2     | ⭐ 4.7     |
+    | Sizes         | 36-41      | 36-40      | 37-41      |
+    | Material      | Faux Leather| Canvas    | Jute       |
+    | Colors        | 3 options  | 2 options  | 4 options  |
+    | Availability  | In Stock   | In Stock   | Low Stock  |
+  - "Add to Cart" button har product ke liye
+  - "Remove" button — compare list se hatao
+  - "Compare mein add karo" button shop/product pages pe hoga
+
+  URL PATTERN:
+  compare.html?ids=prod-001,prod-002
+
+  LINKED FROM:
+  - shop.html — product card pe compare checkbox/icon
+  - product.html — "Compare" button
+  - localStorage key: heelsup_compare (max 3 products)
+  ============================================================
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="main.css">
+  <style>
+    /* Page-specific styles yahan likhna */
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+
+  <main>
+    <!-- TODO: Ye cheezein banani hain:
+      1. URL se product IDs extract karo
+      2. localStorage (heelsup_compare) se IDs lo
+      3. API se products fetch karo
+      4. Comparison table render karo (horizontal scroll on mobile)
+      5. Empty state — "Koi product compare mein nahi hai" + shop.html link
+      6. Max 3 products allowed — 4th add karne pe warning
+      7. "Add to Cart" button har column me
+      8. "X" remove button har column me
+      9. Sticky first column (feature names) on horizontal scroll
+    -->
+    <p style="text-align:center; padding: 4rem; font-family: var(--fb); color: var(--text-3);">
+      compare.html — Abhi khaali hai, code likhna baaki hai.
+    </p>
+  </main>
+
+  <!-- FOOTER -->
+
+
+  <script src="/js/wishlist.js"></script>
+</body></html>

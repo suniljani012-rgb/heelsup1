@@ -1,0 +1,1136 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us – HeelsUp | Jodhpur ki Sabse Stylish Footwear Shop</title>
+    <meta name="description" content="HeelsUp ke baare mein jaanein — Jodhpur mein shuru hua ek sapna jo aaj India bhar ki women ko stylish banata hai. Our story, values, and team.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://heelsup.in/about.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .about-hero {
+            position: relative;
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--color-dark) 0%, #1a100a 60%, var(--color-dark) 100%);
+            overflow: hidden
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 169, 110, .07) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        .about-hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1
+        }
+
+        .about-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--color-primary-light);
+            padding: 7px 18px;
+            border: 1px solid rgba(201, 169, 110, .4);
+            border-radius: 100px;
+            background: rgba(201, 169, 110, .08);
+            margin-bottom: 20px
+        }
+
+        .about-hero-title {
+            font-family: var(--fd);
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -.02em;
+            margin-bottom: 20px
+        }
+
+        .about-hero-title em {
+            font-style: italic;
+            color: var(--color-primary-light)
+        }
+
+        .about-hero-desc {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, .65);
+            line-height: 1.8;
+            margin-bottom: 32px
+        }
+
+        .about-hero-img {
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            position: relative
+        }
+
+        .about-hero-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .about-hero-float {
+            position: absolute;
+            bottom: -16px;
+            left: -20px;
+            background: var(--color-white);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 2;
+            min-width: 190px
+        }
+
+        .about-float-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--color-primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--gold);
+            flex-shrink: 0
+        }
+
+        .about-float-val {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-1);
+            line-height: 1;
+            margin-bottom: 3px
+        }
+
+        .about-float-sub {
+            font-size: 11px;
+            color: var(--text-3)
+        }
+
+        .about-stats {
+            background: var(--color-white);
+            padding: 70px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 32px 24px;
+            border-right: 1px solid var(--border)
+        }
+
+        .stat-box:last-child {
+            border-right: none
+        }
+
+        .stat-big {
+            font-family: var(--fd);
+            font-size: 3.2rem;
+            font-weight: 300;
+            color: var(--color-dark);
+            letter-spacing: -.03em;
+            line-height: 1;
+            margin-bottom: 6px;
+            display: block
+        }
+
+        .stat-big em {
+            color: var(--gold);
+            font-style: italic
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-3)
+        }
+
+        .story-section {
+            padding: 100px 0;
+            background: var(--cream2)
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center
+        }
+
+        .story-imgs {
+            position: relative
+        }
+
+        .story-img-main {
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 3/4
+        }
+
+        .story-img-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .story-img-sec {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 55%;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border: 6px solid var(--color-white);
+            box-shadow: var(--shadow-xl)
+        }
+
+        .story-img-sec img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .story-label {
+            display: inline-block;
+            font-size: var(--text-xs);
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            padding: 6px 16px;
+            border: 1px solid var(--color-primary-light);
+            border-radius: 100px;
+            background: var(--color-primary-glow);
+            margin-bottom: 16px
+        }
+
+        .story-title {
+            font-family: var(--fd);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 300;
+            color: var(--color-dark);
+            line-height: 1.15;
+            letter-spacing: -.02em;
+            margin-bottom: 20px
+        }
+
+        .story-title em {
+            font-style: italic;
+            color: var(--gold-dk)
+        }
+
+        .story-text {
+            font-size: 1rem;
+            color: var(--text-2);
+            line-height: 1.85;
+            margin-bottom: 16px
+        }
+
+        .values-section {
+            padding: 90px 0;
+            background: var(--color-dark)
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(255, 255, 255, .06)
+        }
+
+        .value-card {
+            padding: 48px 36px;
+            background: var(--color-dark);
+            text-align: center;
+            transition: background .3s
+        }
+
+        .value-card:hover {
+            background: var(--color-dark-2)
+        }
+
+        .value-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: var(--color-primary-glow);
+            border: 1px solid rgba(201, 169, 110, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--gold);
+            transition: all .3s
+        }
+
+        .value-card:hover .value-icon {
+            background: var(--gold);
+            color: var(--color-dark);
+            transform: scale(1.1)
+        }
+
+        .value-title {
+            font-family: var(--fh);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px
+        }
+
+        .value-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .45);
+            line-height: 1.75
+        }
+
+        .team-section {
+            padding: 100px 0;
+            background: var(--cream)
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px
+        }
+
+        .team-card {
+            text-align: center;
+            background: var(--color-white);
+            border-radius: 20px;
+            padding: 40px 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all .3s
+        }
+
+        .team-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-6px)
+        }
+
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 16px;
+            border: 3px solid var(--color-primary-light)
+        }
+
+        .team-avatar-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary-glow), var(--gold));
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            border: 3px solid var(--color-primary-light);
+            font-family: var(--fh)
+        }
+
+        .team-name {
+            font-family: var(--fh);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px
+        }
+
+        .team-role {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px
+        }
+
+        .team-bio {
+            font-size: 13px;
+            color: var(--text-3);
+            line-height: 1.7
+        }
+
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--color-dark) 0%, #1a1008 50%, var(--color-dark) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 110, .05);
+            pointer-events: none
+        }
+
+        .cta-title {
+            font-family: var(--fd);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: -.02em
+        }
+
+        .cta-title em {
+            font-style: italic;
+            color: var(--color-primary-light)
+        }
+
+        .cta-sub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, .55);
+            max-width: 500px;
+            margin: 0 auto 36px;
+            line-height: 1.7
+        }
+
+        .about-timeline {
+            padding: 90px 0;
+            background: var(--color-white)
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent)
+        }
+
+        .tl-item {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 48px;
+            align-items: flex-start
+        }
+
+        .tl-item:nth-child(even) {
+            flex-direction: row-reverse
+        }
+
+        .tl-item:nth-child(even) .tl-content {
+            text-align: right
+        }
+
+        .tl-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 3px solid var(--color-white);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+            flex-shrink: 0;
+            margin-top: 6px;
+            position: relative;
+            z-index: 1
+        }
+
+        .tl-year {
+            font-family: var(--fd);
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--gold);
+            font-weight: 300;
+            line-height: 1;
+            flex-shrink: 0;
+            width: 80px;
+            text-align: center
+        }
+
+        .tl-content {
+            flex: 1
+        }
+
+        .tl-title {
+            font-family: var(--fh);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        .tl-desc {
+            font-size: 13px;
+            color: var(--text-3);
+            line-height: 1.7
+        }
+
+        @media(max-width:768px) {
+
+            .about-hero-inner,
+            .story-grid {
+                grid-template-columns: 1fr
+            }
+
+            .about-hero-img {
+                display: none
+            }
+
+            .values-grid,
+            .team-grid {
+                grid-template-columns: 1fr
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .stat-box:nth-child(2) {
+                border-right: none
+            }
+
+            .stat-box:nth-child(3) {
+                border-top: 1px solid var(--border)
+            }
+
+            .story-imgs {
+                height: 300px
+            }
+
+            .story-img-sec {
+                width: 45%;
+                right: -10px;
+                bottom: -15px
+            }
+
+            .timeline::before {
+                left: 20px
+            }
+
+            .tl-item,
+            .tl-item:nth-child(even) {
+                flex-direction: row
+            }
+
+            .tl-item:nth-child(even) .tl-content {
+                text-align: left
+            }
+
+            .tl-year {
+                width: 60px;
+                font-size: 1.5rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    
+
+    <nav class="navbar" id="navbar">
+    <div class="ctn">
+      <div class="nb-inner">
+        <!-- Logo -->
+        <a href="/" class="nb-logo">
+          <img src="logo.png" alt="HeelsUp" id="logo-img" onerror="this.classList.add('err');this.style.display='none'">
+          <span class="nb-logo-txt">Heels<span>Up</span></span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="nb-menu">
+          <li><a href="/" class="nb-link active">Home</a></li>
+          <li>
+            <a href="/shop.html" class="nb-link">
+              Shop
+              <svg class="nb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </a>
+            <div class="nb-drop">
+              <a href="/category.html?cat=heels">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M20 18H4l2-8h12l2 8zM4 18l-2 2M20 18l2 2M8 10V6a4 4 0 018 0v4"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Heels</strong><span>Block, Stiletto, Cone</span></div>
+              </a>
+              <a href="/category.html?cat=sandals">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M3 20h18M5 20V10l7-7 7 7v10M9 20v-6h6v6"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Sandals</strong><span>Strappy, Flat, Wedge</span></div>
+              </a>
+              <a href="/category.html?cat=flats">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <ellipse cx="12" cy="17" rx="9" ry="3"></ellipse>
+                    <path d="M3 17V7l9-4 9 4v10"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Flats</strong><span>Mules, Loafers, Slip-ons</span></div>
+              </a>
+              <a href="/category.html?cat=wedges">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M4 20h16M4 20l4-12h8l4 12"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Wedges</strong><span>Espadrilles, Platform</span></div>
+              </a>
+              <a href="/category.html?cat=bags">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Bags</strong><span>Tote, Clutch, Sling</span></div>
+              </a>
+              <a href="/category.html?cat=clutches">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <rect x="3" y="8" width="18" height="13" rx="2"></rect>
+                    <path d="M8 8V5a4 4 0 018 0v3"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Clutches</strong><span>Evening, Party</span></div>
+              </a>
+            </div>
+          </li>
+          <li><a href="/category.html?cat=heels" class="nb-link">Heels</a></li>
+          <li><a href="/category.html?cat=sandals" class="nb-link">Sandals</a></li>
+          <li><a href="/category.html?cat=bags" class="nb-link">Bags</a></li>
+          <li><a href="/about.html" class="nb-link">About</a></li>
+          <li><a href="/contact.html" class="nb-link">Contact</a></li>
+        </ul>
+
+        <!-- Actions -->
+        <div class="nb-actions">
+          <a href="/search.html" class="nb-btn" id="search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+          </a>
+          <a href="/wishlist.html" class="nb-btn" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+            </svg>
+          </a>
+          <a href="/profile.html" class="nb-btn" id="nav-account" aria-label="Account">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+          <button class="nb-btn" id="cart-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"></path>
+            </svg>
+            <span class="nb-badge" id="cart-cnt">0</span>
+          </button>
+          <button class="nb-ham" id="hamburger" aria-label="Menu">
+            <span class="ham-ln"></span>
+            <span class="ham-ln"></span>
+            <span class="ham-ln"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <div class="mob" id="mob-menu">
+    <div class="mob-bd" id="mob-bd"></div>
+    <div class="mob-panel">
+      <div class="mob-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="logo.png" alt="" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none'">
+          <span style="font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--ink)">Heels<span style="color:var(--gold)">Up</span></span>
+        </div>
+        <button class="mob-close" id="mob-close">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="mob-body">
+        <a href="/" class="mob-lnk active"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg></span>Home</a>
+        <a href="/shop.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.57l1.65-7.43H6"></path>
+            </svg></span>Shop All</a>
+        <a href="/category.html?cat=heels" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M20 18H4l2-8h12l2 8z"></path>
+            </svg></span>Heels</a>
+        <a href="/category.html?cat=sandals" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M3 20h18M5 20V10l7-7 7 7v10"></path>
+            </svg></span>Sandals</a>
+        <a href="/category.html?cat=flats" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <ellipse cx="12" cy="17" rx="9" ry="3"></ellipse>
+            </svg></span>Flats</a>
+        <a href="/category.html?cat=bags" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+            </svg></span>Bags</a>
+        <div class="mob-sep"></div>
+        <a href="/about.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg></span>About Us</a>
+        <a href="/contact.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.95 12 19.79 19.79 0 011.9 3.38 2 2 0 013.89 1.22h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 8.91a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+            </svg></span>Contact</a>
+        <div class="mob-sep"></div>
+        <a href="/profile.html" class="mob-lnk" id="mob-account"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg></span>My Account</a>
+        <a href="/orders.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg></span>Track Order</a>
+        <a href="/wishlist.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+            </svg></span>Wishlist</a>
+      </div>
+      <div class="mob-foot">
+        <a href="/login.html" class="mob-auth primary" id="mob-login-btn">Login / Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+    
+
+    <!-- ABOUT HERO -->
+    <section class="about-hero reveal">
+        <div class="ctn">
+            <div class="about-hero-inner">
+                <div>
+                    <span class="about-hero-tag"><i class="fa-solid fa-star" style="font-size:.65rem"></i> Est. 2019,
+                        Jodhpur</span>
+                    <h1 class="about-hero-title">Sapno Se <em>Shuru</em><br>Hua Ek Safar</h1>
+                    <p class="about-hero-desc">HeelsUp ek chhoti si dukaan se shuru hua tha — Jodhpur ki galiyon mein.
+                        Aaj hum India bhar ki 10,000+ mahilaon ko unki most stylish versions banane mein help karte
+                        hain. Yeh sirf footwear nahi, yeh ek feeling hai.</p>
+                    <div style="display:flex;gap:16px;flex-wrap:wrap">
+                        <a href="shop.html" class="btn btn btn-lg"><i class="fa-solid fa-bag-shopping"></i> Shop
+                            Now</a>
+                        <a href="contact.html" class="btn btn-white btn-lg">Get in Touch</a>
+                    </div>
+                </div>
+                <div class="about-hero-img">
+                    <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=700&amp;q=80&amp;auto=format&amp;fit=crop" alt="HeelsUp Story">
+                    <div class="about-hero-float">
+                        <div class="about-float-icon">🏆</div>
+                        <div>
+                            <div class="about-float-val">4.8 ★</div>
+                            <div class="about-float-sub">Average Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="about-stats reveal">
+        <div class="ctn">
+            <div class="stats-row">
+                <div class="stat-box"><span class="stat-big">10<em>K+</em></span>
+                    <div class="stat-sub">Happy Customers</div>
+                </div>
+                <div class="stat-box"><span class="stat-big">350<em>+</em></span>
+                    <div class="stat-sub">Products Available</div>
+                </div>
+                <div class="stat-box"><span class="stat-big">4.<em>8★</em></span>
+                    <div class="stat-sub">Average Rating</div>
+                </div>
+                <div class="stat-box"><span class="stat-big">5<em>Yrs</em></span>
+                    <div class="stat-sub">Of Excellence</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section class="story-section">
+        <div class="ctn">
+            <div class="story-grid">
+                <div class="story-imgs reveal">
+                    <div class="story-img-main">
+                        <img src="https://images.unsplash.com/photo-1596703263926-eb0762ee17e4?w=700&amp;q=80&amp;auto=format&amp;fit=crop" alt="HeelsUp Workshop">
+                    </div>
+                    <div class="story-img-sec">
+                        <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&amp;q=80&amp;auto=format&amp;fit=crop" alt="Footwear Collection">
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-2">
+                    <span class="story-label">Hamari Kahani</span>
+                    <h2 class="story-title">Jodhpur Se Shuru,<br><em>India Bhar</em> Mein Mashoor</h2>
+                    <p class="story-text">2019 mein jab Priya Sharma ne Jodhpur ke ek chhote se studio mein pehli bar
+                        ladies heels online bechna shuru kiya, tab unhe nahi pata tha ki yeh ek revolution ki shuruat
+                        hogi. Unka manana tha ki har woman deserve karti hai ki woh apni best self feel kare — aur achha
+                        footwear is mein bahut bada role play karta hai.</p>
+                    <p class="story-text">Aaj, HeelsUp sirf ek online store nahi hai. Yeh ek community hai jahan har din
+                        hazaron women apni favorite heels, sandals, flats aur bags dhundh ke jaati hain aur confident
+                        hokar nikalty hain. Hum personally har product select karte hain — quality se zero compromise.
+                    </p>
+                    <p class="story-text">Humara commitment hai: <strong style="color:var(--gold)">best
+                            quality, reasonable price, aur dil se customer service</strong>. Jodhpur ki mitti se uthke,
+                        India bhar ki women ke dilo tak — yeh hai HeelsUp ki kahani.</p>
+                    <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap">
+                        <div style="text-align:center">
+                            <div style="font-family:var(--fd);font-size:2rem;font-style:italic;color:var(--gold)">
+                                100%</div>
+                            <div style="font-size:12px;color:var(--text-3);font-weight:600;letter-spacing:.1em;text-transform:uppercase">
+                                Authentic Products</div>
+                        </div>
+                        <div style="text-align:center">
+                            <div style="font-family:var(--fd);font-size:2rem;font-style:italic;color:var(--gold)">
+                                7 Days</div>
+                            <div style="font-size:12px;color:var(--text-3);font-weight:600;letter-spacing:.1em;text-transform:uppercase">
+                                Easy Returns</div>
+                        </div>
+                        <div style="text-align:center">
+                            <div style="font-family:var(--fd);font-size:2rem;font-style:italic;color:var(--gold)">
+                                24/7</div>
+                            <div style="font-size:12px;color:var(--text-3);font-weight:600;letter-spacing:.1em;text-transform:uppercase">
+                                WhatsApp Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="about-timeline">
+        <div class="ctn">
+            <div class="section-header reveal" style="margin-bottom:60px">
+                <span class="section-label">Humara Safar</span>
+                <h2>5 Saal Ka <em style="font-family:var(--fd);font-style:italic;font-weight:400">Safarnama</em></h2>
+            </div>
+            <div class="timeline reveal">
+                <div class="tl-item">
+                    <div class="tl-year">2019</div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-title">HeelsUp Ki Shuruat</div>
+                        <div class="tl-desc">Jodhpur ke ek chhote studio mein 15 products ke saath online store launch
+                            kiya. Pehle hafte mein hi 50 orders mile!</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2020</div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-title">1000 Customers Milestone</div>
+                        <div class="tl-desc">Pandemic ke bawajood, ghar mein rehne wali women ke liye comfortable yet
+                            stylish footwear ki demand baadh gayi. Hum grow karte rahe.</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2022</div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-title">Bags Collection Launch</div>
+                        <div class="tl-desc">Customer demand sunke ladies bags aur clutches add kiye. Collection instant
+                            hit raha — pehle mahine mein 500+ bags bik gaye.</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2024</div>
+                    <div class="tl-dot"></div>
+                    <div class="tl-content">
+                        <div class="tl-title">10,000 Happy Customers</div>
+                        <div class="tl-desc">India ke 28 states mein delivery — aur 10,000+ families jo HeelsUp ko apna
+                            trusted brand maanti hain. Yeh milestone hamesha yaad rahega.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="values-section reveal">
+        <div class="ctn">
+            <div class="section-header" style="margin-bottom:60px">
+                <span class="section-label" style="color:var(--color-primary-light);border-color:rgba(201,169,110,.3)">Hamari Values</span>
+                <h2 style="color:#fff">Jo Cheez Hume <em style="font-family:var(--fd);font-style:italic;color:var(--color-primary-light)">Alag</em>
+                    Banati Hai</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-gem"></i></div>
+                    <div class="value-title">Premium Quality</div>
+                    <p class="value-desc">Har product ko personally test kiya jaata hai. Top-grade materials se bane
+                        products jo long-lasting bhi hain aur stylish bhi.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-heart"></i></div>
+                    <div class="value-title">Customer First</div>
+                    <p class="value-desc">Aapki satisfaction humari top priority hai. Koi bhi problem ho — WhatsApp
+                        karo, hum hamesha available hain. No questions asked returns.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <div class="value-title">Fast Delivery</div>
+                    <p class="value-desc">Jodhpur mein same-day delivery available hai. India-wide 3-5 business days
+                        mein aapke doorstep par — safely packed.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                    <div class="value-title">Affordable Prices</div>
+                    <p class="value-desc">Best quality ka matlab mehnga nahi hota. Hum ensure karte hain ki aapko har
+                        product best possible price par mile.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <div class="value-title">Ethical Fashion</div>
+                    <p class="value-desc">Hum sustainable fashion mein believe karte hain. Responsible sourcing aur
+                        ethical manufacturing humari commitment hai.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="value-title">Trusted Brand</div>
+                    <p class="value-desc">10,000+ satisfied customers aur 4.8 star rating — yeh hai hamara track record.
+                        Aapka trust hi hamari sabse badi asset hai.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team-section">
+        <div class="ctn">
+            <div class="section-header reveal" style="margin-bottom:60px">
+                <span class="section-label">Hamari Team</span>
+                <h2>The <em style="font-family:var(--fd);font-style:italic;font-weight:400">People</em> Behind
+                    HeelsUp</h2>
+                <p>Passionate, dedicated, aur fashion-obsessed — yeh hai hamari team jo aapke liye roz kaam karti hai
+                </p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card reveal reveal-delay-1">
+                    <div class="team-avatar-placeholder">P</div>
+                    <div class="team-name">Priya Sharma</div>
+                    <div class="team-role">Founder &amp; CEO</div>
+                    <p class="team-bio">Fashion enthusiast aur entrepreneur. Jodhpur ki beti jo Rajasthan ke colors se
+                        inspire hokar ladies fashion ko redefine kar rahi hai.</p>
+                </div>
+                <div class="team-card reveal reveal-delay-2">
+                    <div class="team-avatar-placeholder">R</div>
+                    <div class="team-name">Rahul Mehta</div>
+                    <div class="team-role">Head of Operations</div>
+                    <p class="team-bio">Logistics aur operations expert. Ensure karta hai ki har order time par aur
+                        perfect condition mein aaptak pahunche.</p>
+                </div>
+                <div class="team-card reveal reveal-delay-3">
+                    <div class="team-avatar-placeholder">S</div>
+                    <div class="team-name">Sunita Rathore</div>
+                    <div class="team-role">Customer Care Head</div>
+                    <p class="team-bio">Aapki har problem ka solution dhundna Sunita ka passion hai. WhatsApp support
+                        mein aap unse mil sakte ho — always smiling!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section reveal">
+        <div class="ctn">
+            <h2 class="cta-title">Ready to <em>Step Up</em><br>Your Style?</h2>
+            <p class="cta-sub">Join 10,000+ happy customers aur discover your perfect pair. Free shipping above ₹799!
+            </p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+                <a href="shop.html" class="btn btn btn-lg"><i class="fa-solid fa-bag-shopping"></i> Shop Now</a>
+                <a href="contact.html" class="btn btn-white btn-lg">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+    <div class="ctn">
+      <div class="footer-top">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">
+              <img src="logo.png" alt="HeelsUp" onerror="this.style.display='none'">
+              <span>Heels<span>Up</span></span>
+            </div>
+            <p class="footer-tagline">Premium ladies footwear &amp; bags for the modern Indian woman. Quality, style, and
+              comfort — all in one place.</p>
+            <div class="footer-socials">
+              <a href="https://instagram.com/heelsup.in" target="_blank" rel="noopener" class="footer-soc" aria-label="Instagram">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://facebook.com/heelsup.in" target="_blank" rel="noopener" class="footer-soc" aria-label="Facebook">
+                <svg viewBox="0 0 24 24">
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                </svg>
+              </a>
+              <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="footer-soc" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+                </svg>
+              </a>
+              <a href="https://pinterest.com/heelsup" target="_blank" rel="noopener" class="footer-soc" aria-label="Pinterest">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.76 1.22-5.14 1.22-5.14s-.31-.62-.31-1.54c0-1.44.84-2.52 1.88-2.52.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.53 1.88 1.84 0 3.08-2.37 3.08-5.18 0-2.14-1.44-3.74-4.05-3.74-2.95 0-4.78 2.2-4.78 4.64 0 .84.24 1.44.62 1.9.17.2.19.28.13.51-.04.17-.14.56-.18.72-.06.23-.24.31-.44.22-1.24-.51-1.82-1.88-1.82-3.42 0-2.54 2.14-5.6 6.39-5.6 3.42 0 5.67 2.48 5.67 5.15 0 3.54-1.96 6.18-4.84 6.18-.97 0-1.88-.52-2.19-1.11l-.62 2.37c-.2.76-.62 1.52-1 2.08.74.23 1.52.35 2.33.35 5.52 0 10-4.48 10-10S17.52 2 12 2z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Shop</div>
+            <nav class="footer-links">
+              <a href="/shop.html">All Products</a>
+              <a href="/category.html?cat=heels">Heels</a>
+              <a href="/category.html?cat=sandals">Sandals</a>
+              <a href="/category.html?cat=flats">Flats</a>
+              <a href="/category.html?cat=bags">Bags</a>
+              <a href="/category.html?cat=new">New Arrivals</a>
+              <a href="/category.html?cat=sale">Sale</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-col-title">Company</div>
+            <nav class="footer-links">
+              <a href="/about.html">About Us</a>
+              <a href="/contact.html">Contact</a>
+              <a href="/blog.html">Blog</a>
+              <a href="/faq.html">FAQ</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-col-title">Help</div>
+            <nav class="footer-links">
+              <a href="/shipping.html">Shipping Info</a>
+              <a href="/returns.html">Returns &amp; Exchange</a>
+              <a href="/faq.html#size">Size Guide</a>
+              <a href="/orders.html">Track Order</a>
+              <a href="/contact.html">Customer Support</a>
+              <a href="/policy/privacy.html">Privacy Policy</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 HeelsUp. All rights reserved. Made with ❤️ in India.</p>
+        <div class="footer-pay">
+          <span class="pay-badge">UPI</span>
+          <span class="pay-badge">Visa</span>
+          <span class="pay-badge">Mastercard</span>
+          <span class="pay-badge">COD</span>
+        </div>
+        <div class="footer-legal">
+          <a href="/policy/privacy.html">Privacy Policy</a>
+          <a href="/policy/terms.html">Terms of Service</a>
+          <a href="/policy/returns.html">Exchanges</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <div style="display:flex;align-items:center;gap:12px">
+                <h3>My Cart</h3><span class="cart-count-badge" id="cart-drawer-count">0 items</span>
+            </div><button class="cart-close-btn" id="cart-close-btn">✕</button>
+        </div>
+        <div class="cart-drawer-body" id="cart-body">
+            <div style="text-align:center;padding:60px 20px">
+                <div style="font-size:3rem;margin-bottom:12px">🛍️</div>
+                <div style="font-family:var(--fh);font-size:1.1rem;color:var(--text-3)">Your cart is empty
+                </div>
+            </div>
+        </div>
+        <div class="cart-drawer-footer" id="cart-footer" style="display:none">
+            <div class="cart-summary-row"><span>Subtotal</span><span id="cart-subtotal">₹0</span></div>
+            <div class="cart-summary-row"><span>Shipping</span><span style="color:var(--teal)">Free</span>
+            </div>
+            <div class="cart-summary-row cart-summary-total"><span>Total</span><span id="cart-total">₹0</span></div>
+            <a href="checkout.html" class="btn btn btn-full" style="margin-top:14px"><i class="fa-solid fa-lock"></i> Proceed to Checkout</a>
+        </div>
+    </aside>
+    <div class="toast-container" id="toast-container"></div>
+    <a href="https://wa.me/919xxxxxxxxx" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <button class="scroll-top-btn" id="scroll-top"><i class="fa-solid fa-chevron-up"></i></button>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('heelsup_cart') || '[]');
+        let wishlist = JSON.parse(localStorage.getItem('heelsup_wishlist') || '[]');
+        document.addEventListener('DOMContentLoaded', () => { initTopbar(); initNavbar(); initSearch(); initCart(); initScrollTop(); initReveal(); updateCartUI(); updateWishlistUI(); });
+        function initReveal() { const o = new IntersectionObserver(e => { e.forEach(el => { if (el.isIntersecting) { el.target.classList.add('revealed'); o.unobserve(el.target); } }); }, { threshold: .12, rootMargin: '0px 0px -40px 0px' }); document.querySelectorAll('.reveal').forEach(el => o.observe(el)); }
+        function initTopbar() { document.getElementById('topbar-close')?.addEventListener('click', () => { const tb = document.getElementById('topbar'); tb.style.height = '0'; tb.style.overflow = 'hidden'; tb.style.padding = '0'; }); }
+        function initNavbar() {
+            const navbar = document.getElementById('navbar'); const hamburger = document.getElementById('hamburger-btn'); const mobileMenu = document.getElementById('mobile-menu');
+            window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400); });
+            hamburger?.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : ''; });
+            [document.getElementById('mobile-backdrop'), document.getElementById('mobile-menu-close')].forEach(el => el?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; }));
+        }
+        function initSearch() { const overlay = document.getElementById('search-overlay'); const input = document.getElementById('search-input'); document.getElementById('search-toggle-btn')?.addEventListener('click', () => { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(() => input.focus(), 300); }); document.getElementById('search-close-btn')?.addEventListener('click', () => { overlay.classList.remove('open'); document.body.style.overflow = ''; input.value = ''; }); overlay?.addEventListener('click', e => { if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; input.value = ''; } }); input?.addEventListener('keydown', e => { if (e.key === 'Enter' && input.value.trim()) window.location.href = `search.html?q=${encodeURIComponent(input.value.trim())}`; }); }
+        function initCart() { document.getElementById('cart-open-btn')?.addEventListener('click', openCart); document.getElementById('cart-close-btn')?.addEventListener('click', closeCart); document.getElementById('cart-backdrop')?.addEventListener('click', closeCart); }
+        function openCart() { document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-backdrop').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeCart() { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-backdrop').classList.remove('open'); document.body.style.overflow = ''; }
+        function updateCartUI() { const count = cart.reduce((s, i) => s + i.qty, 0); document.getElementById('cart-count').textContent = count; document.getElementById('cart-drawer-count').textContent = `${count} item${count !== 1 ? 's' : ''}`; renderCartItems(); }
+        function updateWishlistUI() { const wc = document.getElementById('wishlist-count'); if (wc) { wc.textContent = wishlist.length; wc.style.display = wishlist.length ? 'flex' : 'none'; } }
+        function renderCartItems() { const body = document.getElementById('cart-body'); const footer = document.getElementById('cart-footer'); if (!cart.length) { body.innerHTML = `<div style="text-align:center;padding:60px 20px"><div style="font-size:3rem;margin-bottom:12px">🛍️</div><div style="font-family:var(--fh);font-size:1.1rem;color:var(--text-3)">Your cart is empty</div><a href="shop.html" class="btn btn" style="margin-top:16px">Shop Now</a></div>`; footer.style.display = 'none'; return; } const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0); body.innerHTML = cart.map(item => `<div class="cart-item"><div class="cart-item-img"><img src="${item.img}" alt="${item.name}"/></div><div class="cart-item-body"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">₹${(item.price * item.qty).toLocaleString('en-IN')}</div><div class="qty-control"><button class="qty-btn" onclick="updateQty(${item.id},-1)">−</button><span class="qty-value">${item.qty}</span><button class="qty-btn" onclick="updateQty(${item.id},1)">+</button></div><div class="cart-item-remove" onclick="removeCartItem(${item.id})"><i class="fa-solid fa-trash-can"></i> Remove</div></div></div>`).join(''); document.getElementById('cart-subtotal').textContent = `₹${subtotal.toLocaleString('en-IN')}`; document.getElementById('cart-total').textContent = `₹${subtotal.toLocaleString('en-IN')}`; footer.style.display = 'block'; }
+        window.updateQty = (id, delta) => { const item = cart.find(i => i.id === id); if (!item) return; item.qty = Math.max(1, item.qty + delta); localStorage.setItem('heelsup_cart', JSON.stringify(cart)); updateCartUI(); };
+        window.removeCartItem = id => { cart = cart.filter(i => i.id !== id); localStorage.setItem('heelsup_cart', JSON.stringify(cart)); updateCartUI(); };
+        function initScrollTop() { document.getElementById('scroll-top')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); }
+    </script>
+
+
+  <script src="/js/wishlist.js"></script>
+</body></html>

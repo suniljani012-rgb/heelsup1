@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name="theme-color" content="#E8CCC5" />
+
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title>Secure Checkout – HeelsUp | Premium Ladies Footwear</title>
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- ═══ PRECONNECT & FONTS ═══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       DESIGN SYSTEM — HeelsUp Brand Colors
+    ═══════════════════════════════════════════════════ */
+    :root {
+      /* Brand Colors */
+      --blush: #E8CCC5;
+      --cream: #F6E7C6;
+      --sage-blue: #BDCED3;
+      --warm-gray: #BBB9B2;
+      --sage-green: #CFD4AE;
+      --dark-gray: #807E79;
+      --light-gray: #E3E3E3;
+      --red: #C0392B;
+      --red-lt: #e74c3c;
+      --red-dk: #a93226;
+
+      /* Base */
+      --ink: #1a1a1a;
+      --ink2: #2d2d2d;
+      --white: #ffffff;
+      --bg: #faf8f5;
+      --bg2: #f5f0eb;
+
+      /* Semantic */
+      --primary: var(--red);
+      --primary-lt: var(--red-lt);
+      --primary-dk: var(--red-dk);
+      --surface: var(--white);
+      --surface2: #fdf9f7;
+      --border: #e8e2dc;
+      --border2: #d4ccc5;
+      --text-h: var(--ink);
+      --text-b: #3d3d3d;
+      --text-m: #807E79;
+      --text-pale: #a09890;
+
+      /* Font System */
+      --font-head: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      /* Layout */
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-pill: 100px;
+
+      /* Shadows */
+      --shadow-xs: 0 1px 3px rgba(0, 0, 0, .06);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .08);
+      --shadow: 0 4px 20px rgba(0, 0, 0, .10);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, .12);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, .16);
+      --shadow-xl: 0 24px 64px rgba(0, 0, 0, .20);
+
+      /* Transitions */
+      --t: .22s cubic-bezier(.4, 0, .2, 1);
+      --t-slow: .4s cubic-bezier(.4, 0, .2, 1);
+
+      /* Z-index */
+      --z-nav: 100;
+      --z-toast: 9999;
+    }
+
+    /* ═══ RESET & BASE ═══ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-b);
+      background: var(--bg);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-h);
+      letter-spacing: -.01em;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color var(--t);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: inherit;
+      outline: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: var(--font-body);
+      outline: none;
+    }
+
+    ul,
+    ol {
+      list-style: none;
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--light-gray);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--warm-gray);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--dark-gray);
+    }
+
+    ::selection {
+      background: var(--blush);
+      color: var(--ink);
+    }
+
+    /* ═══ UTILITIES ═══ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    @media(max-width:768px) {
+      .container {
+        padding: 0 16px;
+      }
+    }
+
+    /* ═══════════════════════════
+       SECURE CHECKOUT HEADER
+    ═══════════════════════════ */
+    .checkout-nav {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav);
+      background: rgba(255, 255, 255, .97);
+      backdrop-filter: blur(16px) saturate(1.3);
+      -webkit-backdrop-filter: blur(16px) saturate(1.3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .checkout-nav-inner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .checkout-logo img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: contrast(1.05);
+    }
+
+    .secure-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #15803d;
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 700;
+      background: #f0fdf4;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid #bbf7d0;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .back-cart {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-m);
+      transition: all var(--t);
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--bg2);
+    }
+
+    .back-cart:hover {
+      color: var(--primary);
+      background: rgba(192, 57, 43, .06);
+    }
+
+    @media(max-width: 600px) {
+      .secure-badge span {
+        display: none;
+      }
+
+      .secure-badge {
+        padding: 8px;
+      }
+    }
+
+    /* ═══════════════════════════
+       PROGRESS STEPS
+    ═══════════════════════════ */
+    .steps-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .steps-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-pale);
+    }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--bg2);
+      color: var(--text-m);
+      transition: all var(--t);
+    }
+
+    .step-item.done .step-num {
+      background: #15803d;
+      color: #fff;
+    }
+
+    .step-item.active .step-num {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 0 3px rgba(192, 57, 43, .15);
+    }
+
+    .step-item.active {
+      color: var(--primary);
+    }
+
+    .step-item.done {
+      color: #15803d;
+    }
+
+    .step-line {
+      width: 40px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .step-line.done {
+      background: #15803d;
+    }
+
+    @media(max-width: 600px) {
+      .steps-inner {
+        gap: 6px;
+      }
+
+      .step-item span {
+        display: none;
+      }
+
+      .step-line {
+        width: 20px;
+      }
+    }
+
+    /* ═══════════════════════════
+       LAYOUT & CARDS
+    ═══════════════════════════ */
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 36px;
+      padding: 48px 0 80px;
+      align-items: start;
+    }
+
+    @media(max-width: 960px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px 0 60px;
+      }
+    }
+
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-h);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header h3 i {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .section-body {
+      padding: 24px;
+    }
+
+    @media(max-width: 600px) {
+      .section-header {
+        padding: 18px 20px;
+      }
+
+      .section-body {
+        padding: 20px;
+      }
+    }
+
+    /* ═══════════════════════════
+       FORMS
+    ═══════════════════════════ */
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media(max-width: 600px) {
+      .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-b);
+      margin-bottom: 7px;
+    }
+
+    .form-group label .req {
+      color: var(--primary);
+      margin-left: 2px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-h);
+      font-size: 14px;
+      font-family: var(--font-body);
+      transition: all var(--t);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(192, 57, 43, .1);
+    }
+
+    .form-group input::placeholder {
+      color: var(--text-pale);
+    }
+
+    .form-group input[readonly] {
+      background: var(--light-gray);
+      color: var(--text-m);
+      cursor: not-allowed;
+      border-color: var(--border);
+    }
+
+    .save-address-lbl {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-b);
+      margin-top: 8px;
+      user-select: none;
+    }
+
+    .save-address-lbl input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════
+       COUPON SECTION
+    ═══════════════════════════ */
+    .coupon-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .coupon-row input {
+      flex: 1;
+      text-transform: uppercase;
+    }
+
+    .btn-apply {
+      padding: 13px 24px;
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--t);
+    }
+
+    .btn-apply:hover {
+      background: var(--primary);
+    }
+
+    .coupon-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #15803d;
+      margin-top: 12px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .coupon-success i {
+      font-size: 1.1rem;
+    }
+
+    .coupon-remove-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: underline;
+      margin-left: auto;
+      font-family: var(--font-body);
+    }
+
+    .coupon-hints {
+      margin-top: 14px;
+      font-size: 12.5px;
+      color: var(--text-m);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .coupon-hint-btn {
+      background: rgba(192, 57, 43, .06);
+      border: 1px solid rgba(192, 57, 43, .15);
+      color: var(--primary);
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all var(--t);
+    }
+
+    .coupon-hint-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════
+       ORDER SUMMARY (STICKY)
+    ═══════════════════════════ */
+    .order-summary {
+      position: sticky;
+      top: 94px;
+    }
+
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .summary-header {
+      background: var(--ink);
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, .1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .summary-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+
+    .summary-header i {
+      color: var(--blush);
+      font-size: 1.2rem;
+    }
+
+    .summary-body {
+      padding: 24px;
+    }
+
+    .cart-item-mini {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .cart-item-mini:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .cart-item-img {
+      width: 64px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-item-name {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-h);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-meta {
+      font-size: 12px;
+      color: var(--text-m);
+      margin-bottom: 6px;
+    }
+
+    .cart-item-price {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-h);
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 20px 0;
+    }
+
+    /* Progress Bar */
+    .free-shipping-bar {
+      margin: 16px 0;
+      background: var(--bg2);
+      border-radius: 10px;
+      overflow: hidden;
+      height: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .free-shipping-fill {
+      height: 100%;
+      background: #22c55e;
+      border-radius: 10px;
+      transition: width 0.5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .free-shipping-text {
+      font-size: 12px;
+      color: var(--text-b);
+      text-align: center;
+      padding: 6px 0;
+      font-weight: 500;
+    }
+
+    .free-shipping-text strong {
+      color: #15803d;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13.5px;
+      color: var(--text-b);
+    }
+
+    .summary-row.discount {
+      color: #15803d;
+      font-weight: 600;
+      display: none;
+    }
+
+    .summary-row.total {
+      font-family: var(--font-head);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-h);
+      margin-top: 8px;
+      border-top: 2px dashed var(--border);
+      padding-top: 16px;
+    }
+
+    /* Pay Button */
+    .btn-pay {
+      width: 100%;
+      padding: 18px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all var(--t);
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(192, 57, 43, .2);
+    }
+
+    .btn-pay:hover {
+      background: var(--primary-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192, 57, 43, .3);
+    }
+
+    .btn-pay:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Trust Row Under Button */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .trust-badge {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-m);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-head);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .trust-badge i {
+      color: #15803d;
+      font-size: 14px;
+    }
+
+    /* ═══════════════════════════
+       EMPTY STATE
+    ═══════════════════════════ */
+    .empty-cart-state {
+      text-align: center;
+      padding: 100px 24px;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      max-width: 600px;
+      margin: 60px auto;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .empty-cart-state i {
+      font-size: 4.5rem;
+      color: var(--text-pale);
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+
+    .empty-cart-state h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .empty-cart-state p {
+      color: var(--text-m);
+      margin-bottom: 32px;
+      font-size: 15px;
+    }
+
+    .btn-shop {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all var(--t);
+    }
+
+    .btn-shop:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(192, 57, 43, .25);
+    }
+
+    /* ═══════════════════════════
+       TOASTS
+    ═══════════════════════════ */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: var(--z-toast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      width: min(380px, 100%);
+      padding: 0 16px;
+    }
+
+    .toast {
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      pointer-events: all;
+      width: max-content;
+      max-width: 100%;
+      transform: translateY(16px);
+      opacity: 0;
+      transition: all var(--t-slow);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      border-left: 3.5px solid var(--sage-blue);
+    }
+
+    .toast.error {
+      border-left: 3.5px solid var(--primary);
+    }
+
+    .toast.warning {
+      border-left: 3.5px solid #f59e0b;
+    }
+
+    .toast i {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ TOAST CONTAINER ═══ -->
+  <div class="toast-container" id="toast-wrap" aria-live="polite"></div>
+
+  <!-- ═══ SECURE NAVBAR ═══ -->
+  <nav class="checkout-nav" role="navigation" aria-label="Checkout navigation">
+    <div class="container checkout-nav-inner">
+      <a href="/" class="checkout-logo" aria-label="Return to HeelsUp Home">
+        <img src="/logo.png" alt="HeelsUp"
+          onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<span style=\'font-family:var(--font-head);font-size:1.6rem;font-weight:700;color:var(--ink)\'>Heels<span style=\'color:var(--primary)\'>Up</span></span>');" />
+      </a>
+      <div class="secure-badge">
+        <i class="fa-solid fa-lock" aria-hidden="true"></i> <span>Secure Checkout</span>
+      </div>
+      <a href="/cart" class="back-cart">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Return to Cart
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══ PROGRESS STEPS ═══ -->
+  <div class="steps-bar">
+    <div class="container steps-inner">
+      <div class="step-item done">
+        <div class="step-num"><i class="fa-solid fa-check"></i></div> <span>Bag</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step-item active">
+        <div class="step-num">2</div> <span>Delivery & Payment</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-num">3</div> <span>Confirmation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EMPTY STATE (Hidden by default) ═══ -->
+  <div class="container" id="empty-state" style="display:none;">
+    <div class="empty-cart-state">
+      <i class="fa-solid fa-cart-arrow-down" aria-hidden="true"></i>
+      <h2>Your Bag is Empty</h2>
+      <p>Looks like you haven't added anything to your cart yet. Let's fix that!</p>
+      <a href="/shop" class="btn-shop"><i class="fa-solid fa-shoe-prints"></i> Start Shopping</a>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN CHECKOUT LAYOUT ═══ -->
+  <div class="container checkout-grid" id="checkout-main">
+
+    <!-- LEFT COLUMN: Forms -->
+    <div>
+      <!-- Contact Info -->
+      <div class="section-card">
+        <div class="section-header">
+          <h3><i class="fa-solid fa-user"></i> Contact Information</h3>
+        </div>
+        <div class="section-body">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="c-name">Full Name <span class="req">*</span></label>
+              <input type="text" id="c-name" placeholder="E.g. Priya Sharma" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="c-phone">Mobile Number <span class="req">*</span></label>
+              <input type="tel" id="c-phone" placeholder="10-digit mobile number" maxlength="10" autocomplete="tel"
+                oninput="this.value=this.value.replace(/\D/g,'')">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="c-email">Email Address <span class="req">*</span></label>
+            <input type="email" id="c-email" placeholder="E.g. priya@example.com" autocomplete="email">
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Address -->
+      <div class="section-card">
+        <div class="section-header">
+          <h3><i class="fa-solid fa-location-dot"></i> Delivery Address</h3>
+        </div>
+        <div class="section-body">
+          <!-- Saved Addresses Dropdown (Visible if user has saved addresses) -->
+          <div class="form-group" id="saved-address-group"
+            style="display:none; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px dashed var(--border);">
+            <label for="saved-addresses">Use Saved Address</label>
+            <select id="saved-addresses" onchange="fillSavedAddress(this.value)">
+              <option value="">— Choose a saved address —</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="c-line1">Address Line 1 <span class="req">*</span></label>
+            <input type="text" id="c-line1" placeholder="House/Flat No., Building Name, Street"
+              autocomplete="address-line1">
+          </div>
+          <div class="form-group">
+            <label for="c-line2">Address Line 2 (Optional)</label>
+            <input type="text" id="c-line2" placeholder="Area, Landmark, Sector" autocomplete="address-line2">
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="c-city">City <span class="req">*</span></label>
+              <input type="text" id="c-city" placeholder="E.g. Mumbai" autocomplete="address-level2">
+            </div>
+            <div class="form-group">
+              <label for="c-pincode">Pincode <span class="req">*</span></label>
+              <input type="text" id="c-pincode" placeholder="6-digit pincode" maxlength="6" autocomplete="postal-code"
+                oninput="this.value=this.value.replace(/\D/g,'')">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="c-state">State <span class="req">*</span></label>
+            <select id="c-state" autocomplete="address-level1">
+              <option value="">Select State</option>
+              <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Chandigarh">Chandigarh</option>
+              <option value="Chhattisgarh">Chhattisgarh</option>
+              <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+              <option value="Daman and Diu">Daman and Diu</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Goa">Goa</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Himachal Pradesh">Himachal Pradesh</option>
+              <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Ladakh">Ladakh</option>
+              <option value="Lakshadweep">Lakshadweep</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Meghalaya">Meghalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Odisha">Odisha</option>
+              <option value="Puducherry">Puducherry</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Tripura">Tripura</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Uttarakhand">Uttarakhand</option>
+              <option value="West Bengal">West Bengal</option>
+            </select>
+          </div>
+
+          <label class="save-address-lbl">
+            <input type="checkbox" id="save-address" checked>
+            Save this information for next time
+          </label>
+        </div>
+      </div>
+
+      <!-- Coupon Code -->
+      <div class="section-card">
+        <div class="section-header">
+          <h3><i class="fa-solid fa-ticket"></i> Apply Discount</h3>
+        </div>
+        <div class="section-body">
+          <div class="coupon-row">
+            <input type="text" id="coupon-input" placeholder="Enter promo code" autocomplete="off">
+            <button class="btn-apply" onclick="applyCoupon()">Apply</button>
+          </div>
+
+          <div class="coupon-success" id="coupon-success">
+            <i class="fa-solid fa-circle-check"></i> <span id="coupon-msg">Code applied!</span>
+            <button class="coupon-remove-btn" onclick="removeCoupon()">Remove</button>
+          </div>
+
+          <div class="coupon-hints">
+            Available:
+            <button class="coupon-hint-btn" onclick="applyCouponCode('HEELS10')">HEELS10</button>
+            <button class="coupon-hint-btn" onclick="applyCouponCode('WELCOME20')">WELCOME20</button>
+            <button class="coupon-hint-btn" onclick="applyCouponCode('FLAT100')">FLAT100</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: Order Summary -->
+    <div class="order-summary">
+      <div class="summary-card">
+        <div class="summary-header">
+          <h3>Order Summary</h3>
+          <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+        </div>
+        <div class="summary-body">
+
+          <!-- Cart Items List -->
+          <div id="cart-items-list">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <!-- Free Shipping Progress -->
+          <div class="free-shipping-text" id="shipping-bar-text">Calculating shipping...</div>
+          <div class="free-shipping-bar">
+            <div class="free-shipping-fill" id="shipping-bar-fill" style="width:0%"></div>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <!-- Price Breakdown -->
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="s-subtotal">₹0</span>
+          </div>
+          <div class="summary-row discount" id="discount-row">
+            <span>Discount Savings</span>
+            <span id="s-discount">-₹0</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span id="s-shipping">₹0</span>
+          </div>
+
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="s-total">₹0</span>
+          </div>
+
+          <!-- Secure Pay Button -->
+          <button class="btn-pay" id="btn-pay" onclick="initiatePayment()">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i> Pay Securely
+          </button>
+
+          <!-- Trust Badges -->
+          <div class="trust-row">
+            <div class="trust-badge" title="256-bit SSL Encryption"><i class="fa-solid fa-shield-halved"
+                aria-hidden="true"></i> SSL Secure</div>
+            <div class="trust-badge" title="Powered by Razorpay"><i class="fa-solid fa-building-columns"
+                aria-hidden="true"></i> Safe Payments</div>
+            <div class="trust-badge" title="Guaranteed Quality"><i class="fa-solid fa-medal" aria-hidden="true"></i>
+              100% Authentic</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="app-config.js"></script>
+  <script src="app-auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    'use strict';
+
+    /* ── GLOBALS & CONFIG ── */
+    const FREE_SHIP_THRESHOLD = 799;
+    const STANDARD_SHIP_CHARGE = 49;
+    let couponDiscountAmount = 0;
+    let appliedCouponCode = '';
+    let savedUserAddresses = [];
+
+    /* ── DOM UTILS ── */
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    /* ── TOAST NOTIFICATION ── */
+    function toast(msg, type = 'success', dur = 4200) {
+      const wrap = $('toast-wrap');
+      if (!wrap) return;
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation' };
+      el.innerHTML = `<i class="fa-solid ${icons[type] || 'fa-circle-info'}" aria-hidden="true"></i><span>${esc(msg)}</span>`;
+      wrap.appendChild(el);
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+      setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 420) }, dur);
+    }
+
+    /* ── AUTHENTICATION GUARD ── */
+    let currentUser = null;
+    try {
+      if (typeof HeelsUpAuth !== 'undefined') {
+        currentUser = HeelsUpAuth.getUser();
+        if (!currentUser && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          window.location.href = '/login?redirect=checkout';
+        }
+      }
+    } catch (e) {
+      console.warn("Auth check bypassed for local dev");
+    }
+
+    /* ── INITIALIZATION ── */
+    document.addEventListener('DOMContentLoaded', async () => {
+      let cart = [];
+      try { if (typeof HeelsUpCart !== 'undefined') cart = HeelsUpCart.getCart(); } catch (e) { }
+
+      if (!cart || !cart.length) {
+        $('checkout-main').style.display = 'none';
+        $('empty-state').style.display = 'block';
+        return;
+      }
+
+      // Fetch user data if we have a token
+      if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.getToken()) {
+        try {
+          const res = await HeelsUpAuth.api('/api/me');
+          if (res && res.user) {
+            if (typeof HeelsUpAuth.setSession === 'function') HeelsUpAuth.setSession(HeelsUpAuth.getToken(), res.user);
+            currentUser = res.user;
+          }
+        } catch (e) { console.warn("Failed to fetch user:", e); }
+      }
+
+      // Pre-fill user data if available
+      if (currentUser) {
+        if ($('c-name')) $('c-name').value = `${currentUser.firstName || currentUser.first_name || ''} ${currentUser.lastName || currentUser.last_name || ''}`.trim();
+        if ($('c-email')) $('c-email').value = currentUser.email || '';
+        if (currentUser.phone && $('c-phone')) $('c-phone').value = currentUser.phone;
+      }
+      
+      const savedCoupon = localStorage.getItem('heelsup_coupon');
+      if (savedCoupon) {
+        setTimeout(() => window.applyCouponCode(savedCoupon), 100);
+      }
+
+      renderCheckoutCart(cart);
+      calculateAndRenderSummary();
+      await fetchSavedAddresses();
+    });
+
+    /* ── CART RENDERING ── */
+    function renderCheckoutCart(cartItems) {
+      const listEl = $('cart-items-list');
+      listEl.innerHTML = cartItems.map(item => {
+        const imgSrc = esc(item.image || 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=150&q=70');
+        return `
+      <div class="cart-item-mini">
+        <img class="cart-item-img" src="${imgSrc}" alt="${esc(item.name)}" onerror="this.style.display='none'">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${esc(item.name)}</div>
+          <div class="cart-item-meta">${item.size ? 'Size: ' + esc(item.size) + ' &middot; ' : ''}Qty: ${item.quantity || item.qty || 1}</div>
+        </div>
+        <div class="cart-item-price">₹${((item.price || 0) * (item.quantity || item.qty || 1)).toLocaleString('en-IN')}</div>
+      </div>
+    `}).join('');
+    }
+
+    /* ── SUMMARY CALCULATION ── */
+    function calculateAndRenderSummary() {
+      let subtotal = 0;
+      try { if (typeof HeelsUpCart !== 'undefined') subtotal = HeelsUpCart.getSubtotal(); } catch (e) { }
+
+      // Prevent negative subtotal
+      subtotal = Math.max(0, subtotal);
+
+      const shipping = subtotal >= FREE_SHIP_THRESHOLD ? 0 : STANDARD_SHIP_CHARGE;
+      const finalTotal = Math.max(0, subtotal - couponDiscountAmount + shipping);
+
+      $('s-subtotal').textContent = '₹' + subtotal.toLocaleString('en-IN');
+      $('s-shipping').textContent = shipping === 0 ? 'FREE' : '+₹' + shipping;
+      $('s-total').textContent = '₹' + finalTotal.toLocaleString('en-IN');
+
+      const payBtn = $('btn-pay');
+      if (payBtn) payBtn.innerHTML = `<i class="fa-solid fa-lock" aria-hidden="true"></i> Pay ₹${finalTotal.toLocaleString('en-IN')}`;
+
+      // Update Progress Bar
+      const progressPct = Math.min(100, (subtotal / FREE_SHIP_THRESHOLD) * 100);
+      $('shipping-bar-fill').style.width = progressPct + '%';
+
+      const shipTextEl = $('shipping-bar-text');
+      if (subtotal >= FREE_SHIP_THRESHOLD) {
+        shipTextEl.innerHTML = '🚚 <strong>Free Shipping Unlocked!</strong>';
+        $('shipping-bar-fill').style.background = '#22c55e'; // Green
+      } else {
+        const remaining = FREE_SHIP_THRESHOLD - subtotal;
+        shipTextEl.innerHTML = `Add <strong>₹${remaining.toLocaleString('en-IN')}</strong> more for Free Shipping`;
+        $('shipping-bar-fill').style.background = 'var(--primary)'; // Red
+      }
+
+      // Toggle Discount Row
+      const discRow = $('discount-row');
+      if (couponDiscountAmount > 0) {
+        discRow.style.display = 'flex';
+        $('s-discount').textContent = '-₹' + couponDiscountAmount.toLocaleString('en-IN');
+      } else {
+        discRow.style.display = 'none';
+      }
+    }
+
+    /* ── ADDRESS MANAGEMENT ── */
+    async function fetchSavedAddresses() {
+      if (!currentUser || typeof HeelsUpAuth === 'undefined' || !HeelsUpAuth.api) return;
+      try {
+        const data = await HeelsUpAuth.api('/api/me/addresses');
+        savedUserAddresses = data.addresses || [];
+        if (savedUserAddresses.length > 0) {
+          const group = $('saved-address-group');
+          const select = $('saved-addresses');
+          group.style.display = 'block';
+
+          savedUserAddresses.forEach(addr => {
+            const opt = document.createElement('option');
+            opt.value = addr.id;
+            opt.textContent = `${addr.name || 'Saved'} — ${addr.address_line1 || addr.addressLine1}, ${addr.city}`;
+            select.appendChild(opt);
+          });
+
+          // Auto-fill default address
+          const defAddr = savedUserAddresses.find(a => a.is_default || a.isDefault) || savedUserAddresses[0];
+          if (defAddr) {
+            select.value = defAddr.id;
+            fillSavedAddress(defAddr.id);
+          }
+        }
+      } catch (e) { console.warn('Could not fetch addresses', e); }
+    }
+
+    window.fillSavedAddress = function (id) {
+      if (!id) return;
+      const addr = savedUserAddresses.find(a => a.id == id);
+      if (!addr) return;
+
+      if (addr.name) $('c-name').value = addr.name;
+      if (addr.phone) $('c-phone').value = addr.phone;
+      $('c-line1').value = addr.address_line1 || addr.addressLine1 || '';
+      $('c-line2').value = addr.address_line2 || addr.addressLine2 || '';
+      $('c-city').value = addr.city || '';
+      $('c-pincode').value = addr.pincode || '';
+
+      const stateVal = addr.state || '';
+      const stateSel = $('c-state');
+      for (let i = 0; i < stateSel.options.length; i++) {
+        if (stateSel.options[i].value.toLowerCase() === stateVal.toLowerCase()) {
+          stateSel.selectedIndex = i;
+          break;
+        }
+      }
+    };
+
+    /* ── COUPON ENGINE ── */
+    window.applyCouponCode = function (code) {
+      $('coupon-input').value = code;
+      applyCoupon();
+    };
+
+    window.applyCoupon = async function () {
+      const codeInp = $('coupon-input');
+      const code = codeInp.value.trim().toUpperCase();
+
+      if (!code) {
+        toast('Please enter a coupon code', 'warning');
+        codeInp.focus();
+        return;
+      }
+
+      const applyBtn = document.querySelector('.btn-apply');
+      const ogText = applyBtn.textContent;
+      applyBtn.textContent = '...';
+      applyBtn.disabled = true;
+
+      try {
+        let subtotal = 0;
+        if (typeof HeelsUpCart !== 'undefined') subtotal = HeelsUpCart.getSubtotal();
+
+        let discount = 0;
+
+        // Mock API or actual API call depending on environment
+        if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api && window.location.hostname !== 'localhost') {
+          const res = await HeelsUpAuth.api('/api/coupons/validate', {
+            method: 'POST',
+            body: JSON.stringify({ code, subtotal })
+          });
+          discount = res.discount || 0;
+        } else {
+          // Fallback local logic for demo/preview
+          if (code === 'HEELS10') discount = Math.round(subtotal * 0.1);
+          else if (code === 'WELCOME20') discount = Math.round(subtotal * 0.2);
+          else if (code === 'FLAT100' && subtotal > 500) discount = 100;
+          else throw new Error('Invalid or expired coupon code');
+        }
+
+        couponDiscountAmount = discount;
+        appliedCouponCode = code;
+
+        $('coupon-success').style.display = 'flex';
+        $('coupon-msg').innerHTML = `<strong>${esc(code)}</strong> applied! You saved ₹${discount.toLocaleString('en-IN')}`;
+
+        calculateAndRenderSummary();
+        localStorage.setItem('heelsup_coupon', code);
+        toast(`Awesome! You saved ₹${discount.toLocaleString('en-IN')}`, 'success');
+
+      } catch (err) {
+        toast(err.message || 'Invalid coupon code', 'error');
+        removeCoupon();
+      } finally {
+        applyBtn.textContent = ogText;
+        applyBtn.disabled = false;
+      }
+    };
+
+    window.removeCoupon = function () {
+      localStorage.removeItem('heelsup_coupon');
+      couponDiscountAmount = 0;
+      appliedCouponCode = '';
+      $('coupon-success').style.display = 'none';
+      $('coupon-input').value = '';
+      calculateAndRenderSummary();
+      toast('Coupon removed', 'info');
+    };
+
+    /* ── PAYMENT INTEGRATION (RAZORPAY) ── */
+    window.initiatePayment = async function () {
+      // 1. Validate Form
+      const name = $('c-name').value.trim();
+      const email = $('c-email').value.trim();
+      const phone = $('c-phone').value.trim();
+      const line1 = $('c-line1').value.trim();
+      const line2 = $('c-line2').value.trim();
+      const city = $('c-city').value.trim();
+      const state = $('c-state').value.trim();
+      const pin = $('c-pincode').value.trim();
+
+      if (!name || !email || !phone || !line1 || !city || !state || !pin) {
+        toast('Please fill all required fields marked with *', 'error');
+        return;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        toast('Please enter a valid 10-digit mobile number', 'error');
+        $('c-phone').focus(); return;
+      }
+      if (!/^\d{6}$/.test(pin)) {
+        toast('Please enter a valid 6-digit pincode', 'error');
+        $('c-pincode').focus(); return;
+      }
+
+      // 2. Prepare Data
+      const btn = $('btn-pay');
+      const ogHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing Securely...';
+
+      try {
+        // Opt-in address saving
+        if ($('save-address').checked && typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api) {
+          HeelsUpAuth.api('/api/me/addresses', {
+            method: 'POST',
+            body: JSON.stringify({
+              name, phone, addressLine1: line1, addressLine2: line2, city, state, pincode: pin, isDefault: savedUserAddresses.length === 0
+            })
+          }).catch(e => console.warn('Failed to save address implicitly', e));
+        }
+
+        let cart = [];
+        if (typeof HeelsUpCart !== 'undefined') cart = HeelsUpCart.getCart();
+
+        const orderItems = cart.map(item => ({
+          productId: item.id,
+          name: item.name,
+          sku: item.sku || '',
+          qty: item.quantity || item.qty || 1,
+          price: item.price,
+          size: item.size || '',
+          image: item.image || ''
+        }));
+
+        const payload = {
+          customer: { name, email, phone, addressLine1: line1, addressLine2: line2, city, state, pincode: pin },
+          items: orderItems,
+          deliveryMethod: 'standard',
+          couponCode: appliedCouponCode || null
+        };
+
+        // 3. Initiate Order Backend Call
+        let orderData;
+        if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api && window.location.hostname !== 'localhost') {
+          orderData = await HeelsUpAuth.api('/api/orders/initiate', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+        } else {
+          // Simulation for development
+          await new Promise(r => setTimeout(r, 1200));
+          toast('Simulating payment for development. Redirecting...', 'info');
+          if (typeof HeelsUpCart !== 'undefined') HeelsUpCart.clearCart();
+          localStorage.removeItem('heelsup_coupon');
+          setTimeout(() => { window.location.href = '/orders'; }, 1500);
+          return;
+        }
+
+        if (orderData.key === 'free_order') {
+           toast('Order confirmed successfully (Free Order)!', 'success');
+           if (typeof HeelsUpCart !== 'undefined') HeelsUpCart.clearCart();
+           localStorage.removeItem('heelsup_coupon');
+           setTimeout(() => { window.location.href = '/orders'; }, 1500);
+           return;
+        }
+
+        // 4. Load Razorpay Script Dynamically
+        await injectScript('https://checkout.razorpay.com/v1/checkout.js');
+
+        // 5. Configure Razorpay
+        const options = {
+          key: orderData.key,
+          amount: orderData.razorpayOrder.amount, // in paise
+          currency: 'INR',
+          name: 'HeelsUp',
+          description: `Order ${orderData.order.order_number}`,
+          image: '/logo.png', // Or absolute URL
+          order_id: orderData.razorpayOrder.id,
+          theme: { color: '#C0392B' }, // Match Primary Red
+          prefill: { name: name, email: email, contact: phone },
+          handler: async function (response) {
+            btn.innerHTML = '<i class="fa-solid fa-shield-check"></i> Verifying...';
+            try {
+              // 6. Verify Payment Backend Call
+              const verifyRes = await HeelsUpAuth.api('/api/payments/razorpay/verify', {
+                method: 'POST',
+                body: JSON.stringify({
+                  orderId: orderData.order.id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature
+                })
+              });
+
+              // 7. Success
+              if (typeof HeelsUpCart !== 'undefined') HeelsUpCart.clearCart();
+              window.location.href = `/order-confirmation?id=${verifyRes.orderId}&num=${verifyRes.orderNumber}`;
+            } catch (e) {
+              toast('Verification failed. Please contact support with Order #' + orderData.order.order_number, 'error', 8000);
+              resetPayBtn(btn, ogHtml);
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              toast('Payment cancelled', 'warning');
+              resetPayBtn(btn, ogHtml);
+              HeelsUpAuth.api('/api/payments/razorpay/fail', { method: 'POST', body: JSON.stringify({ orderId: orderData.order.id, razorpay_order_id: orderData.razorpayOrder.id }) }).catch(() => { });
+            }
+          }
+        };
+
+        // 8. Open Razorpay
+        const rzp = new window.Razorpay(options);
+        rzp.on('payment.failed', function (resp) {
+          toast('Payment Failed: ' + (resp.error?.description || 'Unknown error'), 'error', 6000);
+          resetPayBtn(btn, ogHtml);
+          HeelsUpAuth.api('/api/payments/razorpay/fail', { method: 'POST', body: JSON.stringify({ orderId: orderData.order.id, razorpay_order_id: orderData.razorpayOrder.id }) }).catch(() => { });
+        });
+        rzp.open();
+
+      } catch (err) {
+        console.error(err);
+        if (err.status === 401 || String(err.message).includes('401')) {
+          window.location.href = '/login?redirect=checkout';
+          return;
+        }
+        toast(err.message || 'An error occurred while preparing your order. Please try again.', 'error');
+        resetPayBtn(btn, ogHtml);
+      }
+    };
+
+    /* ── UTILS ── */
+    function resetPayBtn(btn, originalHTML) {
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+      calculateAndRenderSummary(); // Refresh total in case it changed
+    }
+
+    function injectScript(src) {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+  </script>
+</body>
+
+</html>

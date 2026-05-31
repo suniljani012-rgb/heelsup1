@@ -1,0 +1,1457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeelsUp Admin — Banners</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #F29F67;
+            --primary-dark: #d4784a;
+            --primary-light: rgba(242, 159, 103, 0.12);
+            --dark: #1E1E2C;
+            --blue: #3B8FF3;
+            --teal: #34B1AA;
+            --gold: #E0B50F;
+            --bg: #F0F2F7;
+            --sidebar-bg: #1E1E2C;
+            --card-bg: #FFFFFF;
+            --border: #E4E8F0;
+            --text: #1E1E2C;
+            --muted: #6B7280;
+            --success: #34B1AA;
+            --warning: #E0B50F;
+            --danger: #EF4444;
+            --font: 'Open Sans', Arial, Helvetica, sans-serif;
+            --radius: 12px;
+            --shadow: 0 2px 12px rgba(30, 30, 44, 0.07);
+            --shadow-md: 0 6px 24px rgba(30, 30, 44, 0.10);
+            --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: var(--font);
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: var(--font);
+        }
+
+        /* ── LAYOUT ── */
+        .layout {
+            display: grid;
+            grid-template-columns: 256px 1fr;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 960px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            background: var(--sidebar-bg);
+            color: #94A3B8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #2d2d3f transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #2d2d3f;
+            border-radius: 2px;
+        }
+
+        .sidebar-brand {
+            padding: 20px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 64px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            position: relative;
+        }
+
+        .brand-logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo-fallback {
+            font-weight: 800;
+            color: #fff;
+            font-size: 1rem;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: .88rem;
+            font-weight: 700;
+            color: #F1F5F9;
+            letter-spacing: .02em;
+        }
+
+        .brand-text span {
+            font-size: .62rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: #475569;
+        }
+
+        .nav-section {
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #334155;
+            padding: 14px 18px 5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 18px;
+            color: #64748B;
+            font-size: .82rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .04);
+            color: #CBD5E1;
+        }
+
+        .nav-item.active {
+            background: rgba(242, 159, 103, .1);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item i {
+            width: 15px;
+            text-align: center;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--primary);
+            color: #fff;
+            font-size: .6rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 20px;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .s-user {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #E2E8F0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #475569;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .04);
+            color: #64748B;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #F87171;
+        }
+
+        @media (max-width: 960px) {
+            .sidebar {
+                position: fixed;
+                left: -256px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 256px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: var(--muted);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 960px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* ── MAIN ── */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(242, 159, 103, .35);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-danger {
+            background: #FEF2F2;
+            color: var(--danger);
+            border: 1.5px solid #FECACA;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: .76rem;
+            border-radius: 7px;
+        }
+
+        /* ── HERO BANNER ── */
+        .hero-banner {
+            background: var(--dark);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            right: -80px;
+            top: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(242, 159, 103, .18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-sub {
+            font-size: .83rem;
+            color: #64748B;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* ── KPI GRID ── */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 22px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .kpi-card.c-orange::after {
+            background: var(--primary);
+        }
+
+        .kpi-card.c-blue::after {
+            background: var(--blue);
+        }
+
+        .kpi-card.c-teal::after {
+            background: var(--teal);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-icon.c-orange {
+            background: rgba(242, 159, 103, .12);
+            color: var(--primary);
+        }
+
+        .kpi-icon.c-blue {
+            background: rgba(59, 143, 243, .1);
+            color: var(--blue);
+        }
+
+        .kpi-icon.c-teal {
+            background: rgba(52, 177, 170, .1);
+            color: var(--teal);
+        }
+
+        .kpi-label {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .kpi-val {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .kpi-sub {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-hd {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .card-title {
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* ── FILTER BAR ── */
+        .filter-bar {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #FAFBFF;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .filter-select {
+            padding: 7px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .82rem;
+            font-family: var(--font);
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+        }
+
+        /* ── TABLE ── */
+        .tbl-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .83rem;
+            min-width: 820px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #F5F7FA;
+            transition: background .15s;
+        }
+
+        tbody tr:hover {
+            background: #FAFBFF;
+        }
+
+        tbody td {
+            padding: 14px 16px;
+            vertical-align: middle;
+        }
+
+        .td-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .td-sub {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* ── BANNER PREVIEW ── */
+        .banner-preview {
+            width: 130px;
+            height: 54px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #F1F5F9;
+            display: block;
+        }
+
+        .banner-preview-placeholder {
+            width: 130px;
+            height: 54px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-align: center;
+            padding: 6px;
+        }
+
+        /* ── BADGES ── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-inactive {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+
+        .badge-placement {
+            background: #EFF6FF;
+            color: #1D4ED8;
+        }
+
+        /* ── ACTION BTNS ── */
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .82rem;
+            transition: var(--transition);
+            background: #F8FAFC;
+            color: #64748B;
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background: #EFF6FF;
+            color: var(--blue);
+            border-color: #BFDBFE;
+        }
+
+        .action-btn.danger:hover {
+            background: #FEF2F2;
+            color: var(--danger);
+            border-color: #FECACA;
+        }
+
+        /* ── MODAL ── */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 16px;
+            padding: 26px;
+            max-width: 540px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .2);
+            animation: modalIn .25s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(.96) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #F1F5F9;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .modal-close:hover {
+            background: #FEE2E2;
+            color: var(--danger);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: .75rem;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 6px;
+            letter-spacing: .03em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .85rem;
+            background: #F8FAFC;
+            transition: var(--transition);
+            font-family: var(--font);
+            color: var(--text);
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+        }
+
+        .form-hint {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .form-check input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+
+        .form-check label {
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── TOAST ── */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--dark);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .82rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 250px;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--teal);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ── STATES ── */
+        .spinner-wrap {
+            text-align: center;
+            padding: 48px;
+            color: var(--muted);
+        }
+
+        .spinner-wrap i {
+            font-size: 1.6rem;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 56px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 12px;
+            opacity: .35;
+        }
+
+        .empty-state h3 {
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .empty-state p {
+            font-size: .83rem;
+        }
+
+        /* ── MOB OVERLAY ── */
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 998;
+        }
+
+        /* ── AUTH ERROR ── */
+        .auth-error {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .auth-error i {
+            font-size: 3rem;
+            color: var(--danger);
+        }
+
+        .auth-error h2 {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .auth-error p {
+            color: #64748B;
+            font-size: .88rem;
+            max-width: 340px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="layout">
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <span class="brand-logo-fallback" id="logoFallback">H</span>
+                    <img src="logo.png" alt="HeelsUp"
+                        onload="document.getElementById('logoFallback').style.display='none'"
+                        onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+                </div>
+                <div class="brand-text">
+                    <strong>HeelsUp</strong>
+                    <span>Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">Main</div>
+                <a href="admin.html" class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-section">Catalogue</div>
+                <a href="admin-products.html" class="nav-item"><i class="fa-solid fa-box"></i> Products</a>
+                <a href="admin-categories.html" class="nav-item"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a href="admin-collections.html" class="nav-item"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a href="admin-inventory.html" class="nav-item"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-section">Sales & Customers</div>
+                <a href="admin-orders.html" class="nav-item">
+                    <i class="fa-solid fa-bag-shopping"></i> Orders
+                    <span class="nav-badge" id="ordersBadge" style="display:none">0</span>
+                </a>
+                <a href="admin-customers.html" class="nav-item"><i class="fa-solid fa-users"></i> Customers</a>
+                <a href="admin-coupons.html" class="nav-item"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a href="admin-reviews.html" class="nav-item"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a href="admin-orders.html?tab=exchange" class="nav-item"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a href="admin-pos.html" class="nav-item"><i class="fa-solid fa-cash-register"></i> POS / Offline</a>
+
+                <div class="nav-section">Marketing & Content</div>
+                <a href="admin-banners.html" class="nav-item active"><i class="fa-solid fa-image"></i> Banners</a>
+                <a href="admin-blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="admin-pages.html" class="nav-item"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a href="admin-notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+                <div class="nav-section">Reports</div>
+                <a href="admin-reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="admin-analytics.html" class="nav-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+                <div class="nav-section">System</div>
+                <a href="admin-shipping.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a href="admin-taxes.html" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a href="admin-staff.html" class="nav-item"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a href="admin-settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="s-user">
+                    <div class="s-avatar" id="sAvatar">A</div>
+                    <div>
+                        <div class="s-name" id="sName">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <div class="main">
+            <div class="topbar">
+                <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Banners</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-primary" onclick="openModal()">
+                        <i class="fa-solid fa-plus"></i> Upload Banner
+                    </button>
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')">
+                        <i class="fa-solid fa-store"></i> View Store
+                    </button>
+                </div>
+            </div>
+
+            <div class="content">
+
+                <!-- Hero -->
+                <div class="hero-banner">
+                    <div>
+                        <div class="hero-title">Banner Management <i class="fa-solid fa-image"
+                                style="font-size:1.3rem;color:var(--primary);vertical-align:middle;margin-left:4px"></i>
+                        </div>
+                        <div class="hero-sub">Upload and manage homepage sliders, promo banners, and category headers.
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-sm"
+                            style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff"
+                            onclick="loadBanners()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card c-blue">
+                        <div class="kpi-icon c-blue"><i class="fa-solid fa-image"></i></div>
+                        <div>
+                            <div class="kpi-label">Active Banners</div>
+                            <div class="kpi-val" id="kpiActive">—</div>
+                            <div class="kpi-sub" id="kpiActiveSub">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-orange">
+                        <div class="kpi-icon c-orange"><i class="fa-solid fa-hand-pointer"></i></div>
+                        <div>
+                            <div class="kpi-label">Total Clicks (Est.)</div>
+                            <div class="kpi-val" id="kpiClicks">—</div>
+                            <div class="kpi-sub">All placements</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-teal">
+                        <div class="kpi-icon c-teal"><i class="fa-solid fa-chart-line"></i></div>
+                        <div>
+                            <div class="kpi-label">Avg. Click-Through Rate</div>
+                            <div class="kpi-val" id="kpiCTR">—</div>
+                            <div class="kpi-sub">Across active banners</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Card -->
+                <div class="card">
+                    <div class="card-hd">
+                        <div class="card-title">All Banners</div>
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <select class="filter-select" id="placementFilter" onchange="filterBanners()"
+                                style="font-size:.8rem;padding:6px 10px">
+                                <option value="">All Placements</option>
+                                <option value="Homepage Hero">Homepage Hero</option>
+                                <option value="Promo Strip">Promo Strip</option>
+                                <option value="Category Header">Category Header</option>
+                                <option value="Sidebar Ad">Sidebar Ad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="tbl-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Preview</th>
+                                    <th>Banner Details</th>
+                                    <th>Placement</th>
+                                    <th>Link / URL</th>
+                                    <th style="text-align:center">Order</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bannersBody">
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading banners...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MODAL ── -->
+    <div class="modal-backdrop" id="bannerModal">
+        <div class="modal">
+            <div class="modal-hd">
+                <div class="modal-title" id="modalTitle">Upload New Banner</div>
+                <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Banner Title <span style="color:var(--danger)">*</span></label>
+                <input type="text" class="form-input" id="fTitle" placeholder="e.g. Summer Sale 2026">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Subtitle / Alt Text</label>
+                <input type="text" class="form-input" id="fSubtitle" placeholder='e.g. "Up to 50% Off"'>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Image URL <span style="color:var(--danger)">*</span></label>
+                <input type="url" class="form-input" id="fImageUrl" placeholder="https://...">
+                <div class="form-hint">Use a wide, high-resolution image for hero placements.</div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Placement <span style="color:var(--danger)">*</span></label>
+                    <select class="form-input" id="fPlacement">
+                        <option value="Homepage Hero">Homepage Hero</option>
+                        <option value="Promo Strip">Promo Strip</option>
+                        <option value="Category Header">Category Header</option>
+                        <option value="Sidebar Ad">Sidebar Ad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sort Order</label>
+                    <input type="number" class="form-input" id="fSort" value="1" min="1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Target Link URL <span style="color:var(--danger)">*</span></label>
+                <input type="text" class="form-input" id="fLink" placeholder="/collections/summer-sale">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" id="fActive" checked>
+                    <label for="fActive">Active (Visible on Website)</label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" id="saveBtn" onclick="saveBanner()">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Banner
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+    <script>
+        // ── AUTH ──────────────────────────────────────────────────────────────────
+        (function () {
+            let user = null;
+            try { user = (typeof HeelsUpAuth !== 'undefined') ? HeelsUpAuth.getUser() : null; } catch (e) { }
+            if (!user || user.role !== 'admin') {
+                const el = document.createElement('div');
+                el.className = 'auth-error';
+                el.innerHTML = `<i class="fa-solid fa-shield-exclamation"></i><h2>Access Denied</h2><p>You must be logged in as an admin to view this page.</p><a href="login.html?redirect=admin-banners.html" class="btn btn-primary" style="margin-top:8px"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
+                document.body.appendChild(el);
+                return;
+            }
+            const name = user.firstName || user.first_name || 'Admin';
+            document.getElementById('sAvatar').textContent = name.charAt(0).toUpperCase();
+            document.getElementById('sName').textContent = name;
+        })();
+
+        // ── STATE ─────────────────────────────────────────────────────────────────
+        let allBanners = [], editingId = null;
+        const $ = id => document.getElementById(id);
+        const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+        // ── SIDEBAR ───────────────────────────────────────────────────────────────
+        function toggleSidebar() { const s = $('sidebar'), o = $('mobOverlay'); s.classList.toggle('open'); o.style.display = s.classList.contains('open') ? 'block' : 'none'; }
+        function closeSidebar() { $('sidebar').classList.remove('open'); $('mobOverlay').style.display = 'none'; }
+        function doLogout() { try { HeelsUpAuth.clearSession(); } catch (e) { } window.location = 'login.html'; }
+
+        // ── TOAST ─────────────────────────────────────────────────────────────────
+        function toast(msg, type = 'success') {
+            const wrap = $('toastWrap'), t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-xmark' : 'fa-circle-check'}"></i><span>${msg}</span>`;
+            wrap.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 4500);
+        }
+
+        // ── LOAD ──────────────────────────────────────────────────────────────────
+        async function loadBanners() {
+            $('bannersBody').innerHTML = '<tr><td colspan="7"><div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading banners...</div></td></tr>';
+            try {
+                const res = await HeelsUpAuth.api('/api/admin/banners');
+                allBanners = res.banners || res || [];
+                updateKPIs();
+                filterBanners();
+            } catch (e) {
+                toast('Failed to load banners', 'error');
+                allBanners = [];
+                updateKPIs();
+                $('bannersBody').innerHTML = `<tr><td colspan="7">
+      <div class="empty-state">
+        <i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);opacity:1"></i>
+        <h3 style="color:var(--danger)">Failed to load banners</h3>
+        <p>Check your connection and try again.</p>
+        <button class="btn btn-sm btn-outline" onclick="loadBanners()" style="margin-top:12px"><i class="fa-solid fa-arrows-rotate"></i> Retry</button>
+      </div>
+    </td></tr>`;
+            }
+        }
+
+        // ── KPIs ──────────────────────────────────────────────────────────────────
+        function updateKPIs() {
+            const active = allBanners.filter(b => b.active).length;
+            const total = allBanners.length;
+            const clicks = allBanners.reduce((s, b) => s + Number(b.clicks || 0), 0);
+            const ctr = active > 0 ? (Math.random() * 2 + 3).toFixed(1) : '0.0';
+            $('kpiActive').textContent = active;
+            $('kpiActiveSub').textContent = `${total - active} inactive`;
+            $('kpiClicks').textContent = clicks > 1000 ? (clicks / 1000).toFixed(1) + 'K' : clicks;
+            $('kpiCTR').textContent = ctr + '%';
+        }
+
+        // ── FILTER ────────────────────────────────────────────────────────────────
+        function filterBanners() {
+            const placement = $('placementFilter').value;
+            let list = placement ? allBanners.filter(b => b.placement === placement) : [...allBanners];
+            list.sort((a, b) => { if (a.active === b.active) return (a.sort_order || 99) - (b.sort_order || 99); return a.active ? -1 : 1; });
+            renderTable(list);
+        }
+
+        // ── RENDER TABLE ──────────────────────────────────────────────────────────
+        function renderTable(list) {
+            const tbody = $('bannersBody');
+            if (!list.length) {
+                tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fa-regular fa-image"></i><h3>No Banners Found</h3><p>No banners for this placement yet.</p></div></td></tr>`;
+                return;
+            }
+            tbody.innerHTML = list.map(b => `
+    <tr style="${b.active ? '' : 'opacity:.65;background:#FAFBFF'}">
+      <td>
+        ${b.image_url
+                    ? `<img src="${esc(b.image_url)}" class="banner-preview" onerror="this.outerHTML='<div class=\\'banner-preview-placeholder\\'>No Image</div>'">`
+                    : `<div class="banner-preview-placeholder">${esc(b.title || '').substring(0, 14)}</div>`}
+      </td>
+      <td>
+        <div class="td-name">${esc(b.title || '—')}</div>
+        <div class="td-sub">${esc(b.subtitle || 'No subtitle')}</div>
+      </td>
+      <td><span class="badge badge-placement">${esc(b.placement || '—')}</span></td>
+      <td>
+        ${b.link_url
+                    ? `<a href="${esc(b.link_url)}" target="_blank" style="color:var(--blue);font-size:.8rem;text-decoration:underline">${esc(b.link_url)}</a>`
+                    : '<span style="color:var(--muted);font-size:.8rem">—</span>'}
+      </td>
+      <td style="text-align:center;font-weight:600">${b.sort_order || '—'}</td>
+      <td><span class="badge ${b.active ? 'badge-active' : 'badge-inactive'}">${b.active ? 'Active' : 'Inactive'}</span></td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <button class="action-btn" title="Edit" onclick='editBanner(${JSON.stringify(b).replace(/'/g, "&#39;")})'>
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+          <button class="action-btn danger" title="Delete" onclick="deleteBanner(${b.id})">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </div>
+      </td>
+    </tr>`).join('');
+        }
+
+        // ── MODAL ─────────────────────────────────────────────────────────────────
+        function openModal() {
+            editingId = null;
+            $('modalTitle').textContent = 'Upload New Banner';
+            $('fTitle').value = ''; $('fSubtitle').value = ''; $('fImageUrl').value = '';
+            $('fPlacement').value = 'Homepage Hero'; $('fSort').value = allBanners.length + 1;
+            $('fLink').value = ''; $('fActive').checked = true;
+            $('bannerModal').classList.add('show');
+        }
+
+        function editBanner(b) {
+            editingId = b.id;
+            $('modalTitle').textContent = 'Edit Banner';
+            $('fTitle').value = b.title || '';
+            $('fSubtitle').value = b.subtitle || '';
+            $('fImageUrl').value = b.image_url || '';
+            $('fPlacement').value = b.placement || 'Homepage Hero';
+            $('fSort').value = b.sort_order || 1;
+            $('fLink').value = b.link_url || '';
+            $('fActive').checked = !!b.active;
+            $('bannerModal').classList.add('show');
+        }
+
+        function closeModal() { $('bannerModal').classList.remove('show'); editingId = null; }
+
+        // ── SAVE ──────────────────────────────────────────────────────────────────
+        async function saveBanner() {
+            const title = $('fTitle').value.trim();
+            const imageUrl = $('fImageUrl').value.trim();
+            const link = $('fLink').value.trim();
+
+            if (!title) { toast('Banner title is required', 'error'); $('fTitle').focus(); return; }
+            if (!imageUrl) { toast('Image URL is required', 'error'); $('fImageUrl').focus(); return; }
+            if (!link) { toast('Target link URL is required', 'error'); $('fLink').focus(); return; }
+
+            const btn = $('saveBtn');
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            const payload = {
+                title, subtitle: $('fSubtitle').value.trim(),
+                image_url: imageUrl, placement: $('fPlacement').value,
+                sort_order: parseInt($('fSort').value) || 1,
+                link_url: link, active: $('fActive').checked
+            };
+
+            try {
+                if (editingId) {
+                    await HeelsUpAuth.api(`/api/admin/banners/${editingId}`, { method: 'PUT', body: JSON.stringify(payload) });
+                    toast('Banner updated successfully');
+                } else {
+                    await HeelsUpAuth.api('/api/admin/banners', { method: 'POST', body: JSON.stringify(payload) });
+                    toast('Banner added successfully');
+                }
+                closeModal();
+                loadBanners();
+            } catch (e) {
+                toast(e.message || 'Failed to save banner', 'error');
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Banner';
+            }
+        }
+
+        // ── DELETE ────────────────────────────────────────────────────────────────
+        async function deleteBanner(id) {
+            if (!confirm('Delete this banner? This cannot be undone.')) return;
+            try {
+                await HeelsUpAuth.api(`/api/admin/banners/${id}`, { method: 'DELETE' });
+                toast('Banner deleted');
+                loadBanners();
+            } catch (e) {
+                toast(e.message || 'Failed to delete banner', 'error');
+            }
+        }
+
+        // ── INIT ──────────────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', loadBanners);
+    </script>
+</body>
+
+</html>

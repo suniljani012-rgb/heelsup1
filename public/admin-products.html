@@ -1,0 +1,2090 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeelsUp Admin — Products</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #F29F67;
+            --primary-dark: #d4784a;
+            --primary-light: rgba(242, 159, 103, 0.12);
+            --dark: #1E1E2C;
+            --blue: #3B8FF3;
+            --teal: #34B1AA;
+            --gold: #E0B50F;
+            --bg: #F0F2F7;
+            --sidebar-bg: #1E1E2C;
+            --card-bg: #FFFFFF;
+            --border: #E4E8F0;
+            --text: #1E1E2C;
+            --muted: #6B7280;
+            --success: #34B1AA;
+            --warning: #E0B50F;
+            --danger: #EF4444;
+            --purple: #7C3AED;
+            --font: 'Open Sans', Arial, Helvetica, sans-serif;
+            --radius: 12px;
+            --shadow: 0 2px 12px rgba(30, 30, 44, 0.07);
+            --shadow-md: 0 6px 24px rgba(30, 30, 44, 0.10);
+            --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: var(--font);
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: var(--font);
+        }
+
+        /* ── LAYOUT ── */
+        .layout {
+            display: grid;
+            grid-template-columns: 256px 1fr;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 960px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            background: var(--sidebar-bg);
+            color: #94A3B8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #2d2d3f transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #2d2d3f;
+            border-radius: 2px;
+        }
+
+        .sidebar-brand {
+            padding: 20px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 64px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            position: relative;
+        }
+
+        .brand-logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo-fallback {
+            font-weight: 800;
+            color: #fff;
+            font-size: 1rem;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: .88rem;
+            font-weight: 700;
+            color: #F1F5F9;
+            letter-spacing: .02em;
+        }
+
+        .brand-text span {
+            font-size: .62rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: #475569;
+        }
+
+        .nav-section {
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #334155;
+            padding: 14px 18px 5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 18px;
+            color: #64748B;
+            font-size: .82rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .04);
+            color: #CBD5E1;
+        }
+
+        .nav-item.active {
+            background: rgba(242, 159, 103, .1);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item i {
+            width: 15px;
+            text-align: center;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--primary);
+            color: #fff;
+            font-size: .6rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 20px;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .s-user {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #E2E8F0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #475569;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .04);
+            color: #64748B;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #F87171;
+        }
+
+        @media (max-width: 960px) {
+            .sidebar {
+                position: fixed;
+                left: -256px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 256px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: var(--muted);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 960px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* ── MAIN ── */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(242, 159, 103, .35);
+        }
+
+        .btn-primary:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-ghost {
+            color: var(--muted);
+            background: transparent;
+        }
+
+        .btn-ghost:hover {
+            background: #F1F5F9;
+            color: var(--text);
+        }
+
+        .btn-dark {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .btn-dark:hover {
+            background: #2d2d44;
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: .76rem;
+            border-radius: 7px;
+        }
+
+        .btn-danger-soft {
+            background: #FEF2F2;
+            color: var(--danger);
+            border: 1.5px solid #FECACA;
+        }
+
+        .btn-danger-soft:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        /* ── HERO ── */
+        .hero-banner {
+            background: var(--dark);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            right: -80px;
+            top: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(242, 159, 103, .18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-sub {
+            font-size: .83rem;
+            color: #64748B;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 1;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        /* ── KPI GRID ── */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .kpi-card.c-blue::after {
+            background: var(--blue);
+        }
+
+        .kpi-card.c-teal::after {
+            background: var(--teal);
+        }
+
+        .kpi-card.c-gold::after {
+            background: var(--gold);
+        }
+
+        .kpi-card.c-danger::after {
+            background: var(--danger);
+        }
+
+        .kpi-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-icon.c-blue {
+            background: rgba(59, 143, 243, .1);
+            color: var(--blue);
+        }
+
+        .kpi-icon.c-teal {
+            background: rgba(52, 177, 170, .1);
+            color: var(--teal);
+        }
+
+        .kpi-icon.c-gold {
+            background: rgba(224, 181, 15, .1);
+            color: var(--gold);
+        }
+
+        .kpi-icon.c-danger {
+            background: rgba(239, 68, 68, .1);
+            color: var(--danger);
+        }
+
+        .kpi-label {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .kpi-val {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .kpi-sub {
+            font-size: .7rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .kpi-sub.teal {
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .kpi-sub.danger {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .kpi-sub.warn {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-hd {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+            flex-wrap: wrap;
+        }
+
+        .card-title {
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* ── FILTER BAR ── */
+        .filter-bar {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+            background: #FAFBFF;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: .8rem;
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 32px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .82rem;
+            font-family: var(--font);
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .82rem;
+            font-family: var(--font);
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+        }
+
+        /* ── TABLE ── */
+        .tbl-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .83rem;
+            min-width: 960px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #F5F7FA;
+            transition: background .15s;
+        }
+
+        tbody tr:hover {
+            background: #FAFBFF;
+        }
+
+        tbody td {
+            padding: 13px 16px;
+            vertical-align: middle;
+        }
+
+        .td-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: .85rem;
+        }
+
+        .td-sub {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .td-mono {
+            font-family: monospace;
+            font-size: .78rem;
+            background: #F1F5F9;
+            padding: 2px 7px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* ── PRODUCT IMG ── */
+        .prod-img {
+            width: 46px;
+            height: 46px;
+            object-fit: cover;
+            border-radius: 9px;
+            background: #F1F5F9;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .prod-img-placeholder {
+            width: 46px;
+            height: 46px;
+            border-radius: 9px;
+            background: #F1F5F9;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CBD5E1;
+            flex-shrink: 0;
+        }
+
+        /* ── BADGES ── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-cat {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .badge-active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-draft {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-inactive {
+            background: #FEE2E2;
+            color: #B91C1C;
+        }
+
+        /* ── STOCK ── */
+        .stock-wrap {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stock-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .stock-val {
+            font-weight: 700;
+            font-size: .85rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ── ACTION BTNS ── */
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            transition: var(--transition);
+            background: #F8FAFC;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background: #EFF6FF;
+            color: var(--blue);
+            border-color: #BFDBFE;
+        }
+
+        .action-btn.danger:hover {
+            background: #FEF2F2;
+            color: var(--danger);
+            border-color: #FECACA;
+        }
+
+        .action-btn.success:hover {
+            background: #D1FAE5;
+            color: var(--teal);
+            border-color: #A7F3D0;
+        }
+
+        /* ── PAGINATION ── */
+        .pagination-wrap {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pg-info {
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .pg-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pg-btn {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            border-radius: 7px;
+            border: 1.5px solid var(--border);
+            font-size: .78rem;
+            color: var(--muted);
+            background: #fff;
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: var(--font);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pg-btn:hover:not(:disabled):not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .pg-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .pg-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        /* ── MODAL ── */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 640px;
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .2);
+            animation: modalIn .25s ease;
+            margin: auto;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(.96) translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .modal-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #F1F5F9;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .modal-close:hover {
+            background: #FEE2E2;
+            color: var(--danger);
+        }
+
+        /* ── FORM ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media (max-width: 520px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group.full {
+            grid-column: 1/-1;
+        }
+
+        .form-label {
+            font-size: .75rem;
+            font-weight: 700;
+            color: #475569;
+            letter-spacing: .03em;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .85rem;
+            font-family: var(--font);
+            color: var(--text);
+            background: #F8FAFC;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-hint {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 6px 0;
+        }
+
+        .form-check input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .form-check label {
+            font-size: .85rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── IMAGE PREVIEW ── */
+        .img-preview-wrap {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .img-preview {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .img-preview-rm {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: #fff;
+            border-radius: 50%;
+            font-size: .62rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* ── BULK BAR ── */
+        .bulk-bar {
+            background: var(--dark);
+            color: #fff;
+            padding: 10px 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-size: .82rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .bulk-bar.show {
+            display: flex;
+        }
+
+        /* ── TOAST ── */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--dark);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .82rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 250px;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--teal);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ── STATES ── */
+        .spinner-wrap {
+            text-align: center;
+            padding: 52px;
+            color: var(--muted);
+        }
+
+        .spinner-wrap i {
+            font-size: 1.6rem;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 52px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 2.4rem;
+            display: block;
+            margin-bottom: 14px;
+            opacity: .3;
+        }
+
+        .empty-state h3 {
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        /* ── AUTH ERROR ── */
+        .auth-error {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .auth-error i {
+            font-size: 3rem;
+            color: var(--danger);
+        }
+
+        .auth-error h2 {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .auth-error p {
+            color: #64748B;
+            font-size: .88rem;
+            max-width: 340px;
+        }
+
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 998;
+        }
+
+        /* ── DISCOUNT RIBBON ── */
+        .discount-ribbon {
+            display: inline-block;
+            background: #FEE2E2;
+            color: var(--danger);
+            font-size: .67rem;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="layout">
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <span class="brand-logo-fallback" id="logoFallback">H</span>
+                    <img src="logo.png" alt="HeelsUp"
+                        onload="document.getElementById('logoFallback').style.display='none'"
+                        onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+                </div>
+                <div class="brand-text"><strong>HeelsUp</strong><span>Admin Panel</span></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">Main</div>
+                <a href="admin.html" class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <div class="nav-section">Catalogue</div>
+                <a href="admin-products.html" class="nav-item active"><i class="fa-solid fa-box"></i> Products</a>
+                <a href="admin-categories.html" class="nav-item"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a href="admin-collections.html" class="nav-item"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a href="admin-inventory.html" class="nav-item"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+                <div class="nav-section">Sales & Customers</div>
+                <a href="admin-orders.html" class="nav-item"><i class="fa-solid fa-bag-shopping"></i> Orders <span
+                        class="nav-badge" id="ordersBadge" style="display:none">0</span></a>
+                <a href="admin-customers.html" class="nav-item"><i class="fa-solid fa-users"></i> Customers</a>
+                <a href="admin-coupons.html" class="nav-item"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a href="admin-reviews.html" class="nav-item"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a href="admin-orders.html?tab=exchange" class="nav-item"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a href="admin-pos.html" class="nav-item"><i class="fa-solid fa-cash-register"></i> POS / Offline</a>
+                <div class="nav-section">Marketing & Content</div>
+                <a href="admin-banners.html" class="nav-item"><i class="fa-solid fa-image"></i> Banners</a>
+                <a href="admin-blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="admin-pages.html" class="nav-item"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a href="admin-notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+                <div class="nav-section">Reports</div>
+                <a href="admin-reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="admin-analytics.html" class="nav-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+                <div class="nav-section">System</div>
+                <a href="admin-shipping.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a href="admin-taxes.html" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a href="admin-staff.html" class="nav-item"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a href="admin-settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="s-user">
+                    <div class="s-avatar" id="sAvatar">A</div>
+                    <div>
+                        <div class="s-name" id="sName">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </aside>
+
+        <!-- ── MAIN ── -->
+        <div class="main">
+            <div class="topbar">
+                <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Products</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-outline" onclick="exportProducts()"><i
+                            class="fa-solid fa-download"></i> Export</button>
+                    <input type="file" id="csvImportInput" accept=".csv" style="display:none"
+                        onchange="handleCsvImport(event)">
+                    <button class="btn btn-sm btn-outline"
+                        onclick="document.getElementById('csvImportInput').click()"><i class="fa-solid fa-upload"></i>
+                        Import CSV</button>
+                    <button class="btn btn-sm btn-primary" onclick="openModal()"><i class="fa-solid fa-plus"></i> Add
+                        Product</button>
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')"><i
+                            class="fa-solid fa-store"></i> Store</button>
+                </div>
+            </div>
+
+            <!-- Bulk action bar -->
+            <div class="bulk-bar" id="bulkBar">
+                <i class="fa-solid fa-check-square" style="color:var(--primary)"></i>
+                <span id="bulkCount">0 selected</span>
+                <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:#fff;margin-left:8px"
+                    onclick="bulkToggleActive(true)"><i class="fa-solid fa-eye"></i> Activate</button>
+                <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:#fff"
+                    onclick="bulkToggleActive(false)"><i class="fa-solid fa-eye-slash"></i> Deactivate</button>
+                <button class="btn btn-sm" style="background:rgba(239,68,68,.2);color:#F87171" onclick="bulkDelete()"><i
+                        class="fa-solid fa-trash"></i> Delete</button>
+                <button class="btn btn-sm btn-ghost" style="color:#94A3B8;margin-left:auto"
+                    onclick="clearSelection()"><i class="fa-solid fa-xmark"></i> Clear</button>
+            </div>
+
+            <div class="content">
+
+                <!-- Hero -->
+                <div class="hero-banner">
+                    <div>
+                        <div class="hero-title">Product Catalogue <i class="fa-solid fa-box"
+                                style="font-size:1.3rem;color:var(--primary);vertical-align:middle;margin-left:4px"></i>
+                        </div>
+                        <div class="hero-sub" id="heroSub">Manage your store's products, pricing, variants and images.
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-sm"
+                            style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff"
+                            onclick="loadProducts()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                        <button class="btn btn-sm btn-primary" onclick="openModal()">
+                            <i class="fa-solid fa-plus"></i> Add Product
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card c-blue">
+                        <div class="kpi-icon c-blue"><i class="fa-solid fa-shoe-prints"></i></div>
+                        <div>
+                            <div class="kpi-label">Total Products</div>
+                            <div class="kpi-val" id="kpiTotal">—</div>
+                            <div class="kpi-sub" id="kpiTotalSub">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-teal">
+                        <div class="kpi-icon c-teal"><i class="fa-regular fa-circle-check"></i></div>
+                        <div>
+                            <div class="kpi-label">Active Listings</div>
+                            <div class="kpi-val" id="kpiActive">—</div>
+                            <div class="kpi-sub teal">Visible in store</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-gold">
+                        <div class="kpi-icon c-gold"><i class="fa-regular fa-eye-slash"></i></div>
+                        <div>
+                            <div class="kpi-label">Draft / Hidden</div>
+                            <div class="kpi-val" id="kpiDraft">—</div>
+                            <div class="kpi-sub warn">Not published</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-danger">
+                        <div class="kpi-icon c-danger"><i class="fa-solid fa-boxes-stacked"></i></div>
+                        <div>
+                            <div class="kpi-label">Out of Stock</div>
+                            <div class="kpi-val" id="kpiOos">—</div>
+                            <div class="kpi-sub danger">Needs restocking</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Card -->
+                <div class="card">
+                    <div class="card-hd">
+                        <div class="card-title">All Products</div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <span id="filterInfo" style="font-size:.78rem;color:var(--muted)"></span>
+                            <button class="btn btn-sm btn-ghost" onclick="clearFilters()"><i
+                                    class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Bar -->
+                    <div class="filter-bar">
+                        <div class="search-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" class="search-input" id="searchInput"
+                                placeholder="Search by name, SKU, description..." oninput="applyFilters()">
+                        </div>
+                        <select class="filter-select" id="catFilter" onchange="applyFilters()">
+                            <option value="">All Categories</option>
+                        </select>
+                        <select class="filter-select" id="statusFilter" onchange="applyFilters()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="draft">Draft / Inactive</option>
+                        </select>
+                        <select class="filter-select" id="stockFilter" onchange="applyFilters()">
+                            <option value="">All Inventory</option>
+                            <option value="instock">In Stock (>10)</option>
+                            <option value="lowstock">Low Stock (1–10)</option>
+                            <option value="outstock">Out of Stock</option>
+                        </select>
+                        <select class="filter-select" id="sortFilter" onchange="applyFilters()">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="price_asc">Price: Low → High</option>
+                            <option value="price_desc">Price: High → Low</option>
+                            <option value="stock_asc">Stock: Low → High</option>
+                            <option value="name_az">Name: A → Z</option>
+                        </select>
+                        <select class="filter-select" id="pageSizeSelect"
+                            onchange="pageSize=parseInt(this.value);currentPage=1;renderTable()">
+                            <option value="10">10 / page</option>
+                            <option value="25">25 / page</option>
+                            <option value="50">50 / page</option>
+                        </select>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="tbl-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:40px"><input type="checkbox" id="selectAll"
+                                            onchange="toggleSelectAll(this)" style="accent-color:var(--primary)"></th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Sales</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading products...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-wrap">
+                        <div class="pg-info" id="pgInfo">—</div>
+                        <div class="pg-btns" id="pgBtns"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── ADD / EDIT MODAL ── -->
+    <div class="modal-backdrop" id="productModal">
+        <div class="modal">
+            <div class="modal-hd">
+                <div class="modal-title" id="modalTitle">Add New Product</div>
+                <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label class="form-label">Product Name <span style="color:var(--danger)">*</span></label>
+                    <input type="text" class="form-input" id="fName" placeholder="e.g. Block Heel Sandals">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SKU</label>
+                    <input type="text" class="form-input" id="fSku" placeholder="HU-001">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" id="fCategory">
+                        <option value="Heels">Heels</option>
+                        <option value="Sandals">Sandals</option>
+                        <option value="Wedges">Wedges</option>
+                        <option value="Flats">Flats</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Accessories">Accessories</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Price (₹) <span style="color:var(--danger)">*</span></label>
+                    <input type="number" class="form-input" id="fPrice" min="0" placeholder="899">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">MRP / Original Price (₹)</label>
+                    <input type="number" class="form-input" id="fMrp" min="0" placeholder="1499">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">GST (%)</label>
+                    <input type="number" class="form-input" id="fGst" min="0" max="100" placeholder="18">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stock Quantity</label>
+                    <input type="number" class="form-input" id="fStock" min="0" placeholder="50" value="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Variants / Sizes</label>
+                    <input type="text" class="form-input" id="fVariants" placeholder="e.g. 36,37,38,39,40">
+                    <div class="form-hint">Comma-separated sizes</div>
+                </div>
+                <div class="form-group full">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="fDesc"
+                        placeholder="Write a short product description..."></textarea>
+                </div>
+                <div class="form-group full">
+                    <label class="form-label">Upload Images (max 5)</label>
+                    <input type="file" class="form-input" id="fImages" multiple accept="image/*"
+                        onchange="previewImages(this)">
+                    <div class="img-preview-wrap" id="imgPreviewWrap"></div>
+                    <div class="form-hint">Images stored in R2 automatically</div>
+                </div>
+                <div class="form-group full">
+                    <label class="form-label">Or Image URL (Fallback)</label>
+                    <input type="url" class="form-input" id="fImageUrl" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group full">
+                    <div class="form-check">
+                        <input type="checkbox" id="fActive" checked>
+                        <label for="fActive">Active (visible in store)</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="fFeatured">
+                        <label for="fFeatured">Featured product</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-outline" onclick="saveProduct(false)" id="saveDraftBtn"><i
+                        class="fa-solid fa-floppy-disk"></i> Save as Draft</button>
+                <button class="btn btn-primary" onclick="saveProduct(true)" id="saveBtn"><i
+                        class="fa-solid fa-circle-check"></i> Save & Publish</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+    <script>
+        // ── AUTH ──────────────────────────────────────────────────────────────────
+        (function () {
+            let user = null;
+            try { user = (typeof HeelsUpAuth !== 'undefined') ? HeelsUpAuth.getUser() : null; } catch (e) { }
+            if (!user || user.role !== 'admin') {
+                const el = document.createElement('div');
+                el.className = 'auth-error';
+                el.innerHTML = `<i class="fa-solid fa-shield-exclamation"></i><h2>Access Denied</h2><p>You must be logged in as an admin.</p><a href="login.html?redirect=admin-products.html" class="btn btn-primary" style="margin-top:8px"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>`;
+                document.body.appendChild(el);
+                return;
+            }
+            const name = user.firstName || user.first_name || 'Admin';
+            document.getElementById('sAvatar').textContent = name.charAt(0).toUpperCase();
+            document.getElementById('sName').textContent = name;
+        })();
+
+        // ── STATE ─────────────────────────────────────────────────────────────────
+        let allProducts = [], filtered = [], selectedIds = new Set(), editingId = null;
+        let currentPage = 1, pageSize = 10;
+
+        const $ = id => document.getElementById(id);
+        const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        const fmtRs = v => '₹' + (Number(v) || 0).toLocaleString('en-IN');
+        const fmtNum = v => (Number(v) || 0).toLocaleString('en-IN');
+        const isActive = p => p.is_active !== 0 && p.is_active !== false;
+
+        // ── SIDEBAR ───────────────────────────────────────────────────────────────
+        function toggleSidebar() { const s = $('sidebar'), o = $('mobOverlay'); s.classList.toggle('open'); o.style.display = s.classList.contains('open') ? 'block' : 'none'; }
+        function closeSidebar() { $('sidebar').classList.remove('open'); $('mobOverlay').style.display = 'none'; }
+        function doLogout() { try { HeelsUpAuth.clearSession(); } catch (e) { } window.location = 'login.html'; }
+
+        // ── TOAST ─────────────────────────────────────────────────────────────────
+        function toast(msg, type = 'success') {
+            const wrap = $('toastWrap'), t = document.createElement('div');
+            t.className = `toast ${type}`;
+            const icon = type === 'error' ? 'fa-circle-xmark' : type === 'warning' ? 'fa-triangle-exclamation' : 'fa-circle-check';
+            t.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+            wrap.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 4000);
+        }
+
+        // ── LOAD ──────────────────────────────────────────────────────────────────
+        async function loadProducts() {
+            $('tableBody').innerHTML = '<tr><td colspan="8"><div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading products...</div></td></tr>';
+            try {
+                const t0 = performance.now();
+                const res = await HeelsUpAuth.api('/api/admin/products');
+                allProducts = Array.isArray(res) ? res : (res.products || []);
+                allProducts.sort((a, b) => b.id - a.id);
+                const ms = (performance.now() - t0).toFixed(1);
+                $('heroSub').textContent = `${allProducts.length} products loaded in ${ms}ms · Manage pricing, variants & images`;
+                populateCategoryFilter();
+                updateKPIs();
+                applyFilters();
+            } catch (e) {
+                toast('Failed to load products: ' + (e.message || 'Network error'), 'error');
+                $('tableBody').innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);opacity:1"></i><h3 style="color:var(--danger)">Failed to load</h3><p>Check connection and retry.</p><button class="btn btn-sm btn-outline" onclick="loadProducts()" style="margin-top:12px"><i class="fa-solid fa-arrows-rotate"></i> Retry</button></div></td></tr>`;
+            }
+        }
+
+        // ── KPIs ──────────────────────────────────────────────────────────────────
+        function updateKPIs() {
+            let active = 0, draft = 0, oos = 0;
+            allProducts.forEach(p => {
+                if (isActive(p)) active++; else draft++;
+                if ((parseInt(p.stock) || 0) === 0) oos++;
+            });
+            $('kpiTotal').textContent = fmtNum(allProducts.length);
+            $('kpiTotalSub').textContent = `${allProducts.filter(p => p.category).length} categorised`;
+            $('kpiActive').textContent = fmtNum(active);
+            $('kpiDraft').textContent = fmtNum(draft);
+            $('kpiOos').textContent = fmtNum(oos);
+        }
+
+        // ── CATEGORY FILTER ───────────────────────────────────────────────────────
+        function populateCategoryFilter() {
+            const cats = [...new Set(allProducts.map(p => p.category || '').filter(Boolean))].sort();
+            $('catFilter').innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+            // Also update modal
+            const fCat = $('fCategory');
+            if (fCat && cats.length) {
+                fCat.innerHTML = cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('') + '<option value="Other">Other</option>';
+            }
+        }
+
+        // ── FILTERS ───────────────────────────────────────────────────────────────
+        function applyFilters() {
+            const q = ($('searchInput').value || '').toLowerCase();
+            const cat = $('catFilter').value;
+            const status = $('statusFilter').value;
+            const stock = $('stockFilter').value;
+            const sort = $('sortFilter').value;
+
+            filtered = allProducts.filter(p => {
+                const s = parseInt(p.stock) || 0;
+                const act = isActive(p);
+                const matchQ = !q || (p.name || '').toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q);
+                const matchCat = !cat || (p.category || '').trim() === cat;
+                const matchStatus = !status || (status === 'active' ? act : !act);
+                let matchStock = true;
+                if (stock === 'instock') matchStock = s > 10;
+                else if (stock === 'lowstock') matchStock = s > 0 && s <= 10;
+                else if (stock === 'outstock') matchStock = s === 0;
+                return matchQ && matchCat && matchStatus && matchStock;
+            });
+
+            // Sort
+            if (sort === 'oldest') filtered.sort((a, b) => a.id - b.id);
+            else if (sort === 'price_asc') filtered.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+            else if (sort === 'price_desc') filtered.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+            else if (sort === 'stock_asc') filtered.sort((a, b) => (parseInt(a.stock) || 0) - (parseInt(b.stock) || 0));
+            else if (sort === 'name_az') filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+            currentPage = 1;
+            $('filterInfo').textContent = `${filtered.length} of ${allProducts.length} products`;
+            renderTable();
+        }
+
+        function clearFilters() {
+            $('searchInput').value = ''; $('catFilter').value = ''; $('statusFilter').value = '';
+            $('stockFilter').value = ''; $('sortFilter').value = 'newest';
+            applyFilters();
+        }
+
+        // ── RENDER TABLE ──────────────────────────────────────────────────────────
+        function renderTable() {
+            const start = (currentPage - 1) * pageSize;
+            const page = filtered.slice(start, start + pageSize);
+            const tbody = $('tableBody');
+
+            $('pgInfo').innerHTML = `Showing <strong>${page.length ? start + 1 : 0}–${Math.min(start + pageSize, filtered.length)}</strong> of <strong>${filtered.length}</strong> products`;
+
+            if (!page.length) {
+                tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fa-solid fa-box-open"></i><h3>No products found</h3><p>Try adjusting your search or filters.</p></div></td></tr>`;
+                renderPagination();
+                return;
+            }
+
+            tbody.innerHTML = page.map(p => {
+                const stock = parseInt(p.stock) || 0;
+                const price = parseFloat(p.price) || 0;
+                const mrp = parseFloat(p.mrp) || 0;
+                const act = isActive(p);
+                const selected = selectedIds.has(p.id);
+
+                // Stock color
+                let sColor = 'var(--teal)', sLabel = `${stock} units`;
+                if (stock === 0) { sColor = 'var(--danger)'; sLabel = 'Out of stock'; }
+                else if (stock <= 10) { sColor = 'var(--warning)'; sLabel = `${stock} (low)`; }
+
+                // Discount
+                const disc = mrp > price ? Math.round((1 - price / mrp) * 100) : 0;
+
+                const imgHtml = p.image_url
+                    ? `<img src="${esc(p.image_url)}" class="prod-img" onerror="this.outerHTML='<div class=\\'prod-img-placeholder\\'><i class=\\'fa-regular fa-image\\'></i></div>'">`
+                    : `<div class="prod-img-placeholder"><i class="fa-regular fa-image"></i></div>`;
+
+                return `<tr style="${selected ? 'background:#FFF7F0;' : ''}" id="prow_${p.id}">
+      <td><input type="checkbox" ${selected ? 'checked' : ''} onchange="toggleSelect(${p.id},this)" style="accent-color:var(--primary)"></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:11px">
+          ${imgHtml}
+          <div>
+            <div class="td-name ${!act ? '' : ''}${!act ? ' style="opacity:.6"' : ''}">${esc(p.name || '—')}</div>
+            <div class="td-sub">
+              <span class="td-mono">${esc(p.sku || 'N/A')}</span>
+              ${p.is_featured ? '<span class="badge" style="background:rgba(224,181,15,.15);color:#92400E;margin-left:4px"><i class="fa-solid fa-star" style="font-size:.6rem"></i> Featured</span>' : ''}
+            </div>
+          </div>
+        </div>
+      </td>
+      <td><span class="badge badge-cat">${esc(p.category || '—')}</span></td>
+      <td>
+        <div style="font-weight:700">${fmtRs(price)}</div>
+        ${mrp > price ? `<div class="td-sub" style="text-decoration:line-through">${fmtRs(mrp)}</div>
+        <span class="discount-ribbon">-${disc}%</span>` : ''}
+      </td>
+      <td>
+        <div class="stock-wrap">
+          <span class="stock-dot" style="background:${sColor}"></span>
+          <span class="stock-val" style="color:${sColor}">${sLabel}</span>
+        </div>
+        <div class="td-sub">${p.sizes?.length || 0} variants</div>
+      </td>
+      <td style="font-weight:600">${fmtNum(p.sales_count || p.sales || 0)}</td>
+      <td>
+        <span class="badge ${act ? 'badge-active' : 'badge-draft'}">
+          ${act ? 'Active' : 'Draft'}
+        </span>
+      </td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="action-btn" title="Edit" onclick='openEditModal(${JSON.stringify(p).replace(/'/g, "&#39;")})'>
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+          <button class="action-btn success" title="${act ? 'Deactivate' : 'Activate'}" onclick="toggleProductStatus(${p.id},${act})">
+            <i class="fa-solid ${act ? 'fa-eye-slash' : 'fa-eye'}"></i>
+          </button>
+          <a href="admin-inventory.html?id=${p.id}" class="action-btn" title="Manage Stock" style="text-decoration:none">
+            <i class="fa-solid fa-warehouse"></i>
+          </a>
+          <button class="action-btn danger" title="Delete" onclick="deleteProduct(${p.id})">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </div>
+      </td>
+    </tr>`;
+            }).join('');
+
+            renderPagination();
+        }
+
+        // ── PAGINATION ────────────────────────────────────────────────────────────
+        function renderPagination() {
+            const total = filtered.length, pages = Math.ceil(total / pageSize);
+            const el = $('pgBtns');
+            if (pages <= 1) { el.innerHTML = ''; return; }
+            let html = `<button class="pg-btn" onclick="gotoPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left" style="font-size:.7rem"></i></button>`;
+            let start = Math.max(1, currentPage - 2), end = Math.min(pages, currentPage + 2);
+            if (start > 1) html += `<button class="pg-btn" onclick="gotoPage(1)">1</button>${start > 2 ? '<span style="color:var(--muted);padding:0 4px">…</span>' : ''}`;
+            for (let i = start; i <= end; i++) html += `<button class="pg-btn ${i === currentPage ? 'active' : ''}" onclick="gotoPage(${i})">${i}</button>`;
+            if (end < pages) html += `${end < pages - 1 ? '<span style="color:var(--muted);padding:0 4px">…</span>' : ''}<button class="pg-btn" onclick="gotoPage(${pages})">${pages}</button>`;
+            html += `<button class="pg-btn" onclick="gotoPage(${currentPage + 1})" ${currentPage >= pages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right" style="font-size:.7rem"></i></button>`;
+            el.innerHTML = html;
+        }
+        function gotoPage(p) { const pages = Math.ceil(filtered.length / pageSize); if (p < 1 || p > pages) return; currentPage = p; renderTable(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        // ── SELECT ────────────────────────────────────────────────────────────────
+        function toggleSelect(id, cb) {
+            if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+            updateBulkBar();
+        }
+        function toggleSelectAll(cb) {
+            const page = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+            page.forEach(p => { if (cb.checked) selectedIds.add(p.id); else selectedIds.delete(p.id); });
+            renderTable();
+            updateBulkBar();
+        }
+        function updateBulkBar() {
+            const bar = $('bulkBar');
+            if (selectedIds.size > 0) { bar.classList.add('show'); $('bulkCount').textContent = selectedIds.size + ' selected'; }
+            else { bar.classList.remove('show'); }
+        }
+        function clearSelection() { selectedIds.clear(); renderTable(); updateBulkBar(); }
+
+        // ── BULK ACTIONS ──────────────────────────────────────────────────────────
+        async function bulkToggleActive(activate) {
+            if (!selectedIds.size) { toast('No products selected', 'warning'); return; }
+            let success = 0;
+            for (const id of selectedIds) {
+                try {
+                    await HeelsUpAuth.api(`/api/admin/products/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: activate ? 1 : 0 }) });
+                    const p = allProducts.find(x => x.id === id);
+                    if (p) p.is_active = activate ? 1 : 0;
+                    success++;
+                } catch (e) { }
+            }
+            toast(`${success} products ${activate ? 'activated' : 'deactivated'}`);
+            clearSelection(); updateKPIs(); applyFilters();
+        }
+        async function bulkDelete() {
+            if (!selectedIds.size) { toast('No products selected', 'warning'); return; }
+            if (!confirm(`Delete ${selectedIds.size} products? This cannot be undone.`)) return;
+            let success = 0;
+            for (const id of selectedIds) {
+                try { await HeelsUpAuth.api(`/api/admin/products/${id}`, { method: 'DELETE' }); success++; } catch (e) { }
+            }
+            allProducts = allProducts.filter(p => !selectedIds.has(p.id));
+            toast(`${success} products deleted`);
+            clearSelection(); updateKPIs(); applyFilters();
+        }
+
+        // ── MODAL ─────────────────────────────────────────────────────────────────
+        function openModal() {
+            editingId = null;
+            $('modalTitle').textContent = 'Add New Product';
+            ['fName', 'fSku', 'fPrice', 'fMrp', 'fGst', 'fVariants', 'fDesc', 'fImageUrl'].forEach(id => { if ($(id)) $(id).value = ''; });
+            $('fStock').value = '0'; $('fCategory').value = 'Heels'; $('fActive').checked = true; $('fFeatured').checked = false;
+            $('imgPreviewWrap').innerHTML = '';
+            $('productModal').classList.add('show');
+        }
+        function openEditModal(p) {
+            editingId = p.id;
+            $('modalTitle').textContent = 'Edit Product';
+            $('fName').value = p.name || ''; $('fSku').value = p.sku || '';
+            $('fCategory').value = p.category || 'Heels'; $('fPrice').value = p.price || '';
+            $('fMrp').value = p.mrp || ''; $('fGst').value = p.gst_percent || '';
+            $('fStock').value = p.stock || 0; $('fVariants').value = (p.sizes || []).join(',') || p.variants || '';
+            $('fDesc').value = p.description || ''; $('fImageUrl').value = p.image_url || '';
+            $('fActive').checked = isActive(p); $('fFeatured').checked = !!p.is_featured;
+            $('imgPreviewWrap').innerHTML = p.image_url ? `<img src="${esc(p.image_url)}" class="img-preview">` : '';
+            $('productModal').classList.add('show');
+        }
+        function closeModal() { $('productModal').classList.remove('show'); editingId = null; }
+        $('productModal').addEventListener('click', e => { if (e.target === $('productModal')) closeModal(); });
+
+        // ── IMAGE PREVIEW ─────────────────────────────────────────────────────────
+        function previewImages(input) {
+            const wrap = $('imgPreviewWrap');
+            wrap.innerHTML = '';
+            if (!input.files.length) return;
+            if (input.files.length > 5) { toast('Max 5 images allowed', 'warning'); input.value = ''; return; }
+            Array.from(input.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result; img.className = 'img-preview';
+                    wrap.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ── SAVE PRODUCT ──────────────────────────────────────────────────────────
+        async function saveProduct(publish = true) {
+            const name = $('fName').value.trim();
+            const price = parseFloat($('fPrice').value || 0);
+            if (!name) { toast('Product name is required', 'warning'); $('fName').focus(); return; }
+            if (!price) { toast('Price is required', 'warning'); $('fPrice').focus(); return; }
+
+            const saveBtn = $('saveBtn'), draftBtn = $('saveDraftBtn');
+            saveBtn.disabled = true; draftBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                // Handle image uploads
+                let uploadedUrls = [];
+                const fileInput = $('fImages');
+                if (fileInput?.files?.length) {
+                    const formData = new FormData();
+                    for (let i = 0; i < fileInput.files.length; i++) formData.append('files[]', fileInput.files[i]);
+                    formData.append('folder', 'products');
+                    try {
+                        const token = HeelsUpAuth.getToken();
+                        const upRes = await fetch('/api/admin/upload', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token }, body: formData });
+                        const upData = await upRes.json();
+                        if (upRes.ok) uploadedUrls = upData.results?.map(r => r.url) || [];
+                    } catch (e) { console.warn('Upload error', e); }
+                }
+
+                const fallbackUrl = $('fImageUrl').value.trim();
+                const allImages = [...uploadedUrls];
+                if (fallbackUrl && !allImages.includes(fallbackUrl)) allImages.push(fallbackUrl);
+
+                const catMap = { 'Heels': 1, 'Sandals': 2, 'Wedges': 3, 'Flats': 4, 'Bags': 5, 'Accessories': 6 };
+                const payload = {
+                    name, sku: $('fSku').value.trim(), category: $('fCategory').value,
+                    category_id: catMap[$('fCategory').value] || null,
+                    price, mrp: parseFloat($('fMrp').value) || null,
+                    gst_percent: parseFloat($('fGst').value) || 0,
+                    stock: parseInt($('fStock').value) || 0,
+                    description: $('fDesc').value.trim(),
+                    sizes: $('fVariants').value.split(',').map(s => s.trim()).filter(Boolean),
+                    image_url: allImages[0] || '', images: allImages,
+                    is_active: publish ? ($('fActive').checked ? 1 : 0) : 0,
+                    is_featured: $('fFeatured').checked ? 1 : 0
+                };
+
+                let saved;
+                if (editingId) {
+                    await HeelsUpAuth.api(`/api/admin/products/${editingId}`, { method: 'PUT', body: JSON.stringify(payload) });
+                    saved = { id: editingId };
+                } else {
+                    saved = await HeelsUpAuth.api('/api/admin/products', { method: 'POST', body: JSON.stringify(payload) });
+                }
+
+                // Attach uploaded images
+                if (saved?.id && uploadedUrls.length) {
+                    for (let i = 0; i < uploadedUrls.length; i++) {
+                        try { await HeelsUpAuth.api(`/api/admin/products/${saved.id}/images`, { method: 'POST', body: JSON.stringify({ url: uploadedUrls[i], sort_order: i, is_primary: i === 0 }) }); } catch (e) { }
+                    }
+                }
+
+                toast(`Product ${editingId ? 'updated' : 'added'} successfully`);
+                closeModal();
+                await loadProducts();
+            } catch (e) {
+                toast(e.message || 'Failed to save product', 'error');
+            } finally {
+                saveBtn.disabled = false; draftBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Save & Publish';
+            }
+        }
+
+        // ── TOGGLE STATUS ─────────────────────────────────────────────────────────
+        async function toggleProductStatus(id, currentlyActive) {
+            try {
+                await HeelsUpAuth.api(`/api/admin/products/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: currentlyActive ? 0 : 1 }) });
+                const p = allProducts.find(x => x.id === id);
+                if (p) p.is_active = currentlyActive ? 0 : 1;
+                toast(`Product ${currentlyActive ? 'deactivated' : 'activated'}`);
+                updateKPIs(); applyFilters();
+            } catch (e) { toast(e.message || 'Failed', 'error'); }
+        }
+
+        // ── DELETE ────────────────────────────────────────────────────────────────
+        async function deleteProduct(id) {
+            if (!confirm('Delete this product? This cannot be undone.')) return;
+            try {
+                await HeelsUpAuth.api(`/api/admin/products/${id}`, { method: 'DELETE' });
+                allProducts = allProducts.filter(p => p.id !== id);
+                toast('Product deleted');
+                updateKPIs(); applyFilters();
+            } catch (e) { toast(e.message || 'Failed to delete', 'error'); }
+        }
+
+        // ── EXPORT CSV ────────────────────────────────────────────────────────────
+        function exportProducts() {
+            if (!filtered.length) { toast('No products to export', 'warning'); return; }
+            const rows = [['ID', 'Name', 'SKU', 'Category', 'Price', 'MRP', 'GST%', 'Stock', 'Status', 'Featured', 'Sales']];
+            filtered.forEach(p => {
+                rows.push([p.id, `"${(p.name || '').replace(/"/g, '""')}"`, p.sku || '', p.category || '', p.price || 0, p.mrp || '', p.gst_percent || 0, p.stock || 0, isActive(p) ? 'Active' : 'Draft', p.is_featured ? 'Yes' : 'No', p.sales_count || 0]);
+            });
+            const csv = rows.map(r => r.join(',')).join('\n');
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = `heelsup-products-${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+            toast(`Exported ${filtered.length} products`);
+        }
+
+        // ── IMPORT CSV ────────────────────────────────────────────────────────────
+        function handleCsvImport(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function (evt) {
+                const text = evt.target.result;
+                const rows = text.split('\n').map(r => r.trim()).filter(r => r);
+                if (rows.length < 2) { toast('Invalid CSV', 'error'); return; }
+                const headers = rows[0].split(',').map(h => h.trim().toLowerCase().replace(/"/g, ''));
+                const products = [];
+                for (let i = 1; i < rows.length; i++) {
+                    const cols = []; let inQ = false, cur = '';
+                    for (let c = 0; c < rows[i].length; c++) {
+                        if (rows[i][c] === '"') inQ = !inQ;
+                        else if (rows[i][c] === ',' && !inQ) { cols.push(cur); cur = ''; }
+                        else cur += rows[i][c];
+                    }
+                    cols.push(cur);
+                    const p = {};
+                    headers.forEach((h, idx) => {
+                        let v = (cols[idx] || '').trim().replace(/^"|"$/g, '');
+                        if (h === 'name') p.name = v;
+                        else if (h === 'sku') p.sku = v;
+                        else if (h === 'category') p.category = v;
+                        else if (h === 'price') p.price = Number(v);
+                        else if (h === 'mrp' || h === 'original_price') p.mrp = Number(v);
+                        else if (h === 'stock') p.stock = Number(v);
+                        else if (h === 'status') p.is_active = v.toLowerCase() === 'active' ? 1 : 0;
+                    });
+                    if (p.name && p.price) products.push(p);
+                }
+                if (!products.length) { toast('No valid products in CSV', 'error'); return; }
+                try {
+                    const res = await HeelsUpAuth.api('/api/admin/products/bulk', { method: 'POST', body: JSON.stringify({ filename: file.name, products }) });
+                    toast(`Imported: ${res.success} success, ${res.failed || 0} failed`);
+                    loadProducts();
+                } catch (err) { toast(err.message || 'Import failed', 'error'); }
+                e.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+
+        // ── INIT ──────────────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+
+</html>

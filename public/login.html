@@ -1,0 +1,1436 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — HeelsUp | Ladies Footwear &amp; Bags</title>
+  <meta name="description" content="Sign in to your HeelsUp account to track orders, manage wishlist, and shop premium ladies footwear &amp; bags.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS — identical to index.html
+    ═══════════════════════════════════════ */
+    :root {
+      --ink: #0d0a08;
+      --ink2: #1a1510;
+      --gold: #c9a96e;
+      --gold-lt: #e8c98a;
+      --gold-dk: #8c6033;
+      --gold-glow: rgba(201, 169, 110, .12);
+      --cream: #f9f4ed;
+      --cream2: #f2ebe0;
+      --sand: #e8dece;
+      --rose: #d4456b;
+      --teal: #22c55e;
+      --white: #ffffff;
+      --border: rgba(201, 169, 110, .18);
+      --border-lt: rgba(201, 169, 110, .08);
+      --text-1: #0d0a08;
+      --text-2: #4a3f35;
+      --text-3: #8c8580;
+      --text-4: #b4a899;
+      --r-sm: 6px;
+      --r: 12px;
+      --r-lg: 20px;
+      --r-xl: 32px;
+      --sh-sm: 0 1px 4px rgba(0, 0, 0, .06);
+      --sh: 0 4px 20px rgba(0, 0, 0, .09);
+      --sh-md: 0 8px 40px rgba(0, 0, 0, .13);
+      --sh-lg: 0 20px 60px rgba(0, 0, 0, .18);
+      --sh-gold: 0 8px 32px rgba(201, 169, 110, .25);
+      --fd: 'Cormorant Garamond', Georgia, serif;
+      --fh: 'Playfair Display', Georgia, serif;
+      --fb: 'DM Sans', 'Helvetica Neue', sans-serif;
+      --t: .25s cubic-bezier(.4, 0, .2, 1);
+      --ts: .55s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased
+    }
+
+    body {
+      font-family: var(--fb);
+      background: var(--cream);
+      color: var(--text-1);
+      min-height: 100vh;
+      overflow-x: hidden
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--fb)
+    }
+
+    input {
+      font-family: var(--fb);
+      outline: none
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh
+    }
+
+    /* ── LEFT PANEL ── */
+    .left-panel {
+      position: relative;
+      overflow: hidden;
+      background: var(--ink)
+    }
+
+    .left-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0
+    }
+
+    .left-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .45;
+      transition: opacity 1.4s ease;
+      animation: panZoom 20s ease-in-out infinite alternate
+    }
+
+    @keyframes panZoom {
+      0% {
+        transform: scale(1.08) translateX(0)
+      }
+
+      100% {
+        transform: scale(1.16) translateX(-3%)
+      }
+    }
+
+    .left-grad {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(135deg,
+          rgba(13, 10, 8, .92) 0%,
+          rgba(13, 10, 8, .7) 40%,
+          rgba(140, 96, 51, .35) 100%)
+    }
+
+    /* decorative rings */
+    .left-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 169, 110, .1);
+      z-index: 1
+    }
+
+    .lr1 {
+      width: 500px;
+      height: 500px;
+      top: -120px;
+      right: -160px
+    }
+
+    .lr2 {
+      width: 350px;
+      height: 350px;
+      bottom: -80px;
+      left: -100px
+    }
+
+    .lr3 {
+      width: 200px;
+      height: 200px;
+      bottom: 100px;
+      right: 60px;
+      border-color: rgba(201, 169, 110, .18)
+    }
+
+    .left-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 48px 52px
+    }
+
+    /* logo */
+    .l-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--fd);
+      font-size: 1.7rem;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      color: #fff
+    }
+
+    .l-logo img {
+      height: 40px;
+      width: auto;
+      object-fit: contain
+    }
+
+    .l-logo span {
+      color: var(--gold)
+    }
+
+    .l-logo-fallback {
+      display: none
+    }
+
+    .l-logo img.err+.l-logo-fallback {
+      display: block
+    }
+
+    /* badge */
+    .l-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(201, 169, 110, .35);
+      background: rgba(201, 169, 110, .1);
+      backdrop-filter: blur(8px);
+      margin-bottom: 18px;
+      align-self: flex-start
+    }
+
+    .l-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .5;
+        transform: scale(.7)
+      }
+    }
+
+    /* headline */
+    .l-title {
+      font-family: var(--fd);
+      font-size: clamp(2.8rem, 4.5vw, 4.4rem);
+      font-weight: 300;
+      line-height: .98;
+      letter-spacing: -.03em;
+      color: #fff;
+      margin-bottom: 20px
+    }
+
+    .l-title em {
+      font-style: italic;
+      color: var(--gold-lt);
+      display: block
+    }
+
+    .l-sub {
+      font-size: 14.5px;
+      color: rgba(255, 255, 255, .55);
+      line-height: 1.8;
+      max-width: 340px;
+      margin-bottom: 40px
+    }
+
+    /* feature pills */
+    .l-features {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: auto;
+      margin-bottom: 40px
+    }
+
+    .l-feat {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--r);
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .06);
+      backdrop-filter: blur(4px);
+      transition: background var(--t)
+    }
+
+    .l-feat:hover {
+      background: rgba(255, 255, 255, .08)
+    }
+
+    .l-feat-ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(201, 169, 110, .15);
+      border: 1px solid rgba(201, 169, 110, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .l-feat-ico svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold-lt);
+      fill: none;
+      stroke-width: 1.8
+    }
+
+    .l-feat-txt strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .85)
+    }
+
+    .l-feat-txt span {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .38)
+    }
+
+    /* stats bottom row */
+    .l-stats {
+      display: flex;
+      gap: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .07)
+    }
+
+    .l-stat-num {
+      font-family: var(--fd);
+      font-size: 2rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1
+    }
+
+    .l-stat-lbl {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .35);
+      margin-top: 2px
+    }
+
+    /* ── RIGHT PANEL ── */
+    .right-panel {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      overflow-y: auto;
+      position: relative
+    }
+
+    /* subtle pattern */
+    .right-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 20% 20%, rgba(201, 169, 110, .04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(201, 169, 110, .04) 0%, transparent 50%);
+      pointer-events: none
+    }
+
+    .form-wrap {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      z-index: 1
+    }
+
+    /* mobile logo (hidden on desktop) */
+    .mob-logo {
+      display: none;
+      text-align: center;
+      margin-bottom: 36px
+    }
+
+    .mob-logo-txt {
+      font-family: var(--fd);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -.02em
+    }
+
+    .mob-logo-txt span {
+      color: var(--gold)
+    }
+
+    /* form header */
+    .form-header {
+      margin-bottom: 32px
+    }
+
+    .form-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold-dk);
+      margin-bottom: 12px;
+      background: var(--gold-glow);
+      border: 1px solid rgba(201, 169, 110, .25);
+      padding: 5px 14px;
+      border-radius: 100px
+    }
+
+    .form-title {
+      font-family: var(--fd);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin-bottom: 8px
+    }
+
+    .form-title em {
+      font-style: italic;
+      color: var(--gold-dk)
+    }
+
+    .form-sub {
+      font-size: 14px;
+      color: var(--text-3);
+      line-height: 1.7
+    }
+
+
+
+    /* alert */
+    .alert {
+      padding: 12px 16px;
+      border-radius: var(--r);
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+      display: none
+    }
+
+    .alert svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .alert-error {
+      background: #fff2f2;
+      border: 1px solid rgba(212, 69, 107, .2);
+      color: #a01238
+    }
+
+    .alert-success {
+      background: #f0fff4;
+      border: 1px solid rgba(34, 197, 94, .2);
+      color: #166534
+    }
+
+    /* input groups */
+    .form-group {
+      margin-bottom: 18px
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-2);
+      letter-spacing: .04em;
+      margin-bottom: 8px
+    }
+
+    .form-label a {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--gold-dk);
+      transition: color var(--t)
+    }
+
+    .form-label a:hover {
+      color: var(--gold)
+    }
+
+    .input-wrap {
+      position: relative
+    }
+
+    .input-wrap input {
+      width: 100%;
+      padding: 13px 44px 13px 46px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      font-size: 14px;
+      color: var(--text-1);
+      background: var(--cream);
+      transition: all var(--t)
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--gold);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, .12)
+    }
+
+    .input-wrap input::placeholder {
+      color: var(--text-4)
+    }
+
+    .input-wrap input.err {
+      border-color: var(--rose);
+      background: #fff8f8
+    }
+
+    .inp-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--text-3)
+    }
+
+    .inp-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8
+    }
+
+    .pw-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-3);
+      padding: 4px;
+      border-radius: 6px;
+      transition: color var(--t)
+    }
+
+    .pw-toggle svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      display: block
+    }
+
+    .pw-toggle:hover {
+      color: var(--gold-dk)
+    }
+
+    /* remember row */
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px
+    }
+
+    .check-group {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .custom-check {
+      width: 17px;
+      height: 17px;
+      border-radius: 4px;
+      border: 1.5px solid var(--border);
+      background: var(--cream);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--t);
+      flex-shrink: 0
+    }
+
+    .custom-check.checked {
+      background: var(--gold-dk);
+      border-color: var(--gold-dk)
+    }
+
+    .custom-check svg {
+      width: 10px;
+      height: 10px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 3;
+      opacity: 0;
+      transition: opacity var(--t)
+    }
+
+    .custom-check.checked svg {
+      opacity: 1
+    }
+
+    .check-label {
+      font-size: 12.5px;
+      color: var(--text-2);
+      cursor: pointer;
+      user-select: none
+    }
+
+    /* submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 15px 28px;
+      background: var(--ink);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all var(--t);
+      font-family: var(--fb);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-dk) 0%, var(--gold) 100%);
+      opacity: 0;
+      transition: opacity var(--t)
+    }
+
+    .btn-submit:hover::before {
+      opacity: 1
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .22)
+    }
+
+    .btn-submit:active {
+      transform: translateY(0)
+    }
+
+    .btn-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none
+    }
+
+    .btn-submit span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .btn-submit svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      position: relative;
+      z-index: 1
+    }
+
+    /* spinner */
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, .3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0
+    }
+
+    /* divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--text-4);
+      font-size: 12px;
+      margin-bottom: 20px
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border)
+    }
+
+    /* google btn */
+    .btn-google {
+      width: 100%;
+      padding: 13px 24px;
+      background: var(--cream);
+      color: var(--text-1);
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all var(--t);
+      font-family: var(--fb);
+      margin-bottom: 20px
+    }
+
+    .btn-google:hover {
+      border-color: var(--gold);
+      background: var(--gold-glow);
+      color: var(--gold-dk)
+    }
+
+    .btn-google svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0
+    }
+
+    /* footer links */
+    .form-footer {
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--text-3)
+    }
+
+    .form-footer a {
+      color: var(--gold-dk);
+      font-weight: 700;
+      transition: color var(--t)
+    }
+
+    .form-footer a:hover {
+      color: var(--gold)
+    }
+
+    /* security badges */
+    .sec-badges {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border)
+    }
+
+    .sec-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-4);
+      letter-spacing: .05em
+    }
+
+    .sec-badge svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2
+    }
+
+    /* ── FLOATING TOAST ── */
+    .toast-wrap {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      width: max-content;
+      max-width: 92vw
+    }
+
+    .toast {
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--sh-lg);
+      pointer-events: all;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all var(--ts)
+    }
+
+    .toast svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      flex-shrink: 0
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1
+    }
+
+    .toast.s {
+      border-left: 3px solid var(--teal)
+    }
+
+    .toast.e {
+      border-left: 3px solid var(--rose)
+    }
+
+    /* ── MOBILE ── */
+    @media(max-width:900px) {
+      .page-wrap {
+        grid-template-columns: 1fr
+      }
+
+      .left-panel {
+        display: none
+      }
+
+      .mob-logo {
+        display: block
+      }
+
+      .right-panel {
+        padding: 40px 20px
+      }
+    }
+
+    @media(max-width:480px) {
+      .role-tabs {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .form-wrap {
+        max-width: 100%
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <div class="page-wrap">
+
+    <!-- ══════════════════════════════════
+       LEFT — Brand Visual Panel
+  ══════════════════════════════════ -->
+    <aside class="left-panel">
+      <div class="left-bg">
+        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1200&amp;q=90&amp;auto=format&amp;fit=crop" alt="HeelsUp Collection" id="bg-img">
+      </div>
+      <div class="left-grad"></div>
+      <div class="left-ring lr1"></div>
+      <div class="left-ring lr2"></div>
+      <div class="left-ring lr3"></div>
+
+      <div class="left-content">
+        <!-- Logo -->
+        <a href="index.html" class="l-logo">
+          <img src="logo.png" alt="HeelsUp Logo" id="logo-img" onerror="this.classList.add('err');this.style.display='none'">
+          <span class="l-logo-fallback">Heels<span>Up</span></span>
+        </a>
+
+        <!-- Center content -->
+        <div style="margin-top:auto;margin-bottom:auto;padding:40px 0">
+          <div class="l-badge">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--gold-lt)">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            Est. 2019 · Jodhpur, Rajasthan
+          </div>
+          <h1 class="l-title">
+            Your Style,
+            <em>Your Story</em>
+          </h1>
+          <p class="l-sub">
+            Premium ladies footwear &amp; bags for the modern Indian woman. Crafted with love from the heart of Jodhpur.
+          </p>
+
+          <!-- Feature list -->
+          <div class="l-features">
+            <div class="l-feat">
+              <div class="l-feat-ico">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3M16 21l5-5-5-5M21 16H9a2 2 0 00-2 2v2"></path>
+                </svg>
+              </div>
+              <div class="l-feat-txt">
+                <strong>Free Shipping on ₹799+</strong>
+                <span>Pan-India delivery, every order</span>
+              </div>
+            </div>
+            <div class="l-feat">
+              <div class="l-feat-ico">
+                <svg viewBox="0 0 24 24">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path>
+                </svg>
+              </div>
+              <div class="l-feat-txt">
+                <strong>7-Day Easy Returns</strong>
+                <span>No questions asked, hassle-free</span>
+              </div>
+            </div>
+            <div class="l-feat">
+              <div class="l-feat-ico">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="l-feat-txt">
+                <strong>100% Authentic Products</strong>
+                <span>Quality-checked before dispatch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="l-stats">
+          <div>
+            <div class="l-stat-num">10K+</div>
+            <div class="l-stat-lbl">Happy Customers</div>
+          </div>
+          <div>
+            <div class="l-stat-num">500+</div>
+            <div class="l-stat-lbl">Products</div>
+          </div>
+          <div>
+            <div class="l-stat-num">4.9★</div>
+            <div class="l-stat-lbl">Avg Rating</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ══════════════════════════════════
+       RIGHT — Login Form
+  ══════════════════════════════════ -->
+    <main class="right-panel">
+      <div class="form-wrap">
+
+        <!-- Mobile logo -->
+        <div class="mob-logo">
+          <div class="mob-logo-txt">Heels<span>Up</span></div>
+        </div>
+
+        <!-- Form header -->
+        <div class="form-header">
+          <div class="form-eyebrow">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" stroke="none">
+              <circle cx="4" cy="4" r="4"></circle>
+            </svg>
+            Secure Login
+          </div>
+          <h2 class="form-title">Welcome <em>Back</em></h2>
+          <p class="form-sub">Sign in to continue to your account</p>
+        </div>
+
+        <!-- Error alert -->
+        <div class="alert alert-error" id="alertBox">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="alertMsg">Invalid email or password.</span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <div class="form-label">
+            <label for="fEmail">Email Address</label>
+          </div>
+          <div class="input-wrap">
+            <span class="inp-icon"><svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg></span>
+            <input type="email" id="fEmail" placeholder="you@example.com" autocomplete="email" autocapitalize="none" onkeydown="if(event.key==='Enter')fPassword.focus()" oninput="clearErr()">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="form-label">
+            <label for="fPassword">Password</label>
+            <a href="forgot-password.html">Forgot password?</a>
+          </div>
+          <div class="input-wrap">
+            <span class="inp-icon"><svg viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+                <path d="M7 11V7a5 5 0 0110 0v4"></path>
+              </svg></span>
+            <input type="password" id="fPassword" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()" oninput="clearErr()">
+            <button class="pw-toggle" id="pwToggle" onclick="togglePw()" type="button" aria-label="Toggle password">
+              <svg id="eyeIcon" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember me -->
+        <div class="row-between">
+          <div class="check-group" onclick="toggleRemember()">
+            <div class="custom-check checked" id="rememberCheck">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span class="check-label">Remember me</span>
+          </div>
+          <a href="register.html" style="font-size:12.5px;font-weight:600;color:var(--text-3)">New user?</a>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn-submit" id="btnLogin" onclick="doLogin()">
+          <span id="btnText">
+            <svg viewBox="0 0 24 24">
+              <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            Sign In to HeelsUp
+          </span>
+        </button>
+
+        <!-- Divider -->
+        <div class="divider">or continue with</div>
+
+        <!-- Google SSO -->
+        <div id="googleBtnWrapper" style="display:flex; justify-content:center; margin-bottom: 20px;"></div>
+        <button class="btn-google" id="customGoogleBtn" onclick="doGoogleLogin()">
+          <svg viewBox="0 0 48 48" width="18" height="18">
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+          </svg>
+          Continue with Google
+        </button>
+
+        <!-- Register link -->
+        <div class="form-footer">
+          Don't have an account? &nbsp;<a href="register.html">Create Account</a>
+        </div>
+
+        <!-- Security badges -->
+        <div class="sec-badges">
+          <div class="sec-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            SSL Secured
+          </div>
+          <div class="sec-badge" style="color:var(--border)">·</div>
+          <div class="sec-badge">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+              <path d="M7 11V7a5 5 0 0110 0v4"></path>
+            </svg>
+            256-bit Encryption
+          </div>
+          <div class="sec-badge" style="color:var(--border)">·</div>
+          <div class="sec-badge">
+            <svg viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Verified
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- 2FA OTP MODAL -->
+  <div class="modal-backdrop" id="otpModal" style="position:fixed;inset:0;background:rgba(13,10,8,0.7);backdrop-filter:blur(6px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:24px;padding:32px;max-width:400px;width:100%;box-shadow:var(--sh-lg);animation:fadeSlideIn 0.3s ease;text-align:center;">
+      <div style="width:56px;height:56px;background:var(--gold-glow);color:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px;">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h2 style="font-family:var(--fh);font-size:1.5rem;font-weight:600;margin-bottom:8px;color:var(--text-1)">Admin Verification</h2>
+      <p style="font-size:13.5px;color:var(--text-3);line-height:1.5;margin-bottom:24px;" id="otpModalSub">Enter the 6-digit verification code sent to your email.</p>
+      
+      <div style="margin-bottom:24px;">
+        <input type="text" id="fOtp" maxlength="6" placeholder="000000" style="width:100%;text-align:center;font-size:1.8rem;font-weight:700;letter-spacing:6px;padding:12px;border:1.5px solid var(--border);border-radius:12px;outline:none;background:#faf8f5;color:var(--text-1);font-family:monospace;" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')verifyAdminOtp()">
+        <div id="otpErr" style="color:var(--rose);font-size:12.5px;margin-top:8px;font-weight:500;display:none;"></div>
+      </div>
+      
+      <button class="btn-submit" id="btnVerifyOtp" onclick="verifyAdminOtp()" style="margin-bottom:16px;">
+        <span id="btnVerifyText">Verify &amp; Sign In</span>
+      </button>
+      
+      <button onclick="closeOtpModal()" style="font-size:13px;font-weight:600;color:var(--text-3);text-decoration:underline;cursor:pointer;background:none;border:none;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+     SCRIPTS
+══════════════════════════════════ -->
+  <script src="app-config.js"></script>
+  <script src="app-auth.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async="" defer=""></script>
+  <script src="js/cart.js"></script>
+
+  <script>
+    'use strict';
+
+    /* ── Redirect if already logged in ── */
+    (function () {
+      try {
+        const user = HeelsUpAuth.getUser();
+        if (user) {
+          const redirect = new URLSearchParams(location.search).get('redirect');
+          if (redirect) { window.location.href = redirect; return; }
+          const role = (user.role || '').toLowerCase();
+          window.location.href = (role === 'admin' || role === 'staff' || role === 'manager')
+            ? 'admin.html'
+            : 'index.html';
+        }
+      } catch (e) { }
+    })();
+
+    /* ── State ── */
+    let rememberMe = true;
+    let pwVisible = false;
+
+    /* ── Remember Me ── */
+    function toggleRemember() {
+      rememberMe = !rememberMe;
+      const el = document.getElementById('rememberCheck');
+      el.classList.toggle('checked', rememberMe);
+    }
+
+    /* ── Password Toggle ── */
+    function togglePw() {
+      const inp = document.getElementById('fPassword');
+      pwVisible = !pwVisible;
+      inp.type = pwVisible ? 'text' : 'password';
+      document.getElementById('eyeIcon').innerHTML = pwVisible
+        ? '<line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><circle cx="12" cy="12" r="3"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    }
+
+    /* ── Alert helpers ── */
+    function showErr(msg) {
+      const box = document.getElementById('alertBox');
+      document.getElementById('alertMsg').textContent = msg;
+      box.className = 'alert alert-error';
+      box.style.display = 'flex';
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function clearErr() {
+      document.getElementById('alertBox').style.display = 'none';
+    }
+
+    /* ── Toast ── */
+    function toast(msg, type = 's', dur = 4000) {
+      const wrap = document.getElementById('toastWrap');
+      const t = document.createElement('div');
+      t.className = 'toast ' + type;
+      const icon = type === 's'
+        ? '<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+        : '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+      t.innerHTML = icon + msg;
+      wrap.appendChild(t);
+      requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+      setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, dur);
+    }
+
+    /* ── Main Login Logic ── */
+    let currentSessionToken = '';
+    let currentEmail = '';
+
+    function showOtpUI(sessionToken, email) {
+      currentSessionToken = sessionToken;
+      currentEmail = email;
+      document.getElementById('otpModalSub').innerHTML = `Enter the 6-digit verification code sent to <br><strong>${email}</strong>`;
+      document.getElementById('otpErr').style.display = 'none';
+      document.getElementById('fOtp').value = '';
+      document.getElementById('otpModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('fOtp').focus(), 100);
+    }
+
+    function closeOtpModal() {
+      document.getElementById('otpModal').style.display = 'none';
+      currentSessionToken = '';
+      currentEmail = '';
+    }
+
+    async function verifyAdminOtp() {
+      const otp = document.getElementById('fOtp').value.trim();
+      const errBox = document.getElementById('otpErr');
+      errBox.style.display = 'none';
+      
+      if (otp.length !== 6) {
+        errBox.textContent = 'Please enter a 6-digit code.';
+        errBox.style.display = 'block';
+        return;
+      }
+      
+      const btn = document.getElementById('btnVerifyOtp');
+      const btnText = document.getElementById('btnVerifyText');
+      btn.disabled = true;
+      btnText.innerHTML = '<div class="spinner"></div> Verifying…';
+      
+      try {
+        const rawRes = await HeelsUpAuth.api('/api/auth/admin-verify-otp', {
+          method: 'POST',
+          body: JSON.stringify({
+            otp,
+            session_token: currentSessionToken
+          })
+        });
+        
+        const res = rawRes?.data;
+        if (res && res.token) {
+          HeelsUpAuth.setSession(res.token, res.user);
+          toast('🎉 Admin login successful! Welcome back.');
+          closeOtpModal();
+          
+          setTimeout(() => {
+            const redirectParam = new URLSearchParams(location.search).get('redirect') || 'admin.html';
+            window.location.href = redirectParam;
+          }, 700);
+        } else {
+          throw new Error('Verification failed. Invalid response.');
+        }
+      } catch (err) {
+        errBox.textContent = err?.message || 'Verification failed. Please try again.';
+        errBox.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btnText.innerHTML = 'Verify &amp; Sign In';
+      }
+    }
+
+    async function doLogin() {
+      const email = document.getElementById('fEmail').value.trim();
+      const password = document.getElementById('fPassword').value;
+      clearErr();
+
+      // Validation
+      if (!email) { showErr('Please enter your email address.'); document.getElementById('fEmail').focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('Please enter a valid email address.'); return; }
+      if (!password) { showErr('Please enter your password.'); document.getElementById('fPassword').focus(); return; }
+      if (password.length < 6) { showErr('Password must be at least 6 characters.'); return; }
+
+      // Loading state
+      const btn = document.getElementById('btnLogin');
+      const btnText = document.getElementById('btnText');
+      btn.disabled = true;
+      btnText.innerHTML = '<div class="spinner"></div> Signing In…';
+
+      try {
+        const payload = { email, password, remember: rememberMe };
+
+        const rawRes = await HeelsUpAuth.api('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+
+        if (rawRes?.step === 'otp_required' || rawRes?.data?.step === 'otp_required') {
+          const stepData = rawRes.data || rawRes;
+          showOtpUI(stepData.session_token, stepData.email);
+          return;
+        }
+
+        const res = rawRes?.data;
+        if (!res || !res.token) {
+          throw new Error(rawRes?.error || 'Invalid credentials or login failed.');
+        }
+
+        HeelsUpAuth.setSession(res.token, res.user);
+
+        toast('🎉 Welcome back, ' + (res.user?.name?.split(' ')[0] || 'User') + '!');
+
+        // Role-based redirect
+        const redirectParam = new URLSearchParams(location.search).get('redirect');
+        if (redirectParam) { setTimeout(() => window.location.href = redirectParam, 600); return; }
+
+        const role = (res.user?.role || '').toLowerCase();
+        let target = 'index.html';
+        if (role === 'admin' || role === 'staff' || role === 'manager') target = 'admin.html';
+
+        setTimeout(() => window.location.href = target, 700);
+
+      } catch (err) {
+        const msg = err?.message || '';
+        if (msg.toLowerCase().includes('password')) showErr('Incorrect password. Please try again.');
+        else if (msg.toLowerCase().includes('not found')) showErr('No account found with this email.');
+        else if (msg.toLowerCase().includes('locked')) showErr('Account locked. Please contact support.');
+        else if (msg.toLowerCase().includes('access')) showErr('Invalid staff access code.');
+        else showErr(msg || 'Sign in failed. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btnText.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>Sign In to HeelsUp`;
+      }
+    }
+
+    /* ── Google OAuth (stub — wire to app-auth.js) ── */
+    function doGoogleLogin() {
+      toast('Google Login is not configured. Please contact the administrator.', 'e');
+    }
+
+    async function handleGoogleCallback(response) {
+      try {
+        const rawRes = await HeelsUpAuth.api('/api/auth/google', {
+          method: 'POST',
+          body: JSON.stringify({ credential: response.credential })
+        });
+        const res = rawRes?.data;
+        if (res && res.token) {
+          HeelsUpAuth.setSession(res.token, res.user);
+          toast('Logged in successfully!');
+          setTimeout(() => {
+            const redirect = new URLSearchParams(window.location.search).get('redirect') || 'profile.html';
+            window.location.href = redirect;
+          }, 600);
+        }
+      } catch (e) {
+        toast(e.message || 'Google authentication failed', 'e');
+      }
+    }
+
+    async function initGoogle() {
+      try {
+        const config = await HeelsUpAuth.api('/api/config');
+        if (config.googleClientId) {
+          const tryRender = () => {
+            if (window.google) {
+              const customBtn = document.getElementById('customGoogleBtn');
+              if(customBtn) customBtn.style.display = 'none';
+              
+              const refBtn = document.getElementById('btnLogin');
+              const btnWidth = refBtn ? refBtn.offsetWidth : 300;
+              
+              google.accounts.id.initialize({
+                client_id: config.googleClientId,
+                callback: handleGoogleCallback
+              });
+              google.accounts.id.renderButton(
+                document.getElementById("googleBtnWrapper"),
+                { theme: "outline", size: "large", type: "standard", width: btnWidth }
+              );
+            } else {
+              setTimeout(tryRender, 100);
+            }
+          };
+          tryRender();
+        }
+      } catch (e) {
+        console.error("Could not load Google Config", e);
+      }
+    }
+
+    window.addEventListener('load', initGoogle);
+
+    /* ── Fade-in animation ── */
+    const style = document.createElement('style');
+    style.textContent = '@keyframes fadeSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}';
+    document.head.appendChild(style);
+  </script>
+
+
+
+  <script src="/js/wishlist.js"></script>
+</body></html>

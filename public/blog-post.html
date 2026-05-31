@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Post – HeelsUp</title>
+  <!--
+  ============================================================
+  PAGE: blog-post.html
+  PURPOSE: Individual blog article ka detail page. blog.html listing page se
+           is page pe ?id= ke saath redirect hota hai.
+
+  YE PAGE KYA KAREGA:
+  - URL se blog post ID ya slug leke API se content fetch karna
+  - Full article render karna: title, cover image, author, date, category, body content
+  - Related products section — article mein jis product ki baat ho, usse link karo
+    (e.g. "Top 5 Heels for Wedding Season" → woh 5 products dikhao with Add to Cart)
+  - Related articles section (same category ke 3 aur articles)
+  - Social sharing buttons: WhatsApp, Instagram, Facebook, link copy
+  - Author box — writer ka naam + bio
+  - Comments section (optional — admin-blog.html se enable/disable ho)
+  - Breadcrumb: Home > Blog > Article Title
+
+  URL PATTERN:
+  blog-post.html?id=BLOG_POST_ID
+  blog-post.html?slug=top-5-heels-for-wedding-season
+
+  LINKED FROM:
+  - blog.html → har card pe "Read More" button
+  - index.html → Latest from Blog section
+
+  ADMIN:
+  - admin-blog.html → blog posts manage karo (create/edit/publish/delete)
+  ============================================================
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="main.css">
+  <style>
+    /* Page-specific styles yahan likhna */
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+
+  <main>
+    <!-- TODO: Ye cheezein banani hain:
+      1. URL se ?id ya ?slug extract karo
+      2. API se blog post fetch karo: GET /api/blog/:id
+      3. Render karo:
+         - Breadcrumb (Home > Blog > Title)
+         - Cover image (full width, max-height 480px)
+         - Category badge + Reading time
+         - Title (var(--fd), large)
+         - Author + Date
+         - Article body (HTML content — sanitized)
+         - Tags
+      4. Related Products section (shoppable)
+      5. Social Share buttons (WhatsApp link, copy URL)
+      6. Related Articles (3 cards)
+      7. Author bio box
+      8. Comment section (optional)
+      9. Not found state → 404.html redirect
+    -->
+    <p style="text-align:center; padding: 4rem; font-family: var(--fb); color: var(--text-3);">
+      blog-post.html — Abhi khaali hai, code likhna baaki hai.
+    </p>
+  </main>
+
+  <!-- FOOTER -->
+
+
+  <script src="/js/wishlist.js"></script>
+</body></html>

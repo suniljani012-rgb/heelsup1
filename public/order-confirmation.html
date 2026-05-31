@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name="theme-color" content="#E8CCC5" />
+  <title>Order Confirmed! – HeelsUp</title>
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- ═══ PRECONNECT & FONTS ═══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       DESIGN SYSTEM — HeelsUp Brand Colors (Synced)
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --blush: #E8CCC5;
+      --cream: #F6E7C6;
+      --sage-blue: #BDCED3;
+      --warm-gray: #BBB9B2;
+      --ink: #1a1a1a;
+      --ink2: #2d2d2d;
+      --white: #ffffff;
+      --bg: #faf8f5;
+      --bg2: #f5f0eb;
+      --primary: #C0392B;
+      --primary-dk: #a93226;
+      --border: #e8e2dc;
+      --text-h: var(--ink);
+      --text-b: #3d3d3d;
+      --text-m: #807E79;
+      --success: #22c55e;
+      --success-bg: rgba(34, 197, 94, 0.1);
+
+      --font-head: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-pill: 100px;
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .04);
+      --shadow: 0 4px 20px rgba(0, 0, 0, .08);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, .12);
+
+      --t: .22s cubic-bezier(.4, 0, .2, 1);
+      --z-nav: 100;
+      --z-mob: 200;
+      --z-search: 250;
+      --z-toast: 400;
+    }
+
+    /* ── RESET ── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--text-b);
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color var(--t);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    @media(max-width:768px) {
+      .container {
+        padding: 0 16px;
+      }
+    }
+
+    /* ═══════════════════════════
+       NAVBAR (Synced)
+    ═══════════════════════════ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav);
+      background: rgba(250, 248, 245, .97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow var(--t);
+    }
+
+    .navbar.scrolled {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-inner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      padding: 8px 13px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-b);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all var(--t);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(192, 57, 43, .06);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      margin-left: 20px;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--text-b);
+      transition: all var(--t);
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg2);
+      color: var(--primary);
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      min-width: 17px;
+      height: 17px;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 9.5px;
+      font-weight: 700;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg);
+    }
+
+    .nav-hamburger {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: background var(--t);
+    }
+
+    .nav-hamburger:hover {
+      background: var(--bg2);
+    }
+
+    .ham-line {
+      width: 22px;
+      height: 2px;
+      background: var(--text-h);
+      border-radius: 2px;
+      transition: all var(--t);
+    }
+
+    @media(max-width:1024px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .nav-actions {
+        margin-left: auto;
+      }
+    }
+
+    /* ═══════════════════════════
+       MOBILE MENU (Synced)
+    ═══════════════════════════ */
+    .mob-menu {
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-mob);
+      pointer-events: none;
+    }
+
+    .mob-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      transition: background var(--t);
+    }
+
+    .mob-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(340px, 90vw);
+      background: var(--white);
+      transform: translateX(100%);
+      transition: transform var(--t);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mob-menu.open {
+      pointer-events: all;
+    }
+
+    .mob-menu.open .mob-backdrop {
+      background: rgba(0, 0, 0, .52);
+    }
+
+    .mob-menu.open .mob-panel {
+      transform: translateX(0);
+    }
+
+    .mob-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg2);
+    }
+
+    .mob-head img {
+      height: 32px;
+      mix-blend-mode: multiply;
+    }
+
+    .mob-close {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-m);
+      font-size: 15px;
+    }
+
+    .mob-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .mob-link {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 14.5px;
+      font-weight: 600;
+      font-family: var(--font-head);
+      color: var(--text-b);
+    }
+
+    .mob-link:hover {
+      background: rgba(192, 57, 43, .06);
+      color: var(--primary);
+    }
+
+    .mob-link .m-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--bg2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-m);
+    }
+
+    .mob-sep {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 0;
+    }
+
+    .mob-cat-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-pale);
+      padding: 10px 14px 4px;
+    }
+
+    .mob-foot {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .mob-foot-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius);
+      font-size: 13.5px;
+      font-weight: 700;
+      font-family: var(--font-head);
+      text-align: center;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════
+       SEARCH OVERLAY
+    ═══════════════════════════ */
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-search);
+      background: rgba(10, 10, 10, .9);
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 100px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--t);
+    }
+
+    .search-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .search-wrap {
+      width: min(680px, 90vw);
+    }
+
+    .search-kicker {
+      font-family: var(--font-head);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .search-field {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 2px solid var(--blush);
+      padding-bottom: 14px;
+    }
+
+    .search-field i {
+      font-size: 1.2rem;
+      color: var(--blush);
+    }
+
+    .search-input-el {
+      flex: 1;
+      background: transparent;
+      color: #fff;
+      border: none;
+      font-family: var(--font-head);
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 300;
+    }
+
+    .search-input-el::placeholder {
+      color: rgba(255, 255, 255, .2);
+    }
+
+    .search-cls {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .2);
+      color: rgba(255, 255, 255, .5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all var(--t);
+    }
+
+    .search-cls:hover {
+      border-color: rgba(255, 255, 255, .6);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SUCCESS PAGE (Order Confirmation)
+    ═══════════════════════════════════════════════ */
+    .success-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      background: var(--bg);
+    }
+
+    .success-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .sc-header {
+      background: var(--bg2);
+      padding: 48px 32px 36px;
+      text-align: center;
+      border-bottom: 1px dashed var(--border);
+      position: relative;
+    }
+
+    /* Animated Success Icon */
+    .success-icon-wrap {
+      width: 84px;
+      height: 84px;
+      background: var(--success-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: var(--success);
+      box-shadow: 0 8px 32px rgba(34, 197, 94, 0.2);
+      animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .success-icon-wrap svg {
+      width: 40px;
+      height: 40px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCheck 0.6s ease-out 0.4s forwards;
+    }
+
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes drawCheck {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .sc-header h1 {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      color: var(--text-h);
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .sc-header p {
+      color: var(--text-m);
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .sc-body {
+      padding: 40px 48px;
+    }
+
+    .info-group {
+      margin-bottom: 32px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-row:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .info-label {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-m);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-label i {
+      color: var(--text-pale);
+      font-size: 14px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .info-value {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-h);
+      text-align: right;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-family: var(--font-head);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-badge i {
+      font-size: 12px;
+    }
+
+    .total-box {
+      background: var(--ink);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .total-box .t-label {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .7);
+    }
+
+    .total-box .t-amount {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn-act {
+      padding: 14px 24px;
+      border-radius: var(--radius);
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      text-align: center;
+      transition: all var(--t);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-act.primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(192, 57, 43, 0.2);
+    }
+
+    .btn-act.primary:hover {
+      background: var(--primary-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(192, 57, 43, 0.3);
+    }
+
+    .btn-act.outline {
+      background: var(--white);
+      color: var(--text-h);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-act.outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(192, 57, 43, 0.04);
+    }
+
+    .print-btn {
+      width: 100%;
+      margin-top: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-m);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color var(--t);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .print-btn:hover {
+      color: var(--primary);
+    }
+
+    @media(max-width: 600px) {
+      .sc-header {
+        padding: 40px 24px 32px;
+      }
+
+      .sc-body {
+        padding: 32px 24px;
+      }
+
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .total-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+
+    /* ═══════════════════════════
+       FOOTER (Synced)
+    ═══════════════════════════ */
+    .footer {
+      background: var(--ink2);
+      border-top: 1px solid rgba(255, 255, 255, .05);
+      margin-top: auto;
+    }
+
+    .footer-top {
+      padding: 68px 0 52px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 44px;
+    }
+
+    @media(max-width:1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media(max-width:600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    .footer-logo-wrap img {
+      height: 42px;
+      filter: grayscale(1) invert(1) brightness(1.5);
+      mix-blend-mode: screen;
+      margin-bottom: 14px;
+      opacity: 0.95;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .4);
+      line-height: 1.8;
+      margin-bottom: 22px;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .footer-soc {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: rgba(255, 255, 255, .45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all var(--t);
+    }
+
+    .footer-soc:hover {
+      border-color: var(--blush);
+      color: var(--blush);
+      background: rgba(232, 204, 197, .08);
+    }
+
+    .footer-col-title {
+      font-family: var(--font-head);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .65);
+      margin-bottom: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .38);
+      transition: color var(--t);
+    }
+
+    .footer-links a:hover {
+      color: rgba(255, 255, 255, .75);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, .06);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .25);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 18px;
+    }
+
+    .footer-legal a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .25);
+      transition: color var(--t);
+    }
+
+    .footer-legal a:hover {
+      color: rgba(255, 255, 255, .6);
+    }
+
+    .footer-pay {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .pay-chip {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 5px;
+      padding: 3px 9px;
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .35);
+      font-family: var(--font-head);
+      letter-spacing: .03em;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PRINT STYLES (Professional Invoice Format)
+    ═══════════════════════════════════════════════ */
+    @media print {
+      @page {
+        margin: 15mm;
+      }
+
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        display: block;
+      }
+
+      .navbar,
+      .mob-menu,
+      .search-overlay,
+      .footer,
+      .action-grid,
+      .print-btn,
+      .success-anim {
+        display: none !important;
+      }
+
+      .success-main {
+        padding: 0;
+        display: block;
+        background: #fff;
+      }
+
+      .success-card {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .sc-header {
+        background: transparent;
+        padding: 0 0 10mm;
+        border-bottom: 2px solid #000;
+        text-align: left;
+      }
+
+      .sc-header h1 {
+        font-size: 24pt;
+        color: #000;
+        margin-bottom: 5mm;
+      }
+
+      .sc-header p {
+        display: none;
+      }
+
+      .sc-header::before {
+        content: "HEELSUP INVOICE";
+        display: block;
+        font-family: var(--font-head);
+        font-size: 10pt;
+        font-weight: 700;
+        letter-spacing: .15em;
+        color: #555;
+        margin-bottom: 8mm;
+      }
+
+      .sc-body {
+        padding: 10mm 0;
+      }
+
+      .info-row {
+        border-bottom: 1pt solid #eee;
+        padding: 6mm 0;
+      }
+
+      .info-label {
+        color: #555;
+        font-size: 11pt;
+      }
+
+      .info-label i {
+        display: none;
+      }
+
+      .info-value {
+        color: #000;
+        font-size: 12pt;
+      }
+
+      .status-badge {
+        background: transparent;
+        border: none;
+        color: #000;
+        padding: 0;
+        font-size: 12pt;
+      }
+
+      .status-badge i {
+        display: none;
+      }
+
+      .total-box {
+        background: transparent;
+        border: 2pt solid #000;
+        border-radius: 0;
+        margin-top: 10mm;
+        padding: 8mm;
+        box-shadow: none;
+      }
+
+      .total-box .t-label {
+        color: #000;
+        font-size: 14pt;
+        font-weight: 700;
+      }
+
+      .total-box .t-amount {
+        color: #000;
+        font-size: 18pt;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="/" class="nav-logo" aria-label="HeelsUp Home">
+          <img src="logo.png" alt="HeelsUp" id="logo-img" width="140" height="42" loading="eager" />
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="/shop.html" class="nav-link">Shop</a></li>
+          <li class="nav-item"><a href="/shop.html?cat=heels" class="nav-link">Heels</a></li>
+          <li class="nav-item"><a href="/shop.html?cat=flats" class="nav-link">Flats</a></li>
+          <li class="nav-item"><a href="/about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Actions -->
+        <div class="nav-actions">
+          <button class="nav-btn" id="search-btn" aria-label="Search products">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <a href="/wishlist.html" class="nav-btn" aria-label="My Wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </a>
+          <a href="/profile.html" class="nav-btn" id="nav-account-btn" aria-label="My Account">
+            <i class="fa-regular fa-user"></i>
+          </a>
+          <a href="/cart.html" class="nav-btn" aria-label="Shopping Cart">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="nav-badge" id="cart-count" style="display:none">0</span>
+          </a>
+          <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mob-menu" id="mob-menu">
+    <div class="mob-backdrop" id="mob-backdrop"></div>
+    <nav class="mob-panel">
+      <div class="mob-head">
+        <img src="logo.png" alt="HeelsUp" height="32" />
+        <button class="mob-close" id="mob-close" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="mob-body">
+        <div class="mob-cat-title">Main</div>
+        <a href="/" class="mob-link"><span class="m-icon">🏠</span> Home</a>
+        <a href="/shop.html" class="mob-link"><span class="m-icon">🛍️</span> Shop All</a>
+        <div class="mob-sep"></div>
+        <div class="mob-cat-title">Categories</div>
+        <a href="/shop.html?cat=heels" class="mob-link"><span class="m-icon">👠</span> Heels</a>
+        <a href="/shop.html?cat=flats" class="mob-link"><span class="m-icon">🥿</span> Flats</a>
+        <a href="/shop.html?cat=sandals" class="mob-link"><span class="m-icon">👡</span> Sandals</a>
+        <a href="/shop.html?cat=bags" class="mob-link"><span class="m-icon">👜</span> Bags</a>
+        <div class="mob-sep"></div>
+        <a href="/about.html" class="mob-link"><span class="m-icon">📖</span> About Us</a>
+        <a href="/contact.html" class="mob-link"><span class="m-icon">📞</span> Contact</a>
+        <a href="/orders.html" class="mob-link"><span class="m-icon">📦</span> Track Order</a>
+      </div>
+      <div class="mob-foot">
+        <a href="/login.html" class="mob-foot-btn" id="mob-login-btn">Login / Sign Up</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ═══ SEARCH OVERLAY ═══ -->
+  <div class="search-overlay" id="search-overlay">
+    <div class="container">
+      <div class="search-wrap">
+        <span class="search-kicker">What are you looking for?</span>
+        <div class="search-field">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" class="search-input-el" id="search-inp" placeholder="heels, bags, sandals…"
+            autocomplete="off" />
+          <button class="search-cls" id="search-close-btn" aria-label="Close search">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="search-res" id="search-res"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+     MAIN SUCCESS CONTENT
+  ═══════════════════════════════════════════════ -->
+  <main class="success-main">
+    <div class="success-card" id="order-card">
+
+      <div class="sc-header">
+        <div class="success-icon-wrap">
+          <svg viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for shopping with HeelsUp. Your order has been placed successfully and is now being processed. A
+          confirmation email has been sent to your registered address.</p>
+      </div>
+
+      <div class="sc-body">
+        <div class="info-group">
+          <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-hashtag"></i> Order Number</span>
+            <span class="info-value" id="order-num">Loading…</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label"><i class="fa-regular fa-calendar"></i> Order Date</span>
+            <span class="info-value" id="order-date">Loading…</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label"><i class="fa-regular fa-credit-card"></i> Payment Status</span>
+            <span class="status-badge"><i class="fa-solid fa-circle-check"></i> Paid</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-box-open"></i> Order Status</span>
+            <span class="status-badge"
+              style="color:var(--text-b); background:var(--bg2); border:1px solid var(--border);" id="order-status">
+              <i class="fa-solid fa-spinner"></i> Processing
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label"><i class="fa-solid fa-truck-fast"></i> Est. Delivery</span>
+            <span class="info-value" id="est-delivery">3–5 Business Days</span>
+          </div>
+        </div>
+
+        <div class="total-box">
+          <span class="t-label">Amount Paid</span>
+          <span class="t-amount" id="order-total">₹—</span>
+        </div>
+
+        <div class="action-grid">
+          <a href="/orders.html" class="btn-act outline">
+            <i class="fa-solid fa-box"></i> View My Orders
+          </a>
+          <a href="/shop.html" class="btn-act primary">
+            <i class="fa-solid fa-store"></i> Continue Shopping
+          </a>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">
+          <i class="fa-solid fa-print"></i> Download / Print Receipt
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo-wrap">
+              <img src="logo.png" alt="HeelsUp" onerror="this.style.display='none'" />
+            </div>
+            <p class="footer-tagline">
+              Premium ladies footwear &amp; bags for the modern Indian woman.
+              Quality, style, and comfort — all in one place. Give Value to Your Feet.
+            </p>
+            <div class="footer-socials">
+              <a href="https://instagram.com/heelsup.in" target="_blank" class="footer-soc"><i
+                  class="fa-brands fa-instagram"></i></a>
+              <a href="https://facebook.com/heelsup.in" target="_blank" class="footer-soc"><i
+                  class="fa-brands fa-facebook-f"></i></a>
+              <a href="https://wa.me/917891470935" target="_blank" class="footer-soc"><i
+                  class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Shop</div>
+            <nav class="footer-links">
+              <a href="/shop.html">All Products</a>
+              <a href="/shop.html?cat=heels">Heels</a>
+              <a href="/shop.html?cat=flats">Flats</a>
+              <a href="/shop.html?cat=sandals">Sandals</a>
+              <a href="/shop.html?cat=bags">Bags</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-col-title">Company</div>
+            <nav class="footer-links">
+              <a href="/about.html">About Us</a>
+              <a href="/contact.html">Contact</a>
+              <a href="/blog.html">Blog</a>
+              <a href="/faq.html">FAQ</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-col-title">Help &amp; Policies</div>
+            <nav class="footer-links">
+              <a href="/policy/shipping.html">Shipping Policy</a>
+              <a href="/policy/exchange.html">Exchange Policy</a>
+              <a href="/size-guide.html">Size Guide</a>
+              <a href="/contact.html">Customer Support</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 HeelsUp. All rights reserved.</p>
+        <div class="footer-pay">
+          <span class="pay-chip">UPI</span>
+          <span class="pay-chip">Visa</span>
+          <span class="pay-chip">Mastercard</span>
+        </div>
+        <div class="footer-legal">
+          <a href="/policy/privacy.html">Privacy</a>
+          <a href="/policy/terms.html">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app-config.js"></script>
+  <script src="app-auth.js"></script>
+  <script>
+    'use strict';
+
+    document.addEventListener('DOMContentLoaded', async function () {
+      initNavbar();
+      initSearch();
+      updateCartBadge();
+
+      // Populate Date
+      const dateEl = document.getElementById('order-date');
+      const today = new Date();
+      dateEl.textContent = today.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      // Order Logic
+      const params = new URLSearchParams(location.search);
+      const num = params.get('num') || 'HU-' + Math.random().toString(36).substr(2, 8).toUpperCase() + '-2026';
+      const id = params.get('id');
+
+      document.getElementById('order-num').textContent = num;
+
+      if (id) {
+        try {
+          const data = await HeelsUpAuth.api('/api/orders/my');
+          const order = (data.orders || []).find(o => o.id == id);
+          if (order) {
+            document.getElementById('order-total').textContent = '₹' + Number(order.totalAmount || order.total_amount || 0).toLocaleString('en-IN');
+            document.getElementById('order-status').innerHTML = '<i class="fa-solid fa-spinner"></i> ' + (order.orderStatus || order.status || 'Processing').charAt(0).toUpperCase() + (order.orderStatus || order.status || 'Processing').slice(1);
+          }
+        } catch (e) {
+          console.warn("Could not fetch specific order data.", e);
+        }
+      } else {
+        // Fallback simulate total from Cart for visual feedback if testing
+        try {
+          if (typeof HeelsUpCart !== 'undefined') {
+            const total = HeelsUpCart.getSubtotal();
+            if (total > 0) document.getElementById('order-total').textContent = '₹' + (total / 100).toLocaleString('en-IN');
+          }
+        } catch (e) { }
+      }
+
+      // Auth UI Sync
+      const user = HeelsUpAuth.getUser();
+      const mobLogin = document.getElementById('mob-login-btn');
+      if (user) {
+        document.getElementById('nav-account-btn')?.setAttribute('title', `Hi, ${user.firstName || 'User'}`);
+        if (mobLogin) { mobLogin.textContent = 'My Account'; mobLogin.href = '/profile.html'; }
+      }
+
+      // Clear cart because order is successful
+      if (typeof HeelsUpCart !== 'undefined') {
+        HeelsUpCart.clearCart();
+        updateCartBadge();
+      }
+    });
+
+    /* ── UI Logic (Matches shop.html) ── */
+    function initNavbar() {
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+      const mobMenu = document.getElementById('mob-menu');
+      const hamburger = document.getElementById('nav-hamburger');
+      hamburger?.addEventListener('click', () => { hamburger.classList.toggle('open'); mobMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+      const closeMob = () => { mobMenu.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow = ''; };
+      document.getElementById('mob-close')?.addEventListener('click', closeMob);
+      document.getElementById('mob-backdrop')?.addEventListener('click', closeMob);
+    }
+
+    function initSearch() {
+      const overlay = document.getElementById('search-overlay'), inp = document.getElementById('search-inp');
+      document.getElementById('search-btn')?.addEventListener('click', () => { overlay.classList.add('open'); setTimeout(() => inp.focus(), 60); });
+      document.getElementById('search-close-btn')?.addEventListener('click', () => overlay.classList.remove('open'));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
+      inp?.addEventListener('keydown', e => { if (e.key === 'Enter' && inp.value.trim()) window.location.href = '/search.html?q=' + encodeURIComponent(inp.value.trim()); });
+    }
+
+    function updateCartBadge() {
+      try {
+        const cnt = typeof HeelsUpCart !== 'undefined' ? HeelsUpCart.getCount() : 0;
+        const b = document.getElementById('cart-count');
+        if (b) { b.textContent = cnt; b.style.display = cnt > 0 ? 'flex' : 'none'; }
+      } catch (e) { }
+    }
+  </script>
+</body>
+
+</html>

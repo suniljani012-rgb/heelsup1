@@ -1,0 +1,35 @@
+name = "heelsupnew"
+main = "src/index.js"
+compatibility_date = "2026-05-08"
+workers_dev = true
+
+[vars]
+APP_NAME = "HeelsUp"
+CORS_ORIGIN = "https://heelsup.in"
+API_BASE_URL = "https://heelsupnew.heelsup.workers.dev/api/health"
+GOOGLE_APPSCRIPT_ENDPOINT = ""
+GOOGLE_APPSCRIPT_TOKEN = ""
+JWT_EXPIRES_DAYS = "30"
+OTP_EXPIRY_MINUTES = "10"
+REQUIRE_EMAIL_OTP = "true"
+R2_PUBLIC_URL = "https://media.heelsup.in"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "heelsup-live"
+# Yahan wahi ID daalein jo 'npx wrangler d1 list' command se mili hai
+database_id = "e1421396-862d-4be9-bc68-72ce70b1644c"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "heelsup-media"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "7d13f359a68d48d1af04f6cd043c9852"
+
+[observability.logs]
+enabled = true
+
+[assets]
+directory = "public"

@@ -1,0 +1,1507 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviews â€” HeelsUp Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #8b6914;
+            --bg: #f1f5f9;
+            --sidebar: #0f172a;
+            --card: #fff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --muted: #64748b;
+            --success: #22c55e;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --info: #3b82f6;
+            --info-light: #dbeafe;
+            --admin-card-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        /* Layout */
+        .wrap {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--sidebar);
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 62px;
+        }
+
+        .sidebar-logo {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: .95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .nav-label {
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: #475569;
+            padding: 13px 18px 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            color: #94a3b8;
+            font-size: .83rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: #1e293b;
+            color: var(--gold);
+            border-left-color: var(--gold);
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: .83rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #64748b;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .05);
+            color: #94a3b8;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: all .2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 240px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* Topbar */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: #64748b;
+            display: none;
+        }
+
+        .btn-menu:hover {
+            background: #f1f5f9;
+        }
+
+        @media(max-width:900px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* Main Content */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Page Header */
+        .admin-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .admin-page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .admin-page-header p {
+            font-size: .85rem;
+            color: var(--muted);
+        }
+
+        /* Stats grid */
+        .review-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media(max-width:1100px) {
+            .review-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:600px) {
+            .review-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .1);
+        }
+
+        .stat-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .stat-icon-gold {
+            background: rgba(201, 169, 110, .12);
+            color: var(--gold);
+        }
+
+        .stat-icon-blue {
+            background: rgba(59, 130, 246, .1);
+            color: var(--info);
+        }
+
+        .stat-icon-green {
+            background: rgba(34, 197, 94, .1);
+            color: var(--success);
+        }
+
+        .stat-label {
+            font-size: .72rem;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        /* Filters & Table */
+        .adv-filter-bar {
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: var(--admin-card-radius) var(--admin-card-radius) 0 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            margin-bottom: -20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+            max-width: 350px;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: .8rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 34px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .83rem;
+            transition: all .2s;
+            background: #f8fafc;
+            font-family: inherit;
+            color: var(--text);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--gold);
+            background: #fff;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .83rem;
+            background: #f8fafc;
+            transition: all .2s;
+            font-family: inherit;
+            color: var(--text);
+            outline: none;
+        }
+
+        .filter-select:focus {
+            border-color: var(--gold);
+            background: #fff;
+        }
+
+        .admin-table-wrap {
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            border-radius: 0 0 var(--admin-card-radius) var(--admin-card-radius);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .83rem;
+            min-width: 900px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border-bottom: 2px solid #f1f5f9;
+            background: #fff;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f8fafc;
+            transition: background .15s;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody td {
+            padding: 16px;
+            vertical-align: middle;
+        }
+
+        .review-prod-img {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .admin-table-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .admin-table-sub {
+            font-size: .72rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .review-text {
+            font-size: .8rem;
+            color: var(--text);
+            margin-top: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .star-rating i {
+            color: var(--warning);
+            font-size: .85rem;
+            margin-right: 2px;
+        }
+
+        .badge-verified {
+            color: var(--success);
+            background: var(--success-light);
+            padding: 2px 4px;
+            border-radius: 50%;
+            font-size: .5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .status-active {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .status-draft {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+
+        .status-rejected {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        /* Buttons & Actions */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: all .2s;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-white {
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-white:hover {
+            background: #f8fafc;
+        }
+
+        .admin-table-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .table-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .85rem;
+            transition: all .2s;
+            background: #f8fafc;
+            color: #64748b;
+            border: 1px solid var(--border);
+        }
+
+        .table-action-btn:hover {
+            background: var(--info-light);
+            color: var(--info);
+            border-color: #bae6fd;
+        }
+
+        .table-action-btn.danger:hover {
+            background: var(--danger-light);
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+
+        .table-action-btn.success:hover {
+            background: var(--success-light);
+            color: var(--success);
+            border-color: #bbf7d0;
+        }
+
+        .admin-table-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+        }
+
+        .table-page-info {
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .page-btn {
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: .8rem;
+            color: var(--muted);
+            background: #fff;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .page-btn.active {
+            background: var(--gold);
+            color: #fff;
+            border-color: var(--gold);
+        }
+
+        .page-btn:hover:not(.active):not(:disabled) {
+            background: #f1f5f9;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .25);
+            animation: modalIn .3s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .modal-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .modal-close:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .form-field {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: .75rem;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 10px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .87rem;
+            background: #f8fafc;
+            color: var(--text);
+            font-family: inherit;
+            outline: none;
+            transition: all .2s;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, .1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .customer-review-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Toast */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .83rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 240px;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: .87rem;
+        }
+
+        .loading-spinner i {
+            font-size: 1.8rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+            background: #f8fafc;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 99;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="wrap">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">H</div>
+                <div>
+                    <div style="font-size:.87rem;font-weight:700;color:#f1f5f9">HeelsUp</div>
+                    <div style="font-size:.62rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em">Admin Panel
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-label">Main</div>
+                <a class="nav-item" href="admin.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-label">Catalogue</div>
+                <a class="nav-item" href="admin-products.html"><i class="fa-solid fa-box"></i> Products</a>
+                <a class="nav-item" href="admin-categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a class="nav-item" href="admin-collections.html"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a class="nav-item" href="admin-inventory.html"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-label">Sales & Customers</div>
+                <a class="nav-item" href="admin-orders.html"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+                <a class="nav-item" href="admin-customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+                <a class="nav-item" href="admin-coupons.html"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a class="nav-item active" href="admin-reviews.html"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a class="nav-item" href="admin-orders.html?tab=exchange"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a class="nav-item" href="admin-pos.html"><i class="fa-solid fa-cash-register"></i> POS / Offline
+                    Sales</a>
+
+                <div class="nav-label">Marketing & Content</div>
+                <a class="nav-item" href="admin-banners.html"><i class="fa-solid fa-image"></i> Banners</a>
+                <a class="nav-item" href="admin-blog.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a class="nav-item" href="admin-pages.html"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a class="nav-item" href="admin-notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+                <div class="nav-label">Reports</div>
+                <a class="nav-item" href="admin-reports.html"><i class="fa-solid fa-chart-pie"></i> Reports</a>
+                <a class="nav-item" href="admin-analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+                <div class="nav-label">System</div>
+                <a class="nav-item" href="admin-shipping.html"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a class="nav-item" href="admin-taxes.html"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a class="nav-item" href="admin-staff.html"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a class="nav-item" href="admin-settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="s-avatar" id="s-avatar">A</div>
+                    <div>
+                        <div class="s-name" id="s-name">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="topbar">
+                <button class="btn-menu" id="menuBtn" onclick="toggleSidebar()"><i
+                        class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Reviews</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')"><i
+                            class="fa-solid fa-store"></i> View Store</button>
+                </div>
+            </header>
+
+            <section class="content">
+                <!-- Page Header -->
+                <div class="admin-page-header">
+                    <div>
+                        <h2>Product Reviews</h2>
+                        <p>Manage customer feedback, approve reviews, and reply to concerns.</p>
+                    </div>
+                    <div style="display:flex;gap:12px;">
+                        <button class="btn btn-white" onclick="loadReviews()"><i class="fa-solid fa-rotate-right"></i>
+                            Refresh</button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="review-stats">
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-label">Average Rating</div>
+                            <div class="stat-value" id="statAvgRating"><i class="fa-solid fa-spinner fa-spin"
+                                    style="font-size:1rem;"></i></div>
+                        </div>
+                        <div class="stat-card-icon stat-icon-gold"><i class="fa-solid fa-star-half-stroke"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-label">Total Reviews</div>
+                            <div class="stat-value" id="statTotalReviews"><i class="fa-solid fa-spinner fa-spin"
+                                    style="font-size:1rem;"></i></div>
+                        </div>
+                        <div class="stat-card-icon stat-icon-blue"><i class="fa-solid fa-comments"></i></div>
+                    </div>
+                    <div class="stat-card"
+                        style="border: 1px solid var(--warning-light); background: var(--warning-light);">
+                        <div>
+                            <div class="stat-label" style="color:var(--warning)">Pending Approval</div>
+                            <div class="stat-value" style="color:var(--warning)" id="statPending"><i
+                                    class="fa-solid fa-spinner fa-spin" style="font-size:1rem;"></i></div>
+                        </div>
+                        <div class="stat-card-icon" style="background:var(--warning); color:#fff;"><i
+                                class="fa-solid fa-hourglass-half"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <div class="stat-label">Replied</div>
+                            <div class="stat-value text-success" id="statReplied"><i class="fa-solid fa-spinner fa-spin"
+                                    style="font-size:1rem;"></i></div>
+                        </div>
+                        <div class="stat-card-icon stat-icon-green"><i class="fa-solid fa-reply"></i></div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="adv-filter-bar">
+                    <div style="display:flex; gap:10px; align-items:center; flex:1;">
+                        <div class="search-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" class="search-input" id="reviewSearch"
+                                placeholder="Search product or customer..." oninput="filterReviews()">
+                        </div>
+                        <select class="filter-select" id="statusFilter" onchange="filterReviews()">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected/Hidden</option>
+                        </select>
+                        <select class="filter-select" id="ratingFilter" onchange="filterReviews()">
+                            <option value="">All Ratings</option>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">1-2 Stars</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="btn btn-white btn-sm" onclick="clearFilters()">Clear Filters</button>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="admin-table-wrap">
+                    <div style="overflow-x:auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Rating & Review</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th style="text-align:right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reviewsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Fetching live
+                                            reviews...</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="admin-table-footer">
+                        <div class="table-page-info" id="paginationInfo">Showing 0 reviews</div>
+                        <div class="pagination" id="reviewsPagination"></div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Review Reply Modal -->
+    <div class="modal-backdrop" id="replyModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="replyModalTitle">Review Details</div>
+                <button class="modal-close" onclick="closeReplyModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="customer-review-card">
+                <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                    <div>
+                        <div class="admin-table-name" id="modCustName">Customer Name</div>
+                        <div class="admin-table-sub" id="modProdName">Product Name</div>
+                    </div>
+                    <div class="star-rating" id="modStars">
+                        <!-- Stars will be injected here -->
+                    </div>
+                </div>
+                <div class="review-text" id="modReviewText" style="-webkit-line-clamp: unset; font-size: .85rem;">
+                    Review content goes here...
+                </div>
+            </div>
+
+            <form id="replyForm" onsubmit="saveReply(event)">
+                <input type="hidden" id="updateReviewId">
+                <div class="form-field">
+                    <label class="form-label">Review Status</label>
+                    <select class="form-select" id="updateReviewStatus" required>
+                        <option value="pending">Pending Approval</option>
+                        <option value="approved">Approved (Published)</option>
+                        <option value="rejected">Rejected (Hidden)</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Public Reply (Optional)</label>
+                    <textarea class="form-textarea" id="updateReviewReply"
+                        placeholder="Type your response to the customer here... This will be visible on the product page."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeReplyModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btnSaveReply"><i class="fa-solid fa-check"></i>
+                        Save & Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+  <script src="admin-enterprise.js"></script>
+    <script>
+        // State
+        let allReviews = [];
+        let filteredReviews = [];
+        const PAGE = 15;
+        let currentPg = 1;
+        let editingReviewId = null;
+
+        // Auth
+        try {
+            const user = HeelsUpAuth.getUser();
+            if (!user || user.role !== 'admin') {
+                window.location = 'login.html?redirect=admin-reviews.html';
+            }
+            const uname = (user?.firstName || user?.first_name || 'Admin');
+            document.getElementById('s-avatar').textContent = uname.charAt(0).toUpperCase();
+            document.getElementById('s-name').textContent = uname;
+        } catch (e) {
+            console.error("Auth initialization failed", e);
+        }
+
+        // Sidebar logic
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            s.classList.toggle('open');
+            document.getElementById('mobOverlay').style.display = s.classList.contains('open') ? 'block' : 'none';
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('mobOverlay').style.display = 'none';
+        }
+        function doLogout() {
+            try { HeelsUpAuth.clearSession(); } catch (e) { }
+            window.location = 'login.html';
+        }
+
+        function showToast(msg, type = 'success') {
+            const c = document.getElementById('toastWrap');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            const icon = type === 'error' ? 'fa-circle-xmark' : (type === 'warning' ? 'fa-triangle-exclamation' : 'fa-circle-check');
+            t.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+            c.appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0'; t.style.transition = 'opacity .3s';
+                setTimeout(() => t.remove(), 300);
+            }, 4000);
+        }
+
+        function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+        function fmtDate(d) { return d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'â€”'; }
+
+        // Generate Stars HTML
+        function getStarsHtml(rating) {
+            let html = '';
+            const r = Number(rating || 0);
+            for (let i = 1; i <= 5; i++) {
+                if (i <= r) html += '<i class="fa-solid fa-star"></i>';
+                else if (i - 0.5 <= r) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+                else html += '<i class="fa-regular fa-star"></i>';
+            }
+            return html;
+        }
+
+        // Live API Fetching
+        async function loadReviews() {
+            document.getElementById('reviewsTableBody').innerHTML = '<tr><td colspan="6"><div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Fetching live reviews...</div></td></tr>';
+            try {
+                // Fetch all reviews
+                // Adjusting API call format to match previous patterns
+                const data = await HeelsUpAuth.api('/api/admin/reviews?status=all');
+                allReviews = Array.isArray(data) ? data : (data.reviews || []);
+
+                // Sort descending by date
+                allReviews.sort((a, b) => new Date(b.created_at || Date.now()) - new Date(a.created_at || Date.now()));
+
+                calculateStats();
+                filterReviews();
+            } catch (e) {
+                console.error('API Error:', e);
+                showToast(e.message || 'Failed to load reviews', 'error');
+                document.getElementById('reviewsTableBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--danger)">Failed to connect to the database.</td></tr>';
+            }
+        }
+
+        function calculateStats() {
+            let total = allReviews.length;
+            let pending = 0;
+            let replied = 0;
+            let sumRating = 0;
+
+            allReviews.forEach(r => {
+                const stat = (r.status || 'pending').toLowerCase();
+                if (stat === 'pending') pending++;
+                if (r.reply && r.reply.trim() !== '') replied++;
+                sumRating += Number(r.rating || 0);
+            });
+
+            const avgRating = total > 0 ? (sumRating / total).toFixed(1) : 0;
+            const repliedPct = total > 0 ? Math.round((replied / total) * 100) : 0;
+
+            document.getElementById('statAvgRating').innerHTML = `${avgRating} <i class="fa-solid fa-star" style="font-size:16px; color:var(--gold);"></i>`;
+            document.getElementById('statTotalReviews').textContent = total.toLocaleString('en-IN');
+            document.getElementById('statPending').textContent = pending.toLocaleString('en-IN');
+            document.getElementById('statReplied').textContent = `${repliedPct}%`;
+        }
+
+        function clearFilters() {
+            document.getElementById('reviewSearch').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('ratingFilter').value = '';
+            filterReviews();
+        }
+
+        function filterReviews() {
+            const q = document.getElementById('reviewSearch').value.toLowerCase();
+            const statF = document.getElementById('statusFilter').value;
+            const ratF = document.getElementById('ratingFilter').value;
+
+            filteredReviews = allReviews.filter(r => {
+                const prodName = (r.product_name || '').toLowerCase();
+                const custFirst = (r.first_name || '').toLowerCase();
+                const custLast = (r.last_name || '').toLowerCase();
+                const custEmail = (r.email || '').toLowerCase();
+                const revText = (r.review || '').toLowerCase();
+                const status = (r.status || 'pending').toLowerCase();
+                const rating = Number(r.rating || 0);
+
+                // Search Match
+                const matchesSearch = !q || prodName.includes(q) || custFirst.includes(q) || custLast.includes(q) || custEmail.includes(q) || revText.includes(q);
+
+                // Status Match
+                const matchesStat = !statF || status === statF;
+
+                // Rating Match
+                let matchesRat = true;
+                if (ratF) {
+                    if (ratF === '5' || ratF === '4' || ratF === '3') matchesRat = rating === Number(ratF);
+                    else if (ratF === '2') matchesRat = rating <= 2;
+                }
+
+                return matchesSearch && matchesStat && matchesRat;
+            });
+
+            currentPg = 1;
+            renderReviews();
+        }
+
+        function renderReviews() {
+            const start = (currentPg - 1) * PAGE;
+            const page = filteredReviews.slice(start, start + PAGE);
+            const tbody = document.getElementById('reviewsTableBody');
+            const info = document.getElementById('paginationInfo');
+
+            if (!page.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa-regular fa-comments"></i><h3>No Reviews Found</h3><p>Try adjusting your search or filters.</p></div></td></tr>';
+                info.textContent = `Showing 0 reviews`;
+                document.getElementById('reviewsPagination').innerHTML = '';
+                return;
+            }
+
+            info.innerHTML = `Showing <strong>${start + 1}â€“${Math.min(start + PAGE, filteredReviews.length)}</strong> of <strong>${filteredReviews.length}</strong> reviews`;
+
+            tbody.innerHTML = page.map(r => {
+                const status = (r.status || 'pending').toLowerCase();
+
+                let statusCls = 'status-draft'; // default pending
+                let statusTxt = 'Pending';
+                let trStyle = '';
+
+                if (status === 'approved' || status === 'published') {
+                    statusCls = 'status-active';
+                    statusTxt = 'Published';
+                } else if (status === 'rejected' || status === 'hidden') {
+                    statusCls = 'status-rejected';
+                    statusTxt = 'Hidden';
+                } else {
+                    // Pending highlight
+                    trStyle = 'background:var(--warning-light); opacity: 0.98;';
+                }
+
+                const imgHtml = r.image_url
+                    ? `<img src="${esc(r.image_url)}" class="review-prod-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'44\\' height=\\'44\\'><rect width=\\'44\\' height=\\'44\\' fill=\\'%23f1f5f9\\'/></svg>'">`
+                    : `<div class="review-prod-img" style="display:flex;align-items:center;justify-content:center;color:#cbd5e1;"><i class="fa-solid fa-box"></i></div>`;
+
+                const custName = `${esc(r.first_name || '')} ${esc(r.last_name || '')}`.trim() || 'Guest';
+                const hasReply = r.reply && r.reply.trim() !== '';
+
+                return `<tr style="${trStyle}">
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px">
+                            ${imgHtml}
+                            <div style="max-width: 150px;">
+                                <div class="admin-table-name" style="font-size:12px; white-space:normal; line-height:1.2;">${esc(r.product_name || 'Unknown Product')}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="star-rating">${getStarsHtml(r.rating)}</div>
+                        <div class="review-text">${esc(r.review || 'No review text provided.')}</div>
+                        ${hasReply ? `<div style="font-size:11px; color:var(--info); margin-top:6px; font-weight:600;"><i class="fa-solid fa-reply"></i> Replied</div>` : ''}
+                    </td>
+                    <td>
+                        <div class="admin-table-name">${custName} <span class="badge-verified" title="Verified Buyer"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="admin-table-sub">${esc(r.email || '')}</div>
+                    </td>
+                    <td>
+                        <div class="admin-table-sub">${fmtDate(r.created_at || new Date())}</div>
+                    </td>
+                    <td><span class="status-badge ${statusCls}">${statusTxt}</span></td>
+                    <td>
+                        <div class="admin-table-actions" style="justify-content:flex-end;">
+                            ${status === 'pending' ? `<button class="table-action-btn success" title="Quick Approve" onclick="updateReviewStatus(${r.id}, 'approved')"><i class="fa-solid fa-check"></i></button>` : ''}
+                            <button class="table-action-btn" title="View / Reply" onclick='openReplyModal(${JSON.stringify(r).replace(/'/g, "&#39;")})'><i class="fa-solid fa-reply"></i></button>
+                            ${status !== 'rejected' && status !== 'hidden' ? `<button class="table-action-btn danger" title="Hide/Reject" onclick="updateReviewStatus(${r.id}, 'rejected')"><i class="fa-solid fa-ban"></i></button>` : ''}
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+
+            renderPagination('reviewsPagination', filteredReviews.length, currentPg, p => { currentPg = p; renderReviews(); });
+        }
+
+        // Modal Logic
+        function openReplyModal(r) {
+            editingReviewId = r.id;
+
+            const custName = `${esc(r.first_name || '')} ${esc(r.last_name || '')}`.trim() || 'Guest';
+            document.getElementById('modCustName').textContent = custName;
+            document.getElementById('modProdName').textContent = r.product_name || 'Unknown Product';
+            document.getElementById('modStars').innerHTML = getStarsHtml(r.rating);
+            document.getElementById('modReviewText').textContent = r.review || 'No text provided.';
+
+            // Set form values
+            document.getElementById('updateReviewId').value = r.id;
+
+            let status = (r.status || 'pending').toLowerCase();
+            if (status === 'published') status = 'approved';
+            if (status === 'hidden') status = 'rejected';
+            document.getElementById('updateReviewStatus').value = status;
+
+            document.getElementById('updateReviewReply').value = r.reply || '';
+
+            document.getElementById('replyModal').classList.add('show');
+        }
+
+        function closeReplyModal() {
+            document.getElementById('replyModal').classList.remove('show');
+            editingReviewId = null;
+        }
+
+        async function saveReply(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSaveReply');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            const id = document.getElementById('updateReviewId').value;
+            const status = document.getElementById('updateReviewStatus').value;
+            const reply = document.getElementById('updateReviewReply').value.trim();
+
+            try {
+                await HeelsUpAuth.api(`/api/admin/reviews/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status: status, reply: reply })
+                });
+
+                showToast('Review updated successfully');
+                closeReplyModal();
+                loadReviews(); // Reload live data to refresh UI and stats
+            } catch (err) {
+                showToast(err.message || 'Failed to update review', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Save & Update';
+            }
+        }
+
+        // Quick action without opening modal
+        async function updateReviewStatus(id, newStatus) {
+            try {
+                await HeelsUpAuth.api(`/api/admin/reviews/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status: newStatus })
+                });
+                showToast(`Review ${newStatus === 'approved' ? 'published' : 'hidden'} successfully.`);
+                loadReviews();
+            } catch (err) {
+                showToast(err.message || 'Failed to update review status', 'error');
+            }
+        }
+
+        function renderPagination(elId, total, page, onPageCallback) {
+            const pages = Math.ceil(total / PAGE);
+            const el = document.getElementById(elId);
+
+            if (pages <= 1) { el.innerHTML = ''; return; }
+
+            let html = `<button class="page-btn" onclick="(${onPageCallback.toString()})(${page - 1})" ${page <= 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></button>`;
+
+            let startP = Math.max(1, page - 2);
+            let endP = Math.min(pages, page + 2);
+
+            if (startP > 1) {
+                html += `<button class="page-btn" onclick="(${onPageCallback.toString()})(1)">1</button>`;
+                if (startP > 2) html += `<span class="page-ellipsis" style="color:var(--muted); font-size:10px; padding: 0 4px;">...</span>`;
+            }
+
+            for (let i = startP; i <= endP; i++) {
+                html += `<button class="page-btn ${i === page ? 'active' : ''}" onclick="(${onPageCallback.toString()})(${i})">${i}</button>`;
+            }
+
+            if (endP < pages) {
+                if (endP < pages - 1) html += `<span class="page-ellipsis" style="color:var(--muted); font-size:10px; padding: 0 4px;">...</span>`;
+                html += `<button class="page-btn" onclick="(${onPageCallback.toString()})(${pages})">${pages}</button>`;
+            }
+
+            html += `<button class="page-btn" onclick="(${onPageCallback.toString()})(${page + 1})" ${page >= pages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right" style="font-size:10px"></i></button>`;
+            el.innerHTML = html;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadReviews);
+    </script>
+</body>
+
+</html>

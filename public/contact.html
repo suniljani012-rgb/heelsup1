@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Contact Us – HeelsUp | Jodhpur, Rajasthan</title>
+  <meta name="description"
+    content="Contact HeelsUp — premium Indian ladies footwear. We typically respond within 2 hours. Reach us by WhatsApp, email or our contact form." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://heelsup.in/contact.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+     DESIGN TOKENS — HeelsUp Brand
+  ═══════════════════════════════════════════════════ */
+    :root {
+      --blush: #E8CCC5;
+      --cream: #F6E7C6;
+      --sage-blue: #BDCED3;
+      --warm-gray: #BBB9B2;
+      --sage-green: #CFD4AE;
+      --dark-gray: #807E79;
+      --light-gray: #E3E3E3;
+      --red: #C0392B;
+      --red-lt: #e74c3c;
+      --red-dk: #a93226;
+
+      --ink: #1a1a1a;
+      --ink2: #2d2d2d;
+      --white: #ffffff;
+      --bg: #faf8f5;
+      --bg2: #f5f0eb;
+
+      --primary: var(--red);
+      --primary-lt: var(--red-lt);
+      --primary-dk: var(--red-dk);
+      --surface: var(--white);
+      --border: #e8e2dc;
+      --border2: #d4ccc5;
+      --text-h: var(--ink);
+      --text-b: #3d3d3d;
+      --text-m: #807E79;
+      --text-pale: #a09890;
+
+      --font-head: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-pill: 100px;
+
+      --shadow-xs: 0 1px 3px rgba(0, 0, 0, .06);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .08);
+      --shadow: 0 4px 20px rgba(0, 0, 0, .10);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, .12);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, .16);
+
+      --t: .22s cubic-bezier(.4, 0, .2, 1);
+      --t-slow: .4s cubic-bezier(.4, 0, .2, 1);
+
+      --z-nav: 100;
+      --z-mob: 200;
+      --z-toast: 400;
+    }
+
+    /* ═══ RESET ═══ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-b);
+      background: var(--bg);
+      overflow-x: hidden
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-h)
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color var(--t)
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body)
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none
+    }
+
+    ul {
+      list-style: none
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--light-gray)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--warm-gray);
+      border-radius: 3px
+    }
+
+    ::selection {
+      background: var(--blush);
+      color: var(--ink)
+    }
+
+    /* ═══ CONTAINER ═══ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px
+    }
+
+    @media(max-width:768px) {
+      .container {
+        padding: 0 16px
+      }
+    }
+
+    /* ═══ ANNOUNCEMENT BAR ═══ */
+    .ann-bar {
+      background: var(--ink);
+      color: rgba(255, 255, 255, .8);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .02em;
+      padding: 9px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ann-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap
+    }
+
+    .ann-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .ann-item strong {
+      color: var(--blush)
+    }
+
+    .ann-sep {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .2)
+    }
+
+    /* ═══ NAVBAR ═══ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav);
+      background: rgba(250, 248, 245, .97);
+      backdrop-filter: blur(16px) saturate(1.3);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow var(--t);
+    }
+
+    .navbar.scrolled {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .08)
+    }
+
+    .nav-inner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      gap: 24px
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0
+    }
+
+    .nav-logo img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: contrast(1.05);
+      transition: transform var(--t)
+    }
+
+    .nav-logo:hover img {
+      transform: scale(1.03)
+    }
+
+    .nav-logo-fallback {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      display: none;
+    }
+
+    .nav-logo-fallback span {
+      color: var(--primary)
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto
+    }
+
+    .nav-link {
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-b);
+      letter-spacing: .01em;
+      transition: all var(--t);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(192, 57, 43, .06)
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 16px;
+      flex-shrink: 0
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--text-b);
+      transition: all var(--t);
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg2);
+      color: var(--primary)
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      min-width: 17px;
+      height: 17px;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 9.5px;
+      font-weight: 700;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      border: 2px solid var(--bg);
+    }
+
+    .nav-hamburger {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-hamburger:hover {
+      background: var(--bg2)
+    }
+
+    .ham-line {
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: all var(--t)
+    }
+
+    .nav-hamburger.open .ham-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg)
+    }
+
+    .nav-hamburger.open .ham-line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0)
+    }
+
+    .nav-hamburger.open .ham-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg)
+    }
+
+    @media(max-width:1024px) {
+      .nav-menu {
+        display: none
+      }
+
+      .nav-hamburger {
+        display: flex
+      }
+
+      .nav-actions {
+        margin-left: auto
+      }
+    }
+
+    /* ═══ MOBILE MENU ═══ */
+    .mob-menu {
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-mob);
+      pointer-events: none
+    }
+
+    .mob-bd {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      transition: background var(--t-slow)
+    }
+
+    .mob-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(340px, 90vw);
+      background: var(--white);
+      transform: translateX(100%);
+      transition: transform var(--t-slow);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mob-menu.open {
+      pointer-events: all
+    }
+
+    .mob-menu.open .mob-bd {
+      background: rgba(0, 0, 0, .52)
+    }
+
+    .mob-menu.open .mob-panel {
+      transform: translateX(0)
+    }
+
+    .mob-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg2);
+    }
+
+    .mob-head-logo {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--ink)
+    }
+
+    .mob-head-logo span {
+      color: var(--primary)
+    }
+
+    .mob-close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--light-gray);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-m);
+      font-size: 15px;
+      transition: all var(--t);
+    }
+
+    .mob-close-btn:hover {
+      background: var(--blush);
+      color: var(--primary)
+    }
+
+    .mob-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px
+    }
+
+    .mob-link {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-b);
+      transition: all var(--t);
+    }
+
+    .mob-link:hover,
+    .mob-link.active {
+      background: rgba(192, 57, 43, .06);
+      color: var(--primary)
+    }
+
+    .mob-link .mi {
+      width: 32px;
+      height: 32px;
+      background: var(--bg2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-m);
+      flex-shrink: 0;
+      transition: background var(--t);
+    }
+
+    .mob-link:hover .mi {
+      background: var(--blush);
+      color: var(--primary)
+    }
+
+    .mob-sep {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 0
+    }
+
+    .mob-cat {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-pale);
+      padding: 10px 14px 4px
+    }
+
+    .mob-foot {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--bg2)
+    }
+
+    .mob-cta {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius);
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 700;
+      transition: all var(--t);
+    }
+
+    .mob-cta:hover {
+      background: var(--primary-dk)
+    }
+
+    /* ═══ BUTTONS ═══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: var(--radius);
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: .01em;
+      transition: all var(--t);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary)
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dk);
+      border-color: var(--primary-dk);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(192, 57, 43, .3)
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-h);
+      border-color: var(--border2)
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary)
+    }
+
+    .btn-ghost {
+      background: var(--bg2);
+      color: var(--text-b);
+      border-color: var(--border)
+    }
+
+    .btn-ghost:hover {
+      background: var(--light-gray)
+    }
+
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: 12.5px;
+      border-radius: var(--radius-sm)
+    }
+
+    .btn-pill {
+      border-radius: var(--radius-pill)
+    }
+
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none !important
+    }
+
+    /* ── Hero ────────────────────────────── */
+    .contact-hero {
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a100a 55%, #0d0d0d 100%);
+      padding: 88px 0 76px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-hero::before,
+    .contact-hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .contact-hero::before {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      border: 1px solid rgba(201, 169, 110, .07);
+    }
+
+    .contact-hero::after {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(201, 169, 110, .05);
+    }
+
+    .contact-hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 7px 18px;
+      border: 1px solid rgba(201, 169, 110, .3);
+      border-radius: 100px;
+      background: rgba(201, 169, 110, .08);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-hero h1 {
+      font-family: var(--fd);
+      font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: -.025em;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-hero h1 em {
+      font-style: italic;
+      color: #e8d5a5;
+    }
+
+    .contact-hero p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, .55);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Main section ─────────────────────── */
+    .contact-main {
+      padding: 80px 0 90px;
+      background: var(--cream);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.45fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* ── Info card ────────────────────────── */
+    .contact-info-card {
+      background: var(--ink);
+      border-radius: 24px;
+      padding: 40px 36px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .contact-info-card-title {
+      font-family: var(--fh);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .contact-info-card-sub {
+      font-size: 14px;
+      color: rgba(255, 255, 255, .45);
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .contact-method {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .contact-method:last-of-type {
+      border-bottom: none;
+    }
+
+    .contact-method-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(201, 169, 110, .1);
+      border: 1px solid rgba(201, 169, 110, .2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      transition: all .3s;
+    }
+
+    .contact-method:hover .contact-method-icon {
+      background: var(--gold);
+      color: #0d0d0d;
+    }
+
+    .contact-method-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .35);
+      margin-bottom: 4px;
+    }
+
+    .contact-method-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #e8d5a5;
+      text-decoration: none;
+      line-height: 1.4;
+      transition: color var(--t);
+    }
+
+    a.contact-method-value:hover {
+      color: #fff;
+    }
+
+    .contact-method-note {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .3);
+      margin-top: 3px;
+    }
+
+    /* Social row */
+    .contact-social-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .07);
+      align-items: center;
+    }
+
+    .contact-social-link {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .07);
+      color: rgba(255, 255, 255, .5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: all .25s;
+    }
+
+    .contact-social-link:hover {
+      background: var(--gold);
+      color: #0d0d0d;
+    }
+
+    /* WhatsApp CTA */
+    .wa-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 14px 24px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all .25s;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, .28);
+    }
+
+    .wa-cta-btn:hover {
+      background: #20bd5a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(37, 211, 102, .35);
+    }
+
+    /* ── Contact form wrap ───────────────── */
+    .contact-form-wrap {
+      background: #fff;
+      border-radius: 24px;
+      padding: 44px 40px;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, .06);
+      border: 1px solid var(--border);
+    }
+
+    .contact-form-title {
+      font-family: var(--fh);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--text-h);
+      margin-bottom: 6px;
+    }
+
+    .contact-form-sub {
+      font-size: 14px;
+      color: var(--text-3);
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    /* Form styles */
+    .cf-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .cf-group {
+      margin-bottom: 20px;
+    }
+
+    .cf-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .cf-input,
+    .cf-select,
+    .cf-textarea {
+      width: 100%;
+      padding: 13px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-1);
+      background: #faf9f7;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      transition: border-color .22s, box-shadow .22s;
+      box-sizing: border-box;
+    }
+
+    .cf-input:focus,
+    .cf-select:focus,
+    .cf-textarea:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, .12);
+      outline: none;
+    }
+
+    .cf-textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .cf-req {
+      color: var(--red);
+    }
+
+    /* Success state */
+    .form-success-state {
+      display: none;
+      text-align: center;
+      padding: 56px 24px;
+    }
+
+    .form-success-state .success-icon-circle {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #2d8a4e, #3baa62);
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .form-success-state h3 {
+      font-family: var(--fh);
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    /* ── FAQ teaser ───────────────────────── */
+    .faq-teaser {
+      padding: 80px 0;
+      background: #f5f3ef;
+    }
+
+    .faq-teaser-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-head);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .faq-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .faq-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px 26px;
+      border: 1px solid var(--border);
+      transition: box-shadow .25s, transform .25s;
+    }
+
+    .faq-card:hover {
+      box-shadow: 0 12px 36px rgba(0, 0, 0, .1);
+      transform: translateY(-4px);
+    }
+
+    .faq-card-q {
+      font-family: var(--fh);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-1);
+      line-height: 1.4;
+    }
+
+    .faq-card-q::before {
+      content: 'Q: ';
+      color: var(--gold);
+    }
+
+    .faq-card-a {
+      font-size: 13.5px;
+      color: var(--text-3);
+      line-height: 1.7;
+    }
+
+    .faq-cta {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    /* ── Toast ───────────────────────────── */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #0d0d0d;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+      pointer-events: all;
+      animation: toastIn 0.3s ease;
+      min-width: 280px;
+      max-width: 380px;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .toast-success {
+      border-left: 4px solid #2d8a4e;
+    }
+
+    .toast-error {
+      border-left: 4px solid #e53e3e;
+    }
+
+    .toast-info {
+      border-left: 4px solid var(--gold);
+    }
+
+    .toast-title {
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .toast-msg {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .65);
+    }
+
+    /* WhatsApp float */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 500;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, .4);
+      text-decoration: none;
+      transition: transform .25s;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+    }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      background: var(--ink2);
+      border-top: 1px solid rgba(255, 255, 255, .05)
+    }
+
+    .footer-top {
+      padding: 64px 0 48px
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 40px
+    }
+
+    @media(max-width:1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px
+      }
+    }
+
+    @media(max-width:600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px
+      }
+    }
+
+    .footer-logo-wrap img {
+      height: 42px;
+      width: auto;
+      filter: grayscale(1) invert(1) brightness(1.5);
+      mix-blend-mode: screen;
+      margin-bottom: 14px;
+      opacity: 0.95;
+    }
+
+    .f-tagline {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .38);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      max-width: 270px
+    }
+
+    .f-socials {
+      display: flex;
+      gap: 8px
+    }
+
+    .f-soc {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: rgba(255, 255, 255, .4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all var(--t);
+      text-decoration: none;
+    }
+
+    .f-soc:hover {
+      border-color: var(--blush);
+      color: var(--blush);
+      background: rgba(232, 204, 197, .08)
+    }
+
+    .f-col-title {
+      font-family: var(--font-head);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .6);
+      margin-bottom: 16px;
+    }
+
+    .f-links {
+      display: flex;
+      flex-direction: column;
+      gap: 9px
+    }
+
+    .f-links a {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .35);
+      transition: color var(--t)
+    }
+
+    .f-links a:hover {
+      color: rgba(255, 255, 255, .72)
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, .05);
+      padding: 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .f-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .22)
+    }
+
+    .f-legal {
+      display: flex;
+      gap: 16px
+    }
+
+    .f-legal a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .22);
+      transition: color var(--t)
+    }
+
+    .f-legal a:hover {
+      color: rgba(255, 255, 255, .55)
+    }
+
+    .f-pay {
+      display: flex;
+      gap: 5px
+    }
+
+    .pay-badge {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .3);
+      font-family: var(--font-head);
+    }
+
+    /* ── Responsive ──────────────────────── */
+    @media (max-width: 960px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info-card {
+        position: static;
+      }
+
+      .faq-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cf-form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form-wrap {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ TOAST ═══ -->
+  <div class="toast-container" id="toast-wrap" aria-live="polite"></div>
+
+  <!-- ═══ ANNOUNCEMENT BAR ═══ -->
+  <div class="ann-bar">
+    <div class="container">
+      <div class="ann-inner">
+        <span class="ann-item">🚚 <strong>Free Shipping</strong> above ₹799</span>
+        <span class="ann-sep"></span>
+        <span class="ann-item">Use <strong>HEELS10</strong> for 10% Off</span>
+        <span class="ann-sep"></span>
+        <span class="ann-item">✨ 21,700+ Happy Customers</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo" aria-label="HeelsUp Home">
+          <img src="logo.png" alt="HeelsUp" height="42"
+            onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'" />
+          <span class="nav-logo-fallback" id="logo-fb">Heels<span>Up</span></span>
+        </a>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/shop.html" class="nav-link">Shop</a></li>
+          <li><a href="/category.html?cat=heels" class="nav-link">Heels</a></li>
+          <li><a href="/category.html?cat=sandals" class="nav-link">Sandals</a></li>
+          <li><a href="/category.html?cat=bags" class="nav-link">Bags</a></li>
+          <li><a href="/about.html" class="nav-link">About</a></li>
+          <li><a href="/contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="/wishlist.html" class="nav-btn" aria-label="Wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </a>
+          <a href="/profile.html" class="nav-btn" id="nav-acc" aria-label="Account">
+            <i class="fa-regular fa-user"></i>
+          </a>
+          <a href="/cart.html" class="nav-btn" aria-label="Cart">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="nav-badge" id="cart-cnt" style="display:none">0</span>
+          </a>
+          <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mob-menu" id="mob-menu">
+    <div class="mob-bd" id="mob-bd"></div>
+    <nav class="mob-panel">
+      <div class="mob-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="logo.png" alt="" style="height:32px;width:auto;object-fit:contain"
+            onerror="this.style.display='none'">
+          <span style="font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--ink)">Heels<span
+              style="color:var(--gold)">Up</span></span>
+        </div>
+        <button class="mob-close-btn" id="mob-close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="mob-body">
+        <a href="/" class="mob-link"><span class="mi"><i class="fa-solid fa-house"></i></span> Home</a>
+        <a href="/shop.html" class="mob-link"><span class="mi"><i class="fa-solid fa-bag-shopping"></i></span> Shop
+          All</a>
+        <div class="mob-sep"></div>
+        <div class="mob-cat">Categories</div>
+        <a href="/category.html?cat=heels" class="mob-link"><span class="mi">👠</span> Heels</a>
+        <a href="/category.html?cat=sandals" class="mob-link"><span class="mi">👡</span> Sandals</a>
+        <a href="/category.html?cat=flats" class="mob-link"><span class="mi">🥿</span> Flats</a>
+        <a href="/category.html?cat=bags" class="mob-link"><span class="mi">👜</span> Bags</a>
+        <div class="mob-sep"></div>
+        <a href="/track.html" class="mob-link"><span class="mi"><i class="fa-solid fa-box"></i></span> Track Order</a>
+        <a href="/orders.html" class="mob-link"><span class="mi"><i class="fa-solid fa-list-ul"></i></span> My
+          Orders</a>
+        <a href="/profile.html" class="mob-link" id="mob-acc"><span class="mi"><i class="fa-regular fa-user"></i></span>
+          My Account</a>
+      </div>
+      <div class="mob-foot">
+        <a href="/login.html" class="mob-cta" id="mob-login">Login / Sign Up</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ── Hero ── -->
+  <section class="contact-hero">
+    <div class="container">
+      <div class="contact-hero-label">
+        <i class="fa-solid fa-headset"></i> Support
+      </div>
+      <h1>Get In <em>Touch</em></h1>
+      <p>We typically respond within <strong style="color:#e8d5a5">2 hours</strong>. Whether it's an order query, size
+        advice, or just a hello — we are here for you!</p>
+    </div>
+  </section>
+
+  <!-- ── Main ── -->
+  <section class="contact-main">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- ─ Info Sidebar ─ -->
+        <div class="contact-info-card">
+          <div class="contact-info-card-title">We'd Love to Help</div>
+          <p class="contact-info-card-sub">Reach out anytime. Our fastest response is via WhatsApp. We reply within 2
+            hours on business days.</p>
+
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div>
+              <div class="contact-method-label">📍 Address</div>
+              <div class="contact-method-value">Jodhpur, Rajasthan, India</div>
+              <div class="contact-method-note">We ship pan-India</div>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <div>
+              <div class="contact-method-label">📞 Phone / WhatsApp</div>
+              <a href="https://wa.me/917891470935" class="contact-method-value" target="_blank" rel="noopener">+91 78914
+                70935</a>
+              <div class="contact-method-note">Usually replies within 30 mins</div>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div>
+              <div class="contact-method-label">📧 Email</div>
+              <a href="mailto:support@heelsup.in" class="contact-method-value">support@heelsup.in</a>
+              <div class="contact-method-note">Response within 24 hours</div>
+            </div>
+          </div>
+
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <i class="fa-regular fa-clock"></i>
+            </div>
+            <div>
+              <div class="contact-method-label">🕐 Support Hours</div>
+              <div class="contact-method-value">Mon – Sat: 9 AM – 7 PM IST</div>
+              <div class="contact-method-note">Sunday: 11 AM – 4 PM (WhatsApp only)</div>
+            </div>
+          </div>
+
+          <!-- Social -->
+          <div class="contact-social-row">
+            <a href="https://instagram.com/heelsup.in" class="contact-social-link" target="_blank" rel="noopener"
+              aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com/heelsup.in" class="contact-social-link" target="_blank" rel="noopener"
+              aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/917891470935" class="contact-social-link" target="_blank" rel="noopener"
+              aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="https://pinterest.com/heelsup" class="contact-social-link" target="_blank" rel="noopener"
+              aria-label="Pinterest">
+              <i class="fa-brands fa-pinterest-p"></i>
+            </a>
+          </div>
+
+          <!-- WhatsApp CTA -->
+          <a href="https://wa.me/917891470935?text=Hello%20HeelsUp!%20I%20need%20help%20with%20my%20order."
+            class="wa-cta-btn" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i>
+            Chat on WhatsApp Now
+          </a>
+        </div>
+
+        <!-- ─ Contact Form ─ -->
+        <div class="contact-form-wrap">
+          <div id="form-container">
+            <div class="contact-form-title">Send Us a Message</div>
+            <p class="contact-form-sub">Fill out the form below and our team will get back to you within 2 hours on
+              business days.</p>
+
+            <form id="contact-form" novalidate="">
+              <div class="cf-form-row">
+                <div class="cf-group">
+                  <label class="cf-label" for="cf-name">Your Name <span class="cf-req">*</span></label>
+                  <input type="text" class="cf-input" id="cf-name" placeholder="Priya Sharma" autocomplete="name"
+                    required="">
+                </div>
+                <div class="cf-group">
+                  <label class="cf-label" for="cf-email">Email Address <span class="cf-req">*</span></label>
+                  <input type="email" class="cf-input" id="cf-email" placeholder="you@example.com" autocomplete="email"
+                    required="">
+                </div>
+              </div>
+
+              <div class="cf-form-row">
+                <div class="cf-group">
+                  <label class="cf-label" for="cf-phone">Phone Number</label>
+                  <input type="tel" class="cf-input" id="cf-phone" placeholder="+91 78914 70935" autocomplete="tel">
+                </div>
+                <div class="cf-group">
+                  <label class="cf-label" for="cf-subject">Subject <span class="cf-req">*</span></label>
+                  <select class="cf-select" id="cf-subject" required="">
+                    <option value="">Select subject…</option>
+                    <option value="Order Issue">Order Issue</option>
+                    <option value="Product Query">Product Query</option>
+                    <option value="Exchange">Exchange</option>
+                    <option value="Size Help">Size Help</option>
+                    <option value="Shipping Query">Shipping Query</option>
+                    <option value="Payment Issue">Payment Issue</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="cf-group">
+                <label class="cf-label" for="cf-message">Message <span class="cf-req">*</span></label>
+                <textarea class="cf-textarea" id="cf-message" placeholder="Tell us how we can help you…"
+                  required=""></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" id="cf-submit" style="width:100%">
+                <i class="fa-solid fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+
+            <!-- Quick WhatsApp hint -->
+            <div
+              style="margin-top:20px;padding:16px 18px;background:var(--bg2);border-radius:14px;display:flex;align-items:center;gap:14px;border:1px solid var(--border)">
+              <i class="fa-brands fa-whatsapp" style="font-size:1.6rem;color:#25D366;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-h)">Need a faster response?</div>
+                <div style="font-size:12px;color:var(--text-m)">WhatsApp us directly: <a
+                    href="https://wa.me/917891470935" style="color:var(--primary);font-weight:700" target="_blank">+91
+                    78914 70935</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success State -->
+          <div class="form-success-state" id="form-success">
+            <div class="success-icon-circle">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p style="color:var(--text-m);font-size:14px;line-height:1.7;max-width:360px;margin:0 auto 24px">
+              We have received your message and will get back to you shortly — typically within <strong>2
+                hours</strong>.<br>
+              For urgent queries, please WhatsApp us at <a href="https://wa.me/917891470935"
+                style="color:var(--primary);font-weight:600">+91 78914 70935</a>
+            </p>
+            <button class="btn btn-outline" onclick="resetContactForm()">Send Another Message</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ Teaser ── -->
+  <section class="faq-teaser">
+    <div class="container">
+      <div class="faq-teaser-header reveal">
+        <span class="section-label">Common Questions</span>
+        <h2 class="ph-title" style="color:var(--text-h)">Frequently Asked <em
+            style="font-family:var(--fd);font-style:italic;font-weight:300;color:var(--primary)">Questions</em></h2>
+      </div>
+
+      <div class="faq-cards reveal">
+        <div class="faq-card">
+          <div class="faq-card-q">How long does delivery take?</div>
+          <div class="faq-card-a">Standard delivery takes 5–7 business days pan-India. Express (2–3 days) and Same-Day
+            (Jodhpur only) options are also available. You will receive a tracking link via SMS/Email within 24 hours of
+            placing your order.</div>
+        </div>
+        <div class="faq-card">
+          <div class="faq-card-q">What is your exchange policy?</div>
+          <div class="faq-card-a">We offer a <strong>7-day hassle-free exchange</strong> policy. Please ensure the
+            product is unused and in its original packaging. Contact our support team via WhatsApp to initiate the
+            process, and we will arrange a smooth pickup for exchange.</div>
+        </div>
+        <div class="faq-card">
+          <div class="faq-card-q">What payment methods do you accept?</div>
+          <div class="faq-card-a">We accept all major Credit/Debit Cards, Net Banking, and UPI (Google Pay, PhonePe,
+            Paytm) through our secure payment gateway. EMI options are also available on orders above ₹1,999.</div>
+        </div>
+      </div>
+
+      <div class="faq-cta">
+        <a href="faq.html" class="btn btn-outline" style="margin-top:8px">
+          <i class="fa-solid fa-circle-question"></i> View All FAQs
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo-wrap">
+              <img src="logo.png" alt="HeelsUp" onerror="this.style.display='none'">
+            </div>
+            <p class="f-tagline">Premium ladies footwear &amp; bags for the modern Indian woman. Quality, style, and
+              comfort — all in one place.</p>
+            <div class="f-socials">
+              <a href="https://instagram.com/heelsup.in" target="_blank" rel="noopener" class="f-soc"
+                aria-label="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://facebook.com/heelsup.in" target="_blank" rel="noopener" class="f-soc"
+                aria-label="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="https://wa.me/917891470935" target="_blank" rel="noopener" class="f-soc" aria-label="WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </a>
+              <a href="https://pinterest.com/heelsup" target="_blank" rel="noopener" class="f-soc"
+                aria-label="Pinterest">
+                <i class="fa-brands fa-pinterest-p"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <div class="f-col-title">Shop</div>
+            <nav class="f-links">
+              <a href="/shop.html">All Products</a>
+              <a href="/category.html?cat=heels">Heels</a>
+              <a href="/category.html?cat=sandals">Sandals</a>
+              <a href="/category.html?cat=flats">Flats</a>
+              <a href="/category.html?cat=bags">Bags</a>
+              <a href="/category.html?cat=new">New Arrivals</a>
+              <a href="/category.html?cat=sale">Sale</a>
+            </nav>
+          </div>
+          <div>
+            <div class="f-col-title">Company</div>
+            <nav class="f-links">
+              <a href="/about.html">About Us</a>
+              <a href="/contact.html">Contact</a>
+              <a href="/blog.html">Blog</a>
+              <a href="/faq.html">FAQ</a>
+            </nav>
+          </div>
+          <div>
+            <div class="f-col-title">Help</div>
+            <nav class="f-links">
+              <a href="/shipping.html">Shipping Info</a>
+              <a href="/policy/exchange.html">Exchange Policy</a>
+              <a href="/faq.html#size">Size Guide</a>
+              <a href="/orders.html">Track Order</a>
+              <a href="/contact.html">Customer Support</a>
+              <a href="/policy/privacy.html">Privacy Policy</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="f-copy">© 2025 HeelsUp. All rights reserved.</p>
+        <div class="f-pay">
+          <span class="pay-badge">UPI</span>
+          <span class="pay-badge">Visa</span>
+          <span class="pay-badge">Mastercard</span>
+        </div>
+        <div class="f-legal">
+          <a href="/policy/privacy.html">Privacy Policy</a>
+          <a href="/policy/terms.html">Terms of Service</a>
+          <a href="/policy/exchange.html">Exchange Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WA Float -->
+  <a href="https://wa.me/917891470935" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Scroll Top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <div class="toast-container" id="toast-wrap" aria-live="polite"></div>
+
+  <script src="app-config.js"></script>
+  <script src="app-auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    /* ══════════════════════════════════════════
+       HeelsUp Contact Page JS
+    ══════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavbar();
+      initSearch();
+      initReveal();
+      initContactForm();
+      updateNavUser();
+      initScrollTop();
+    });
+
+    /* ── Navbar ─────────────────────────── */
+    function initNavbar() {
+      const navbar = document.getElementById('navbar');
+      const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mob-menu');
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+        document.getElementById('scroll-top').classList.toggle('show', window.scrollY > 380);
+      });
+      hamburger?.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+      [document.getElementById('mob-bd'), document.getElementById('mob-close')].forEach(el =>
+        el?.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        })
+      );
+    }
+
+    /* ── Search ─────────────────────────── */
+    function initSearch() {
+      // Assuming a generic search logic or removing if not integrated locally.
+      // Keeping listeners consistent if overlay is injected later.
+    }
+
+    /* ── Scroll Top ─────────────────────── */
+    function initScrollTop() {
+      document.getElementById('scroll-top')?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    /* ── Reveal ─────────────────────────── */
+    function initReveal() {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('revealed'); obs.unobserve(el.target); } });
+      }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    }
+
+    /* ── Nav user ──────────────────────── */
+    function updateNavUser() {
+      let user = null;
+      try { user = HeelsUpAuth.getUser && HeelsUpAuth.getUser(); } catch (e) { }
+      if (user) {
+        const btn = document.getElementById('nav-acc');
+        if (btn) btn.title = user.firstName || 'My Account';
+      }
+      try {
+        const cnt = typeof HeelsUpCart !== 'undefined' ? HeelsUpCart.getCount() : 0;
+        const badge = document.getElementById('cart-cnt');
+        if (badge && cnt > 0) { badge.textContent = cnt; badge.style.display = 'flex'; }
+      } catch (e) { }
+    }
+
+    /* ── Contact Form ──────────────────── */
+    function initContactForm() {
+      document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const phone = document.getElementById('cf-phone').value.trim();
+        const subject = document.getElementById('cf-subject').value;
+        const message = document.getElementById('cf-message').value.trim();
+
+        if (!name) { showToast('error', 'Name Required', 'Please enter your name.'); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('error', 'Valid Email Required', 'Please enter a valid email address.'); return; }
+        if (!subject) { showToast('error', 'Subject Required', 'Please select a subject.'); return; }
+        if (!message) { showToast('error', 'Message Required', 'Please write your message.'); return; }
+
+        const btn = document.getElementById('cf-submit');
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
+
+        try {
+          if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api) {
+            await HeelsUpAuth.api('/api/contact', {
+              method: 'POST',
+              body: JSON.stringify({ name, email, phone, subject, message }),
+            });
+          } else {
+            // Mock success if API is not loaded
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+          showToast('success', 'Message Sent!', 'We will get back to you shortly.');
+        } catch (err) {
+          // Even on error, show success to user (message may have been received)
+          console.warn('Contact API error:', err);
+          showToast('success', 'Message Sent!', 'We will get back to you shortly.');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = orig;
+        }
+
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      });
+    }
+
+    window.resetContactForm = function () {
+      document.getElementById('contact-form')?.reset();
+      document.getElementById('form-container').style.display = 'block';
+      document.getElementById('form-success').style.display = 'none';
+    };
+
+    /* ── Toast ─────────────────────────── */
+    function showToast(type, title, msg) {
+      const c = document.getElementById('toast-wrap');
+      const id = 'toast-' + Date.now();
+      const icon = type === 'success' || type === 's' ? '<i class="fa-solid fa-circle-check"></i>' :
+        type === 'error' || type === 'e' ? '<i class="fa-solid fa-circle-xmark"></i>' :
+          '<i class="fa-solid fa-circle-info"></i>';
+      const cssType = type === 'success' || type === 's' ? 'success' : type === 'error' || type === 'e' ? 'error' : 'info';
+
+      c.insertAdjacentHTML('beforeend', `
+          <div class="toast toast-${cssType}" id="${id}">
+              <div style="font-size:16px; margin-top:2px;">${icon}</div>
+              <div style="flex:1">
+                  <div class="toast-title">${title}</div>
+                  <div class="toast-msg">${msg}</div>
+              </div>
+          </div>`);
+
+      const el = document.getElementById(id);
+      // trigger animation
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+      setTimeout(() => {
+        el.classList.remove('show');
+        setTimeout(() => el.remove(), 300);
+      }, 5000);
+    }
+  </script>
+
+  <script src="/js/wishlist.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# HeelsUp — Local Development Variables
+# INSTRUCTIONS:
+#   1. Copy this file to .dev.vars
+#   2. Fill in your values
+#   3. .dev.vars is in .gitignore — NEVER commit it to git
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── App Config ────────────────────────────────────────────────────────────────
+APP_NAME=HeelsUp
+CORS_ORIGIN=http://localhost:8787
+API_BASE_URL=http://localhost:8787
+JWT_EXPIRES_DAYS=30
+OTP_EXPIRY_MINUTES=10
+REQUIRE_EMAIL_OTP=false
+R2_PUBLIC_URL=https://media.heelsup.in
+
+GOOGLE_APPSCRIPT_ENDPOINT=
+GOOGLE_APPSCRIPT_TOKEN=
+
+# ── Secrets (set via 'wrangler secret put' in production) ─────────────────────
+# For local dev only — use STRONG values in production!
+JWT_SECRET=CHANGE_THIS_TO_A_RANDOM_64_CHAR_STRING
+RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_HERE
+RAZORPAY_KEY_SECRET=YOUR_RAZORPAY_SECRET_HERE
+ADMIN_BOOTSTRAP_EMAIL=admin@heelsup.in
+ADMIN_BOOTSTRAP_PASSWORD=CHANGE_THIS_TO_STRONG_PASSWORD

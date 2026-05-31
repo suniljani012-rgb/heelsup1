@@ -1,0 +1,1378 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Blog | HeelsUp – Fashion Tips, Footwear Guides &amp; Trends</title>
+    <meta name="description" content="HeelsUp Style Blog — Ladies footwear fashion tips, styling guides, new trends aur care tips. India ki sabse stylish shoe blog.">
+    <meta name="keywords" content="ladies footwear tips, heels styling guide, women fashion india, shoe care tips, footwear trends 2025, ladies bag styling">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://heelsup.in/blog.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Style Blog | HeelsUp">
+    <meta property="og:description" content="Footwear fashion tips, styling guides aur latest trends. HeelsUp ke saath stay stylish!">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+
+    <style>
+        /* ---- BLOG HERO ---- */
+        .blog-hero {
+            position: relative;
+            height: 480px;
+            overflow: hidden;
+        }
+
+        .blog-hero-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .blog-hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, rgba(13, 13, 13, 0.85) 0%, rgba(13, 13, 13, 0.5) 55%, rgba(13, 13, 13, 0.15) 100%);
+        }
+
+        .blog-hero-content {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .blog-hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-primary-light);
+            padding: 6px 16px;
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            border-radius: 100px;
+            background: rgba(201, 169, 110, 0.1);
+            backdrop-filter: blur(8px);
+            margin-bottom: 18px;
+        }
+
+        .blog-hero-title {
+            font-family: var(--fd);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
+
+        .blog-hero-title em {
+            color: var(--color-primary-light);
+            font-style: italic;
+        }
+
+        .blog-hero-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 460px;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* ---- BLOG FILTER TABS ---- */
+        .blog-tabs-section {
+            background: var(--color-white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: var(--navbar-height);
+            z-index: 50;
+        }
+
+        .blog-tabs-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .blog-tabs-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .blog-tab {
+            padding: 16px 22px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .blog-tab:hover {
+            color: var(--gold);
+        }
+
+        .blog-tab.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        /* ---- BLOG MAIN LAYOUT ---- */
+        .blog-main {
+            padding: 72px 0;
+            background: var(--cream);
+        }
+
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* ---- FEATURED ARTICLE ---- */
+        .featured-article {
+            background: var(--color-white);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 40px;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .featured-article:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-3px);
+        }
+
+        .featured-article-img {
+            position: relative;
+            height: 340px;
+            overflow: hidden;
+        }
+
+        .featured-article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .featured-article:hover .featured-article-img img {
+            transform: scale(1.04);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--gold);
+            color: var(--color-dark);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 100px;
+        }
+
+        .featured-article-body {
+            padding: 36px;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .article-category {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: var(--color-primary-glow);
+            border: 1px solid var(--color-primary-light);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        .article-date {
+            font-size: 12px;
+            color: var(--text-3);
+        }
+
+        .article-read-time {
+            font-size: 12px;
+            color: var(--text-3);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .featured-article-title {
+            font-family: var(--fh);
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: var(--text-1);
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .featured-article-excerpt {
+            font-size: 15px;
+            color: var(--text-2);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary-glow);
+            border: 2px solid var(--color-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gold-dk);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .author-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-1);
+        }
+
+        .author-title {
+            font-size: 11px;
+            color: var(--text-3);
+            margin-top: 1px;
+        }
+
+        .article-read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-left: auto;
+        }
+
+        .article-read-link:hover {
+            gap: 12px;
+        }
+
+        .article-read-link i {
+            transition: transform 0.2s ease;
+        }
+
+        .article-read-link:hover i {
+            transform: translateX(4px);
+        }
+
+        /* ---- ARTICLES GRID ---- */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .article-card {
+            background: var(--color-white);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .article-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .article-card-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .article-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .article-card:hover .article-card-img img {
+            transform: scale(1.06);
+        }
+
+        .article-card-body {
+            padding: 22px;
+        }
+
+        .article-card-title {
+            font-family: var(--fh);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-1);
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .article-card-excerpt {
+            font-size: 13px;
+            color: var(--text-3);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .article-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* ---- LOAD MORE ---- */
+        .load-more-wrap {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ---- SIDEBAR ---- */
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .sidebar-widget {
+            background: var(--color-white);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .widget-title {
+            font-family: var(--fh);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-1);
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--color-primary-light);
+        }
+
+        /* Popular Posts */
+        .popular-post {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+        }
+
+        .popular-post:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .popular-post-img {
+            width: 70px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .popular-post-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .popular-post-num {
+            font-family: var(--fd);
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--color-primary-light);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .popular-post-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-1);
+            line-height: 1.4;
+            margin-bottom: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .popular-post:hover .popular-post-title {
+            color: var(--gold);
+        }
+
+        .popular-post-date {
+            font-size: 11px;
+            color: var(--text-3);
+        }
+
+        /* Categories Widget */
+        .cat-widget-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--text-2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+        }
+
+        .cat-widget-item:hover {
+            background: var(--color-primary-glow);
+            color: var(--gold);
+        }
+
+        .cat-widget-count {
+            font-size: 11px;
+            background: var(--color-light-2);
+            border-radius: 100px;
+            padding: 2px 8px;
+            color: var(--text-3);
+            font-weight: 600;
+        }
+
+        /* Tags Widget */
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag-chip {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 5px 12px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            color: var(--text-3);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--cream2);
+        }
+
+        .tag-chip:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--color-dark);
+        }
+
+        /* Newsletter Widget */
+        .sidebar-newsletter {
+            background: linear-gradient(135deg, var(--color-dark), #1a1008);
+            border-radius: 18px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .sidebar-newsletter h3 {
+            font-family: var(--fd);
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-newsletter h3 em {
+            color: var(--color-primary-light);
+            font-style: italic;
+        }
+
+        .sidebar-newsletter p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 18px;
+        }
+
+        .sidebar-email-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-email-input {
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .sidebar-email-input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* ---- BLOG CATEGORIES BANNER ---- */
+        .blog-categories-section {
+            padding: 0 0 72px;
+            background: var(--cream);
+        }
+
+        .blog-cat-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+        }
+
+        .blog-cat-item {
+            background: var(--color-white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .blog-cat-item:hover {
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+            transform: translateY(-3px);
+        }
+
+        .blog-cat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-cat-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-1);
+        }
+
+        .blog-cat-count {
+            font-size: 11px;
+            color: var(--text-3);
+            margin-top: 3px;
+        }
+
+        /* Responsive */
+        @media(max-width:1024px) {
+            .blog-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-sidebar {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .blog-cat-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media(max-width:768px) {
+            .blog-hero {
+                height: 360px;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-cat-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .featured-article-title {
+                font-size: 1.5rem;
+            }
+
+            .featured-article-body {
+                padding: 24px;
+            }
+        }
+
+        @media(max-width:480px) {
+            .blog-hero {
+                height: 300px;
+            }
+
+            .blog-cat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .articles-grid {
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+    <div class="ctn">
+      <div class="nb-inner">
+        <!-- Logo -->
+        <a href="/" class="nb-logo">
+          <img src="logo.png" alt="HeelsUp" id="logo-img" onerror="this.classList.add('err');this.style.display='none'">
+          <span class="nb-logo-txt">Heels<span>Up</span></span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="nb-menu">
+          <li><a href="/" class="nb-link active">Home</a></li>
+          <li>
+            <a href="/shop.html" class="nb-link">
+              Shop
+              <svg class="nb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </a>
+            <div class="nb-drop">
+              <a href="/category.html?cat=heels">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M20 18H4l2-8h12l2 8zM4 18l-2 2M20 18l2 2M8 10V6a4 4 0 018 0v4"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Heels</strong><span>Block, Stiletto, Cone</span></div>
+              </a>
+              <a href="/category.html?cat=sandals">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M3 20h18M5 20V10l7-7 7 7v10M9 20v-6h6v6"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Sandals</strong><span>Strappy, Flat, Wedge</span></div>
+              </a>
+              <a href="/category.html?cat=flats">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <ellipse cx="12" cy="17" rx="9" ry="3"></ellipse>
+                    <path d="M3 17V7l9-4 9 4v10"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Flats</strong><span>Mules, Loafers, Slip-ons</span></div>
+              </a>
+              <a href="/category.html?cat=wedges">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M4 20h16M4 20l4-12h8l4 12"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Wedges</strong><span>Espadrilles, Platform</span></div>
+              </a>
+              <a href="/category.html?cat=bags">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Bags</strong><span>Tote, Clutch, Sling</span></div>
+              </a>
+              <a href="/category.html?cat=clutches">
+                <div class="nb-drop-ico"><svg viewBox="0 0 24 24">
+                    <rect x="3" y="8" width="18" height="13" rx="2"></rect>
+                    <path d="M8 8V5a4 4 0 018 0v3"></path>
+                  </svg></div>
+                <div class="nb-drop-txt"><strong>Clutches</strong><span>Evening, Party</span></div>
+              </a>
+            </div>
+          </li>
+          <li><a href="/category.html?cat=heels" class="nb-link">Heels</a></li>
+          <li><a href="/category.html?cat=sandals" class="nb-link">Sandals</a></li>
+          <li><a href="/category.html?cat=bags" class="nb-link">Bags</a></li>
+          <li><a href="/about.html" class="nb-link">About</a></li>
+          <li><a href="/contact.html" class="nb-link">Contact</a></li>
+        </ul>
+
+        <!-- Actions -->
+        <div class="nb-actions">
+          <a href="/search.html" class="nb-btn" id="search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+          </a>
+          <a href="/wishlist.html" class="nb-btn" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+            </svg>
+          </a>
+          <a href="/profile.html" class="nb-btn" id="nav-account" aria-label="Account">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+          <button class="nb-btn" id="cart-btn" aria-label="Cart">
+            <svg viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"></path>
+            </svg>
+            <span class="nb-badge" id="cart-cnt">0</span>
+          </button>
+          <button class="nb-ham" id="hamburger" aria-label="Menu">
+            <span class="ham-ln"></span>
+            <span class="ham-ln"></span>
+            <span class="ham-ln"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mob" id="mob-menu">
+    <div class="mob-bd" id="mob-bd"></div>
+    <div class="mob-panel">
+      <div class="mob-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="logo.png" alt="" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none'">
+          <span style="font-family:var(--fd);font-size:1.3rem;font-weight:600;color:var(--ink)">Heels<span style="color:var(--gold)">Up</span></span>
+        </div>
+        <button class="mob-close" id="mob-close">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="mob-body">
+        <a href="/" class="mob-lnk active"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg></span>Home</a>
+        <a href="/shop.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.57l1.65-7.43H6"></path>
+            </svg></span>Shop All</a>
+        <a href="/category.html?cat=heels" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M20 18H4l2-8h12l2 8z"></path>
+            </svg></span>Heels</a>
+        <a href="/category.html?cat=sandals" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M3 20h18M5 20V10l7-7 7 7v10"></path>
+            </svg></span>Sandals</a>
+        <a href="/category.html?cat=flats" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <ellipse cx="12" cy="17" rx="9" ry="3"></ellipse>
+            </svg></span>Flats</a>
+        <a href="/category.html?cat=bags" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+            </svg></span>Bags</a>
+        <div class="mob-sep"></div>
+        <a href="/about.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg></span>About Us</a>
+        <a href="/contact.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.95 12 19.79 19.79 0 011.9 3.38 2 2 0 013.89 1.22h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 8.91a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"></path>
+            </svg></span>Contact</a>
+        <div class="mob-sep"></div>
+        <a href="/profile.html" class="mob-lnk" id="mob-account"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg></span>My Account</a>
+        <a href="/orders.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg></span>Track Order</a>
+        <a href="/wishlist.html" class="mob-lnk"><span class="mob-ico"><svg viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+            </svg></span>Wishlist</a>
+      </div>
+      <div class="mob-foot">
+        <a href="/login.html" class="mob-auth primary" id="mob-login-btn">Login / Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+    <!-- SEARCH OVERLAY -->
+    
+
+    <!-- HERO -->
+    <section class="blog-hero">
+        <div class="blog-hero-bg">
+            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1600&amp;q=80&amp;auto=format&amp;fit=crop" alt="HeelsUp Style Blog" loading="eager" fetchpriority="high">
+        </div>
+        <div class="blog-hero-overlay"></div>
+        <div class="blog-hero-content">
+            <div class="ctn">
+                <div class="blog-hero-tag"><i class="fa-solid fa-pen-nib" style="font-size:0.65rem"></i> Style Blog by
+                    HeelsUp</div>
+                <h1 class="blog-hero-title">Fashion <em>Tips,</em> Trends<br>&amp; Style Stories</h1>
+                <p class="blog-hero-sub">Footwear care se styling secrets tak — sab kuch yahan milega. Inspired raho,
+                    stylish raho.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BREADCRUMB + TABS -->
+    <div class="blog-tabs-section">
+        <div class="ctn">
+            <div class="blog-tabs-inner">
+                <button class="blog-tab active" data-cat="all">All Posts</button>
+                <button class="blog-tab" data-cat="styling">Styling Tips</button>
+                <button class="blog-tab" data-cat="trends">Trends</button>
+                <button class="blog-tab" data-cat="care">Shoe Care</button>
+                <button class="blog-tab" data-cat="occasions">Occasions</button>
+                <button class="blog-tab" data-cat="bags">Bags &amp; Accessories</button>
+                <button class="blog-tab" data-cat="festive">Festive Fashion</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG MAIN -->
+    <section class="blog-main">
+        <div class="ctn">
+            <div class="blog-layout">
+
+                <!-- ARTICLES COLUMN -->
+                <div>
+
+                    <!-- FEATURED ARTICLE -->
+                    <a href="#" class="featured-article reveal" onclick="return false;">
+                        <div class="featured-article-img">
+                            <img src="https://images.unsplash.com/photo-1596703263926-eb0762ee17e4?w=900&amp;q=80&amp;auto=format&amp;fit=crop" alt="How to style block heels" loading="lazy">
+                            <span class="featured-badge">⭐ Featured</span>
+                        </div>
+                        <div class="featured-article-body">
+                            <div class="article-meta">
+                                <span class="article-category">Styling Tips</span>
+                                <span class="article-date">15 Jan 2025</span>
+                                <span class="article-read-time"><i class="fa-regular fa-clock"></i> 5 min read</span>
+                            </div>
+                            <h2 class="featured-article-title">Block Heels Ko 5 Alag Looks Ke Saath Kaise Style Karein —
+                                Office Se Party Tak</h2>
+                            <p class="featured-article-excerpt">Block heels ek versatile footwear choice hai jo almost
+                                har occasion ke liye perfect hai. Office meetings se shuru hokar weekend parties tak —
+                                is guide mein hum batayenge ki in heels ko kaise style karo ki hamesha perfect lago.
+                                Saath mein best color combinations aur outfit pairing tips bhi honge.</p>
+                            <div class="article-author" style="justify-content:space-between">
+                                <div style="display:flex;align-items:center;gap:12px">
+                                    <div class="author-avatar">P</div>
+                                    <div>
+                                        <div class="author-name">Priya Kapoor</div>
+                                        <div class="author-title">Style Editor, HeelsUp</div>
+                                    </div>
+                                </div>
+                                <span class="article-read-link">Read Article <i class="fa-solid fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- SECTION TITLE -->
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+                        <h3 style="font-family:var(--fh);font-size:1.3rem;font-weight:600;color:var(--text-1)">
+                            Latest Articles</h3>
+                        <span style="font-size:12px;color:var(--text-3)">12 articles</span>
+                    </div>
+
+                    <!-- ARTICLES GRID -->
+                    <div class="articles-grid reveal" id="articles-grid">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- LOAD MORE -->
+                    <div class="load-more-wrap reveal">
+                        <button class="btn btn-secondary btn-lg" id="load-more-btn">
+                            <i class="fa-solid fa-refresh"></i> Load More Articles
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR -->
+                <aside class="blog-sidebar">
+
+                    <!-- Search -->
+                    <div class="sidebar-widget">
+                        <div class="widget-title">Search Articles</div>
+                        <div style="position:relative">
+                            <input type="text" placeholder="Search tips, trends…" class="form-input" style="padding-right:44px">
+                            <button style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:1rem;background:none;border:none;cursor:pointer">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget">
+                        <div class="widget-title">Popular Posts</div>
+                        <a href="#" class="popular-post" onclick="return false;">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=200&amp;q=70&amp;auto=format&amp;fit=crop" alt="Popular post" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="popular-post-num">01</div>
+                                <div class="popular-post-title">Sandals Ki Care Kaise Karein — Monsoon Guide</div>
+                                <div class="popular-post-date">12 Jan 2025</div>
+                            </div>
+                        </a>
+                        <a href="#" class="popular-post" onclick="return false;">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&amp;q=70&amp;auto=format&amp;fit=crop" alt="Popular post" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="popular-post-num">02</div>
+                                <div class="popular-post-title">Best Bags for Office-Going Women in 2025</div>
+                                <div class="popular-post-date">8 Jan 2025</div>
+                            </div>
+                        </a>
+                        <a href="#" class="popular-post" onclick="return false;">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=200&amp;q=70&amp;auto=format&amp;fit=crop" alt="Popular post" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="popular-post-num">03</div>
+                                <div class="popular-post-title">Saree Ke Saath Kaun Si Heels Acchi Lagti Hain?</div>
+                                <div class="popular-post-date">3 Jan 2025</div>
+                            </div>
+                        </a>
+                        <a href="#" class="popular-post" onclick="return false;">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=200&amp;q=70&amp;auto=format&amp;fit=crop" alt="Popular post" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="popular-post-num">04</div>
+                                <div class="popular-post-title">Wedge Heels vs Block Heels — Kaun Better Hai?</div>
+                                <div class="popular-post-date">28 Dec 2024</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="sidebar-widget">
+                        <div class="widget-title">Browse Categories</div>
+                        <div class="cat-widget-item"><span>👠 Styling Tips</span><span class="cat-widget-count">8</span>
+                        </div>
+                        <div class="cat-widget-item"><span>✨ Trends 2025</span><span class="cat-widget-count">5</span>
+                        </div>
+                        <div class="cat-widget-item"><span>🧹 Shoe Care</span><span class="cat-widget-count">4</span>
+                        </div>
+                        <div class="cat-widget-item"><span>🎉 Occasions</span><span class="cat-widget-count">6</span>
+                        </div>
+                        <div class="cat-widget-item"><span>👜 Bags &amp; Acc.</span><span class="cat-widget-count">3</span>
+                        </div>
+                        <div class="cat-widget-item"><span>🪔 Festive</span><span class="cat-widget-count">4</span>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="sidebar-widget">
+                        <div class="widget-title">Popular Tags</div>
+                        <div class="tags-cloud">
+                            <span class="tag-chip">#BlockHeels</span>
+                            <span class="tag-chip">#SummerStyle</span>
+                            <span class="tag-chip">#WeddingSeason</span>
+                            <span class="tag-chip">#Flats</span>
+                            <span class="tag-chip">#ToteBag</span>
+                            <span class="tag-chip">#OfficeWear</span>
+                            <span class="tag-chip">#Jodhpur</span>
+                            <span class="tag-chip">#Rajasthan</span>
+                            <span class="tag-chip">#ShoeCare</span>
+                            <span class="tag-chip">#FestiveWear</span>
+                            <span class="tag-chip">#Sandals</span>
+                            <span class="tag-chip">#Monsoon</span>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="sidebar-newsletter">
+                        <h3>Style Updates <em>Weekly</em></h3>
+                        <p>Subscribe karo aur pao fashion tips seedha inbox mein — free!</p>
+                        <div class="sidebar-email-form">
+                            <input type="email" placeholder="Your email…" class="sidebar-email-input" id="sidebar-email">
+                            <button class="btn btn btn-full" onclick="subscribeSidebar()">
+                                <i class="fa-solid fa-paper-plane"></i> Subscribe Free
+                            </button>
+                        </div>
+                        <p style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:12px;margin-bottom:0">No spam.
+                            Unsubscribe anytime.</p>
+                    </div>
+
+                    <!-- Shop CTA -->
+                    <div style="background:linear-gradient(135deg,var(--color-primary-glow),var(--cream2));border:1px solid var(--color-primary-light);border-radius:18px;padding:28px;text-align:center">
+                        <div style="font-size:2.5rem;margin-bottom:12px">👠</div>
+                        <h4 style="font-family:var(--fh);font-size:1.1rem;margin-bottom:8px;color:var(--text-1)">
+                            Shop New Arrivals</h4>
+                        <p style="font-size:13px;color:var(--text-3);margin-bottom:18px">Blog padhke inspire ho
+                            gaye? Ab collection dekho!</p>
+                        <a href="category.html?cat=new" class="btn btn btn-full" style="font-size:11px">Shop Now
+                            <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG CATEGORIES QUICK LINKS -->
+    <section class="blog-categories-section">
+        <div class="ctn">
+            <div class="section-header reveal">
+                <span class="section-label">Explore</span>
+                <h2>Browse By <em style="font-family:var(--fd);font-style:italic;font-weight:400">Topic</em>
+                </h2>
+            </div>
+            <div class="blog-cat-grid reveal">
+                <div class="blog-cat-item">
+                    <div class="blog-cat-icon">👠</div>
+                    <div class="blog-cat-name">Styling Tips</div>
+                    <div class="blog-cat-count">8 articles</div>
+                </div>
+                <div class="blog-cat-item">
+                    <div class="blog-cat-icon">✨</div>
+                    <div class="blog-cat-name">Trends</div>
+                    <div class="blog-cat-count">5 articles</div>
+                </div>
+                <div class="blog-cat-item">
+                    <div class="blog-cat-icon">🧹</div>
+                    <div class="blog-cat-name">Shoe Care</div>
+                    <div class="blog-cat-count">4 articles</div>
+                </div>
+                <div class="blog-cat-item">
+                    <div class="blog-cat-icon">🎉</div>
+                    <div class="blog-cat-name">Occasions</div>
+                    <div class="blog-cat-count">6 articles</div>
+                </div>
+                <div class="blog-cat-item">
+                    <div class="blog-cat-icon">🪔</div>
+                    <div class="blog-cat-name">Festive</div>
+                    <div class="blog-cat-count">4 articles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+    <div class="ctn">
+      <div class="footer-top">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">
+              <img src="logo.png" alt="HeelsUp" onerror="this.style.display='none'">
+              <span>Heels<span>Up</span></span>
+            </div>
+            <p class="footer-tagline">Premium ladies footwear &amp; bags for the modern Indian woman. Quality, style, and
+              comfort — all in one place.</p>
+            <div class="footer-socials">
+              <a href="https://instagram.com/heelsup.in" target="_blank" rel="noopener" class="footer-soc" aria-label="Instagram">
+                <svg viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://facebook.com/heelsup.in" target="_blank" rel="noopener" class="footer-soc" aria-label="Facebook">
+                <svg viewBox="0 0 24 24">
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                </svg>
+              </a>
+              <a href="https://wa.me/919000000000" target="_blank" rel="noopener" class="footer-soc" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+                </svg>
+              </a>
+              <a href="https://pinterest.com/heelsup" target="_blank" rel="noopener" class="footer-soc" aria-label="Pinterest">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.76 1.22-5.14 1.22-5.14s-.31-.62-.31-1.54c0-1.44.84-2.52 1.88-2.52.89 0 1.32.67 1.32 1.47 0 .9-.57 2.24-.87 3.48-.25 1.04.52 1.88 1.53 1.88 1.84 0 3.08-2.37 3.08-5.18 0-2.14-1.44-3.74-4.05-3.74-2.95 0-4.78 2.2-4.78 4.64 0 .84.24 1.44.62 1.9.17.2.19.28.13.51-.04.17-.14.56-.18.72-.06.23-.24.31-.44.22-1.24-.51-1.82-1.88-1.82-3.42 0-2.54 2.14-5.6 6.39-5.6 3.42 0 5.67 2.48 5.67 5.15 0 3.54-1.96 6.18-4.84 6.18-.97 0-1.88-.52-2.19-1.11l-.62 2.37c-.2.76-.62 1.52-1 2.08.74.23 1.52.35 2.33.35 5.52 0 10-4.48 10-10S17.52 2 12 2z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Shop</div>
+            <nav class="footer-links">
+              <a href="/shop.html">All Products</a>
+              <a href="/category.html?cat=heels">Heels</a>
+              <a href="/category.html?cat=sandals">Sandals</a>
+              <a href="/category.html?cat=flats">Flats</a>
+              <a href="/category.html?cat=bags">Bags</a>
+              <a href="/category.html?cat=new">New Arrivals</a>
+              <a href="/category.html?cat=sale">Sale</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-col-title">Company</div>
+            <nav class="footer-links">
+              <a href="/about.html">About Us</a>
+              <a href="/contact.html">Contact</a>
+              <a href="/blog.html">Blog</a>
+              <a href="/faq.html">FAQ</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-col-title">Help</div>
+            <nav class="footer-links">
+              <a href="/shipping.html">Shipping Info</a>
+              <a href="/returns.html">Returns &amp; Exchange</a>
+              <a href="/faq.html#size">Size Guide</a>
+              <a href="/orders.html">Track Order</a>
+              <a href="/contact.html">Customer Support</a>
+              <a href="/policy/privacy.html">Privacy Policy</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 HeelsUp. All rights reserved. Made with ❤️ in India.</p>
+        <div class="footer-pay">
+          <span class="pay-badge">UPI</span>
+          <span class="pay-badge">Visa</span>
+          <span class="pay-badge">Mastercard</span>
+          <span class="pay-badge">COD</span>
+        </div>
+        <div class="footer-legal">
+          <a href="/policy/privacy.html">Privacy Policy</a>
+          <a href="/policy/terms.html">Terms of Service</a>
+          <a href="/policy/returns.html">Exchanges</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-drawer-backdrop" id="cart-backdrop"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <div style="display:flex;align-items:center;gap:12px">
+                <h3>My Cart</h3><span class="cart-count-badge" id="cart-drawer-count">0 items</span>
+            </div>
+            <button class="cart-close-btn" id="cart-close-btn">✕</button>
+        </div>
+        <div class="cart-drawer-body" id="cart-body">
+            <div class="cart-empty">
+                <div class="cart-empty-icon">🛍️</div>
+                <div class="cart-empty-text">Your cart is empty</div>
+                <p style="font-size:13px;color:var(--text-3)">Add some amazing products to get started!</p>
+                <a href="shop.html" class="btn btn" style="margin-top:12px">Shop Now</a>
+            </div>
+        </div>
+        <div class="cart-drawer-footer" id="cart-footer" style="display:none">
+            <div class="cart-summary-row"><span>Subtotal</span><span id="cart-subtotal">₹0</span></div>
+            <div class="cart-summary-row"><span>Shipping</span><span style="color:var(--teal)">Free</span>
+            </div>
+            <div class="cart-summary-row cart-summary-total"><span>Total</span><span id="cart-total">₹0</span></div>
+            <a href="checkout.html" class="btn btn btn-full" style="margin-top:14px"><i class="fa-solid fa-lock"></i> Checkout</a>
+        </div>
+    </aside>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <a href="https://wa.me/919xxxxxxxxx" target="_blank" style="position:fixed;bottom:28px;right:28px;z-index:500;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 8px 24px rgba(37,211,102,0.4);text-decoration:none">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button class="scroll-top-btn" id="scroll-top"><i class="fa-solid fa-chevron-up"></i></button>
+
+    <script>
+        // Blog articles data
+        const BLOG_ARTICLES = [
+            {
+                id: 1, title: "Summer 2025 Mein Kaun Se Sandals Trend Ho Rahe Hain?",
+                category: "Trends", date: "10 Jan 2025", readTime: "4 min",
+                img: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&q=75&auto=format&fit=crop",
+                excerpt: "Is summer ke top sandal trends jo har woman ko apni wardrobe mein add karne chahiye…",
+                tag: "trends"
+            },
+            {
+                id: 2, title: "Heels Mein Poora Din Comfortable Rehne Ke 7 Secret Tips",
+                category: "Styling Tips", date: "8 Jan 2025", readTime: "6 min",
+                img: "https://images.unsplash.com/photo-1596703263926-eb0762ee17e4?w=600&q=75&auto=format&fit=crop",
+                excerpt: "Office mein 9 ghante heels pehne ke baad bhi comfortable rehna chahti ho? Ye tips try karo…",
+                tag: "styling"
+            },
+            {
+                id: 3, title: "Leather Bags Ki Care Kaise Karein — Detailed Guide",
+                category: "Bag Care", date: "5 Jan 2025", readTime: "5 min",
+                img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=75&auto=format&fit=crop",
+                excerpt: "Apni premium leather bag ki life badhaani hai? Ye simple care tips regularly follow karo…",
+                tag: "bags"
+            },
+            {
+                id: 4, title: "Dulhan Ke Liye Perfect Bridal Footwear — Wedding Guide",
+                category: "Occasions", date: "2 Jan 2025", readTime: "7 min",
+                img: "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=600&q=75&auto=format&fit=crop",
+                excerpt: "Shaadi ke sabse important din ke liye perfect heels choose karna ek art hai. Yeh guide help karegi…",
+                tag: "occasions"
+            },
+            {
+                id: 5, title: "Monsoon Mein Footwear Care — Baarish Se Kaise Bachayein?",
+                category: "Shoe Care", date: "28 Dec 2024", readTime: "5 min",
+                img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=75&auto=format&fit=crop",
+                excerpt: "Monsoon season mein apni favourite shoes protect karne ke best tips aur tricks…",
+                tag: "care"
+            },
+            {
+                id: 6, title: "Kolhapuri Chappals — Rajasthan Ki Heritage Footwear Ka Jadoo",
+                category: "Styling Tips", date: "24 Dec 2024", readTime: "4 min",
+                img: "https://images.unsplash.com/photo-1554141220-83411835a60b?w=600&q=75&auto=format&fit=crop",
+                excerpt: "Kolhapuri chappals sirf footwear nahi, ek cultural heritage hai. In ko modern look ke saath kaise pair karein…",
+                tag: "styling"
+            },
+        ];
+
+        let page = 1;
+        let currentFilter = 'all';
+        const ARTICLES_PER_PAGE = 6;
+
+        function makeArticleCard(article) {
+            return `
+            <a href="#" class="article-card" onclick="return false;">
+                <div class="article-card-img">
+                    <img src="${article.img}" alt="${article.title}" loading="lazy" />
+                </div>
+                <div class="article-card-body">
+                    <div class="article-meta" style="margin-bottom:12px">
+                        <span class="article-category">${article.category}</span>
+                        <span class="article-read-time" style="font-size:11px;color:var(--text-3)"><i class="fa-regular fa-clock"></i> ${article.readTime}</span>
+                    </div>
+                    <h3 class="article-card-title">${article.title}</h3>
+                    <p class="article-card-excerpt">${article.excerpt}</p>
+                    <div class="article-card-footer">
+                        <span style="font-size:11px;color:var(--text-3)">${article.date}</span>
+                        <span class="article-read-link" style="font-size:11px">Read <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>`;
+        }
+
+        function renderArticles(filter = 'all', reset = false) {
+            const grid = document.getElementById('articles-grid');
+            let filtered = filter === 'all' ? BLOG_ARTICLES : BLOG_ARTICLES.filter(a => a.tag === filter);
+            if (reset) { grid.innerHTML = ''; page = 1; }
+            const start = (page - 1) * ARTICLES_PER_PAGE;
+            const slice = filtered.slice(0, Math.min(start + ARTICLES_PER_PAGE, filtered.length));
+            grid.innerHTML = slice.map(makeArticleCard).join('');
+            document.getElementById('load-more-btn').style.display = filtered.length > slice.length ? 'inline-flex' : 'none';
+        }
+
+        // Blog tabs
+        document.querySelectorAll('.blog-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.blog-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.cat;
+                renderArticles(currentFilter, true);
+            });
+        });
+
+        document.getElementById('load-more-btn').addEventListener('click', () => {
+            page++;
+            renderArticles(currentFilter);
+        });
+
+        // Sidebar newsletter
+        window.subscribeSidebar = function () {
+            const email = document.getElementById('sidebar-email').value.trim();
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('error', 'Invalid Email', 'Valid email enter karo.');
+                return;
+            }
+            document.getElementById('sidebar-email').value = '';
+            showToast('success', '🎉 Subscribed!', 'Weekly style updates ab aayengi aapke inbox mein!');
+        };
+
+        // Navbar
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+            document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400);
+        });
+        document.getElementById('topbar-close')?.addEventListener('click', () => {
+            const tb = document.getElementById('topbar'); tb.style.height = '0'; tb.style.overflow = 'hidden'; tb.style.padding = '0';
+        });
+        const hamburger = document.getElementById('hamburger-btn'), mobileMenu = document.getElementById('mobile-menu');
+        hamburger?.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : ''; });
+        document.getElementById('mobile-backdrop')?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+        document.getElementById('mobile-menu-close')?.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+
+        // Search
+        const searchOverlay = document.getElementById('search-overlay'), searchInput = document.getElementById('search-input');
+        document.getElementById('search-toggle-btn')?.addEventListener('click', () => { searchOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(() => searchInput.focus(), 300); });
+        document.getElementById('search-close-btn')?.addEventListener('click', () => { searchOverlay.classList.remove('open'); document.body.style.overflow = ''; searchInput.value = ''; });
+
+        // Cart
+        document.getElementById('cart-open-btn')?.addEventListener('click', () => { document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-backdrop').classList.add('open'); document.body.style.overflow = 'hidden'; });
+        document.getElementById('cart-close-btn')?.addEventListener('click', () => { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-backdrop').classList.remove('open'); document.body.style.overflow = ''; });
+        document.getElementById('cart-backdrop')?.addEventListener('click', () => { document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-backdrop').classList.remove('open'); document.body.style.overflow = ''; });
+        document.getElementById('scroll-top')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); observer.unobserve(e.target); } }), { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Toast
+        function showToast(type, title, message) {
+            const container = document.getElementById('toast-container');
+            const id = 'toast-' + Date.now();
+            const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' };
+            container.insertAdjacentHTML('beforeend', `<div class="toast toast-${type}" id="${id}"><i class="fa-solid ${icons[type] || icons.info} toast-icon"></i><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-message">${message}</div></div><button class="toast-close" onclick="document.getElementById('${id}').remove()">✕</button></div>`);
+            setTimeout(() => document.getElementById(id)?.remove(), 4000);
+        }
+
+        // Cart count
+        const cart = JSON.parse(localStorage.getItem('heelsup_cart') || '[]');
+        document.getElementById('cart-count').textContent = cart.reduce((s, i) => s + i.qty, 0);
+        document.getElementById('cart-drawer-count').textContent = cart.reduce((s, i) => s + i.qty, 0) + ' items';
+
+        // Init
+        renderArticles();
+    </script>
+
+
+  <script src="/js/wishlist.js"></script>
+</body></html>

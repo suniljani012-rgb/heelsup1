@@ -1,0 +1,2905 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HeelsUp Admin — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --primary: #F29F67;
+      --primary-dark: #d4784a;
+      --primary-light: rgba(242, 159, 103, 0.12);
+      --dark: #1E1E2C;
+      --blue: #3B8FF3;
+      --teal: #34B1AA;
+      --gold: #E0B50F;
+      --purple: #7C3AED;
+      --bg: #F0F2F7;
+      --sidebar-bg: #1E1E2C;
+      --card-bg: #FFFFFF;
+      --border: #E4E8F0;
+      --text: #1E1E2C;
+      --muted: #6B7280;
+      --success: #34B1AA;
+      --warning: #E0B50F;
+      --danger: #EF4444;
+      --green: #22c55e;
+      --rose: #f43f5e;
+      --violet: #8b5cf6;
+      --font: 'Open Sans', Arial, Helvetica, sans-serif;
+      --radius: 12px;
+      --shadow: 0 2px 12px rgba(30, 30, 44, .07);
+      --shadow-md: 0 6px 24px rgba(30, 30, 44, .10);
+      --shadow-lg: 0 12px 36px rgba(30, 30, 44, .14);
+      --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font);
+      font-size: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: var(--font);
+    }
+
+    /* ═══ AUTH GUARD ═══ */
+    #authGuard {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: linear-gradient(135deg, #1E1E2C 0%, #2a2a3d 100%);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    #authGuard.show {
+      display: flex;
+    }
+
+    /* ═══ PROGRESS BAR ═══ */
+    #nprogress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), #f59e0b);
+      z-index: 9999;
+      transition: width .3s;
+      opacity: 1;
+    }
+
+    /* ═══ LAYOUT ═══ */
+    .layout {
+      display: grid;
+      grid-template-columns: 256px 1fr;
+      min-height: 100vh;
+    }
+
+    @media(max-width:960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ═══ SIDEBAR ═══ */
+    .sidebar {
+      background: var(--sidebar-bg);
+      color: #94A3B8;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #2d2d3f transparent;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #2d2d3f;
+      border-radius: 2px;
+    }
+
+    .sidebar-brand {
+      padding: 20px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 64px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.1rem;
+      overflow: hidden;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: .88rem;
+      font-weight: 700;
+      color: #F1F5F9;
+      letter-spacing: .02em;
+    }
+
+    .brand-text span {
+      font-size: .62rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #475569;
+    }
+
+    .nav-section {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #334155;
+      padding: 14px 18px 5px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 8px 0;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 18px;
+      color: #64748B;
+      font-size: .82rem;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, .04);
+      color: #CBD5E1;
+    }
+
+    .nav-item.active {
+      background: rgba(242, 159, 103, .1);
+      color: var(--primary);
+      border-left-color: var(--primary);
+    }
+
+    .nav-item i {
+      width: 15px;
+      text-align: center;
+      font-size: .8rem;
+      flex-shrink: 0;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--danger);
+      color: #fff;
+      font-size: .6rem;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .6
+      }
+    }
+
+    .sidebar-footer {
+      padding: 14px;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .s-user {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 9px;
+    }
+
+    .s-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: .8rem;
+      flex-shrink: 0;
+    }
+
+    .s-name {
+      font-size: .8rem;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .s-role {
+      font-size: .65rem;
+      color: #475569;
+    }
+
+    .btn-logout {
+      width: 100%;
+      padding: 7px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .04);
+      color: #64748B;
+      font-size: .78rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .btn-logout:hover {
+      background: rgba(239, 68, 68, .15);
+      color: #F87171;
+    }
+
+    @media(max-width:960px) {
+      .sidebar {
+        position: fixed;
+        left: -256px;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+        transition: left .3s;
+        width: 256px;
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+    }
+
+    /* ═══ MAIN ═══ */
+    .main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══ TOPBAR ═══ */
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+    }
+
+    .topbar-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .topbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-menu {
+      padding: 8px;
+      border-radius: 8px;
+      color: var(--muted);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media(max-width:960px) {
+      .btn-menu {
+        display: flex;
+      }
+    }
+
+    /* ═══ CONTENT ═══ */
+    .content {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .sec {
+      display: none;
+    }
+
+    .sec.active {
+      display: block;
+      animation: fadeUp .25s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    /* ═══ BUTTONS ═══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: .82rem;
+      font-weight: 600;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      font-family: var(--font);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(242, 159, 103, .35);
+    }
+
+    .btn-primary:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--border);
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-dark {
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .btn-dark:hover {
+      background: #2d2d44;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, .1);
+      color: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, .2);
+    }
+
+    .btn-teal {
+      background: rgba(52, 177, 170, .1);
+      color: var(--teal);
+    }
+
+    .btn-teal:hover {
+      background: rgba(52, 177, 170, .2);
+    }
+
+    .btn-ghost {
+      background: #F1F5F9;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-sm {
+      padding: 5px 12px;
+      font-size: .76rem;
+      border-radius: 7px;
+    }
+
+    .btn-xs {
+      padding: 3px 8px;
+      font-size: .7rem;
+      border-radius: 6px;
+    }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      background: #F1F5F9;
+      color: var(--muted);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: rgba(242, 159, 103, .3);
+    }
+
+    .icon-btn.del:hover {
+      background: #FEE2E2;
+      color: var(--danger);
+      border-color: #FECACA;
+    }
+
+    /* ═══ TOAST ═══ */
+    .toast-wrap {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      background: var(--dark);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: .82rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+      animation: toastIn .3s ease;
+      min-width: 250px;
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--teal);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast.info {
+      border-left: 4px solid var(--blue);
+    }
+
+    .toast.warning {
+      border-left: 4px solid var(--gold);
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .toast-close {
+      margin-left: auto;
+      opacity: .6;
+      cursor: pointer;
+      font-size: .75rem;
+    }
+
+    .toast-close:hover {
+      opacity: 1;
+    }
+
+    /* ═══ CARD ═══ */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .card-hd {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ═══ BADGES ═══ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: .67rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-placed {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
+
+    .badge-confirmed {
+      background: #E0F2FE;
+      color: #0369A1;
+    }
+
+    .badge-processing {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .badge-shipped {
+      background: #EDE9FE;
+      color: #6D28D9;
+    }
+
+    .badge-out_for_delivery {
+      background: #FFF7ED;
+      color: #C2410C;
+    }
+
+    .badge-delivered {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .badge-cancelled {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    .badge-exchange_requested {
+      background: #FEF9C3;
+      color: #713F12;
+    }
+
+    .badge-exchange_approved {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .badge-exchange_rejected {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .badge-pending {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .badge-paid {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .badge-failed {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    .badge-refunded {
+      background: #E0F2FE;
+      color: #0369A1;
+    }
+
+    .badge-razorpay {
+      background: #EDE9FE;
+      color: #6D28D9;
+    }
+
+    .badge-cod {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .badge-locked {
+      background: #F1F5F9;
+      color: #64748B;
+    }
+
+    .badge-active {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .badge-inactive {
+      background: #F1F5F9;
+      color: #64748B;
+    }
+
+    .badge-admin {
+      background: rgba(242, 159, 103, .15);
+      color: var(--primary-dark);
+    }
+
+    .badge-customer {
+      background: #F1F5F9;
+      color: var(--muted);
+    }
+
+    .badge-approved {
+      background: #D1FAE5;
+      color: #166534;
+    }
+
+    .badge-rejected {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    /* ═══ TABLE ═══ */
+    .tbl-scroll {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .82rem;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #F5F7FA;
+      transition: background .15s;
+    }
+
+    tbody tr:hover {
+      background: #FAFBFF;
+    }
+
+    tbody td {
+      padding: 11px 14px;
+      vertical-align: middle;
+    }
+
+    .td-name {
+      font-weight: 600;
+      font-size: .83rem;
+    }
+
+    .td-sub {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .tbl-img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+    }
+
+    .card-ft {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+    }
+
+    .pg-info {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* ═══ FORM ELEMENTS ═══ */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .form-row.single {
+      grid-template-columns: 1fr;
+    }
+
+    .form-row.three {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .form-row.full {
+      grid-column: 1/-1;
+      grid-template-columns: 1fr;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-label {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 9px 11px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: .84rem;
+      background: #F8FAFC;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 72px;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+    }
+
+    .form-input[readonly] {
+      background: #F1F5F9;
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .form-input.locked {
+      background: #EDE9FE;
+      color: #6D28D9;
+      border-color: #C4B5FD;
+      cursor: not-allowed;
+      font-weight: 600;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 2px 0;
+    }
+
+    .form-check input {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--primary);
+    }
+
+    .form-check label {
+      font-size: .83rem;
+      color: var(--text);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-field.full {
+      grid-column: 1/-1;
+    }
+
+    /* ═══ PAGINATION ═══ */
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .pg-btn {
+      padding: 4px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: .78rem;
+      color: var(--muted);
+      background: #fff;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .pg-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .pg-btn:hover:not(.active):not(:disabled) {
+      background: #F1F5F9;
+    }
+
+    .pg-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    /* ═══ MISC ═══ */
+    .spinner-wrap {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .spinner-wrap i {
+      font-size: 1.6rem;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 10px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state i {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      opacity: .3;
+      display: block;
+    }
+
+    .empty-state p {
+      font-size: .84rem;
+    }
+
+    .mob-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 998;
+    }
+
+    .error-state {
+      background: #fff8f8;
+      border: 1.5px solid #FECDD3;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .82rem;
+      color: #BE185D;
+    }
+
+    .error-state i {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .warning-box {
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: .8rem;
+      color: #92400E;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .truncate {
+      max-width: 130px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
+    .divider-label {
+      font-size: .67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      padding: 6px 0 8px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+
+    /* ═══ DASHBOARD SPECIFIC ═══ */
+    .date-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px;
+      box-shadow: var(--shadow);
+      flex-wrap: wrap;
+    }
+
+    .dfb-label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 0 6px;
+      white-space: nowrap;
+    }
+
+    .df-btn {
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--muted);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .df-btn:hover {
+      background: #F8FAFC;
+      color: var(--text);
+    }
+
+    .df-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(242, 159, 103, .35);
+    }
+
+    .df-sep {
+      width: 1px;
+      height: 18px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .df-custom {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 4px;
+    }
+
+    .df-input {
+      padding: 5px 9px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: .74rem;
+      color: var(--text);
+      background: #F8FAFC;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .df-input:focus {
+      border-color: var(--primary);
+    }
+
+    .df-apply {
+      padding: 5px 12px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-size: .74rem;
+      font-weight: 600;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .df-apply:hover {
+      opacity: .85;
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, #0b0f1a 0%, #1a2540 60%, #0e1d38 100%);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(242, 159, 103, .12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .welcome-text h2 {
+      font-size: 1.5rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .welcome-text p {
+      font-size: .78rem;
+      color: #64748B;
+    }
+
+    .welcome-actions {
+      display: flex;
+      gap: 8px;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media(max-width:1100px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:600px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stat-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .si-orange {
+      background: rgba(242, 159, 103, .12);
+      color: var(--primary);
+    }
+
+    .si-blue {
+      background: rgba(59, 143, 243, .1);
+      color: var(--blue);
+    }
+
+    .si-green {
+      background: rgba(52, 177, 170, .1);
+      color: var(--teal);
+    }
+
+    .si-rose {
+      background: rgba(239, 68, 68, .1);
+      color: var(--danger);
+    }
+
+    .stat-label {
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .stat-value {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -.01em;
+    }
+
+    .stat-sub {
+      font-size: .69rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* Order Pipeline */
+    .order-pipeline {
+      background: #fff;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .pipeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .pipeline-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .pipeline-strip {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      height: 10px;
+      margin-bottom: 16px;
+    }
+
+    .ps-seg {
+      height: 100%;
+      min-width: 2px;
+      transition: flex .6s;
+    }
+
+    .pipeline-items {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    @media(max-width:800px) {
+      .pipeline-items {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .pi-item {
+      background: #F8FAFC;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .pi-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .pi-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin: 0 auto 7px;
+    }
+
+    .pi-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .pi-lbl {
+      font-size: .64rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .pi-pct {
+      font-size: .64rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media(max-width:900px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ═══ ORDERS SECTION ═══ */
+    .hero-banner {
+      background: var(--dark);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(242, 159, 103, .18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .hero-sub {
+      font-size: .82rem;
+      color: #64748B;
+      z-index: 1;
+      position: relative;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      z-index: 1;
+      position: relative;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    @media(max-width:1200px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media(max-width:700px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .kpi-card.c-orange::after {
+      background: var(--primary);
+    }
+
+    .kpi-card.c-blue::after {
+      background: var(--blue);
+    }
+
+    .kpi-card.c-teal::after {
+      background: var(--teal);
+    }
+
+    .kpi-card.c-gold::after {
+      background: var(--gold);
+    }
+
+    .kpi-card.c-red::after {
+      background: var(--danger);
+    }
+
+    .kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .kpi-icon.c-orange {
+      background: rgba(242, 159, 103, .12);
+      color: var(--primary);
+    }
+
+    .kpi-icon.c-blue {
+      background: rgba(59, 143, 243, .1);
+      color: var(--blue);
+    }
+
+    .kpi-icon.c-teal {
+      background: rgba(52, 177, 170, .1);
+      color: var(--teal);
+    }
+
+    .kpi-icon.c-gold {
+      background: rgba(224, 181, 15, .1);
+      color: var(--gold);
+    }
+
+    .kpi-icon.c-red {
+      background: rgba(239, 68, 68, .1);
+      color: var(--danger);
+    }
+
+    .kpi-label {
+      font-size: .67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .kpi-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .kpi-sub {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .tab-strip {
+      display: flex;
+      gap: 4px;
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 6px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tab-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      transition: var(--transition);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font);
+    }
+
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(242, 159, 103, .35);
+    }
+
+    .tab-cnt {
+      background: rgba(255, 255, 255, .25);
+      color: inherit;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: .65rem;
+      font-weight: 800;
+    }
+
+    .tab-btn:not(.active) .tab-cnt {
+      background: #F1F5F9;
+      color: var(--muted);
+    }
+
+    .filter-bar {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 320px;
+    }
+
+    .search-wrap i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 10px 8px 30px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: .82rem;
+      background: #F8FAFC;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+    }
+
+    .filter-select {
+      padding: 8px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      background: #F8FAFC;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      border-color: var(--primary);
+    }
+
+    .date-input {
+      padding: 8px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      background: #F8FAFC;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .source-badge {
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .source-online {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
+
+    .source-pos {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .razorpay-locked-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #EDE9FE;
+      color: #6D28D9;
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-left: 6px;
+    }
+
+    /* ═══ MODAL ═══ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      padding: 0;
+      max-width: 780px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, .25);
+      animation: modalIn .28s ease;
+    }
+
+    .modal.wide {
+      max-width: 860px;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(.96) translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0)
+      }
+    }
+
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 5;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .modal-close:hover {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    .modal-body {
+      padding: 20px 24px;
+    }
+
+    .modal-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      background: #F8FAFC;
+      border-radius: 0 0 18px 18px;
+      position: sticky;
+      bottom: 0;
+    }
+
+    .detail-section {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .detail-section-title {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-section-title i {
+      color: var(--primary);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .detail-grid.three {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .detail-item-label {
+      font-size: .67rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 2px;
+    }
+
+    .detail-item-val {
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .detail-item-val.highlight {
+      color: var(--primary);
+      font-size: .95rem;
+      font-weight: 800;
+    }
+
+    .detail-item-val.razorpay-id {
+      color: var(--purple);
+      font-size: .75rem;
+      font-family: monospace;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 4px;
+    }
+
+    .tl-item {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 14px;
+      position: relative;
+    }
+
+    .tl-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .tl-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 22px;
+      bottom: 0;
+      width: 2px;
+      background: #E4E8F0;
+    }
+
+    .tl-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .tl-dot.done {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .tl-dot.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 0 3px rgba(242, 159, 103, .2);
+    }
+
+    .tl-dot.pending {
+      background: #F1F5F9;
+      color: var(--muted);
+    }
+
+    .tl-dot.error {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .tl-content {
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    .tl-title {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .tl-time {
+      font-size: .7rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    /* Exchange */
+    .exchange-section {
+      background: #FFF7ED;
+      border: 1px solid rgba(242, 159, 103, .3);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 10px;
+    }
+
+    .exchange-section-title {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .8rem;
+    }
+
+    .items-table th {
+      text-align: left;
+      padding: 8px 10px;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .items-table td {
+      padding: 10px;
+      border-bottom: 1px solid #F5F7FA;
+      vertical-align: middle;
+    }
+
+    .items-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .amounts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .amount-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 10px;
+      background: #fff;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      font-size: .82rem;
+    }
+
+    .amount-row.total {
+      background: var(--dark);
+      color: #fff;
+      border-color: var(--dark);
+      font-weight: 700;
+    }
+
+    .amount-row.discount {
+      color: var(--teal);
+    }
+
+    /* Product / Coupon Modal overlays */
+    .product-modal-bd,
+    .coupon-modal-bd {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(4px);
+      z-index: 1001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .product-modal-bd.show,
+    .coupon-modal-bd.show {
+      display: flex;
+    }
+
+    .product-modal-bd .modal {
+      max-width: 580px;
+    }
+
+    @media print {
+
+      .sidebar,
+      .topbar,
+      .filter-bar,
+      .tab-strip,
+      .hero-banner,
+      .kpi-grid,
+      .modal-footer,
+      .modal-close,
+      .btn,
+      button {
+        display: none !important;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .modal-overlay {
+        position: static;
+        background: none;
+        padding: 0;
+      }
+
+      .modal {
+        box-shadow: none;
+        max-height: none;
+        border-radius: 0;
+        animation: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      @page {
+        margin: 1cm;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ AUTH GUARD ══ -->
+  <div id="authGuard">
+    <i class="fa-solid fa-shield-halved" style="font-size:3.5rem;color:var(--danger)"></i>
+    <h2 style="color:#fff;font-size:1.8rem;font-weight:700">Access Denied</h2>
+    <p style="color:#64748B;font-size:.9rem;text-align:center;max-width:320px">You don't have permission. Please log in
+      as admin.</p>
+    <a href="login.html?redirect=admin.html" class="btn btn-primary" style="margin-top:8px">
+      <i class="fa-solid fa-arrow-right-to-bracket"></i> Go to Login
+    </a>
+  </div>
+
+  <!-- ══ PROGRESS BAR ══ -->
+  <div id="nprogress" style="width:0"></div>
+
+  <!-- ══ TOAST ══ -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <!-- ══ MOBILE OVERLAY ══ -->
+  <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+
+  <div class="layout">
+
+    <!-- ══════════════════════════════════════════
+         SIDEBAR
+    ══════════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <span id="logoFallback">H</span>
+          <img src="logo.png" alt="HeelsUp" style="width:44px;height:44px;object-fit:contain;display:none"
+            onload="this.style.display='block';document.getElementById('logoFallback').style.display='none'"
+            onerror="this.style.display='none'">
+        </div>
+        <div class="brand-text">
+          <strong>HeelsUp</strong>
+          <span>Admin Panel</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">Main</div>
+        <div class="nav-item active" data-sec="dashboard" onclick="navTo(this)">
+          <i class="fa-solid fa-gauge-high"></i> Dashboard
+        </div>
+
+        <div class="nav-section">Catalogue</div>
+        <div class="nav-item" data-sec="products" onclick="navTo(this)">
+          <i class="fa-solid fa-box"></i> Products
+        </div>
+        <a href="admin-categories.html" class="nav-item"><i class="fa-solid fa-layer-group"></i> Categories</a>
+        <a href="admin-collections.html" class="nav-item"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+        <a href="admin-inventory.html" class="nav-item"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+        <div class="nav-section">Sales &amp; Customers</div>
+        <div class="nav-item" data-sec="orders" onclick="navTo(this)">
+          <i class="fa-solid fa-bag-shopping"></i> Orders
+          <span class="nav-badge" id="ordersBadge" style="display:none">0</span>
+        </div>
+        <div class="nav-item" data-sec="customers" onclick="navTo(this)">
+          <i class="fa-solid fa-users"></i> Customers
+        </div>
+        <div class="nav-item" data-sec="coupons" onclick="navTo(this)">
+          <i class="fa-solid fa-ticket"></i> Coupons
+        </div>
+        <div class="nav-item" data-sec="reviews" onclick="navTo(this)">
+          <i class="fa-solid fa-star"></i> Reviews
+        </div>
+        <a href="admin-pos.html" class="nav-item"><i class="fa-solid fa-cash-register"></i> POS / Offline</a>
+
+        <div class="nav-section">Marketing</div>
+        <a href="admin-banners.html" class="nav-item"><i class="fa-solid fa-image"></i> Banners</a>
+        <a href="admin-blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i> Blog</a>
+        <a href="admin-pages.html" class="nav-item"><i class="fa-solid fa-file-lines"></i> Pages</a>
+        <a href="admin-notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+        <div class="nav-section">Reports</div>
+        <a href="admin-reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+        <a href="admin-analytics.html" class="nav-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+        <div class="nav-section">System</div>
+        <a href="admin-shipping.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+        <a href="admin-taxes.html" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+        <a href="admin-staff.html" class="nav-item"><i class="fa-solid fa-users-gear"></i> Staff</a>
+        <a href="admin-settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="s-user">
+          <div class="s-avatar" id="sAvatar">A</div>
+          <div>
+            <div class="s-name" id="sName">Admin</div>
+            <div class="s-role">Super Admin</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="doLogout()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ══════════════════════════════════════════
+         MAIN AREA
+    ══════════════════════════════════════════ -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <button class="btn-menu" onclick="toggleSidebar()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-right">
+          <button class="btn btn-sm btn-outline" onclick="refreshCurrent()">
+            <i class="fa-solid fa-rotate-right"></i> Refresh
+          </button>
+          <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')">
+            <i class="fa-solid fa-store"></i> Store
+          </button>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <!-- ══════════════════════════════════════
+             DASHBOARD SECTION
+        ══════════════════════════════════════ -->
+        <div class="sec active" id="sec-dashboard">
+
+          <!-- Date Filter Bar -->
+          <div class="date-filter-bar">
+            <span class="dfb-label"><i class="fa-regular fa-calendar"></i> Period</span>
+            <button class="df-btn" onclick="setDays(7,this)">7 Days</button>
+            <button class="df-btn" onclick="setDays(10,this)">10 Days</button>
+            <button class="df-btn active" onclick="setDays(30,this)">30 Days</button>
+            <button class="df-btn" onclick="setDays(90,this)">3 Months</button>
+            <button class="df-btn" onclick="setDays(180,this)">6 Months</button>
+            <div class="df-sep"></div>
+            <div class="df-custom">
+              <input type="date" class="df-input" id="dfFrom">
+              <span style="font-size:.72rem;color:var(--muted)">to</span>
+              <input type="date" class="df-input" id="dfTo">
+              <button class="df-apply" onclick="applyCustomRange()">Apply</button>
+            </div>
+          </div>
+
+          <!-- Welcome Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h2>Welcome Back! 👋</h2>
+              <p id="dashDate">Loading…</p>
+            </div>
+            <div class="welcome-actions">
+              <button class="btn btn-sm btn-primary"
+                onclick="navTo(document.querySelector('[data-sec=products]'));setTimeout(openProductModal,120)">
+                <i class="fa-solid fa-plus"></i> Add Product
+              </button>
+              <button class="btn btn-sm"
+                style="background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)"
+                onclick="navTo(document.querySelector('[data-sec=orders]'))">
+                <i class="fa-solid fa-bag-shopping"></i> Orders
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid — rendered by dashboard.js renderStats() -->
+          <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+              <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i></div>
+            </div>
+            <div class="stat-card">
+              <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i></div>
+            </div>
+            <div class="stat-card">
+              <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i></div>
+            </div>
+            <div class="stat-card">
+              <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i></div>
+            </div>
+          </div>
+
+          <!-- Order Pipeline -->
+          <div class="order-pipeline">
+            <div class="pipeline-header">
+              <div class="pipeline-title">Order Pipeline</div>
+              <span class="badge badge-placed" id="pipelineTotal">—</span>
+            </div>
+            <div class="pipeline-strip" id="pipelineStrip"></div>
+            <div class="pipeline-items" id="pipelineItems">
+              <div class="spinner-wrap" style="grid-column:1/-1">
+                <i class="fa-solid fa-spinner"></i>Loading…
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-column: Recent Orders + Top Products -->
+          <div class="two-col">
+            <div class="card">
+              <div class="card-hd">
+                <div class="card-title">Recent Orders</div>
+                <button class="btn btn-sm btn-outline" onclick="navTo(document.querySelector('[data-sec=orders]'))">
+                  View All <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i>
+                </button>
+              </div>
+              <div id="dashOrders">
+                <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-hd">
+                <div class="card-title">Top Products</div>
+                <button class="btn btn-sm btn-outline" onclick="navTo(document.querySelector('[data-sec=products]'))">
+                  View All <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i>
+                </button>
+              </div>
+              <div id="dashProducts">
+                <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /sec-dashboard -->
+
+
+        <!-- ══════════════════════════════════════
+             PRODUCTS SECTION
+        ══════════════════════════════════════ -->
+        <div class="sec" id="sec-products">
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">Products</div>
+              <button class="btn btn-sm btn-primary" onclick="openProductModal()">
+                <i class="fa-solid fa-plus"></i> Add Product
+              </button>
+            </div>
+            <!-- Filter bar -->
+            <div class="filter-bar"
+              style="margin-bottom:0;border-radius:0;border:none;border-bottom:1px solid var(--border);box-shadow:none">
+              <div class="search-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input" id="productSearch" placeholder="Search products…"
+                  oninput="filterProducts()">
+              </div>
+              <select class="filter-select" id="catFilter" onchange="filterProducts()">
+                <option value="">All Categories</option>
+                <option>Heels</option>
+                <option>Sandals</option>
+                <option>Wedges</option>
+                <option>Flats</option>
+                <option>Bags</option>
+                <option>Accessories</option>
+              </select>
+              <select class="filter-select" id="statusFilter2" onchange="filterProducts()">
+                <option value="">All Status</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+            <div class="tbl-scroll">
+              <table style="min-width:800px">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>MRP</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                  <tr>
+                    <td colspan="7">
+                      <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading products…</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-ft">
+              <div class="pg-info" id="productsPgInfo">—</div>
+              <div class="pagination" id="productsPagination"></div>
+            </div>
+          </div>
+        </div><!-- /sec-products -->
+
+
+        <!-- ══════════════════════════════════════
+             ORDERS SECTION
+        ══════════════════════════════════════ -->
+        <div class="sec" id="sec-orders">
+
+          <!-- Hero Banner -->
+          <div class="hero-banner">
+            <div>
+              <div class="hero-title">
+                Order Management
+                <i class="fa-solid fa-bag-shopping"
+                  style="font-size:1.2rem;color:var(--primary);vertical-align:middle;margin-left:4px"></i>
+              </div>
+              <div class="hero-sub" id="ordersHeroSub">Loading orders…</div>
+            </div>
+            <div class="hero-actions">
+              <button class="btn btn-sm btn-dark" onclick="exportOrdersCSV()">
+                <i class="fa-solid fa-file-csv"></i> CSV
+              </button>
+              <button class="btn btn-sm btn-primary" id="ordersRefreshBtn" onclick="loadOrders(true)">
+                <i class="fa-solid fa-arrows-rotate"></i> Refresh
+              </button>
+              <a href="admin-orders.html" class="btn btn-sm btn-outline"
+                style="color:#0b0b0b;border-color:rgba(255,255,255,.3)">
+                <i class="fa-solid fa-external-link-alt"></i> Full Page
+              </a>
+            </div>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card c-blue">
+              <div class="kpi-icon c-blue"><i class="fa-solid fa-bag-shopping"></i></div>
+              <div>
+                <div class="kpi-label">Total Orders</div>
+                <div class="kpi-val" id="oKpiTotal">—</div>
+                <div class="kpi-sub">All time</div>
+              </div>
+            </div>
+            <div class="kpi-card c-gold">
+              <div class="kpi-icon c-gold"><i class="fa-solid fa-clock"></i></div>
+              <div>
+                <div class="kpi-label">Unfulfilled</div>
+                <div class="kpi-val" id="oKpiUnfulfilled">—</div>
+                <div class="kpi-sub">Need action</div>
+              </div>
+            </div>
+            <div class="kpi-card c-teal">
+              <div class="kpi-icon c-teal"><i class="fa-solid fa-circle-check"></i></div>
+              <div>
+                <div class="kpi-label">Delivered</div>
+                <div class="kpi-val" id="oKpiDelivered">—</div>
+                <div class="kpi-sub">Completed</div>
+              </div>
+            </div>
+            <div class="kpi-card c-orange">
+              <div class="kpi-icon c-orange"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+              <div>
+                <div class="kpi-label">Revenue</div>
+                <div class="kpi-val" id="oKpiRevenue">—</div>
+                <div class="kpi-sub">Paid orders</div>
+              </div>
+            </div>
+            <div class="kpi-card c-red">
+              <div class="kpi-icon c-red"><i class="fa-solid fa-ban"></i></div>
+              <div>
+                <div class="kpi-label">Cancelled</div>
+                <div class="kpi-val" id="oKpiCancelled">—</div>
+                <div class="kpi-sub">Total cancels</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Strip -->
+          <div class="tab-strip" id="ordersTabStrip">
+            <button class="tab-btn active" onclick="setOrderTab('all',this)">All Orders <span class="tab-cnt"
+                id="otcAll">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('unfulfilled',this)">Unfulfilled <span class="tab-cnt"
+                id="otcUnfulfilled">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('payment_pending',this)">Pmt Pending <span class="tab-cnt"
+                id="otcPending">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('placed',this)">Placed <span class="tab-cnt"
+                id="otcPlaced">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('confirmed',this)">Confirmed <span class="tab-cnt"
+                id="otcConfirmed">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('shipped',this)">Shipped <span class="tab-cnt"
+                id="otcShipped">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('out_for_delivery',this)">Out for Delivery <span
+                class="tab-cnt" id="otcOfd">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('delivered',this)">Delivered <span class="tab-cnt"
+                id="otcDelivered">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('cancelled',this)">Cancelled <span class="tab-cnt"
+                id="otcCancelled">0</span></button>
+            <button class="tab-btn" onclick="setOrderTab('exchange',this)">Exchange <span class="tab-cnt"
+                id="otcExchange">0</span></button>
+          </div>
+
+          <!-- Filter Bar -->
+          <div class="filter-bar">
+            <div class="search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="search-input" id="ordersSearch" placeholder="Order#, Customer, Phone, Email…"
+                oninput="applyOrderFilters()">
+            </div>
+            <select class="filter-select" id="oPayFilter" onchange="applyOrderFilters()">
+              <option value="">All Payments</option>
+              <option value="paid">Paid</option>
+              <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+              <option value="refunded">Refunded</option>
+            </select>
+            <select class="filter-select" id="oMethodFilter" onchange="applyOrderFilters()">
+              <option value="">All Methods</option>
+              <option value="razorpay">Razorpay / UPI</option>
+              <option value="cod">COD</option>
+              <option value="pos">POS</option>
+            </select>
+            <select class="filter-select" id="oSourceFilter" onchange="applyOrderFilters()">
+              <option value="">All Sources</option>
+              <option value="online">Online</option>
+              <option value="pos">POS / Offline</option>
+            </select>
+            <input type="date" class="date-input" id="oDateFrom" onchange="applyOrderFilters()" title="From Date">
+            <input type="date" class="date-input" id="oDateTo" onchange="applyOrderFilters()" title="To Date">
+            <button class="btn btn-sm btn-outline" onclick="clearOrderFilters()">
+              <i class="fa-solid fa-filter-circle-xmark"></i> Clear
+            </button>
+          </div>
+
+          <!-- Orders Table -->
+          <div class="card">
+            <div class="tbl-scroll">
+              <table style="min-width:900px">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Source</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTbody">
+                  <tr>
+                    <td colspan="8">
+                      <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading orders…</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-ft">
+              <div class="pg-info" id="ordersPgInfo">Showing 0 orders</div>
+              <div class="pagination" id="ordersPagination"></div>
+            </div>
+          </div>
+
+        </div><!-- /sec-orders -->
+
+
+        <!-- ══════════════════════════════════════
+             CUSTOMERS SECTION
+        ══════════════════════════════════════ -->
+        <div class="sec" id="sec-customers">
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">Customers</div>
+            </div>
+            <div class="filter-bar"
+              style="margin-bottom:0;border-radius:0;border:none;border-bottom:1px solid var(--border);box-shadow:none">
+              <div class="search-wrap">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input" id="customerSearch" placeholder="Search name or email…"
+                  oninput="filterCustomers()">
+              </div>
+              <select class="filter-select" id="roleFilter" onchange="filterCustomers()">
+                <option value="">All Roles</option>
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div class="tbl-scroll">
+              <table style="min-width:700px">
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Joined</th>
+                    <th>Orders</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="customersTableBody">
+                  <tr>
+                    <td colspan="6">
+                      <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading…</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-ft">
+              <div class="pg-info" id="customersPgInfo">—</div>
+              <div class="pagination" id="customersPagination"></div>
+            </div>
+          </div>
+        </div><!-- /sec-customers -->
+
+
+        <!-- ══════════════════════════════════════
+             COUPONS SECTION
+        ══════════════════════════════════════ -->
+        <div class="sec" id="sec-coupons">
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">Coupons &amp; Offers</div>
+              <button class="btn btn-sm btn-primary" onclick="openCouponModal()">
+                <i class="fa-solid fa-plus"></i> Add Coupon
+              </button>
+            </div>
+            <div class="tbl-scroll">
+              <table style="min-width:800px">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Min Order</th>
+                    <th>Uses</th>
+                    <th>Expires</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="couponsTableBody">
+                  <tr>
+                    <td colspan="8">
+                      <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading…</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div><!-- /sec-coupons -->
+
+
+        <!-- ══════════════════════════════════════
+             REVIEWS SECTION
+        ══════════════════════════════════════ -->
+        <div class="sec" id="sec-reviews">
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">Product Reviews</div>
+              <select class="filter-select" id="reviewStatusFilter" onchange="loadReviews()" style="width:auto">
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div class="tbl-scroll">
+              <table style="min-width:700px">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Customer</th>
+                    <th>Rating</th>
+                    <th>Review</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reviewsTableBody">
+                  <tr>
+                    <td colspan="6">
+                      <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading…</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div><!-- /sec-reviews -->
+
+      </div><!-- /content -->
+    </div><!-- /main -->
+  </div><!-- /layout -->
+
+
+  <!-- ══════════════════════════════════════════════════
+       ORDER DETAIL MODAL
+  ══════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="orderDetailModal">
+    <div class="modal wide">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="orderModalTitle">Order Details</div>
+          <div id="orderModalSubtitle" style="font-size:.75rem;color:var(--muted);margin-top:2px"></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-sm btn-outline" onclick="printOrderInvoice()" title="Print Invoice">
+            <i class="fa-solid fa-print"></i> Invoice
+          </button>
+          <button class="modal-close" onclick="closeOrderModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" id="orderModalBody">Loading...</div>
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-outline" onclick="closeOrderModal()">Close</button>
+        <button class="btn btn-sm btn-primary" id="btnSaveOrder" onclick="saveOrderUpdate()">
+          <i class="fa-solid fa-check"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════
+       PRODUCT MODAL
+  ══════════════════════════════════════════════════ -->
+  <div class="product-modal-bd" id="productModalBd">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="productModalTitle">Add New Product</div>
+        <button class="modal-close" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <!-- NOTE: no <form> submit action — handled by saveProduct(event) in dashboard.js -->
+        <form id="productForm" onsubmit="saveProduct(event)">
+          <div class="form-grid">
+            <div class="form-field full">
+              <label class="form-label">Product Name *</label>
+              <input type="text" class="form-input" name="name" required placeholder="e.g. Block Heel Sandals">
+            </div>
+            <div class="form-field">
+              <label class="form-label">SKU</label>
+              <input type="text" class="form-input" name="sku" placeholder="HU-001">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Category</label>
+              <select class="form-select" name="category">
+                <option>Heels</option>
+                <option>Sandals</option>
+                <option>Wedges</option>
+                <option>Flats</option>
+                <option>Bags</option>
+                <option>Accessories</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Price ₹ *</label>
+              <input type="number" class="form-input" name="price" required min="0" placeholder="899">
+            </div>
+            <div class="form-field">
+              <label class="form-label">MRP ₹</label>
+              <input type="number" class="form-input" name="mrp" min="0" placeholder="1499">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Stock Qty</label>
+              <input type="number" class="form-input" name="stock" min="0" value="0">
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Description</label>
+              <textarea class="form-input form-textarea" name="description"
+                placeholder="Short product description…"></textarea>
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Image URL</label>
+              <input type="url" class="form-input" name="image_url" placeholder="https://…">
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Sizes (comma separated)</label>
+              <input type="text" class="form-input" name="sizes" placeholder="36,37,38,39,40,41">
+            </div>
+            <div class="form-field full">
+              <div class="form-check">
+                <input type="checkbox" name="featured" id="chkFeatured">
+                <label for="chkFeatured">Featured Product</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" name="is_new" id="chkNew">
+                <label for="chkNew">New Arrival</label>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" name="active" id="chkActive" checked>
+                <label for="chkActive">Active (visible in store)</label>
+              </div>
+            </div>
+          </div>
+          <!-- Error display — shown by dashboard.js on save failure -->
+          <div id="productFormError" style="display:none" class="error-state">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span id="productFormErrorMsg"></span>
+          </div>
+          <div class="modal-footer" style="padding:14px 0 0;margin-top:14px">
+            <button type="button" class="btn btn-outline btn-sm" onclick="closeProductModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="saveProductBtn">
+              <i class="fa-solid fa-floppy-disk"></i> Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════
+       COUPON MODAL
+  ══════════════════════════════════════════════════ -->
+  <div class="coupon-modal-bd" id="couponModalBd">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="couponModalTitle">Add Coupon</div>
+        <button class="modal-close" onclick="closeCouponModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="couponForm" onsubmit="saveCoupon(event)">
+          <div class="form-grid">
+            <div class="form-field full">
+              <label class="form-label">Coupon Code *</label>
+              <input type="text" class="form-input" name="code" required placeholder="HEELS10"
+                style="text-transform:uppercase;font-family:monospace">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Discount Type</label>
+              <select class="form-select" name="type">
+                <option value="percent">Percentage (%)</option>
+                <option value="flat">Flat Amount (₹)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Value *</label>
+              <input type="number" class="form-input" name="value" required min="0" placeholder="10">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Min Order (₹)</label>
+              <input type="number" class="form-input" name="min_order" min="0" placeholder="0" value="0">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Max Discount (₹)</label>
+              <input type="number" class="form-input" name="max_discount" min="0" placeholder="Unlimited">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Max Uses</label>
+              <input type="number" class="form-input" name="max_uses" min="0" placeholder="Unlimited">
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Expires At</label>
+              <input type="datetime-local" class="form-input" name="expires_at">
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Description</label>
+              <textarea class="form-input form-textarea" name="description" style="min-height:56px"
+                placeholder="Short description…"></textarea>
+            </div>
+            <div class="form-field full">
+              <div class="form-check">
+                <input type="checkbox" name="active" id="chkCouponActive" checked>
+                <label for="chkCouponActive">Active</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="padding:14px 0 0;margin-top:14px">
+            <button type="button" class="btn btn-outline btn-sm" onclick="closeCouponModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="saveCouponBtn">
+              <i class="fa-solid fa-floppy-disk"></i> Save Coupon
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════
+       SCRIPTS
+       Load order: HeelsUpAuth first → then dashboard.js
+       NO inline <script> block — all logic is in dashboard.js
+  ══════════════════════════════════════════════════ -->
+  <script src="app-auth.js"></script>
+  <script src="dashboard.js"></script>
+
+</body>
+
+</html>

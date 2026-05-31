@@ -1,0 +1,2169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HeelsUp Admin — Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Brand colors from image */
+            --primary: #F29F67;
+            /* Orange */
+            --primary-dark: #d4784a;
+            --primary-light: rgba(242, 159, 103, 0.12);
+            --dark: #1E1E2C;
+            /* Dark navy */
+            --blue: #3B8FF3;
+            /* Blue support */
+            --teal: #34B1AA;
+            /* Teal support */
+            --gold: #E0B50F;
+            /* Gold/Yellow */
+
+            /* UI */
+            --bg: #F0F2F7;
+            --sidebar-bg: #1E1E2C;
+            --card-bg: #FFFFFF;
+            --border: #E4E8F0;
+            --text: #1E1E2C;
+            --muted: #6B7280;
+            --success: #34B1AA;
+            --warning: #E0B50F;
+            --danger: #EF4444;
+
+            --font: 'Open Sans', Arial, Helvetica, sans-serif;
+            --radius: 12px;
+            --shadow: 0 2px 12px rgba(30, 30, 44, 0.07);
+            --shadow-md: 0 6px 24px rgba(30, 30, 44, 0.10);
+            --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: var(--font);
+        }
+
+        input,
+        select {
+            font-family: var(--font);
+        }
+
+        /* ── LAYOUT ───────────────────────────── */
+        .layout {
+            display: grid;
+            grid-template-columns: 256px 1fr;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 960px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── SIDEBAR ──────────────────────────── */
+        .sidebar {
+            background: var(--sidebar-bg);
+            color: #94A3B8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #2d2d3f transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #2d2d3f;
+            border-radius: 2px;
+        }
+
+        .sidebar-brand {
+            padding: 20px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 64px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            position: relative;
+        }
+
+        .brand-logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-logo-fallback {
+            font-weight: 800;
+            color: #fff;
+            font-size: 1rem;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .brand-text strong {
+            display: block;
+            font-size: .88rem;
+            font-weight: 700;
+            color: #F1F5F9;
+            letter-spacing: .02em;
+        }
+
+        .brand-text span {
+            font-size: .62rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: #475569;
+        }
+
+        .nav-section {
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #334155;
+            padding: 14px 18px 5px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 18px;
+            color: #64748B;
+            font-size: .82rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .04);
+            color: #CBD5E1;
+        }
+
+        .nav-item.active {
+            background: rgba(242, 159, 103, .1);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item i {
+            width: 15px;
+            text-align: center;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--primary);
+            color: #fff;
+            font-size: .6rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 20px;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .s-user {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #E2E8F0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #475569;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .04);
+            color: #64748B;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #F87171;
+        }
+
+        @media (max-width: 960px) {
+            .sidebar {
+                position: fixed;
+                left: -256px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 256px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* ── MAIN ─────────────────────────────── */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── TOPBAR ───────────────────────────── */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: var(--muted);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 960px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* Period filter */
+        .period-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .pf-btn {
+            padding: 5px 11px;
+            border-radius: 7px;
+            font-size: .76rem;
+            font-weight: 600;
+            color: var(--muted);
+            transition: var(--transition);
+            background: none;
+        }
+
+        .pf-btn:hover {
+            background: rgba(242, 159, 103, .1);
+            color: var(--primary-dark);
+        }
+
+        .pf-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(242, 159, 103, .35);
+        }
+
+        .date-input {
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            font-size: .78rem;
+            font-family: var(--font);
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .date-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(242, 159, 103, .1);
+        }
+
+        .divider-v {
+            width: 1px;
+            height: 28px;
+            background: var(--border);
+            margin: 0 4px;
+        }
+
+        /* ── CONTENT ──────────────────────────── */
+        .content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* ── HERO BANNER ──────────────────────── */
+        .hero-banner {
+            background: var(--dark);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            right: -80px;
+            top: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(242, 159, 103, .18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            left: 40%;
+            bottom: -60px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(59, 143, 243, .1) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-sub {
+            font-size: .83rem;
+            color: #64748B;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* ── KPI GRID ─────────────────────────── */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .kpi-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 22px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .kpi-card.c-orange::after {
+            background: var(--primary);
+        }
+
+        .kpi-card.c-blue::after {
+            background: var(--blue);
+        }
+
+        .kpi-card.c-teal::after {
+            background: var(--teal);
+        }
+
+        .kpi-card.c-gold::after {
+            background: var(--gold);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-icon.c-orange {
+            background: rgba(242, 159, 103, .12);
+            color: var(--primary);
+        }
+
+        .kpi-icon.c-blue {
+            background: rgba(59, 143, 243, .1);
+            color: var(--blue);
+        }
+
+        .kpi-icon.c-teal {
+            background: rgba(52, 177, 170, .1);
+            color: var(--teal);
+        }
+
+        .kpi-icon.c-gold {
+            background: rgba(224, 181, 15, .1);
+            color: var(--gold);
+        }
+
+        .kpi-label {
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .kpi-val {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .kpi-sub {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tag-up {
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .tag-down {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        /* ── ORDER STATUS TILES ───────────────── */
+        .order-status-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .order-status-row {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .order-status-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .os-tile {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 16px 14px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border-top: 3px solid transparent;
+        }
+
+        .os-tile:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .os-tile.os-placed {
+            border-top-color: var(--primary);
+        }
+
+        .os-tile.os-confirmed {
+            border-top-color: var(--blue);
+        }
+
+        .os-tile.os-shipped {
+            border-top-color: #7C3AED;
+        }
+
+        .os-tile.os-delivered {
+            border-top-color: var(--teal);
+        }
+
+        .os-tile.os-cancelled {
+            border-top-color: var(--danger);
+        }
+
+        .os-tile.os-returned {
+            border-top-color: var(--gold);
+        }
+
+        .os-tile.os-pending {
+            border-top-color: #F59E0B;
+        }
+
+        .os-count {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .os-label {
+            font-size: .68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        /* ── CARDS ────────────────────────────── */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-hd {
+            padding: 18px 20px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1050px) {
+
+            .two-col,
+            .three-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── BUTTONS ──────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: var(--font);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(242, 159, 103, .35);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-dark {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .btn-dark:hover {
+            background: #2d2d44;
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: .76rem;
+            border-radius: 7px;
+        }
+
+        /* ── CHARTS ───────────────────────────── */
+        .chart-container {
+            position: relative;
+        }
+
+        /* Revenue SVG chart */
+        #revenueChartSvg {
+            width: 100%;
+            overflow: visible;
+        }
+
+        /* Bar chart horizontal */
+        .hbar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .hbar-label {
+            width: 100px;
+            font-size: .76rem;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+        }
+
+        .hbar-track {
+            flex: 1;
+            height: 24px;
+            background: #F1F5F9;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .hbar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            font-size: .72rem;
+            font-weight: 700;
+            color: #fff;
+            transition: width .8s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .hbar-val {
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--text);
+            width: 70px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Donut */
+        .donut-flex {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .donut-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            flex: 1;
+        }
+
+        .donut-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: .8rem;
+        }
+
+        .donut-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        /* Funnel */
+        .funnel-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .funnel-label {
+            width: 100px;
+            font-size: .76rem;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .funnel-track {
+            flex: 1;
+            background: #F1F5F9;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 28px;
+        }
+
+        .funnel-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: .73rem;
+            font-weight: 700;
+            color: #fff;
+            transition: width .8s cubic-bezier(.4, 0, .2, 1);
+            white-space: nowrap;
+        }
+
+        .funnel-pct {
+            width: 42px;
+            text-align: right;
+            font-size: .78rem;
+            font-weight: 700;
+        }
+
+        /* Metric tile */
+        .m-tile {
+            background: #F8FAFC;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid #EFF1F5;
+        }
+
+        .m-tile-val {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .m-tile-lbl {
+            font-size: .67rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .83rem;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #F5F7FA;
+            transition: background .15s;
+        }
+
+        tbody tr:hover {
+            background: #FAFBFF;
+        }
+
+        tbody td {
+            padding: 11px 14px;
+            vertical-align: middle;
+        }
+
+        .td-name {
+            font-weight: 600;
+        }
+
+        .td-sub {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* Toast */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--dark);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .82rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 250px;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--teal);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--blue);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Spinner */
+        .spinner-wrap {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            font-size: .84rem;
+        }
+
+        .spinner-wrap i {
+            font-size: 1.6rem;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Auth error overlay */
+        .auth-error {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .auth-error-icon {
+            font-size: 3rem;
+            color: var(--danger);
+        }
+
+        .auth-error h2 {
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .auth-error p {
+            color: #64748B;
+            font-size: .88rem;
+            max-width: 340px;
+        }
+
+        /* Error state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            opacity: .4;
+            display: block;
+        }
+
+        .empty-state p {
+            font-size: .84rem;
+        }
+
+        /* Mob overlay */
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 998;
+        }
+
+        /* Rank circles */
+        .rank {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .rank-1 {
+            background: rgba(242, 159, 103, .2);
+            color: var(--primary-dark);
+        }
+
+        .rank-2 {
+            background: #F1F5F9;
+            color: #64748B;
+        }
+
+        .rank-3 {
+            background: rgba(224, 181, 15, .2);
+            color: #b45309;
+        }
+
+        .rank-n {
+            background: #F1F5F9;
+            color: #94A3B8;
+        }
+
+        /* Product row */
+        .prod-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .prod-bar-wrap {
+            flex: 1;
+        }
+
+        .prod-name {
+            font-weight: 600;
+            font-size: .82rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .prod-bar-bg {
+            height: 4px;
+            background: #F1F5F9;
+            border-radius: 2px;
+            margin-top: 5px;
+        }
+
+        .prod-bar-fill {
+            height: 4px;
+            border-radius: 2px;
+            background: var(--primary);
+            transition: width .8s;
+        }
+
+        .prod-rev {
+            font-size: .82rem;
+            font-weight: 700;
+            text-align: right;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .prod-qty {
+            font-size: .7rem;
+            color: var(--muted);
+        }
+
+        /* Chart legend */
+        .legend {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .74rem;
+            color: var(--muted);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Metrics grid 2-col */
+        .metrics-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* Payment row */
+        .pay-row {
+            margin-bottom: 14px;
+        }
+
+        .pay-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .pay-name {
+            font-size: .82rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .pay-val {
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        .pay-pct {
+            color: var(--muted);
+            font-weight: 400;
+            font-size: .76rem;
+        }
+
+        .pay-track {
+            height: 6px;
+            background: #F1F5F9;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .pay-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width .8s;
+        }
+
+        /* Responsive topbar */
+        @media (max-width: 768px) {
+            .period-group {
+                flex-wrap: wrap;
+                gap: 3px;
+            }
+
+            .topbar-right {
+                gap: 6px;
+            }
+
+            .hero-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Tooltip for chart */
+        .chart-tooltip {
+            position: absolute;
+            background: var(--dark);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: .75rem;
+            pointer-events: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+            z-index: 50;
+            display: none;
+        }
+
+        /* Loading skeleton */
+        @keyframes shimmer {
+            0% {
+                background-position: -400px 0;
+            }
+
+            100% {
+                background-position: 400px 0;
+            }
+        }
+
+        .skeleton {
+            border-radius: 6px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+            background-size: 400px 100%;
+            animation: shimmer 1.2s infinite;
+        }
+
+        /* Scroll area table */
+        .tbl-scroll {
+            overflow-x: auto;
+        }
+
+        /* Star rating */
+        .stars {
+            color: var(--gold);
+            font-size: .78rem;
+        }
+
+        /* Conn rate highlight */
+        .conv-highlight {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .conv-rate {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="layout">
+        <!-- ── SIDEBAR ─────────────────────────── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <span class="brand-logo-fallback" id="logoFallback">H</span>
+                    <img src="logo.png" alt="HeelsUp"
+                        onload="document.getElementById('logoFallback').style.display='none'"
+                        onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+                </div>
+                <div class="brand-text">
+                    <strong>HeelsUp</strong>
+                    <span>Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">Main</div>
+                <a href="admin.html" class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-section">Catalogue</div>
+                <a href="admin-products.html" class="nav-item"><i class="fa-solid fa-box"></i> Products</a>
+                <a href="admin-categories.html" class="nav-item"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a href="admin-collections.html" class="nav-item"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a href="admin-inventory.html" class="nav-item"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-section">Sales & Customers</div>
+                <a href="admin-orders.html" class="nav-item">
+                    <i class="fa-solid fa-bag-shopping"></i> Orders
+                    <span class="nav-badge" id="ordersBadge" style="display:none">0</span>
+                </a>
+                <a href="admin-customers.html" class="nav-item"><i class="fa-solid fa-users"></i> Customers</a>
+                <a href="admin-coupons.html" class="nav-item"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a href="admin-reviews.html" class="nav-item"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a href="admin.html" class="nav-item"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a href="admin-pos.html" class="nav-item"><i class="fa-solid fa-cash-register"></i> POS / Offline</a>
+
+                <div class="nav-section">Marketing</div>
+                <a href="admin-banners.html" class="nav-item"><i class="fa-solid fa-image"></i> Banners</a>
+                <a href="admin-blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="admin-pages.html" class="nav-item"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a href="admin-notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+                <div class="nav-section">Reports</div>
+                <a href="admin-reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="admin-analytics.html" class="nav-item active"><i class="fa-solid fa-chart-line"></i>
+                    Analytics</a>
+
+                <div class="nav-section">System</div>
+                <a href="admin-shipping.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a href="admin-taxes.html" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a href="admin-staff.html" class="nav-item"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a href="admin-settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="s-user">
+                    <div class="s-avatar" id="sAvatar">A</div>
+                    <div>
+                        <div class="s-name" id="sName">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <!-- ── MAIN ──────────────────────────────── -->
+        <div class="main">
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Analytics</div>
+                <div class="topbar-right">
+                    <!-- Custom date range -->
+                    <input type="date" class="date-input" id="customStart" title="Start Date" />
+                    <input type="date" class="date-input" id="customEnd" title="End Date" />
+                    <button class="btn btn-sm btn-primary" onclick="applyCustom()">
+                        <i class="fa-solid fa-filter"></i> Apply
+                    </button>
+                    <div class="divider-v"></div>
+                    <!-- Quick period -->
+                    <div class="period-group">
+                        <button class="pf-btn" onclick="setPeriod(7,this)">7D</button>
+                        <button class="pf-btn" onclick="setPeriod(10,this)">10D</button>
+                        <button class="pf-btn active" onclick="setPeriod(30,this)">30D</button>
+                        <button class="pf-btn" onclick="setPeriod(90,this)">3M</button>
+                        <button class="pf-btn" onclick="setPeriod(180,this)">6M</button>
+                        <button class="pf-btn" onclick="setPeriod(365,this)">1Y</button>
+                    </div>
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')">
+                        <i class="fa-solid fa-store"></i> Store
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="content">
+
+                <!-- Hero Banner -->
+                <div class="hero-banner">
+                    <div>
+                        <div class="hero-title">Analytics & Insights <i class="fa-solid fa-chart-line"
+                                style="font-size:1.3rem;color:var(--primary);vertical-align:middle;margin-left:4px"></i>
+                        </div>
+                        <div class="hero-sub" id="heroPeriod">Last 30 days · Loading...</div>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-sm btn-dark" onclick="exportCSV()">
+                            <i class="fa-solid fa-download"></i> Export
+                        </button>
+                        <button class="btn btn-sm btn-primary" onclick="loadAll()" id="refreshBtn">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid" id="kpiGrid">
+                    <div class="kpi-card c-orange">
+                        <div class="kpi-icon c-orange"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                        <div>
+                            <div class="kpi-label">Total Revenue</div>
+                            <div class="kpi-val" id="kpiRev">—</div>
+                            <div class="kpi-sub" id="kpiRevSub">
+                                <div class="skeleton" style="width:100px;height:12px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-blue">
+                        <div class="kpi-icon c-blue"><i class="fa-solid fa-bag-shopping"></i></div>
+                        <div>
+                            <div class="kpi-label">Total Orders</div>
+                            <div class="kpi-val" id="kpiOrders">—</div>
+                            <div class="kpi-sub" id="kpiOrdSub">
+                                <div class="skeleton" style="width:100px;height:12px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-teal">
+                        <div class="kpi-icon c-teal"><i class="fa-solid fa-users"></i></div>
+                        <div>
+                            <div class="kpi-label">Customers</div>
+                            <div class="kpi-val" id="kpiCust">—</div>
+                            <div class="kpi-sub" id="kpiCustSub">
+                                <div class="skeleton" style="width:100px;height:12px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card c-gold">
+                        <div class="kpi-icon c-gold"><i class="fa-solid fa-receipt"></i></div>
+                        <div>
+                            <div class="kpi-label">Avg. Order Value</div>
+                            <div class="kpi-val" id="kpiAOV">—</div>
+                            <div class="kpi-sub" id="kpiAOVSub">
+                                <div class="skeleton" style="width:100px;height:12px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Status Tiles -->
+                <div class="order-status-row" id="orderStatusRow">
+                    <div class="os-tile os-placed">
+                        <div class="os-count" id="os-placed">—</div>
+                        <div class="os-label">Placed</div>
+                    </div>
+                    <div class="os-tile os-confirmed">
+                        <div class="os-count" id="os-confirmed">—</div>
+                        <div class="os-label">Confirmed</div>
+                    </div>
+                    <div class="os-tile os-shipped">
+                        <div class="os-count" id="os-shipped">—</div>
+                        <div class="os-label">Shipped</div>
+                    </div>
+                    <div class="os-tile os-delivered">
+                        <div class="os-count" id="os-delivered">—</div>
+                        <div class="os-label">Delivered</div>
+                    </div>
+                    <div class="os-tile os-cancelled">
+                        <div class="os-count" id="os-cancelled">—</div>
+                        <div class="os-label">Cancelled</div>
+                    </div>
+                    <div class="os-tile os-returned">
+                        <div class="os-count" id="os-returned">—</div>
+                        <div class="os-label">Returned</div>
+                    </div>
+                    <div class="os-tile os-pending">
+                        <div class="os-count" id="os-pending">—</div>
+                        <div class="os-label">Pmt Pending</div>
+                    </div>
+                </div>
+
+                <!-- Revenue Chart + Order Status Donut -->
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Revenue Over Time</div>
+                            <div class="legend">
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background:var(--primary)"></div>Revenue
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background:var(--blue)"></div>Orders
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="padding-bottom:12px">
+                            <div class="chart-tooltip" id="chartTooltip"></div>
+                            <div id="revenueChartWrap" style="position:relative">
+                                <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading chart...</div>
+                            </div>
+                            <div id="revenueChartLabels"
+                                style="display:flex;justify-content:space-between;font-size:.67rem;color:var(--muted);margin-top:6px;padding:0 4px">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Order Status Breakdown</div>
+                        </div>
+                        <div class="card-body">
+                            <div id="statusDonut">
+                                <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i></div>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px"
+                                id="statusTiles"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Products + Category Sales -->
+                <div class="two-col">
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Top Products by Revenue</div>
+                            <a href="admin-reports.html" class="btn btn-sm btn-outline">Full Report</a>
+                        </div>
+                        <div class="card-body" id="topProductsWrap">
+                            <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Sales by Category</div>
+                        </div>
+                        <div class="card-body" id="categoryWrap">
+                            <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Funnel + Payment + Key Metrics -->
+                <div class="three-col">
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Conversion Funnel</div>
+                        </div>
+                        <div class="card-body" id="funnelWrap">
+                            <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Payment Methods</div>
+                        </div>
+                        <div class="card-body" id="paymentWrap">
+                            <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-hd">
+                            <div class="card-title">Key Metrics</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="metrics-2" id="keyMetricsWrap">
+                                <div class="spinner-wrap" style="grid-column:1/-1"><i
+                                        class="fa-solid fa-spinner"></i>Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="card">
+                    <div class="card-hd">
+                        <div class="card-title">Recent Orders</div>
+                        <a href="admin-orders.html" class="btn btn-sm btn-outline">
+                            <i class="fa-solid fa-arrow-right"></i> View All
+                        </a>
+                    </div>
+                    <div class="tbl-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTbody">
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="spinner-wrap"><i class="fa-solid fa-spinner"></i>Loading...</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div><!-- /content -->
+        </div><!-- /main -->
+    </div><!-- /layout -->
+
+    <script src="app-auth.js"></script>
+    <script>
+        // ── AUTH ─────────────────────────────────────────────────────────────────
+        (function () {
+            let user = null;
+            try { user = (typeof HeelsUpAuth !== 'undefined') ? HeelsUpAuth.getUser() : null; } catch (e) { }
+            if (!user || user.role !== 'admin') {
+                // Show auth error
+                const el = document.createElement('div');
+                el.className = 'auth-error';
+                el.innerHTML = `
+      <i class="fa-solid fa-shield-exclamation auth-error-icon"></i>
+      <h2>Access Denied</h2>
+      <p>You must be logged in as an admin to view this page.</p>
+      <a href="login.html?redirect=admin-analytics.html" class="btn btn-primary" style="margin-top:8px">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+      </a>`;
+                document.body.appendChild(el);
+                return;
+            }
+            const name = user.firstName || user.first_name || 'Admin';
+            document.getElementById('sAvatar').textContent = name.charAt(0).toUpperCase();
+            document.getElementById('sName').textContent = name;
+        })();
+
+        // ── STATE ─────────────────────────────────────────────────────────────────
+        let period = 30, customStart = null, customEnd = null, dashData = null;
+        const cache = {};
+
+        // ── HELPERS ───────────────────────────────────────────────────────────────
+        const $ = id => document.getElementById(id);
+        const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const fmtRs = v => '₹' + Math.round(Number(v) || 0).toLocaleString('en-IN');
+        const fmtNum = v => (Number(v) || 0).toLocaleString('en-IN');
+        const fmtDate = d => d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+        const clamp = (v, mn, mx) => Math.min(mx, Math.max(mn, v));
+
+        function statusBadge(s) {
+            const m = {
+                placed: ['#DBEAFE', '#1D4ED8'],
+                confirmed: ['#DCFCE7', '#15803D'],
+                shipped: ['#F3E8FF', '#7E22CE'],
+                delivered: ['#D1FAE5', '#065F46'],
+                cancelled: ['#FEE2E2', '#B91C1C'],
+                returned: ['#FEF3C7', '#92400E'],
+                payment_pending: ['#FEF3C7', '#B45309'],
+            };
+            const [bg, cl] = (m[s] || ['#F1F5F9', '#64748B']);
+            return `<span class="badge" style="background:${bg};color:${cl}">${esc(s || 'placed')}</span>`;
+        }
+        function payBadge(s) {
+            return s === 'paid'
+                ? '<span class="badge" style="background:#D1FAE5;color:#065F46">Paid</span>'
+                : `<span class="badge" style="background:#FEF3C7;color:#B45309">${esc(s || 'pending')}</span>`;
+        }
+
+        // ── SIDEBAR ───────────────────────────────────────────────────────────────
+        function toggleSidebar() {
+            const s = $('sidebar'), o = $('mobOverlay');
+            s.classList.toggle('open');
+            o.style.display = s.classList.contains('open') ? 'block' : 'none';
+        }
+        function closeSidebar() { $('sidebar').classList.remove('open'); $('mobOverlay').style.display = 'none'; }
+        function doLogout() {
+            try { HeelsUpAuth.clearSession(); } catch (e) { }
+            window.location = 'login.html';
+        }
+
+        // ── TOAST ─────────────────────────────────────────────────────────────────
+        function toast(msg, type = 'success') {
+            const wrap = $('toastWrap'), t = document.createElement('div');
+            t.className = `toast ${type}`;
+            const icon = type === 'error' ? 'fa-circle-xmark' : type === 'info' ? 'fa-circle-info' : 'fa-circle-check';
+            t.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+            wrap.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 4500);
+        }
+
+        // ── PERIOD ────────────────────────────────────────────────────────────────
+        function setPeriod(days, btn) {
+            period = days; customStart = null; customEnd = null;
+            document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            $('heroPeriod').textContent = `Last ${days} days · updated just now`;
+            loadAll();
+        }
+        function applyCustom() {
+            const s = $('customStart').value, e = $('customEnd').value;
+            if (!s || !e) { toast('Please select both start and end dates', 'error'); return; }
+            if (new Date(s) > new Date(e)) { toast('Start date must be before end date', 'error'); return; }
+            customStart = s; customEnd = e; period = 'custom';
+            document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+            $('heroPeriod').textContent = `${s} → ${e} · updated just now`;
+            loadAll();
+        }
+
+        // ── API ───────────────────────────────────────────────────────────────────
+        async function apiFetch(url) {
+            const cacheKey = url;
+            // Cache for 30s
+            if (cache[cacheKey] && Date.now() - cache[cacheKey].ts < 30000) return cache[cacheKey].data;
+            let apiFunc;
+            try { apiFunc = HeelsUpAuth.api; } catch (e) { apiFunc = null; }
+            if (!apiFunc) throw new Error('Not authenticated');
+            const data = await apiFunc(url);
+            cache[cacheKey] = { data, ts: Date.now() };
+            return data;
+        }
+
+        // ── MAIN LOAD ─────────────────────────────────────────────────────────────
+        async function loadAll() {
+            const btn = $('refreshBtn');
+            if (btn) { btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading'; btn.disabled = true; }
+
+            try {
+                let url = `/api/admin/analytics/dashboard?period=${period}`;
+                if (period === 'custom' && customStart && customEnd) url += `&start=${customStart}&end=${customEnd}`;
+
+                // Parallel fetch — fast
+                const t0 = performance.now();
+                const [dash, ordersRes] = await Promise.all([
+                    apiFetch(url),
+                    apiFetch('/api/admin/orders')
+                ]);
+                const ms = (performance.now() - t0).toFixed(1);
+
+                dashData = dash;
+                const s = dash.summary || {};
+
+                // KPIs
+                renderKPIs(s);
+                // Order status tiles
+                renderStatusTiles(dash.order_status_counts || {});
+                // Charts
+                renderRevenueChart(dash.daily_revenue || []);
+                renderStatusDonut(dash.order_status_counts || {});
+                renderTopProducts(dash.top_products || []);
+                renderCategoryChart(dash.category_sales || []);
+                renderFunnel(dash.funnel || {});
+                renderPaymentMethods(dash.payment_methods || {});
+                renderKeyMetrics(s);
+                renderRecentOrders((ordersRes.orders || []).slice(0, 10));
+
+                toast(`Data loaded in ${ms}ms ✓`, 'success');
+                $('heroPeriod').textContent = ($('heroPeriod').textContent || '').replace(/·.*/, `· ${ms}ms load`);
+
+            } catch (e) {
+                toast('Failed to load analytics: ' + (e.message || 'Network error'), 'error');
+                showEmptyAll();
+            } finally {
+                if (btn) { btn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Refresh'; btn.disabled = false; }
+            }
+        }
+
+        function showEmptyAll() {
+            ['revenueChartWrap', 'statusDonut', 'topProductsWrap', 'categoryWrap', 'funnelWrap', 'paymentWrap'].forEach(id => {
+                const el = $(id);
+                if (el) el.innerHTML = `<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);opacity:1"></i><p style="color:var(--danger)">Failed to load data. Check your connection.</p></div>`;
+            });
+            ['kpiRev', 'kpiOrders', 'kpiCust', 'kpiAOV'].forEach(id => {
+                const el = $(id); if (el) el.innerHTML = '<span style="font-size:1rem;color:var(--danger)">Error</span>';
+            });
+            // Fix recent orders table on error
+            const tbody = $('recentOrdersTbody');
+            if (tbody) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px">
+    <div style="display:inline-flex;flex-direction:column;align-items:center;gap:8px">
+      <i class="fa-solid fa-circle-exclamation" style="font-size:1.6rem;color:var(--danger)"></i>
+      <span style="color:var(--danger);font-size:.84rem;font-weight:600">Failed to load orders</span>
+      <button class="btn btn-sm btn-outline" onclick="loadAll()" style="margin-top:4px"><i class="fa-solid fa-arrows-rotate"></i> Retry</button>
+    </div>
+  </td></tr>`;
+            // Fix key metrics
+            const km = $('keyMetricsWrap');
+            if (km) km.innerHTML = `<div style="grid-column:1/-1" class="empty-state"><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);opacity:1"></i><p style="color:var(--danger)">Failed to load metrics</p></div>`;
+            // Fix status tiles
+            ['os-placed', 'os-confirmed', 'os-shipped', 'os-delivered', 'os-cancelled', 'os-returned', 'os-pending'].forEach(id => {
+                const el = $(id); if (el) { el.textContent = '—'; el.style.color = 'var(--danger)'; }
+            });
+            // Fix status tiles (order status tiles row)
+            const stiles = $('statusTiles');
+            if (stiles) stiles.innerHTML = '';
+        }
+
+        // ── KPIs ──────────────────────────────────────────────────────────────────
+        function renderKPIs(s) {
+            const aov = s.total_orders ? (s.total_revenue / s.total_orders) : 0;
+            $('kpiRev').textContent = fmtRs(s.total_revenue || 0);
+            $('kpiOrders').textContent = fmtNum(s.total_orders || 0);
+            $('kpiCust').textContent = fmtNum(s.total_customers || 0);
+            $('kpiAOV').textContent = fmtRs(aov);
+            $('kpiRevSub').innerHTML = `<span class="tag-up"><i class="fa-solid fa-circle-check"></i> ${s.delivered_orders || 0} delivered</span>`;
+            $('kpiOrdSub').innerHTML = `<span style="color:var(--warning)"><i class="fa-solid fa-clock"></i> ${s.pending_orders || 0} pending</span>`;
+            $('kpiCustSub').innerHTML = `<span class="tag-up"><i class="fa-solid fa-user-plus"></i> ${s.new_customers || 0} new</span>`;
+            $('kpiAOVSub').innerHTML = `<span style="color:var(--muted)">Across ${fmtNum(s.total_orders || 0)} orders</span>`;
+        }
+
+        // ── ORDER STATUS TILES ─────────────────────────────────────────────────────
+        function renderStatusTiles(counts) {
+            const keys = ['placed', 'confirmed', 'shipped', 'delivered', 'cancelled', 'returned', 'payment_pending'];
+            keys.forEach(k => {
+                const el = $(k === 'payment_pending' ? 'os-pending' : `os-${k}`);
+                if (el) el.textContent = fmtNum(counts[k] || 0);
+            });
+        }
+
+        // ── REVENUE CHART (SVG) ────────────────────────────────────────────────────
+        function renderRevenueChart(data) {
+            const wrap = $('revenueChartWrap');
+            const labelsEl = $('revenueChartLabels');
+            if (!data.length) { wrap.innerHTML = '<div class="empty-state"><i class="fa-solid fa-chart-line"></i><p>No revenue data for this period</p></div>'; return; }
+
+            const W = 600, H = 170, PT = 16, PR = 16, PB = 10, PL = 16;
+            const revenues = data.map(d => d.revenue || 0);
+            const orders = data.map(d => d.orders || 0);
+            const maxRev = Math.max(...revenues, 1);
+            const maxOrd = Math.max(...orders, 1);
+
+            const xP = i => PL + (i / (data.length - 1 || 1)) * (W - PL - PR);
+            const yRevP = v => PT + (1 - (v / maxRev)) * (H - PT - PB);
+            const yOrdP = v => PT + (1 - (v / maxOrd)) * (H - PT - PB) * 0.6 + H * 0.2; // secondary axis scaled
+
+            const revPts = data.map((d, i) => `${xP(i)},${yRevP(d.revenue || 0)}`).join(' ');
+            const ordPts = data.map((d, i) => `${xP(i)},${yOrdP(d.orders || 0)}`).join(' ');
+            const revArea = `${PL},${H - PB} ${revPts} ${W - PR},${H - PB}`;
+
+            // Labels
+            const step = Math.max(1, Math.ceil(data.length / 7));
+            labelsEl.innerHTML = data.filter((_, i) => i % step === 0 || i === data.length - 1)
+                .map(d => `<span>${new Date(d.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}</span>`).join('');
+
+            // Grid Y lines
+            const gridLines = [0.25, 0.5, 0.75].map(f => {
+                const y = PT + (1 - f) * (H - PT - PB);
+                const val = maxRev * f;
+                const lbl = val >= 100000 ? `₹${(val / 100000).toFixed(1)}L` : val >= 1000 ? `₹${(val / 1000).toFixed(0)}K` : `₹${val.toFixed(0)}`;
+                return `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" stroke="#E4E8F0" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="${PL - 4}" y="${y + 3}" text-anchor="end" font-size="9" fill="#94A3B8">${lbl}</text>`;
+            }).join('');
+
+            wrap.innerHTML = `
+  <svg id="revenueChartSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:${H}px;display:block;overflow:visible;cursor:crosshair" onmousemove="chartHover(event,this)" onmouseleave="$('chartTooltip').style.display='none'">
+    <defs>
+      <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F29F67" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#F29F67" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    ${gridLines}
+    <polygon points="${revArea}" fill="url(#revGrad)"/>
+    <polyline points="${revPts}" fill="none" stroke="#F29F67" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="${ordPts}" fill="none" stroke="#3B8FF3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 3" opacity="0.7"/>
+    ${data.map((d, i) => `<circle cx="${xP(i)}" cy="${yRevP(d.revenue || 0)}" r="3.5" fill="#fff" stroke="#F29F67" stroke-width="2" data-rev="${d.revenue || 0}" data-ord="${d.orders || 0}" data-date="${d.date || ''}"/>`).join('')}
+  </svg>`;
+        }
+
+        function chartHover(e, svg) {
+            const rect = svg.getBoundingClientRect();
+            const tip = $('chartTooltip');
+            const circles = svg.querySelectorAll('circle');
+            let closest = null, minDist = 999;
+            circles.forEach(c => {
+                const cx = parseFloat(c.getAttribute('cx'));
+                const scaleX = (rect.width / 600);
+                const px = cx * scaleX + rect.left;
+                const dist = Math.abs(e.clientX - px);
+                if (dist < minDist) { minDist = dist; closest = c; }
+            });
+            if (closest && minDist < 30) {
+                tip.innerHTML = `<strong>${closest.dataset.date ? new Date(closest.dataset.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }) : '—'}</strong><br>Revenue: ${fmtRs(closest.dataset.rev)}<br>Orders: ${fmtNum(closest.dataset.ord)}`;
+                tip.style.display = 'block';
+                tip.style.left = (e.clientX - rect.left + 10) + 'px';
+                tip.style.top = (e.clientY - rect.top - 50) + 'px';
+            } else { tip.style.display = 'none'; }
+        }
+
+        // ── STATUS DONUT ───────────────────────────────────────────────────────────
+        function renderStatusDonut(counts) {
+            const el = $('statusDonut'), tilesEl = $('statusTiles');
+            const statuses = [
+                { k: 'delivered', l: 'Delivered', c: '#34B1AA' },
+                { k: 'shipped', l: 'Shipped', c: '#7C3AED' },
+                { k: 'confirmed', l: 'Confirmed', c: '#3B8FF3' },
+                { k: 'placed', l: 'Placed', c: '#F29F67' },
+                { k: 'cancelled', l: 'Cancelled', c: '#EF4444' },
+            ];
+            const total = Object.values(counts).reduce((a, b) => a + Number(b || 0), 0) || 1;
+            let offset = 0;
+            const segs = statuses.map(s => {
+                const val = Number(counts[s.k] || 0);
+                const pct = val / total;
+                const seg = { ...s, val, pct, offset };
+                offset += pct * 100;
+                return seg;
+            });
+            const r = 15.9, circ = 2 * Math.PI * r;
+            const svgSegs = segs.map(s => {
+                const dash = s.pct * circ, gap = circ - dash;
+                const rot = -90 + (s.offset / 100) * 360;
+                return `<circle cx="18" cy="18" r="${r}" fill="none" stroke="${s.c}" stroke-width="4" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" transform="rotate(${rot} 18 18)"/>`;
+            }).join('');
+
+            el.innerHTML = `<div class="donut-flex">
+    <div style="position:relative;width:120px;height:120px;flex-shrink:0">
+      <svg viewBox="0 0 36 36" style="width:120px;height:120px" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="${r}" fill="none" stroke="#F1F5F9" stroke-width="4"/>
+        ${svgSegs}
+      </svg>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <div style="font-size:1.3rem;font-weight:800;color:var(--text)">${fmtNum(total)}</div>
+        <div style="font-size:.62rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em">Orders</div>
+      </div>
+    </div>
+    <div class="donut-legend">
+      ${segs.map(s => `<div class="donut-row"><div class="donut-dot" style="background:${s.c}"></div><div style="flex:1;font-size:.8rem">${s.l}</div><strong style="color:var(--text)">${fmtNum(s.val)}</strong><span style="color:var(--muted);font-size:.72rem;width:34px;text-align:right">${(s.pct * 100).toFixed(0)}%</span></div>`).join('')}
+    </div>
+  </div>`;
+
+            tilesEl.innerHTML = segs.slice(0, 4).map(s => `<div class="m-tile"><div class="m-tile-val" style="color:${s.c}">${fmtNum(s.val)}</div><div class="m-tile-lbl">${s.l}</div></div>`).join('');
+        }
+
+        // ── TOP PRODUCTS ───────────────────────────────────────────────────────────
+        function renderTopProducts(products) {
+            const el = $('topProductsWrap');
+            if (!products.length) { el.innerHTML = '<div class="empty-state"><i class="fa-solid fa-box-open"></i><p>No product data</p></div>'; return; }
+            const maxRev = Math.max(...products.map(p => p.revenue || 0), 1);
+            el.innerHTML = products.slice(0, 7).map((p, i) => `
+    <div class="prod-row">
+      <div class="rank ${i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-n'}">${i + 1}</div>
+      ${p.image_url ? `<img src="${esc(p.image_url)}" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">` : ''}
+      <div class="prod-bar-wrap" style="flex:1;min-width:0">
+        <div class="prod-name">${esc(p.name || '—')}</div>
+        <div class="prod-bar-bg"><div class="prod-bar-fill" style="width:${((p.revenue || 0) / maxRev * 100).toFixed(0)}%"></div></div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div class="prod-rev">${fmtRs(p.revenue || 0)}</div>
+        <div class="prod-qty">${fmtNum(p.quantity || 0)} sold</div>
+      </div>
+    </div>`).join('');
+        }
+
+        // ── CATEGORY CHART ─────────────────────────────────────────────────────────
+        function renderCategoryChart(data) {
+            const el = $('categoryWrap');
+            if (!data.length) { el.innerHTML = '<div class="empty-state"><i class="fa-solid fa-layer-group"></i><p>No category data</p></div>'; return; }
+            const colors = ['#F29F67', '#3B8FF3', '#34B1AA', '#E0B50F', '#7C3AED', '#EF4444', '#64748B'];
+            const maxRev = Math.max(...data.map(d => d.revenue || 0), 1);
+            el.innerHTML = data.map((d, i) => `
+    <div class="hbar-row">
+      <div class="hbar-label">${esc(d.category || 'Other')}</div>
+      <div class="hbar-track">
+        <div class="hbar-fill" style="width:${((d.revenue || 0) / maxRev * 100).toFixed(0)}%;background:${colors[i % colors.length]}">
+          ${((d.revenue || 0) / maxRev * 100) > 15 ? fmtRs(d.revenue || 0) : ''}
+        </div>
+      </div>
+      <div class="hbar-val">${((d.revenue || 0) / maxRev * 100) <= 15 ? fmtRs(d.revenue || 0) : ''}</div>
+    </div>`).join('');
+        }
+
+        // ── FUNNEL ─────────────────────────────────────────────────────────────────
+        function renderFunnel(f) {
+            const el = $('funnelWrap');
+            const steps = [
+                { l: 'Store Visits', k: 'visits', c: 'linear-gradient(90deg,#3B8FF3,#60A5FA)' },
+                { l: 'Product Views', k: 'product_views', c: 'linear-gradient(90deg,#7C3AED,#A78BFA)' },
+                { l: 'Add to Cart', k: 'add_to_cart', c: 'linear-gradient(90deg,#F29F67,#d4784a)' },
+                { l: 'Checkout', k: 'checkout', c: 'linear-gradient(90deg,#E0B50F,#F59E0B)' },
+                { l: 'Purchased', k: 'orders', c: 'linear-gradient(90deg,#34B1AA,#4ADE80)' },
+            ];
+            const hasData = steps.some(s => f[s.k]);
+            if (!hasData) { el.innerHTML = '<div class="empty-state"><i class="fa-solid fa-filter"></i><p>Funnel tracking not available.<br>Enable event tracking in your storefront.</p></div>'; return; }
+            const base = Number(f[steps[0].k] || 1);
+            el.innerHTML = steps.map(s => {
+                const val = Number(f[s.k] || 0);
+                const pct = base ? (val / base * 100).toFixed(0) : 0;
+                return `<div class="funnel-row">
+      <div class="funnel-label">${s.l}</div>
+      <div class="funnel-track">
+        <div class="funnel-fill" style="width:${pct}%;background:${s.c}">${pct > 10 ? fmtNum(val) : ''}</div>
+      </div>
+      <div class="funnel-pct" style="color:var(--text)">${pct}%</div>
+    </div>`;
+            }).join('') +
+                `<div class="conv-highlight">
+    <div style="font-size:.78rem;color:var(--muted)">Conversion Rate</div>
+    <div class="conv-rate">${base ? ((Number(f.orders || 0) / base) * 100).toFixed(2) : 0}%</div>
+  </div>`;
+        }
+
+        // ── PAYMENT METHODS ────────────────────────────────────────────────────────
+        function renderPaymentMethods(data) {
+            const el = $('paymentWrap');
+            const methods = [
+                { k: 'cod', l: 'Cash on Delivery', icon: 'fa-money-bill-wave', c: '#34B1AA' },
+                { k: 'razorpay', l: 'Razorpay / UPI', icon: 'fa-credit-card', c: '#3B8FF3' },
+                { k: 'card', l: 'Card', icon: 'fa-credit-card', c: '#7C3AED' },
+                { k: 'upi', l: 'UPI Direct', icon: 'fa-mobile-screen', c: '#F29F67' },
+            ];
+            const total = Object.values(data).reduce((a, b) => a + Number(b || 0), 0) || 1;
+            el.innerHTML = methods.map(m => {
+                const val = Number(data[m.k] || 0);
+                const pct = (val / total * 100).toFixed(0);
+                return `<div class="pay-row">
+      <div class="pay-top">
+        <div class="pay-name"><i class="fa-solid ${m.icon}" style="color:${m.c};width:14px"></i> ${m.l}</div>
+        <div class="pay-val">${fmtNum(val)} <span class="pay-pct">(${pct}%)</span></div>
+      </div>
+      <div class="pay-track"><div class="pay-fill" style="width:${pct}%;background:${m.c}"></div></div>
+    </div>`;
+            }).join('');
+        }
+
+        // ── KEY METRICS ────────────────────────────────────────────────────────────
+        function renderKeyMetrics(s) {
+            const el = $('keyMetricsWrap');
+            const aov = s.total_orders ? (s.total_revenue / s.total_orders) : 0;
+            const cancRate = s.total_orders ? ((s.cancelled_orders || 0) / s.total_orders * 100) : 0;
+            const retRate = s.total_orders ? ((s.returned_orders || 0) / s.total_orders * 100) : 0;
+            const delRate = s.total_orders ? ((s.delivered_orders || 0) / s.total_orders * 100) : 0;
+            const tiles = [
+                { v: fmtRs(aov), l: 'Avg Order Value' },
+                { v: fmtNum(s.pending_orders || 0), l: 'Pending Orders' },
+                { v: cancRate.toFixed(1) + '%', l: 'Cancellation Rate' },
+                { v: retRate.toFixed(1) + '%', l: 'Return Rate' },
+                { v: delRate.toFixed(1) + '%', l: 'Delivery Rate' },
+                { v: fmtNum(s.new_customers || 0), l: 'New Customers' },
+            ];
+            el.innerHTML = tiles.map(t => `<div class="m-tile"><div class="m-tile-val">${t.v}</div><div class="m-tile-lbl">${t.l}</div></div>`).join('');
+        }
+
+        // ── RECENT ORDERS ──────────────────────────────────────────────────────────
+        function renderRecentOrders(orders) {
+            const tbody = $('recentOrdersTbody');
+            if (!orders.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--muted)">No orders found</td></tr>'; return; }
+            tbody.innerHTML = orders.map(o => `<tr>
+    <td><div class="td-name">${esc(o.order_number || '—')}</div></td>
+    <td><div class="td-name">${esc(o.customer_name || '—')}</div><div class="td-sub">${esc(o.customer_email || '')}</div></td>
+    <td style="font-size:.8rem;color:var(--muted)">${fmtDate(o.created_at)}</td>
+    <td><strong>${fmtRs(o.total_amount || 0)}</strong></td>
+    <td>${payBadge(o.payment_status)}</td>
+    <td>${statusBadge(o.order_status)}</td>
+    <td><a href="admin-orders.html?id=${esc(o.id || o.order_id || '')}" class="btn btn-sm btn-outline" style="padding:4px 10px;font-size:.72rem"><i class="fa-solid fa-eye"></i></a></td>
+  </tr>`).join('');
+        }
+
+        // ── EXPORT CSV ─────────────────────────────────────────────────────────────
+        function exportCSV() {
+            if (!dashData) { toast('No data to export', 'info'); return; }
+            const s = dashData.summary || {};
+            const rows = [
+                ['Metric', 'Value'],
+                ['Total Revenue', s.total_revenue || 0],
+                ['Total Orders', s.total_orders || 0],
+                ['Total Customers', s.total_customers || 0],
+                ['Delivered Orders', s.delivered_orders || 0],
+                ['Cancelled Orders', s.cancelled_orders || 0],
+                ['Returned Orders', s.returned_orders || 0],
+                ['Pending Orders', s.pending_orders || 0],
+                ['New Customers', s.new_customers || 0],
+                ['Avg Order Value', s.total_orders ? (s.total_revenue / s.total_orders).toFixed(2) : 0],
+            ];
+            const csv = rows.map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `heelsup-analytics-${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+            toast('CSV exported successfully', 'success');
+        }
+
+        // ── INIT ───────────────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set today as default end date, 30 days ago as start
+            const today = new Date();
+            const ago = new Date(today); ago.setDate(today.getDate() - 30);
+            $('customEnd').value = today.toISOString().slice(0, 10);
+            $('customStart').value = ago.toISOString().slice(0, 10);
+            loadAll();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1790 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Tax Management â€” HeelsUp Admin</title>
+   <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+   <style>
+      /* â”€â”€ GLOBAL â”€â”€ */
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      :root {
+         --gold: #c9a96e;
+         --gold-dark: #8b6914;
+         --gold-light: #fef9f0;
+         --bg: #f1f5f9;
+         --sidebar: #0f172a;
+         --card: #fff;
+         --border: #e2e8f0;
+         --text: #1e293b;
+         --muted: #64748b;
+         --success: #22c55e;
+         --success-light: #dcfce7;
+         --warning: #f59e0b;
+         --warning-light: #fef3c7;
+         --danger: #ef4444;
+         --danger-light: #fee2e2;
+         --info: #3b82f6;
+         --info-light: #dbeafe;
+         --admin-card-radius: 12px;
+      }
+
+      body {
+         font-family: 'Inter', sans-serif;
+         background: var(--bg);
+         color: var(--text);
+         min-height: 100vh;
+         -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+         text-decoration: none;
+         color: inherit;
+      }
+
+      button {
+         cursor: pointer;
+         border: none;
+         background: none;
+         font-family: inherit;
+      }
+
+      /* â”€â”€ LAYOUT â”€â”€ */
+      .wrap {
+         display: grid;
+         grid-template-columns: 240px 1fr;
+         min-height: 100vh;
+      }
+
+      @media(max-width:900px) {
+         .wrap {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      .main {
+         min-height: 100vh;
+         display: flex;
+         flex-direction: column;
+      }
+
+      .content {
+         padding: 32px;
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         gap: 24px;
+         max-width: 1200px;
+         margin: 0 auto;
+         width: 100%;
+      }
+
+      @media(max-width:768px) {
+         .content {
+            padding: 20px;
+         }
+      }
+
+      /* â”€â”€ SIDEBAR â”€â”€ */
+      .sidebar {
+         background: var(--sidebar);
+         color: #94a3b8;
+         display: flex;
+         flex-direction: column;
+         height: 100vh;
+         position: sticky;
+         top: 0;
+         overflow-y: auto;
+         overflow-x: hidden;
+         z-index: 100;
+      }
+
+      .sidebar-brand {
+         padding: 18px 20px;
+         border-bottom: 1px solid rgba(255, 255, 255, .06);
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         min-height: 62px;
+      }
+
+      .sidebar-logo {
+         width: 34px;
+         height: 34px;
+         background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+         border-radius: 9px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: #fff;
+         font-family: 'Playfair Display', serif;
+         font-size: .95rem;
+         font-weight: 700;
+         flex-shrink: 0;
+      }
+
+      .sidebar-nav {
+         flex: 1;
+         padding: 10px 0;
+      }
+
+      .nav-label {
+         font-size: .6rem;
+         font-weight: 700;
+         letter-spacing: .15em;
+         text-transform: uppercase;
+         color: #475569;
+         padding: 13px 18px 4px;
+      }
+
+      .nav-item {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         padding: 8px 18px;
+         color: #94a3b8;
+         font-size: .83rem;
+         font-weight: 500;
+         border-left: 3px solid transparent;
+         transition: all .2s;
+         text-decoration: none;
+         cursor: pointer;
+      }
+
+      .nav-item:hover {
+         background: #1e293b;
+         color: #e2e8f0;
+      }
+
+      .nav-item.active {
+         background: #1e293b;
+         color: var(--gold);
+         border-left-color: var(--gold);
+      }
+
+      .nav-item i {
+         width: 16px;
+         text-align: center;
+         font-size: .83rem;
+         flex-shrink: 0;
+      }
+
+      .nav-badge {
+         margin-left: auto;
+         background: var(--gold);
+         color: #0f172a;
+         font-size: .6rem;
+         font-weight: 800;
+         padding: 2px 7px;
+         border-radius: 20px;
+      }
+
+      .sidebar-footer {
+         padding: 14px;
+         border-top: 1px solid rgba(255, 255, 255, .06);
+      }
+
+      .sidebar-user {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         margin-bottom: 8px;
+      }
+
+      .s-avatar {
+         width: 34px;
+         height: 34px;
+         border-radius: 50%;
+         background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: #fff;
+         font-weight: 700;
+         font-size: .8rem;
+         flex-shrink: 0;
+      }
+
+      .s-name {
+         font-size: .8rem;
+         font-weight: 600;
+         color: #e2e8f0;
+      }
+
+      .s-role {
+         font-size: .65rem;
+         color: #64748b;
+      }
+
+      .btn-logout {
+         width: 100%;
+         padding: 7px;
+         border-radius: 8px;
+         background: rgba(255, 255, 255, .05);
+         color: #94a3b8;
+         font-size: .78rem;
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         justify-content: center;
+         transition: all .2s;
+      }
+
+      .btn-logout:hover {
+         background: rgba(239, 68, 68, .15);
+         color: #f87171;
+      }
+
+      @media(max-width:900px) {
+         .sidebar {
+            position: fixed;
+            left: -240px;
+            top: 0;
+            bottom: 0;
+            z-index: 999;
+            transition: left .3s;
+            width: 240px;
+         }
+
+         .sidebar.open {
+            left: 0;
+         }
+      }
+
+      /* â”€â”€ TOPBAR â”€â”€ */
+      .topbar {
+         background: #fff;
+         border-bottom: 1px solid var(--border);
+         padding: 0 24px;
+         height: 60px;
+         display: flex;
+         align-items: center;
+         gap: 14px;
+         position: sticky;
+         top: 0;
+         z-index: 90;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+      }
+
+      .topbar-title {
+         font-family: 'Playfair Display', serif;
+         font-size: 1.1rem;
+         font-weight: 700;
+         color: var(--text);
+      }
+
+      .topbar-right {
+         margin-left: auto;
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .btn-menu {
+         padding: 8px;
+         border-radius: 8px;
+         color: #64748b;
+         display: none;
+      }
+
+      .btn-menu:hover {
+         background: #f1f5f9;
+      }
+
+      @media(max-width:900px) {
+         .btn-menu {
+            display: flex;
+         }
+      }
+
+      /* â”€â”€ BUTTONS â”€â”€ */
+      .btn {
+         display: inline-flex;
+         align-items: center;
+         gap: 7px;
+         padding: 8px 16px;
+         border-radius: 8px;
+         font-size: .82rem;
+         font-weight: 600;
+         transition: all .2s;
+         font-family: 'Inter', sans-serif;
+         cursor: pointer;
+         border: none;
+      }
+
+      .btn-primary {
+         background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+         color: #fff;
+      }
+
+      .btn-primary:hover {
+         opacity: .9;
+         transform: translateY(-1px);
+      }
+
+      .btn-primary:disabled {
+         opacity: .6;
+         cursor: not-allowed;
+         transform: none;
+      }
+
+      .btn-outline {
+         border: 1.5px solid var(--border);
+         color: var(--muted);
+         background: #fff;
+      }
+
+      .btn-outline:hover {
+         border-color: var(--gold);
+         color: var(--gold);
+      }
+
+      .btn-sm {
+         padding: 5px 12px;
+         font-size: .76rem;
+         border-radius: 7px;
+      }
+
+      .btn-danger {
+         background: var(--danger-light);
+         color: #b91c1c;
+         border: 1.5px solid #fecaca;
+      }
+
+      .btn-danger:hover {
+         background: #fecaca;
+      }
+
+      .btn-icon {
+         width: 32px;
+         height: 32px;
+         border-radius: 7px;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         font-size: .8rem;
+         transition: all .2s;
+         cursor: pointer;
+         border: none;
+      }
+
+      .btn-edit {
+         background: #f0f9ff;
+         color: #0284c7;
+      }
+
+      .btn-edit:hover {
+         background: #0284c7;
+         color: #fff;
+      }
+
+      .btn-del {
+         background: var(--danger-light);
+         color: #dc2626;
+      }
+
+      .btn-del:hover {
+         background: #dc2626;
+         color: #fff;
+      }
+
+      /* â”€â”€ PAGE HEADER â”€â”€ */
+      .admin-page-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: flex-end;
+         gap: 16px;
+         flex-wrap: wrap;
+      }
+
+      .admin-page-header h2 {
+         font-family: 'Playfair Display', serif;
+         font-size: 1.75rem;
+         color: var(--text);
+         margin-bottom: 6px;
+      }
+
+      .admin-page-header p {
+         font-size: .9rem;
+         color: var(--muted);
+      }
+
+      /* â”€â”€ CARD â”€â”€ */
+      .card {
+         background: #fff;
+         border-radius: var(--admin-card-radius);
+         box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+         border: 1px solid var(--border);
+         overflow: hidden;
+      }
+
+      .card-header {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 20px 24px;
+         border-bottom: 1px solid var(--border);
+         flex-wrap: wrap;
+         gap: 12px;
+      }
+
+      .card-title {
+         font-family: 'Playfair Display', serif;
+         font-size: 1rem;
+         font-weight: 700;
+         color: var(--text);
+         display: flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      .card-body {
+         padding: 24px;
+      }
+
+      /* â”€â”€ FORM ELEMENTS â”€â”€ */
+      .form-grid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 20px;
+      }
+
+      @media(max-width:700px) {
+         .form-grid {
+            grid-template-columns: 1fr;
+         }
+      }
+
+      .form-field {
+         display: flex;
+         flex-direction: column;
+         gap: 6px;
+      }
+
+      .form-field.full {
+         grid-column: 1/-1;
+      }
+
+      .form-label {
+         font-size: .72rem;
+         font-weight: 700;
+         color: #64748b;
+         letter-spacing: .04em;
+         text-transform: uppercase;
+      }
+
+      .form-input,
+      .form-select {
+         padding: 10px 14px;
+         border: 1.5px solid var(--border);
+         border-radius: 9px;
+         font-size: .87rem;
+         transition: all .2s;
+         background: #f8fafc;
+         width: 100%;
+         font-family: 'Inter', sans-serif;
+         color: var(--text);
+      }
+
+      .form-input:focus,
+      .form-select:focus {
+         outline: none;
+         border-color: var(--gold);
+         background: #fff;
+         box-shadow: 0 0 0 3px rgba(201, 169, 110, .1);
+      }
+
+      .form-hint {
+         font-size: .73rem;
+         color: var(--muted);
+         margin-top: 4px;
+      }
+
+      /* â”€â”€ TOGGLE â”€â”€ */
+      .toggle {
+         position: relative;
+         display: inline-block;
+         width: 44px;
+         height: 24px;
+         flex-shrink: 0;
+      }
+
+      .toggle input {
+         opacity: 0;
+         width: 0;
+         height: 0;
+      }
+
+      .toggle-slider {
+         position: absolute;
+         inset: 0;
+         background: #cbd5e1;
+         border-radius: 34px;
+         cursor: pointer;
+         transition: .3s;
+      }
+
+      .toggle-slider:before {
+         position: absolute;
+         content: '';
+         height: 18px;
+         width: 18px;
+         left: 3px;
+         bottom: 3px;
+         background: #fff;
+         border-radius: 50%;
+         transition: .3s;
+      }
+
+      input:checked+.toggle-slider {
+         background: var(--gold);
+      }
+
+      input:checked+.toggle-slider:before {
+         transform: translateX(20px);
+      }
+
+      .toggle-row {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 14px 0;
+         border-bottom: 1px solid #f1f5f9;
+      }
+
+      .toggle-row:last-child {
+         border-bottom: none;
+      }
+
+      .toggle-info h4 {
+         font-size: .9rem;
+         font-weight: 600;
+         color: var(--text);
+         margin-bottom: 3px;
+      }
+
+      .toggle-info p {
+         font-size: .8rem;
+         color: var(--muted);
+      }
+
+      /* â”€â”€ GST SLAB REFERENCE â”€â”€ */
+      .slabs-grid {
+         display: grid;
+         grid-template-columns: repeat(5, 1fr);
+         gap: 10px;
+      }
+
+      @media(max-width:700px) {
+         .slabs-grid {
+            grid-template-columns: repeat(3, 1fr);
+         }
+      }
+
+      .slab-card {
+         background: #f8fafc;
+         border: 1.5px solid var(--border);
+         border-radius: 10px;
+         padding: 14px;
+         text-align: center;
+         transition: all .2s;
+      }
+
+      .slab-card:hover {
+         border-color: var(--gold);
+         background: var(--gold-light);
+      }
+
+      .slab-rate {
+         font-family: 'Playfair Display', serif;
+         font-size: 1.6rem;
+         font-weight: 700;
+         color: var(--text);
+      }
+
+      .slab-label {
+         font-size: .7rem;
+         color: var(--muted);
+         font-weight: 600;
+         text-transform: uppercase;
+         letter-spacing: .05em;
+         margin-top: 4px;
+      }
+
+      .slab-example {
+         font-size: .68rem;
+         color: #94a3b8;
+         margin-top: 3px;
+      }
+
+      /* â”€â”€ INFO BOX â”€â”€ */
+      .info-box {
+         padding: 16px 20px;
+         border-radius: 10px;
+         display: flex;
+         gap: 14px;
+         align-items: flex-start;
+      }
+
+      .info-box i {
+         font-size: 1.1rem;
+         flex-shrink: 0;
+         margin-top: 2px;
+      }
+
+      .info-box.info {
+         background: var(--info-light);
+         color: #1e40af;
+         border: 1px solid #bfdbfe;
+      }
+
+      .info-box.info i {
+         color: var(--info);
+      }
+
+      .info-box.warning {
+         background: var(--warning-light);
+         color: #92400e;
+         border: 1px solid #fde68a;
+      }
+
+      .info-box.warning i {
+         color: var(--warning);
+      }
+
+      .info-box.success {
+         background: var(--success-light);
+         color: #14532d;
+         border: 1px solid #bbf7d0;
+      }
+
+      .info-box.success i {
+         color: var(--success);
+      }
+
+      .info-box-title {
+         font-weight: 700;
+         font-size: .87rem;
+         margin-bottom: 4px;
+      }
+
+      .info-box-body {
+         font-size: .82rem;
+         line-height: 1.6;
+      }
+
+      /* â”€â”€ TABLE â”€â”€ */
+      .table-wrap {
+         overflow-x: auto;
+      }
+
+      table {
+         width: 100%;
+         border-collapse: collapse;
+         font-size: .83rem;
+         min-width: 600px;
+      }
+
+      thead th {
+         text-align: left;
+         padding: 10px 16px;
+         font-size: .68rem;
+         font-weight: 700;
+         letter-spacing: .08em;
+         text-transform: uppercase;
+         color: #94a3b8;
+         border-bottom: 2px solid #f1f5f9;
+         background: #fafbfc;
+         white-space: nowrap;
+      }
+
+      tbody tr {
+         border-bottom: 1px solid #f8fafc;
+         transition: background .15s;
+      }
+
+      tbody tr:hover {
+         background: #f8fafc;
+      }
+
+      tbody td {
+         padding: 13px 16px;
+         vertical-align: middle;
+      }
+
+      .tbl-name {
+         font-weight: 600;
+         color: var(--text);
+      }
+
+      .tbl-sub {
+         font-size: .73rem;
+         color: #94a3b8;
+         margin-top: 2px;
+      }
+
+      .act-cell {
+         display: flex;
+         align-items: center;
+         gap: 6px;
+      }
+
+      /* â”€â”€ BADGE â”€â”€ */
+      .badge {
+         display: inline-flex;
+         align-items: center;
+         gap: 4px;
+         padding: 3px 9px;
+         border-radius: 20px;
+         font-size: .68rem;
+         font-weight: 700;
+         letter-spacing: .03em;
+         text-transform: uppercase;
+         white-space: nowrap;
+      }
+
+      .badge-active {
+         background: var(--success-light);
+         color: #15803d;
+      }
+
+      .badge-gold {
+         background: rgba(201, 169, 110, .15);
+         color: var(--gold-dark);
+      }
+
+      .badge-blue {
+         background: var(--info-light);
+         color: #1d4ed8;
+      }
+
+      /* â”€â”€ RATE INPUT â”€â”€ */
+      .rate-input-wrap {
+         display: flex;
+         align-items: center;
+         gap: 6px;
+      }
+
+      .rate-input {
+         padding: 6px 10px;
+         border: 1.5px solid var(--border);
+         border-radius: 7px;
+         font-size: .83rem;
+         width: 80px;
+         font-family: 'Inter', sans-serif;
+         text-align: right;
+      }
+
+      .rate-input:focus {
+         outline: none;
+         border-color: var(--gold);
+         box-shadow: 0 0 0 2px rgba(201, 169, 110, .1);
+      }
+
+      /* â”€â”€ RADIO GROUP â”€â”€ */
+      .radio-group {
+         display: flex;
+         gap: 12px;
+         flex-wrap: wrap;
+      }
+
+      .radio-option {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         padding: 10px 16px;
+         border: 1.5px solid var(--border);
+         border-radius: 9px;
+         cursor: pointer;
+         transition: all .2s;
+         flex: 1;
+         min-width: 140px;
+      }
+
+      .radio-option:hover {
+         border-color: var(--gold);
+      }
+
+      .radio-option.selected {
+         border-color: var(--gold);
+         background: var(--gold-light);
+      }
+
+      .radio-option input {
+         width: 16px;
+         height: 16px;
+         accent-color: var(--gold);
+      }
+
+      .radio-option label {
+         font-size: .87rem;
+         font-weight: 600;
+         color: var(--text);
+         cursor: pointer;
+      }
+
+      .radio-option .radio-desc {
+         font-size: .73rem;
+         color: var(--muted);
+         margin-top: 2px;
+      }
+
+      /* â”€â”€ MODAL â”€â”€ */
+      .modal-backdrop {
+         position: fixed;
+         inset: 0;
+         background: rgba(0, 0, 0, .55);
+         backdrop-filter: blur(4px);
+         z-index: 1000;
+         display: none;
+         align-items: center;
+         justify-content: center;
+         padding: 20px;
+      }
+
+      .modal-backdrop.show {
+         display: flex;
+      }
+
+      .modal {
+         background: #fff;
+         border-radius: 18px;
+         padding: 28px;
+         max-width: 500px;
+         width: 100%;
+         max-height: 90vh;
+         overflow-y: auto;
+         box-shadow: 0 25px 60px rgba(0, 0, 0, .25);
+         animation: modalIn .3s ease;
+      }
+
+      @keyframes modalIn {
+         from {
+            opacity: 0;
+            transform: scale(.95) translateY(8px);
+         }
+
+         to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+         }
+      }
+
+      .modal-header {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         margin-bottom: 22px;
+      }
+
+      .modal-title {
+         font-family: 'Playfair Display', serif;
+         font-size: 1.1rem;
+         font-weight: 700;
+         color: var(--text);
+         display: flex;
+         align-items: center;
+         gap: 9px;
+      }
+
+      .modal-close {
+         width: 34px;
+         height: 34px;
+         border-radius: 8px;
+         background: #f1f5f9;
+         color: #64748b;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition: all .2s;
+         cursor: pointer;
+         border: none;
+      }
+
+      .modal-close:hover {
+         background: var(--danger-light);
+         color: #dc2626;
+      }
+
+      .modal-footer {
+         display: flex;
+         gap: 10px;
+         justify-content: flex-end;
+         margin-top: 22px;
+         padding-top: 18px;
+         border-top: 1px solid var(--border);
+      }
+
+      /* â”€â”€ LOADING â”€â”€ */
+      .loading-spinner {
+         text-align: center;
+         padding: 40px;
+         color: #94a3b8;
+         font-size: .87rem;
+      }
+
+      .loading-spinner i {
+         font-size: 1.8rem;
+         color: var(--gold);
+         display: block;
+         margin-bottom: 10px;
+         animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+         to {
+            transform: rotate(360deg);
+         }
+      }
+
+      /* â”€â”€ TOAST â”€â”€ */
+      .toast-wrap {
+         position: fixed;
+         bottom: 24px;
+         right: 24px;
+         z-index: 9999;
+         display: flex;
+         flex-direction: column;
+         gap: 8px;
+      }
+
+      .toast {
+         background: #1e293b;
+         color: #fff;
+         padding: 12px 18px;
+         border-radius: 10px;
+         font-size: .83rem;
+         font-weight: 500;
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+         animation: toastIn .3s ease;
+         min-width: 240px;
+      }
+
+      .toast.success {
+         border-left: 4px solid var(--success);
+      }
+
+      .toast.error {
+         border-left: 4px solid var(--danger);
+      }
+
+      .toast.warning {
+         border-left: 4px solid var(--warning);
+      }
+
+      .toast.info {
+         border-left: 4px solid var(--info);
+      }
+
+      @keyframes toastIn {
+         from {
+            opacity: 0;
+            transform: translateX(30px);
+         }
+
+         to {
+            opacity: 1;
+            transform: translateX(0);
+         }
+      }
+
+      /* â”€â”€ MOBILE â”€â”€ */
+      .mob-overlay {
+         display: none;
+         position: fixed;
+         inset: 0;
+         background: rgba(0, 0, 0, .5);
+         z-index: 998;
+      }
+
+      /* Divider */
+      .section-divider {
+         height: 1px;
+         background: var(--border);
+      }
+   </style>
+</head>
+
+<body>
+
+   <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+   <div class="toast-wrap" id="toastWrap"></div>
+
+   <div class="wrap">
+      <!-- â”€â”€ SIDEBAR â”€â”€ -->
+      <aside class="sidebar" id="sidebar">
+         <div class="sidebar-brand">
+            <div class="sidebar-logo">H</div>
+            <div>
+               <div style="font-size:.87rem;font-weight:700;color:#f1f5f9">HeelsUp</div>
+               <div style="font-size:.62rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em">Admin Panel
+               </div>
+            </div>
+         </div>
+         <nav class="sidebar-nav">
+            <div class="nav-label">Main</div>
+            <a href="admin.html" class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+            <div class="nav-label">Catalogue</div>
+            <a href="admin-products.html" class="nav-item"><i class="fa-solid fa-box"></i> Products</a>
+            <a href="admin-categories.html" class="nav-item"><i class="fa-solid fa-layer-group"></i> Categories</a>
+            <a href="admin-collections.html" class="nav-item"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+            <a href="admin-inventory.html" class="nav-item"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+            <div class="nav-label">Sales & Customers</div>
+            <a href="admin-orders.html" class="nav-item">
+               <i class="fa-solid fa-bag-shopping"></i> Orders
+               <span class="nav-badge" id="ordersBadge" style="display:none">0</span>
+            </a>
+            <a href="admin-customers.html" class="nav-item"><i class="fa-solid fa-users"></i> Customers</a>
+            <a href="admin-coupons.html" class="nav-item"><i class="fa-solid fa-ticket"></i> Coupons</a>
+            <a href="admin-reviews.html" class="nav-item"><i class="fa-solid fa-star"></i> Reviews</a>
+            <a href="admin-orders.html?tab=exchange" class="nav-item"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+            <a href="admin-pos.html" class="nav-item"><i class="fa-solid fa-cash-register"></i> POS / Offline Sales</a>
+
+            <div class="nav-label">Marketing & Content</div>
+            <a href="admin-banners.html" class="nav-item"><i class="fa-solid fa-image"></i> Banners</a>
+            <a href="admin-blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i> Blog</a>
+            <a href="admin-pages.html" class="nav-item"><i class="fa-solid fa-file-lines"></i> Pages</a>
+            <a href="admin-notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+            <div class="nav-label">Reports</div>
+            <a href="admin-reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+            <a href="admin-analytics.html" class="nav-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+            <div class="nav-label">System</div>
+            <a href="admin-shipping.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+            <a href="admin-taxes.html" class="nav-item active"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+            <a href="admin-staff.html" class="nav-item"><i class="fa-solid fa-users-gear"></i> Staff</a>
+            <a href="admin-settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+         </nav>
+         <div class="sidebar-footer">
+            <div class="sidebar-user">
+               <div class="s-avatar" id="s-avatar">A</div>
+               <div>
+                  <div class="s-name" id="s-name">Admin</div>
+                  <div class="s-role">Super Admin</div>
+               </div>
+            </div>
+            <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+               Logout</button>
+         </div>
+      </aside>
+
+      <div class="main">
+         <!-- â”€â”€ TOPBAR â”€â”€ -->
+         <div class="topbar">
+            <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div class="topbar-title">Tax Management</div>
+            <div class="topbar-right">
+               <a href="admin-reports.html" class="btn btn-sm btn-outline">
+                  <i class="fa-solid fa-chart-bar"></i> View Tax Report
+               </a>
+               <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')">
+                  <i class="fa-solid fa-store"></i> View Store
+               </button>
+            </div>
+         </div>
+
+         <div class="content">
+
+            <!-- â”€â”€ PAGE HEADER â”€â”€ -->
+            <div class="admin-page-header">
+               <div>
+                  <h2>GST & Tax Configuration</h2>
+                  <p>India GST compliance settings â€” tax slabs, category rules, and invoice preferences.</p>
+               </div>
+               <div style="display:flex;gap:10px;">
+                  <button class="btn btn-outline" onclick="loadTaxSettings()">
+                     <i class="fa-solid fa-rotate-right"></i> Refresh
+                  </button>
+                  <button class="btn btn-primary" id="saveAllBtn" onclick="saveAllSettings()">
+                     <i class="fa-solid fa-floppy-disk"></i> Save All Settings
+                  </button>
+               </div>
+            </div>
+
+            <!-- â”€â”€ LOADING STATE â”€â”€ -->
+            <div id="loadingState" style="display:none;">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Loading tax configuration...</div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- â”€â”€ MAIN CONTENT â”€â”€ (shown after load) -->
+            <div id="mainContent">
+
+               <!-- â”€â”€ INDIA GST RULE INFO BOX â”€â”€ -->
+               <div class="info-box info">
+                  <i class="fa-solid fa-circle-info"></i>
+                  <div>
+                     <div class="info-box-title">India Footwear GST Rule (As per GST Council)</div>
+                     <div class="info-box-body">
+                        Footwear priced <strong>up to â‚¹1,000</strong> â†’ <strong>5% GST</strong> (HSN 6402) &nbsp;|&nbsp;
+                        Footwear priced <strong>above â‚¹1,000</strong> â†’ <strong>18% GST</strong> (HSN 6402)
+                        &nbsp;|&nbsp;
+                        Bags &amp; Clutches â†’ <strong>18% GST</strong> (HSN 4202). System auto-applies the correct slab
+                        at checkout based on product price.
+                     </div>
+                  </div>
+               </div>
+
+               <!-- â”€â”€ GST CONFIGURATION CARD â”€â”€ -->
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-building-columns" style="color:var(--gold)"></i> GST
+                        Registration</div>
+                     <span class="badge badge-active" id="gstStatusBadge">Registered</span>
+                  </div>
+                  <div class="card-body">
+                     <div style="display:flex;flex-direction:column;gap:0;">
+                        <div class="toggle-row">
+                           <div class="toggle-info">
+                              <h4>GST Registered Business</h4>
+                              <p>Enable to collect GST on all applicable orders and issue tax invoices.</p>
+                           </div>
+                           <label class="toggle"><input type="checkbox" id="gstRegistered"
+                                 onchange="onGstToggle()"><span class="toggle-slider"></span></label>
+                        </div>
+                        <div class="toggle-row">
+                           <div class="toggle-info">
+                              <h4>GST Inclusive Pricing</h4>
+                              <p>ON = product prices already include GST. OFF = GST added on top at checkout.</p>
+                           </div>
+                           <label class="toggle"><input type="checkbox" id="gstInclusive"><span
+                                 class="toggle-slider"></span></label>
+                        </div>
+                        <div class="toggle-row">
+                           <div class="toggle-info">
+                              <h4>Auto Price-Based Slab (Footwear)</h4>
+                              <p>Automatically apply 5% below â‚¹1,000 and 18% above â‚¹1,000 for footwear.</p>
+                           </div>
+                           <label class="toggle"><input type="checkbox" id="autoFootwearSlab"><span
+                                 class="toggle-slider"></span></label>
+                        </div>
+                     </div>
+
+                     <div class="section-divider" style="margin:20px 0"></div>
+
+                     <div class="form-grid" id="gstFields">
+                        <div class="form-field">
+                           <label class="form-label">GSTIN Number</label>
+                           <input type="text" class="form-input" id="gstinNumber" placeholder="27AAPFU0939F1ZV"
+                              maxlength="15"
+                              style="text-transform:uppercase;font-family:monospace;letter-spacing:.08em;">
+                           <div class="form-hint">15-character GST Identification Number. Format: 2-digit state code +
+                              PAN + 3 chars.</div>
+                        </div>
+                        <div class="form-field">
+                           <label class="form-label">Business Legal Name</label>
+                           <input type="text" class="form-input" id="businessName"
+                              placeholder="HeelsUp Fashion Pvt Ltd">
+                        </div>
+                        <div class="form-field">
+                           <label class="form-label">GST State</label>
+                           <select class="form-select" id="gstState">
+                              <option value="">â€” Select State â€”</option>
+                              <option value="RJ">Rajasthan (08)</option>
+                              <option value="GJ">Gujarat (24)</option>
+                              <option value="MH">Maharashtra (27)</option>
+                              <option value="DL">Delhi (07)</option>
+                              <option value="UP">Uttar Pradesh (09)</option>
+                              <option value="HR">Haryana (06)</option>
+                              <option value="PB">Punjab (03)</option>
+                              <option value="KA">Karnataka (29)</option>
+                              <option value="TN">Tamil Nadu (33)</option>
+                              <option value="WB">West Bengal (19)</option>
+                              <option value="MP">Madhya Pradesh (23)</option>
+                              <option value="AP">Andhra Pradesh (37)</option>
+                              <option value="TS">Telangana (36)</option>
+                              <option value="KL">Kerala (32)</option>
+                              <option value="OR">Odisha (21)</option>
+                              <option value="BR">Bihar (10)</option>
+                              <option value="AS">Assam (18)</option>
+                              <option value="HP">Himachal Pradesh (02)</option>
+                              <option value="UK">Uttarakhand (05)</option>
+                              <option value="GA">Goa (30)</option>
+                           </select>
+                        </div>
+                        <div class="form-field">
+                           <label class="form-label">Default Tax Rate</label>
+                           <select class="form-select" id="defaultTaxRate">
+                              <option value="0">0% â€” Exempt / Nil Rated</option>
+                              <option value="5">5% â€” Essential Goods</option>
+                              <option value="12">12% â€” Standard</option>
+                              <option value="18" selected>18% â€” Standard (Footwear / Bags)</option>
+                              <option value="28">28% â€” Luxury / Sin Goods</option>
+                           </select>
+                           <div class="form-hint">Applied when no category-specific rule matches.</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- â”€â”€ GST SLAB QUICK REFERENCE â”€â”€ -->
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-percent" style="color:var(--gold)"></i> GST Slab
+                        Reference</div>
+                     <span style="font-size:.78rem;color:var(--muted)">India GST Council â€” Standard Slabs</span>
+                  </div>
+                  <div class="card-body">
+                     <div class="slabs-grid">
+                        <div class="slab-card">
+                           <div class="slab-rate">0%</div>
+                           <div class="slab-label">Nil / Exempt</div>
+                           <div class="slab-example">Unbranded natural products</div>
+                        </div>
+                        <div class="slab-card">
+                           <div class="slab-rate">5%</div>
+                           <div class="slab-label">Essential</div>
+                           <div class="slab-example">Footwear â‰¤ â‚¹1,000</div>
+                        </div>
+                        <div class="slab-card" style="border-color:var(--gold);background:var(--gold-light);">
+                           <div class="slab-rate" style="color:var(--gold-dark)">12%</div>
+                           <div class="slab-label">Standard</div>
+                           <div class="slab-example">General goods</div>
+                        </div>
+                        <div class="slab-card" style="border-color:var(--gold);background:var(--gold-light);">
+                           <div class="slab-rate" style="color:var(--gold-dark)">18%</div>
+                           <div class="slab-label">Standard</div>
+                           <div class="slab-example">Footwear &gt; â‚¹1,000 Â· Bags</div>
+                        </div>
+                        <div class="slab-card">
+                           <div class="slab-rate">28%</div>
+                           <div class="slab-label">Luxury</div>
+                           <div class="slab-example">Sin / luxury goods</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- â”€â”€ TAX RULES TABLE â”€â”€ -->
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-table-list" style="color:var(--gold)"></i> Category
+                        Tax Rules</div>
+                     <button class="btn btn-primary btn-sm" onclick="openRuleModal()">
+                        <i class="fa-solid fa-plus"></i> Add Rule
+                     </button>
+                  </div>
+
+                  <div class="table-wrap">
+                     <table>
+                        <thead>
+                           <tr>
+                              <th>Category / Product Type</th>
+                              <th>HSN Code</th>
+                              <th>GST Rate</th>
+                              <th>Condition</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                           </tr>
+                        </thead>
+                        <tbody id="taxRulesBody">
+                           <tr>
+                              <td colspan="6">
+                                 <div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Loading rules...</div>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+
+               <!-- â”€â”€ INVOICE SETTINGS CARD â”€â”€ -->
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-file-invoice" style="color:var(--gold)"></i> Invoice
+                        Preferences</div>
+                  </div>
+                  <div class="card-body">
+                     <div class="form-grid">
+                        <div class="form-field">
+                           <label class="form-label">Invoice Prefix</label>
+                           <input type="text" class="form-input" id="invoicePrefix" placeholder="HU-INV" maxlength="10">
+                           <div class="form-hint">e.g. HU-INV â†’ Invoice No: HU-INV-2024-0001</div>
+                        </div>
+                        <div class="form-field">
+                           <label class="form-label">Financial Year Start</label>
+                           <select class="form-select" id="fyStart">
+                              <option value="april">April (Indian FY â€” Apr to Mar)</option>
+                              <option value="january">January (Calendar Year)</option>
+                           </select>
+                        </div>
+                        <div class="form-field full">
+                           <label class="form-label">Invoice Footer Note</label>
+                           <input type="text" class="form-input" id="invoiceNote"
+                              placeholder="Thank you for shopping with HeelsUp! All prices are inclusive of applicable GST.">
+                        </div>
+                     </div>
+
+                     <div class="section-divider" style="margin:20px 0"></div>
+
+                     <div style="display:flex;flex-direction:column;gap:0">
+                        <div class="toggle-row">
+                           <div class="toggle-info">
+                              <h4>Show GST Breakup on Invoice</h4>
+                              <p>Display CGST + SGST / IGST split separately on customer invoices.</p>
+                           </div>
+                           <label class="toggle"><input type="checkbox" id="showGstBreakup" checked><span
+                                 class="toggle-slider"></span></label>
+                        </div>
+                        <div class="toggle-row">
+                           <div class="toggle-info">
+                              <h4>Show HSN Code on Invoice</h4>
+                              <p>Include HSN code for each line item â€” required for B2B invoices above â‚¹50,000.</p>
+                           </div>
+                           <label class="toggle"><input type="checkbox" id="showHsnCode"><span
+                                 class="toggle-slider"></span></label>
+                        </div>
+                        <div class="toggle-row">
+                           <div class="toggle-info">
+                              <h4>Auto-Generate Invoice PDF</h4>
+                              <p>Automatically create and attach a PDF invoice for every completed order.</p>
+                           </div>
+                           <label class="toggle"><input type="checkbox" id="autoInvoicePdf"><span
+                                 class="toggle-slider"></span></label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- â”€â”€ INTER-STATE TAX INFO â”€â”€ -->
+               <div class="info-box warning">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <div>
+                     <div class="info-box-title">CGST / SGST vs IGST â€” Auto Applied</div>
+                     <div class="info-box-body">
+                        Orders <strong>within Rajasthan</strong> â†’ CGST (9%) + SGST (9%) split applied
+                        automatically.<br>
+                        Orders <strong>outside Rajasthan</strong> â†’ IGST (18%) applied as single integrated tax.<br>
+                        System detects shipping state vs store state and applies the correct tax structure.
+                     </div>
+                  </div>
+               </div>
+
+            </div><!-- /mainContent -->
+
+         </div><!-- /content -->
+      </div><!-- /main -->
+   </div><!-- /wrap -->
+
+
+   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     ADD / EDIT TAX RULE MODAL
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+   <div class="modal-backdrop" id="ruleModal">
+      <div class="modal">
+         <div class="modal-header">
+            <div class="modal-title" id="ruleModalTitle"><i class="fa-solid fa-plus" style="color:var(--gold)"></i> Add
+               Tax Rule</div>
+            <button class="modal-close" onclick="closeRuleModal()"><i class="fa-solid fa-xmark"></i></button>
+         </div>
+         <form id="ruleForm" onsubmit="saveRule(event)">
+            <div style="display:flex;flex-direction:column;gap:16px;">
+               <div class="form-field">
+                  <label class="form-label">Category / Product Type</label>
+                  <select name="category" class="form-select" required>
+                     <option value="">â€” Select Category â€”</option>
+                     <option value="heels">Heels (Footwear)</option>
+                     <option value="flats">Flats (Footwear)</option>
+                     <option value="sandals">Sandals (Footwear)</option>
+                     <option value="wedges">Wedges (Footwear)</option>
+                     <option value="bags">Bags</option>
+                     <option value="clutches">Clutches</option>
+                     <option value="accessories">Accessories</option>
+                     <option value="all">All Categories (Default)</option>
+                  </select>
+               </div>
+               <div class="form-field">
+                  <label class="form-label">HSN Code</label>
+                  <input name="hsn_code" type="text" class="form-input" placeholder="e.g. 6402, 4202" maxlength="8"
+                     style="font-family:monospace;letter-spacing:.05em;">
+                  <div class="form-hint">Footwear â†’ 6402 / 6403. Bags â†’ 4202. Accessories â†’ 6217.</div>
+               </div>
+               <div class="form-field">
+                  <label class="form-label">GST Rate (%)</label>
+                  <select name="tax_rate" class="form-select" required>
+                     <option value="">â€” Select Rate â€”</option>
+                     <option value="0">0% â€” Nil / Exempt</option>
+                     <option value="5">5% â€” Footwear â‰¤ â‚¹1,000</option>
+                     <option value="12">12% â€” Standard</option>
+                     <option value="18">18% â€” Footwear &gt; â‚¹1,000 / Bags</option>
+                     <option value="28">28% â€” Luxury</option>
+                  </select>
+               </div>
+               <div class="form-field">
+                  <label class="form-label">Price Condition (Optional)</label>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                     <select name="condition_type" class="form-select">
+                        <option value="none">No Condition</option>
+                        <option value="lte">Price â‰¤ amount</option>
+                        <option value="gt">Price &gt; amount</option>
+                     </select>
+                     <div style="position:relative;">
+                        <span
+                           style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--muted)">â‚¹</span>
+                        <input name="condition_amount" type="number" class="form-input" placeholder="1000"
+                           style="padding-left:28px;">
+                     </div>
+                  </div>
+                  <div class="form-hint">Leave condition as "No Condition" to apply this rate to all prices in the
+                     category.</div>
+               </div>
+               <div class="form-field">
+                  <label class="form-label">Notes</label>
+                  <input name="notes" type="text" class="form-input" placeholder="e.g. GST Council notification ref.">
+               </div>
+               <div
+                  style="display:flex;align-items:center;gap:12px;padding:12px;background:#f8fafc;border-radius:8px;border:1.5px solid var(--border);">
+                  <label class="toggle"><input type="checkbox" id="chkRuleActive" name="is_active" checked><span
+                        class="toggle-slider"></span></label>
+                  <div>
+                     <div style="font-size:.87rem;font-weight:600;color:var(--text)">Rule Active</div>
+                     <div style="font-size:.73rem;color:var(--muted)">Inactive rules are ignored at checkout.</div>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-outline" onclick="closeRuleModal()">Cancel</button>
+               <button type="submit" class="btn btn-primary" id="saveRuleBtn"><i class="fa-solid fa-floppy-disk"></i>
+                  Save Rule</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
+
+   <script src="app-config.js"></script>
+   <script src="app-auth.js"></script>
+  <script src="admin-enterprise.js"></script>
+   <script>
+      // â”€â”€ AUTH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      const user = HeelsUpAuth.getUser();
+      if (!user || user.role !== 'admin') { window.location = 'login.html?redirect=admin-taxes.html'; }
+      const uname = (user?.firstName || user?.first_name || 'Admin');
+      document.getElementById('s-avatar').textContent = uname.charAt(0).toUpperCase();
+      document.getElementById('s-name').textContent = uname;
+
+      // â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      let taxRules = [];
+      let editingRuleId = null;
+
+      // DEFAULT RULES â€” used as fallback if API returns empty
+      const DEFAULT_RULES = [
+         { id: 1, category: 'heels', category_label: 'Heels', hsn_code: '6402', tax_rate: 5, condition_type: 'lte', condition_amount: 1000, notes: 'GST Council â€” footwear â‰¤ â‚¹1,000', is_active: 1 },
+         { id: 2, category: 'heels', category_label: 'Heels', hsn_code: '6402', tax_rate: 18, condition_type: 'gt', condition_amount: 1000, notes: 'GST Council â€” footwear > â‚¹1,000', is_active: 1 },
+         { id: 3, category: 'flats', category_label: 'Flats', hsn_code: '6402', tax_rate: 5, condition_type: 'lte', condition_amount: 1000, notes: 'Footwear â‰¤ â‚¹1,000', is_active: 1 },
+         { id: 4, category: 'flats', category_label: 'Flats', hsn_code: '6402', tax_rate: 18, condition_type: 'gt', condition_amount: 1000, notes: 'Footwear > â‚¹1,000', is_active: 1 },
+         { id: 5, category: 'sandals', category_label: 'Sandals', hsn_code: '6402', tax_rate: 5, condition_type: 'lte', condition_amount: 1000, notes: 'Footwear â‰¤ â‚¹1,000', is_active: 1 },
+         { id: 6, category: 'sandals', category_label: 'Sandals', hsn_code: '6402', tax_rate: 18, condition_type: 'gt', condition_amount: 1000, notes: 'Footwear > â‚¹1,000', is_active: 1 },
+         { id: 7, category: 'wedges', category_label: 'Wedges', hsn_code: '6402', tax_rate: 5, condition_type: 'lte', condition_amount: 1000, notes: 'Footwear â‰¤ â‚¹1,000', is_active: 1 },
+         { id: 8, category: 'wedges', category_label: 'Wedges', hsn_code: '6402', tax_rate: 18, condition_type: 'gt', condition_amount: 1000, notes: 'Footwear > â‚¹1,000', is_active: 1 },
+         { id: 9, category: 'bags', category_label: 'Bags', hsn_code: '4202', tax_rate: 18, condition_type: 'none', condition_amount: null, notes: 'Bags & travel accessories', is_active: 1 },
+         { id: 10, category: 'clutches', category_label: 'Clutches', hsn_code: '4202', tax_rate: 18, condition_type: 'none', condition_amount: null, notes: 'Handbags & clutches', is_active: 1 },
+      ];
+
+      // â”€â”€ UI HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      function toggleSidebar() {
+         const s = document.getElementById('sidebar'), o = document.getElementById('mobOverlay');
+         s.classList.toggle('open');
+         o.style.display = s.classList.contains('open') ? 'block' : 'none';
+      }
+      function closeSidebar() {
+         document.getElementById('sidebar').classList.remove('open');
+         document.getElementById('mobOverlay').style.display = 'none';
+      }
+      function doLogout() { HeelsUpAuth.clearSession(); window.location = 'login.html'; }
+
+      function showToast(msg, type = 'success') {
+         const c = document.getElementById('toastWrap');
+         const t = document.createElement('div');
+         t.className = `toast ${type}`;
+         const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' };
+         t.innerHTML = `<i class="fa-solid ${icons[type]}"></i><span>${msg}</span>`;
+         c.appendChild(t);
+         setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(20px)'; t.style.transition = 'all .3s'; setTimeout(() => t.remove(), 300); }, 4000);
+      }
+
+      function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+      function onGstToggle() {
+         const on = document.getElementById('gstRegistered').checked;
+         document.getElementById('gstStatusBadge').textContent = on ? 'Registered' : 'Not Registered';
+         document.getElementById('gstStatusBadge').className = `badge ${on ? 'badge-active' : 'badge badge-inactive'}`;
+         document.getElementById('gstFields').style.opacity = on ? '1' : '0.4';
+         document.getElementById('gstFields').style.pointerEvents = on ? 'auto' : 'none';
+      }
+      // Badge styles for not-registered
+      const style = document.createElement('style');
+      style.textContent = '.badge-inactive{background:#f1f5f9;color:#64748b;}';
+      document.head.appendChild(style);
+
+      // â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      async function loadTaxSettings() {
+         document.getElementById('loadingState').style.display = 'block';
+         document.getElementById('mainContent').style.opacity = '0.5';
+         document.getElementById('mainContent').style.pointerEvents = 'none';
+
+         try {
+            const [settingsRes, rulesRes] = await Promise.all([
+               HeelsUpAuth.api('/api/admin/taxes/settings').catch(() => null),
+               HeelsUpAuth.api('/api/admin/taxes/rules').catch(() => null)
+            ]);
+
+            // Populate GST settings
+            const s = settingsRes || {};
+            document.getElementById('gstRegistered').checked = s.gst_registered !== false;
+            document.getElementById('gstInclusive').checked = !!s.gst_inclusive;
+            document.getElementById('autoFootwearSlab').checked = s.auto_footwear_slab !== false;
+            document.getElementById('gstinNumber').value = s.gstin_number || '';
+            document.getElementById('businessName').value = s.business_name || '';
+            document.getElementById('gstState').value = s.gst_state || 'RJ';
+            document.getElementById('defaultTaxRate').value = s.default_tax_rate ?? '18';
+            document.getElementById('invoicePrefix').value = s.invoice_prefix || 'HU-INV';
+            document.getElementById('fyStart').value = s.fy_start || 'april';
+            document.getElementById('invoiceNote').value = s.invoice_note || '';
+            document.getElementById('showGstBreakup').checked = s.show_gst_breakup !== false;
+            document.getElementById('showHsnCode').checked = !!s.show_hsn_code;
+            document.getElementById('autoInvoicePdf').checked = !!s.auto_invoice_pdf;
+
+            onGstToggle();
+
+            // Populate rules â€” use API data or defaults if empty
+            const apiRules = rulesRes?.rules || rulesRes || [];
+            taxRules = apiRules.length ? apiRules : DEFAULT_RULES;
+            renderRulesTable();
+
+            // Load orders badge
+            loadOrdersBadge();
+
+         } catch (e) {
+            showToast('Could not load tax settings.', 'error');
+            // Still show defaults
+            taxRules = DEFAULT_RULES;
+            renderRulesTable();
+         } finally {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('mainContent').style.opacity = '1';
+            document.getElementById('mainContent').style.pointerEvents = 'auto';
+         }
+      }
+
+      async function loadOrdersBadge() {
+         try {
+            const r = await HeelsUpAuth.api('/api/admin/orders');
+            const pend = (r.orders || []).filter(o => o.order_status === 'placed').length;
+            if (pend > 0) { const b = document.getElementById('ordersBadge'); b.textContent = pend; b.style.display = 'inline-block'; }
+         } catch (e) { }
+      }
+
+      // â”€â”€ RENDER RULES TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      function renderRulesTable() {
+         const tbody = document.getElementById('taxRulesBody');
+         if (!taxRules.length) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted)">No tax rules configured. Click "Add Rule" to get started.</td></tr>`;
+            return;
+         }
+
+         const catLabels = { heels: 'Heels', flats: 'Flats', sandals: 'Sandals', wedges: 'Wedges', bags: 'Bags', clutches: 'Clutches', accessories: 'Accessories', all: 'All Categories' };
+         const catIcons = { heels: 'fa-shoe-prints', flats: 'fa-person-walking', sandals: 'fa-person-walking', wedges: 'fa-shoe-prints', bags: 'fa-bag-shopping', clutches: 'fa-bag-shopping', accessories: 'fa-gem', all: 'fa-layer-group' };
+
+         tbody.innerHTML = taxRules.map(r => {
+            const catLabel = r.category_label || catLabels[r.category] || r.category;
+            const icon = catIcons[r.category] || 'fa-tag';
+            const rate = Number(r.tax_rate);
+            const rateColor = rate === 0 ? '#64748b' : rate <= 5 ? '#15803d' : rate <= 12 ? '#0284c7' : '#d97706';
+
+            let condition = 'â€”';
+            if (r.condition_type === 'lte' && r.condition_amount) condition = `Price â‰¤ â‚¹${Number(r.condition_amount).toLocaleString('en-IN')}`;
+            if (r.condition_type === 'gt' && r.condition_amount) condition = `Price > â‚¹${Number(r.condition_amount).toLocaleString('en-IN')}`;
+
+            return `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:34px;height:34px;border-radius:8px;background:rgba(201,169,110,.1);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;">
+              <i class="fa-solid ${icon}"></i>
+            </div>
+            <div>
+              <div class="tbl-name">${esc(catLabel)}</div>
+              ${r.notes ? `<div class="tbl-sub">${esc(r.notes)}</div>` : ''}
+            </div>
+          </div>
+        </td>
+        <td><code style="background:#f8fafc;padding:3px 8px;border-radius:5px;font-size:.82rem;color:var(--text);border:1px solid var(--border);">${esc(r.hsn_code || 'â€”')}</code></td>
+        <td>
+          <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:${rateColor};">${rate}%</span>
+          <div style="font-size:.68rem;color:var(--muted);margin-top:2px;">
+            ${rate === 0 ? 'Nil / Exempt' : rate === 5 ? 'CGST 2.5% + SGST 2.5%' : rate === 12 ? 'CGST 6% + SGST 6%' : rate === 18 ? 'CGST 9% + SGST 9%' : 'CGST 14% + SGST 14%'}
+          </div>
+        </td>
+        <td style="color:var(--muted);font-size:.82rem;">${condition}</td>
+        <td>
+          <label class="toggle" style="transform:scale(0.9);">
+            <input type="checkbox" ${r.is_active ? 'checked' : ''} onchange="toggleRule(${r.id}, this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </td>
+        <td>
+          <div class="act-cell">
+            <button class="btn-icon btn-edit" onclick='editRule(${JSON.stringify(r)})' title="Edit Rule"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn-icon btn-del" onclick="deleteRule(${r.id})" title="Delete Rule"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </td>
+      </tr>
+    `;
+         }).join('');
+      }
+
+      // â”€â”€ RULE MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      function openRuleModal() {
+         editingRuleId = null;
+         document.getElementById('ruleForm').reset();
+         document.getElementById('chkRuleActive').checked = true;
+         document.getElementById('ruleModalTitle').innerHTML = '<i class="fa-solid fa-plus" style="color:var(--gold)"></i> Add Tax Rule';
+         document.getElementById('saveRuleBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Rule';
+         document.getElementById('ruleModal').classList.add('show');
+      }
+
+      function editRule(r) {
+         editingRuleId = r.id;
+         const f = document.getElementById('ruleForm');
+         f.category.value = r.category || '';
+         f.hsn_code.value = r.hsn_code || '';
+         f.tax_rate.value = String(r.tax_rate);
+         f.condition_type.value = r.condition_type || 'none';
+         f.condition_amount.value = r.condition_amount || '';
+         f.notes.value = r.notes || '';
+         document.getElementById('chkRuleActive').checked = !!r.is_active;
+         document.getElementById('ruleModalTitle').innerHTML = '<i class="fa-solid fa-pen" style="color:var(--gold)"></i> Edit Tax Rule';
+         document.getElementById('saveRuleBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Update Rule';
+         document.getElementById('ruleModal').classList.add('show');
+      }
+
+      function closeRuleModal() { document.getElementById('ruleModal').classList.remove('show'); }
+
+      async function saveRule(e) {
+         e.preventDefault();
+         const f = e.target;
+         const btn = document.getElementById('saveRuleBtn');
+         btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+         const catLabels = { heels: 'Heels', flats: 'Flats', sandals: 'Sandals', wedges: 'Wedges', bags: 'Bags', clutches: 'Clutches', accessories: 'Accessories', all: 'All Categories' };
+
+         const data = {
+            category: f.category.value,
+            category_label: catLabels[f.category.value] || f.category.value,
+            hsn_code: f.hsn_code.value.trim(),
+            tax_rate: Number(f.tax_rate.value),
+            condition_type: f.condition_type.value,
+            condition_amount: f.condition_amount.value ? Number(f.condition_amount.value) : null,
+            notes: f.notes.value.trim(),
+            is_active: f.is_active.checked ? 1 : 0,
+         };
+
+         try {
+            if (editingRuleId) {
+               await HeelsUpAuth.api(`/api/admin/taxes/rules/${editingRuleId}`, { method: 'PUT', body: JSON.stringify(data) });
+               const idx = taxRules.findIndex(r => r.id === editingRuleId);
+               if (idx !== -1) taxRules[idx] = { ...taxRules[idx], ...data };
+               showToast('Tax rule updated.');
+            } else {
+               const res = await HeelsUpAuth.api('/api/admin/taxes/rules', { method: 'POST', body: JSON.stringify(data) });
+               taxRules.push({ id: res.id || Date.now(), ...data });
+               showToast('Tax rule added.', 'success');
+            }
+            closeRuleModal();
+            renderRulesTable();
+         } catch (err) {
+            showToast(err.message || 'Failed to save rule.', 'error');
+         } finally {
+            btn.disabled = false;
+            btn.innerHTML = editingRuleId ? '<i class="fa-solid fa-floppy-disk"></i> Update Rule' : '<i class="fa-solid fa-floppy-disk"></i> Save Rule';
+         }
+      }
+
+      async function toggleRule(id, val) {
+         try {
+            await HeelsUpAuth.api(`/api/admin/taxes/rules/${id}`, { method: 'PATCH', body: JSON.stringify({ is_active: val ? 1 : 0 }) });
+            const r = taxRules.find(x => x.id === id);
+            if (r) r.is_active = val ? 1 : 0;
+            showToast(val ? 'Rule enabled.' : 'Rule disabled.');
+         } catch (e) { showToast('Failed to update rule.', 'error'); }
+      }
+
+      async function deleteRule(id) {
+         if (!confirm('Delete this tax rule? This may affect checkout tax calculations.')) return;
+         try {
+            await HeelsUpAuth.api(`/api/admin/taxes/rules/${id}`, { method: 'DELETE' });
+            taxRules = taxRules.filter(r => r.id !== id);
+            renderRulesTable();
+            showToast('Rule deleted.', 'warning');
+         } catch (e) { showToast('Deletion failed.', 'error'); }
+      }
+
+      // â”€â”€ SAVE ALL SETTINGS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      async function saveAllSettings() {
+         const btn = document.getElementById('saveAllBtn');
+         btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+         // Validate GSTIN if registered
+         const gstin = document.getElementById('gstinNumber').value.trim().toUpperCase();
+         if (document.getElementById('gstRegistered').checked && gstin && gstin.length !== 15) {
+            showToast('GSTIN must be exactly 15 characters.', 'error');
+            btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save All Settings';
+            return;
+         }
+
+         const payload = {
+            gst_registered: document.getElementById('gstRegistered').checked,
+            gst_inclusive: document.getElementById('gstInclusive').checked,
+            auto_footwear_slab: document.getElementById('autoFootwearSlab').checked,
+            gstin_number: gstin,
+            business_name: document.getElementById('businessName').value.trim(),
+            gst_state: document.getElementById('gstState').value,
+            default_tax_rate: Number(document.getElementById('defaultTaxRate').value),
+            invoice_prefix: document.getElementById('invoicePrefix').value.trim() || 'HU-INV',
+            fy_start: document.getElementById('fyStart').value,
+            invoice_note: document.getElementById('invoiceNote').value.trim(),
+            show_gst_breakup: document.getElementById('showGstBreakup').checked,
+            show_hsn_code: document.getElementById('showHsnCode').checked,
+            auto_invoice_pdf: document.getElementById('autoInvoicePdf').checked,
+         };
+
+         try {
+            await HeelsUpAuth.api('/api/admin/taxes/settings', { method: 'PUT', body: JSON.stringify(payload) });
+            showToast('Tax settings saved successfully.', 'success');
+         } catch (err) {
+            showToast(err.message || 'Failed to save settings.', 'error');
+         } finally {
+            btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save All Settings';
+         }
+      }
+
+      // Close modals on backdrop click
+      document.getElementById('ruleModal').addEventListener('click', function (e) {
+         if (e.target === this) this.classList.remove('show');
+      });
+
+      // â”€â”€ BOOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      document.addEventListener('DOMContentLoaded', loadTaxSettings);
+   </script>
+</body>
+
+</html>

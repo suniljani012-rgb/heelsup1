@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name="theme-color" content="#E8CCC5" />
+
+  <!-- ═══ PRIMARY SEO ═══ -->
+  <title id="page-title">Shopping Bag – HeelsUp | Premium Ladies Footwear</title>
+  <meta name="description"
+    content="Review your selected items and complete your order. Free shipping on orders above ₹799." />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- ═══ PRECONNECT & FONTS ═══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       DESIGN SYSTEM — HeelsUp Brand Colors (Unified)
+    ═══════════════════════════════════════════════════ */
+    :root {
+      /* Brand Colors */
+      --blush: #E8CCC5;
+      --cream: #F6E7C6;
+      --sage-blue: #BDCED3;
+      --warm-gray: #BBB9B2;
+      --sage-green: #CFD4AE;
+      --dark-gray: #807E79;
+      --light-gray: #E3E3E3;
+      --red: #C0392B;
+      --red-lt: #e74c3c;
+      --red-dk: #a93226;
+
+      /* Base */
+      --ink: #1a1a1a;
+      --ink2: #2d2d2d;
+      --white: #ffffff;
+      --bg: #faf8f5;
+      --bg2: #f5f0eb;
+
+      /* Semantic */
+      --primary: var(--red);
+      --primary-lt: var(--red-lt);
+      --primary-dk: var(--red-dk);
+      --surface: var(--white);
+      --surface2: #fdf9f7;
+      --border: #e8e2dc;
+      --border2: #d4ccc5;
+      --text-h: var(--ink);
+      --text-b: #3d3d3d;
+      --text-m: #807E79;
+      --text-pale: #a09890;
+
+      /* Font System */
+      --font-head: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      /* Layout */
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --radius-pill: 100px;
+
+      /* Shadows */
+      --shadow-xs: 0 1px 3px rgba(0, 0, 0, .06);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .08);
+      --shadow: 0 4px 20px rgba(0, 0, 0, .10);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, .12);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, .16);
+      --shadow-xl: 0 24px 64px rgba(0, 0, 0, .20);
+
+      /* Transitions */
+      --t: .22s cubic-bezier(.4, 0, .2, 1);
+      --t-slow: .4s cubic-bezier(.4, 0, .2, 1);
+
+      /* Z-index */
+      --z-ann: 90;
+      --z-nav: 100;
+      --z-drop: 110;
+      --z-mob: 200;
+      --z-search: 250;
+      --z-modal: 300;
+      --z-cart: 310;
+      --z-toast: 9999;
+    }
+
+    /* ═══ RESET & BASE ═══ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-b);
+      background: var(--bg);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-h);
+      letter-spacing: -.01em;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color var(--t);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: var(--font-body);
+      outline: none;
+    }
+
+    ul,
+    ol {
+      list-style: none;
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--light-gray);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--warm-gray);
+      border-radius: 3px;
+    }
+
+    ::selection {
+      background: var(--blush);
+      color: var(--ink);
+    }
+
+    /* ═══ UTILITIES ═══ */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    @media(max-width:768px) {
+      .container {
+        padding: 0 16px;
+      }
+    }
+
+    /* ═══════════════════════════
+       NAVBAR (Unified from product.html)
+    ═══════════════════════════ */
+    .ann-bar {
+      background: var(--ink);
+      color: rgba(255, 255, 255, .85);
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 9px 0;
+      position: relative;
+      z-index: var(--z-ann);
+      overflow: hidden;
+    }
+
+    .ann-scroll {
+      display: flex;
+      align-items: center;
+      animation: annScroll 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ann-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 40px;
+      flex-shrink: 0;
+    }
+
+    .ann-item strong,
+    .ann-item a {
+      color: var(--blush);
+      font-weight: 700;
+    }
+
+    .ann-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .25);
+    }
+
+    .ann-close {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, .45);
+      font-size: 12px;
+      padding: 4px 8px;
+      transition: color var(--t);
+      z-index: 2;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    @keyframes annScroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav);
+      background: rgba(250, 248, 245, .97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow var(--t);
+    }
+
+    .navbar.scrolled {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-inner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: contrast(1.05);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+    }
+
+    .nav-link {
+      padding: 8px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-b);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all var(--t);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(192, 57, 43, .06);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 20px;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--text-b);
+      transition: all var(--t);
+      position: relative;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg2);
+      color: var(--primary);
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 9.5px;
+      font-weight: 700;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg);
+    }
+
+    .nav-hamburger {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: background var(--t);
+    }
+
+    .ham-line {
+      width: 22px;
+      height: 2px;
+      background: var(--text-h);
+      border-radius: 2px;
+      transition: all var(--t);
+    }
+
+    @media(max-width:1024px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+    }
+
+    /* ═══════════════════════════
+       CART PAGE STYLES
+    ═══════════════════════════ */
+    .breadcrumb-wrap {
+      background: var(--surface2);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text-m);
+      font-weight: 500;
+    }
+
+    .breadcrumb a {
+      color: var(--text-b);
+      transition: color var(--t);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--primary);
+    }
+
+    .breadcrumb-sep {
+      opacity: 0.5;
+      font-size: 10px;
+    }
+
+    .cart-page {
+      padding: 48px 0 80px;
+    }
+
+    .cart-header {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cart-title-wrap h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 8px;
+    }
+
+    .cart-title-wrap p {
+      color: var(--text-m);
+      font-size: 14px;
+    }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: 2px solid var(--border2);
+      color: var(--text-h);
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all var(--t);
+    }
+
+    .btn-continue:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media(max-width:1024px) {
+      .cart-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cart Items */
+    .cart-items-wrap {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-xs);
+      overflow: hidden;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 20px;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      transition: background var(--t);
+    }
+
+    .cart-item:hover {
+      background: var(--bg2);
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item-img {
+      width: 100px;
+      height: 125px;
+      border-radius: var(--radius);
+      object-fit: cover;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+    }
+
+    .cart-item-info h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .cart-item-meta {
+      font-size: 13px;
+      color: var(--text-m);
+      margin-bottom: 12px;
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .qty-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-m);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--border2);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--text-h);
+      transition: background var(--t);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover {
+      background: var(--bg2);
+      color: var(--primary);
+    }
+
+    .qty-num {
+      width: 42px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-head);
+      border-left: 1px solid var(--border2);
+      border-right: 1px solid var(--border2);
+      user-select: none;
+    }
+
+    .cart-item-remove {
+      font-size: 12px;
+      color: var(--text-pale);
+      cursor: pointer;
+      transition: color var(--t);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .cart-item-remove:hover {
+      color: var(--primary);
+      background: rgba(192, 57, 43, .06);
+    }
+
+    .cart-item-price {
+      text-align: right;
+    }
+
+    .item-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      font-family: var(--font-head);
+      color: var(--text-h);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .item-price-orig {
+      font-size: 13px;
+      color: var(--text-pale);
+      text-decoration: line-through;
+      display: block;
+    }
+
+    /* Empty State */
+    .cart-empty {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .cart-empty i {
+      font-size: 3.5rem;
+      color: var(--text-pale);
+      margin-bottom: 20px;
+      opacity: .3;
+    }
+
+    .cart-empty h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .cart-empty p {
+      color: var(--text-m);
+      margin-bottom: 28px;
+      max-width: 380px;
+      margin-inline: auto;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-xs);
+      position: sticky;
+      top: 90px;
+    }
+
+    @media(max-width:1024px) {
+      .order-summary {
+        position: static;
+      }
+    }
+
+    .summary-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 14.5px;
+    }
+
+    .summary-label {
+      color: var(--text-m);
+      font-weight: 500;
+    }
+
+    .summary-value {
+      font-weight: 700;
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--text-h);
+    }
+
+    .summary-value.discount {
+      color: #22c55e;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+    }
+
+    .summary-total-label {
+      font-size: 17px;
+      font-weight: 700;
+      font-family: var(--font-head);
+    }
+
+    .summary-total-value {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--font-head);
+      color: var(--primary);
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-head);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-top: 24px;
+      transition: all var(--t);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-checkout:hover {
+      background: var(--primary-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(192, 57, 43, .25);
+    }
+
+    .shipping-note {
+      margin-top: 20px;
+      padding: 14px 16px;
+      background: rgba(34, 197, 94, .08);
+      border: 1px solid rgba(34, 197, 94, .2);
+      border-radius: var(--radius);
+      font-size: 13px;
+      color: #15803d;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .shipping-note i {
+      font-size: 16px;
+    }
+
+    .trust-badges {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .trust-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-m);
+    }
+
+    .trust-badge i {
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    /* Coupon */
+    .coupon-wrap {
+      margin-top: 24px;
+      padding: 20px;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .coupon-title {
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-head);
+      margin-bottom: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .coupon-input-wrap {
+      display: flex;
+      gap: 8px;
+    }
+
+    .coupon-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border2);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      background: var(--surface);
+      transition: all var(--t);
+    }
+
+    .coupon-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(192, 57, 43, .1);
+    }
+
+    .btn-apply {
+      padding: 12px 24px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 700;
+      transition: all var(--t);
+    }
+
+    .btn-apply:hover {
+      background: var(--primary);
+    }
+
+    .coupon-success {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(34, 197, 94, .08);
+      border: 1px solid rgba(34, 197, 94, .2);
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      color: #15803d;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--ink2);
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .footer-top {
+      padding: 68px 0 52px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 44px;
+    }
+
+    @media(max-width:1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media(max-width:600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    .footer-logo-wrap img {
+      height: 42px;
+      width: auto;
+      filter: grayscale(1) invert(1) brightness(1.5);
+      mix-blend-mode: screen;
+      margin-bottom: 14px;
+      opacity: 0.95;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .4);
+      line-height: 1.8;
+      margin-bottom: 22px;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 8px;
+    }
+
+    .footer-soc {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: rgba(255, 255, 255, .45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all var(--t);
+    }
+
+    .footer-soc:hover {
+      border-color: var(--blush);
+      color: var(--blush);
+      background: rgba(232, 204, 197, .08);
+    }
+
+    .footer-col-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .65);
+      margin-bottom: 18px;
+      font-family: var(--font-head);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .38);
+      transition: color var(--t);
+    }
+
+    .footer-links a:hover {
+      color: rgba(255, 255, 255, .75);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, .06);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .25);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 18px;
+    }
+
+    .footer-legal a {
+      font-size: 12px;
+      color: rgba(255, 255, 255, .25);
+      transition: color var(--t);
+    }
+
+    .footer-pay {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pay-chip {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 5px;
+      padding: 3px 9px;
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .35);
+      font-family: var(--font-head);
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: var(--z-toast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      pointer-events: all;
+      transform: translateY(16px);
+      opacity: 0;
+      transition: all var(--t-slow);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      border-left: 3.5px solid var(--sage-blue);
+    }
+
+    .toast.error {
+      border-left: 3.5px solid var(--primary);
+    }
+
+    /* Loading */
+    .skeleton {
+      background: linear-gradient(90deg, var(--light-gray) 25%, var(--bg2) 50%, var(--light-gray) 75%);
+      background-size: 200%;
+      animation: skelAnim 1.6s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    @keyframes skelAnim {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    /* FABs */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: var(--z-toast);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #25d366;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, .4);
+      transition: all var(--t);
+    }
+
+    .whatsapp-fab:hover {
+      transform: scale(1.1) rotate(-8deg);
+    }
+
+    .scroll-top {
+      position: fixed;
+      bottom: 82px;
+      right: 24px;
+      z-index: var(--z-toast);
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--text-h);
+      border: 1.5px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all var(--t);
+      pointer-events: none;
+      cursor: pointer;
+    }
+
+    .scroll-top.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .scroll-top:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* Button Utilities */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 13.5px;
+      font-weight: 600;
+      transition: all var(--t);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(192, 57, 43, .3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-h);
+      border-color: var(--border2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(192, 57, 43, .04);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ TOAST CONTAINER ═══ -->
+  <div class="toast-container" id="toast-wrap"></div>
+
+  <!-- ═══ ANNOUNCEMENT BAR ═══ -->
+  <div class="ann-bar" id="ann-bar">
+    <div class="ann-scroll">
+      <span class="ann-item">🚚 <strong>Free Shipping</strong> on orders above ₹799!</span>
+      <span class="ann-dot"></span>
+      <span class="ann-item">✨ 21,700+ Happy Customers · Pan-India Delivery</span>
+      <span class="ann-dot"></span>
+      <span class="ann-item">💫 Exchange Policy Available · Authentic Quality</span>
+      <span class="ann-dot"></span>
+      <span class="ann-item">🚚 <strong>Free Shipping</strong> on orders above ₹799!</span>
+      <span class="ann-dot"></span>
+      <span class="ann-item">✨ 21,700+ Happy Customers · Pan-India Delivery</span>
+      <span class="ann-dot"></span>
+      <span class="ann-item">💫 Exchange Policy Available · Authentic Quality</span>
+      <span class="ann-dot"></span>
+    </div>
+    <button class="ann-close" id="ann-close">✕</button>
+  </div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <img src="/logo.png" alt="HeelsUp" loading="eager" />
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/shop.html" class="nav-link">Shop</a></li>
+          <li><a href="/shop.html?cat=heels" class="nav-link">Heels</a></li>
+          <li><a href="/shop.html?cat=sandals" class="nav-link">Sandals</a></li>
+          <li><a href="/shop.html?cat=bags" class="nav-link">Bags</a></li>
+          <li><a href="/about.html" class="nav-link">About</a></li>
+          <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="/search.html" class="nav-btn"><i class="fa-solid fa-magnifying-glass"></i></a>
+          <a href="/wishlist.html" class="nav-btn"><i class="fa-regular fa-heart"></i></a>
+          <a href="/profile.html" class="nav-btn" id="nav-account-btn"><i class="fa-regular fa-user"></i></a>
+          <button class="nav-hamburger" id="nav-hamburger">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ BREADCRUMB ═══ -->
+  <div class="breadcrumb-wrap">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <span style="color:var(--primary);font-weight:600">Shopping Bag</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ═══ CART PAGE ═══ -->
+  <section class="cart-page">
+    <div class="container">
+
+      <!-- Loading State -->
+      <div id="cart-loading" style="display:none">
+        <div class="skeleton" style="height:50px;width:300px;margin-bottom:40px"></div>
+        <div class="skeleton" style="height:400px;border-radius:18px"></div>
+      </div>
+
+      <!-- Cart Header -->
+      <div class="cart-header" id="cart-header" style="display:none">
+        <div class="cart-title-wrap">
+          <h1>Shopping <span style="font-style:italic;font-weight:300;color:var(--primary)">Bag</span></h1>
+          <p id="cart-subtitle">Review your items and complete your order</p>
+        </div>
+        <a href="/shop.html" class="btn-continue">
+          <i class="fa-solid fa-chevron-left"></i> Continue Shopping
+        </a>
+      </div>
+
+      <!-- Empty State -->
+      <div id="cart-empty" class="cart-empty" style="display:none">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <h2>Your bag is empty</h2>
+        <p>Looks like you haven't added anything yet. Explore our premium collection and find your perfect pair.</p>
+        <a href="/shop.html" class="btn btn-primary">Start Shopping</a>
+      </div>
+
+      <!-- Cart Layout -->
+      <div class="cart-layout" id="cart-layout" style="display:none">
+
+        <!-- Cart Items -->
+        <div>
+          <div class="cart-items-wrap" id="cart-items-wrap">
+            <!-- Items rendered by JS -->
+          </div>
+
+          <!-- Coupon -->
+          <div class="coupon-wrap">
+            <div class="coupon-title">Have a Coupon?</div>
+            <div class="coupon-input-wrap">
+              <input type="text" class="coupon-input" id="coupon-input" placeholder="Enter coupon code (e.g. HEELS10)">
+              <button class="btn-apply" onclick="applyCoupon()">Apply</button>
+            </div>
+            <div class="coupon-success" id="coupon-success" style="display:none">
+              <i class="fa-solid fa-circle-check"></i>
+              <span id="coupon-msg">Coupon applied successfully!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <aside class="order-summary">
+          <h2 class="summary-title">Order Summary</h2>
+
+          <div class="summary-row">
+            <span class="summary-label">Subtotal</span>
+            <span class="summary-value" id="summary-subtotal">₹0</span>
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-label">Discount</span>
+            <span class="summary-value discount" id="summary-discount">-₹0</span>
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-label">Shipping</span>
+            <span class="summary-value" id="summary-shipping">Free</span>
+          </div>
+
+          <div class="summary-total">
+            <span class="summary-total-label">Total</span>
+            <span class="summary-total-value" id="summary-total">₹0</span>
+          </div>
+
+          <button class="btn-checkout" onclick="location.href='/checkout.html'">
+            <i class="fa-solid fa-lock"></i> Proceed to Checkout
+          </button>
+
+          <div class="shipping-note" id="shipping-note">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span id="shipping-msg">Add ₹799+ for FREE shipping!</span>
+          </div>
+
+          <div class="trust-badges">
+            <div class="trust-badge-row">
+              <div class="trust-badge"><i class="fa-solid fa-shield-halved"></i> Secure Checkout</div>
+              <div class="trust-badge"><i class="fa-solid fa-lock"></i> SSL Encrypted</div>
+            </div>
+            <div style="font-size:12px;color:var(--text-m)">We accept: <strong>UPI · Cards · COD · EMI</strong></div>
+          </div>
+        </aside>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-grid">
+
+          <div>
+            <div class="footer-logo-wrap">
+              <img src="/logo.png" alt="HeelsUp" onerror="this.style.display='none'" />
+            </div>
+            <p class="footer-tagline">
+              Premium ladies footwear & bags for the modern Indian woman.
+              Quality, style, and comfort — all in one place.
+            </p>
+            <div class="footer-socials">
+              <a href="https://www.instagram.com/heel_s_up" target="_blank" class="footer-soc"><i
+                  class="fa-brands fa-instagram"></i></a>
+              <a href="https://wa.me/917891470935" target="_blank" class="footer-soc"><i
+                  class="fa-brands fa-whatsapp"></i></a>
+              <a href="mailto:support@heelsup.in" class="footer-soc"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Shop</div>
+            <nav class="footer-links">
+              <a href="/shop.html">All Products</a>
+              <a href="/shop.html?cat=heels">Heels</a>
+              <a href="/shop.html?cat=flats">Flats</a>
+              <a href="/shop.html?cat=sandals">Sandals</a>
+              <a href="/shop.html?cat=bags">Bags</a>
+              <a href="/shop.html?cat=new">New Arrivals</a>
+            </nav>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Company</div>
+            <nav class="footer-links">
+              <a href="/about.html">About Us</a>
+              <a href="/contact.html">Contact</a>
+              <a href="/blog.html">Blog</a>
+              <a href="/orders">Track Order</a>
+              <a href="/faq.html">FAQ</a>
+            </nav>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Help</div>
+            <nav class="footer-links">
+              <a href="/shipping-info.html">Shipping Policy</a>
+              <a href="/returns.html">Exchange Policy</a>
+              <a href="/privacy.html">Privacy Policy</a>
+              <a href="/terms.html">Terms</a>
+              <a href="/size-guide.html">Size Guide</a>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 HeelsUp. All rights reserved.</p>
+        <div class="footer-pay">
+          <span class="pay-chip">UPI</span>
+          <span class="pay-chip">Visa</span>
+          <span class="pay-chip">Mastercard</span>
+          <span class="pay-chip">COD</span>
+        </div>
+        <div class="footer-legal">
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/shipping-info.html">Shipping</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ FLOATING ═══ -->
+  <a href="https://wa.me/917891470935?text=Hi%20HeelsUp%2C%20I%20need%20help" target="_blank" class="whatsapp-fab">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <button class="scroll-top" id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="app-config.js"></script>
+  <script src="app-auth.js"></script>
+  <script src="js/cart.js"></script>
+
+  <script>
+    'use strict';
+
+    /* ── DOM UTILS ── */
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const fmt = n => '₹' + (Number(n) || 0).toLocaleString('en-IN');
+
+    /* ── STATE ── */
+    let cart = [];
+    let couponDiscount = 0;
+
+    /* ── INIT ── */
+    document.addEventListener('DOMContentLoaded', () => {
+      initGlobalUI();
+      loadCart();
+    });
+
+    /* ── GLOBAL UI ── */
+    function initGlobalUI() {
+      // Ann Bar Close
+      $('ann-close')?.addEventListener('click', () => {
+        const bar = $('ann-bar');
+        if (bar) {
+          bar.style.height = bar.offsetHeight + 'px';
+          bar.style.transition = 'height .3s ease';
+          setTimeout(() => bar.style.height = '0', 10);
+          setTimeout(() => bar.remove(), 320);
+        }
+      });
+
+      // Scroll Effects
+      window.addEventListener('scroll', () => {
+        const s = window.scrollY;
+        $('navbar').classList.toggle('scrolled', s > 50);
+        $('scroll-top-btn').classList.toggle('show', s > 380);
+      }, { passive: true });
+    }
+
+    /* ── TOAST ── */
+    function toast(msg, type = 'success', dur = 4200) {
+      const wrap = $('toast-wrap');
+      if (!wrap) return;
+      const el = document.createElement('div');
+      el.className = 'toast ' + type;
+      const icons = {
+        success: 'fa-circle-check',
+        error: 'fa-circle-xmark',
+        info: 'fa-circle-info'
+      };
+      el.innerHTML = `<i class="fa-solid ${icons[type] || icons.success}"></i><span>${esc(msg)}</span>`;
+      wrap.appendChild(el);
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+      setTimeout(() => {
+        el.classList.remove('show');
+        setTimeout(() => el.remove(), 420);
+      }, dur);
+    }
+
+    /* ── LOAD CART ── */
+    function loadCart() {
+      $('cart-loading').style.display = 'block';
+
+      try {
+        cart = typeof HeelsUpCart !== 'undefined' ? HeelsUpCart.getCart() : [];
+      } catch (e) {
+        cart = [];
+      }
+
+      setTimeout(() => {
+        $('cart-loading').style.display = 'none';
+
+        if (!cart || cart.length === 0) {
+          $('cart-empty').style.display = 'block';
+          $('cart-header').style.display = 'none';
+          $('cart-layout').style.display = 'none';
+        } else {
+          $('cart-empty').style.display = 'none';
+          $('cart-header').style.display = 'flex';
+          $('cart-layout').style.display = 'grid';
+          renderCart();
+          
+          const savedCoupon = localStorage.getItem('heelsup_coupon');
+          if (savedCoupon && !couponDiscount) {
+              $('coupon-input').value = savedCoupon;
+              window.applyCoupon();
+          }
+        }
+      }, 600);
+    }
+
+    /* ── RENDER CART ── */
+    function renderCart() {
+      const itemsWrap = $('cart-items-wrap');
+      const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
+
+      $('cart-subtitle').textContent = `${count} item${count > 1 ? 's' : ''} in your bag`;
+
+      itemsWrap.innerHTML = cart.map((item, i) => {
+        const img = esc(item.image || item.image_url || '');
+        const price = item.price || 0;
+        const qty = item.qty || 1;
+        const total = price * qty;
+
+        return `
+          <div class="cart-item">
+            ${img ? `<img class="cart-item-img" src="${img}" alt="${esc(item.name)}" loading="lazy" onerror="this.src=''">` : '<div class="cart-item-img"></div>'}
+            <div class="cart-item-info">
+              <h3>${esc(item.name)}</h3>
+              <div class="cart-item-meta">${item.size ? 'Size: ' + esc(item.size) + ' · ' : ''}${item.category || ''}</div>
+              <div class="cart-item-qty">
+                <span class="qty-label">Qty</span>
+                <div class="qty-control">
+                  <button class="qty-btn" onclick="updateQty('${item.key}', ${item.qty - 1})"><i class="fa-solid fa-minus" style="font-size:.65rem"></i></button>
+                  <span class="qty-num">${item.qty}</span>
+                  <button class="qty-btn" onclick="updateQty('${item.key}', ${item.qty + 1})"><i class="fa-solid fa-plus" style="font-size:.65rem"></i></button>
+                </div>
+              </div>
+              <button class="cart-item-remove" onclick="removeItem('${item.key}')">
+                <i class="fa-solid fa-trash"></i> Remove
+              </button>
+            </div>
+            <div class="cart-item-price">
+              <span class="item-price">${fmt(total)}</span>
+              ${item.original_price && item.original_price > price ? `<span class="item-price-orig">${fmt(item.original_price * qty)}</span>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+
+      updateSummary();
+    }
+
+    /* ── UPDATE SUMMARY ── */
+    function updateSummary() {
+      const subtotal = cart.reduce((s, i) => s + (i.price * (i.qty || 1)), 0);
+      const freeShipThresh = 799; // ₹799.00
+      const shipping = subtotal >= freeShipThresh ? 0 : 49; // ₹60
+      const total = subtotal - couponDiscount + shipping;
+
+      $('summary-subtotal').textContent = fmt(subtotal);
+      $('summary-discount').textContent = couponDiscount ? '-' + fmt(couponDiscount) : '-₹0';
+      $('summary-shipping').textContent = shipping === 0 ? 'Free' : fmt(shipping);
+      $('summary-total').textContent = fmt(Math.max(0, total));
+
+      const remaining = freeShipThresh - subtotal;
+      const shipMsg = $('shipping-msg');
+      if (remaining > 0) {
+        shipMsg.innerHTML = `Add <strong>${fmt(remaining)}</strong> more for FREE shipping!`;
+      } else {
+        shipMsg.innerHTML = '<strong>🎉 You qualify for FREE shipping!</strong>';
+      }
+    }
+
+    /* ── UPDATE QTY ── */
+    window.updateQty = function (key, newQty) {
+    if (typeof HeelsUpCart !== 'undefined') {
+        HeelsUpCart.updateQty(key, newQty);
+        cart = HeelsUpCart.getCart();
+    }
+    renderCart();
+};
+
+    /* ── REMOVE ITEM ── */
+    window.removeItem = function (key) {
+    if (typeof HeelsUpCart !== 'undefined') {
+        HeelsUpCart.removeItem(key);
+        cart = HeelsUpCart.getCart();
+    }
+    if (cart.length === 0) {
+        location.reload();
+    } else {
+        renderCart();
+        toast('Item removed from bag', 'info');
+    }
+};
+
+    /* ── APPLY COUPON ── */
+    window.applyCoupon = async function () {
+    const code = $('coupon-input').value.trim().toUpperCase();
+    const successEl = $('coupon-success');
+    const msgEl = $('coupon-msg');
+
+      if (!code) {
+          localStorage.removeItem('heelsup_coupon');
+          toast('Please enter a coupon code', 'warning');
+          return;
+      }
+
+    try {
+        const subtotal = cart.reduce((s, i) => s + (i.price * (i.qty || 1)), 0);
+        
+        if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api) {
+            const res = await HeelsUpAuth.api('/api/coupons/validate', {
+                method: 'POST',
+                body: JSON.stringify({ code, subtotal })
+            });
+              couponDiscount = res.discount || 0;
+              successEl.style.display = 'flex';
+              msgEl.textContent = `Coupon "${code}" applied!`;
+              localStorage.setItem('heelsup_coupon', code);
+              updateSummary();
+              toast('Coupon applied successfully!', 'success');
+        } else {
+            // Fallback logic
+              if (code === 'HEELS10') {
+                  couponDiscount = Math.round(subtotal * 0.1);
+                  successEl.style.display = 'flex';
+                  msgEl.textContent = `Coupon "${code}" applied! 10% discount`;
+                  localStorage.setItem('heelsup_coupon', code);
+                  updateSummary();
+                  toast('Coupon applied successfully!', 'success');
+            } else {
+                throw new Error('Invalid coupon code');
+            }
+        }
+      } catch(e) {
+          successEl.style.display = 'none';
+          couponDiscount = 0;
+          localStorage.removeItem('heelsup_coupon');
+          updateSummary();
+          toast(e.message || 'Invalid coupon code', 'error');
+      }
+};
+
+    /* ── CART UPDATES ── */
+    document.addEventListener('cart:updated', () => {
+      if (typeof HeelsUpCart !== 'undefined') {
+        cart = HeelsUpCart.getCart();
+        renderCart();
+      }
+    });
+  </script>
+</body>
+
+</html>

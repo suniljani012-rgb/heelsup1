@@ -1,0 +1,2088 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Management â€” HeelsUp Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* â”€â”€ GLOBAL â”€â”€ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #8b6914;
+            --gold-light: #fef9f0;
+            --bg: #f1f5f9;
+            --sidebar: #0f172a;
+            --card: #fff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --muted: #64748b;
+            --success: #22c55e;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --info: #3b82f6;
+            --info-light: #dbeafe;
+            --admin-card-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        /* â”€â”€ LAYOUT â”€â”€ */
+        .wrap {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .content {
+            padding: 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media(max-width:768px) {
+            .content {
+                padding: 20px;
+            }
+        }
+
+        /* â”€â”€ SIDEBAR â”€â”€ */
+        .sidebar {
+            background: var(--sidebar);
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 62px;
+        }
+
+        .sidebar-logo {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: .95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .nav-label {
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: #475569;
+            padding: 13px 18px 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            color: #94a3b8;
+            font-size: .83rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: #1e293b;
+            color: var(--gold);
+            border-left-color: var(--gold);
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: .83rem;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--gold);
+            color: #0f172a;
+            font-size: .6rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 20px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #64748b;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .05);
+            color: #94a3b8;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: all .2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 240px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* â”€â”€ TOPBAR â”€â”€ */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: #64748b;
+            display: none;
+        }
+
+        .btn-menu:hover {
+            background: #f1f5f9;
+        }
+
+        @media(max-width:900px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* â”€â”€ BUTTONS â”€â”€ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: all .2s;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: .76rem;
+            border-radius: 7px;
+        }
+
+        .btn-danger {
+            background: var(--danger-light);
+            color: #b91c1c;
+            border: 1.5px solid #fecaca;
+        }
+
+        .btn-danger:hover {
+            background: #fecaca;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            transition: all .2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-edit {
+            background: #f0f9ff;
+            color: #0284c7;
+        }
+
+        .btn-edit:hover {
+            background: #0284c7;
+            color: #fff;
+        }
+
+        .btn-del {
+            background: var(--danger-light);
+            color: #dc2626;
+        }
+
+        .btn-del:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .btn-warn {
+            background: var(--warning-light);
+            color: #92400e;
+        }
+
+        .btn-warn:hover {
+            background: #fde68a;
+        }
+
+        /* â”€â”€ PAGE HEADER â”€â”€ */
+        .admin-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .admin-page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .admin-page-header p {
+            font-size: .9rem;
+            color: var(--muted);
+        }
+
+        /* â”€â”€ STATS GRID â”€â”€ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media(max-width:1100px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: var(--admin-card-radius);
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: transform .2s, box-shadow .2s;
+            border: 1px solid var(--border);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .icon-gold {
+            background: rgba(201, 169, 110, .12);
+            color: var(--gold);
+        }
+
+        .icon-blue {
+            background: rgba(59, 130, 246, .1);
+            color: var(--info);
+        }
+
+        .icon-green {
+            background: rgba(34, 197, 94, .1);
+            color: var(--success);
+        }
+
+        .icon-rose {
+            background: rgba(239, 68, 68, .1);
+            color: var(--danger);
+        }
+
+        .icon-purple {
+            background: rgba(139, 92, 246, .1);
+            color: #7c3aed;
+        }
+
+        .stat-label {
+            font-size: .7rem;
+            color: #94a3b8;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .stat-sub {
+            font-size: .7rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* â”€â”€ HERO BANNER â”€â”€ */
+        .welcome-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 14px;
+            padding: 28px 32px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -40px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(201, 169, 110, .15) 0%, transparent 70%);
+        }
+
+        .welcome-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .welcome-text p {
+            font-size: .85rem;
+            color: #94a3b8;
+        }
+
+        .welcome-actions {
+            display: flex;
+            gap: 10px;
+            z-index: 1;
+        }
+
+        /* â”€â”€ CARD â”€â”€ */
+        .card {
+            background: #fff;
+            border-radius: var(--admin-card-radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* â”€â”€ FILTER BAR â”€â”€ */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            background: #fafbfc;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: .8rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 9px 10px 9px 34px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .83rem;
+            transition: all .2s;
+            background: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, .1);
+        }
+
+        .filter-select {
+            padding: 9px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: .83rem;
+            background: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        /* â”€â”€ TABLE â”€â”€ */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .83rem;
+            min-width: 700px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border-bottom: 2px solid #f1f5f9;
+            background: #fafbfc;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f8fafc;
+            transition: background .15s;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody td {
+            padding: 14px 16px;
+            vertical-align: middle;
+        }
+
+        .tbl-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: .87rem;
+        }
+
+        .tbl-sub {
+            font-size: .73rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        .act-cell {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .empty-state p {
+            font-size: .9rem;
+        }
+
+        /* â”€â”€ STAFF AVATAR â”€â”€ */
+        .staff-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .85rem;
+            flex-shrink: 0;
+        }
+
+        .staff-avatar.invite {
+            background: #f1f5f9;
+            color: #94a3b8;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .staff-avatar.admin-role {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+
+        .staff-avatar.editor-role {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .staff-avatar.support-role {
+            background: linear-gradient(135deg, #22c55e, #15803d);
+        }
+
+        .staff-avatar.inventory-role {
+            background: linear-gradient(135deg, #f59e0b, #b45309);
+        }
+
+        /* â”€â”€ BADGES â”€â”€ */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .badge-active {
+            background: var(--success-light);
+            color: #15803d;
+        }
+
+        .badge-inactive {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .badge-invite {
+            background: var(--warning-light);
+            color: #92400e;
+        }
+
+        .badge-suspended {
+            background: var(--danger-light);
+            color: #b91c1c;
+        }
+
+        .badge-tfa-on {
+            background: var(--success-light);
+            color: #15803d;
+        }
+
+        .badge-tfa-off {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        /* Role Badges */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: .72rem;
+            font-weight: 700;
+        }
+
+        .role-super-admin {
+            background: rgba(201, 169, 110, .15);
+            color: var(--gold-dark);
+            border: 1px solid rgba(201, 169, 110, .3);
+        }
+
+        .role-admin {
+            background: rgba(15, 23, 42, .08);
+            color: #1e293b;
+            border: 1px solid rgba(15, 23, 42, .15);
+        }
+
+        .role-editor {
+            background: var(--info-light);
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .role-support {
+            background: var(--success-light);
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .role-inventory {
+            background: var(--warning-light);
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        /* â”€â”€ PAGINATION â”€â”€ */
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 24px;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .pg-btn {
+            padding: 6px 13px;
+            border-radius: 7px;
+            border: 1.5px solid var(--border);
+            font-size: .79rem;
+            color: #64748b;
+            background: #fff;
+            font-family: 'Inter', sans-serif;
+            transition: all .2s;
+        }
+
+        .pg-btn:hover:not(:disabled) {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .pg-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        /* â”€â”€ MODALS â”€â”€ */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-backdrop.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 18px;
+            padding: 28px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .25);
+            animation: modalIn .3s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .modal-close:hover {
+            background: var(--danger-light);
+            color: #dc2626;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media(max-width:500px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-field.full {
+            grid-column: 1/-1;
+        }
+
+        .form-label {
+            font-size: .72rem;
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .form-input,
+        .form-select {
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 9px;
+            font-size: .87rem;
+            transition: all .2s;
+            background: #f8fafc;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201, 169, 110, .1);
+        }
+
+        .form-hint {
+            font-size: .73rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Permissions checklist */
+        .perms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .perm-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .perm-item:hover {
+            border-color: var(--gold);
+        }
+
+        .perm-item input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--gold);
+        }
+
+        .perm-item label {
+            font-size: .8rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .perm-item.checked {
+            border-color: var(--gold);
+            background: rgba(201, 169, 110, .06);
+        }
+
+        /* Toggle */
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #cbd5e1;
+            border-radius: 34px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: '';
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s;
+        }
+
+        input:checked+.toggle-slider {
+            background: var(--gold);
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Confirm modal */
+        .confirm-modal {
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .confirm-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .confirm-icon.danger {
+            color: var(--danger);
+        }
+
+        .confirm-icon.warning {
+            color: var(--warning);
+        }
+
+        .confirm-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .confirm-msg {
+            font-size: .9rem;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* â”€â”€ TOAST â”€â”€ */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .83rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 240px;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--info);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* â”€â”€ LOADING â”€â”€ */
+        .loading-spinner {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+            font-size: .87rem;
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* â”€â”€ MOBILE OVERLAY â”€â”€ */
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 998;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="wrap">
+        <!-- â”€â”€ SIDEBAR â”€â”€ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">H</div>
+                <div>
+                    <div style="font-size:.87rem;font-weight:700;color:#f1f5f9">HeelsUp</div>
+                    <div style="font-size:.62rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em">Admin Panel
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">Main</div>
+                <a href="admin.html" class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-label">Catalogue</div>
+                <a href="admin-products.html" class="nav-item"><i class="fa-solid fa-box"></i> Products</a>
+                <a href="admin-categories.html" class="nav-item"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a href="admin-collections.html" class="nav-item"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a href="admin-inventory.html" class="nav-item"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-label">Sales & Customers</div>
+                <a href="admin-orders.html" class="nav-item">
+                    <i class="fa-solid fa-bag-shopping"></i> Orders
+                    <span class="nav-badge" id="ordersBadge" style="display:none">0</span>
+                </a>
+                <a href="admin-customers.html" class="nav-item"><i class="fa-solid fa-users"></i> Customers</a>
+                <a href="admin-coupons.html" class="nav-item"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a href="admin-reviews.html" class="nav-item"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a href="admin-orders.html?tab=exchange" class="nav-item"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a href="admin-pos.html" class="nav-item"><i class="fa-solid fa-cash-register"></i> POS / Offline
+                    Sales</a>
+
+                <div class="nav-label">Marketing & Content</div>
+                <a href="admin-banners.html" class="nav-item"><i class="fa-solid fa-image"></i> Banners</a>
+                <a href="admin-blog.html" class="nav-item"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a href="admin-pages.html" class="nav-item"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a href="admin-notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+
+                <div class="nav-label">Reports</div>
+                <a href="admin-reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="admin-analytics.html" class="nav-item"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+                <div class="nav-label">System</div>
+                <a href="admin-shipping.html" class="nav-item"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a href="admin-taxes.html" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a href="admin-staff.html" class="nav-item active"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a href="admin-settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="s-avatar" id="s-avatar">A</div>
+                    <div>
+                        <div class="s-name" id="s-name">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </aside>
+
+        <div class="main">
+            <!-- â”€â”€ TOPBAR â”€â”€ -->
+            <div class="topbar">
+                <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Staff Management</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')">
+                        <i class="fa-solid fa-store"></i> View Store
+                    </button>
+                </div>
+            </div>
+
+            <div class="content">
+
+                <!-- â”€â”€ PAGE HEADER â”€â”€ -->
+                <div class="admin-page-header">
+                    <div>
+                        <h2>Team Management</h2>
+                        <p>Manage staff accounts, assign roles, control permissions, and track access.</p>
+                    </div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="btn btn-outline" onclick="loadAll()">
+                            <i class="fa-solid fa-rotate-right"></i> Refresh
+                        </button>
+                        <button class="btn btn-primary" onclick="openAddModal()">
+                            <i class="fa-solid fa-user-plus"></i> Add Staff Member
+                        </button>
+                    </div>
+                </div>
+
+                <!-- â”€â”€ STATS â”€â”€ -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-gold"><i class="fa-solid fa-users-gear"></i></div>
+                        <div>
+                            <div class="stat-label">Total Staff</div>
+                            <div class="stat-value" id="statTotal">â€”</div>
+                            <div class="stat-sub">All team members</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                        <div>
+                            <div class="stat-label">Active</div>
+                            <div class="stat-value" id="statActive">â€”</div>
+                            <div class="stat-sub">Currently enabled</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-envelope-open-text"></i></div>
+                        <div>
+                            <div class="stat-label">Invite Pending</div>
+                            <div class="stat-value" id="statInvite">â€”</div>
+                            <div class="stat-sub">Awaiting acceptance</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-rose"><i class="fa-solid fa-ban"></i></div>
+                        <div>
+                            <div class="stat-label">Suspended</div>
+                            <div class="stat-value" id="statSuspended">â€”</div>
+                            <div class="stat-sub">Access revoked</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- â”€â”€ STAFF TABLE CARD â”€â”€ -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fa-solid fa-users-gear" style="color:var(--gold)"></i> All
+                            Staff Members</div>
+                        <div style="font-size:.82rem;color:var(--muted)" id="staffCountLabel">Loading...</div>
+                    </div>
+
+                    <!-- Filter Bar -->
+                    <div class="filter-bar">
+                        <div class="search-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" class="search-input" id="searchInput"
+                                placeholder="Search by name or email..." oninput="filterStaff()">
+                        </div>
+                        <select class="filter-select" id="roleFilter" onchange="filterStaff()">
+                            <option value="">All Roles</option>
+                            <option value="super_admin">Super Admin</option>
+                            <option value="admin">Admin</option>
+                            <option value="editor">Editor</option>
+                            <option value="support">Support</option>
+                            <option value="inventory">Inventory</option>
+                        </select>
+                        <select class="filter-select" id="statusFilter" onchange="filterStaff()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="invite_sent">Invite Sent</option>
+                            <option value="suspended">Suspended</option>
+                        </select>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Staff Member</th>
+                                    <th>Role / Access</th>
+                                    <th>2FA Status</th>
+                                    <th>Last Login</th>
+                                    <th>Account Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Loading team...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <span id="paginationInfo"></span>
+                        <div style="display:flex;gap:8px">
+                            <button class="pg-btn" id="prevBtn" onclick="changePage(-1)" disabled>â€¹ Prev</button>
+                            <button class="pg-btn" id="nextBtn" onclick="changePage(1)" disabled>Next â€º</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /content -->
+        </div><!-- /main -->
+    </div><!-- /wrap -->
+
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     ADD / EDIT STAFF MODAL
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div class="modal-backdrop" id="staffModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="staffModalTitle"><i class="fa-solid fa-user-plus"
+                        style="color:var(--gold)"></i> Add Staff Member</div>
+                <button class="modal-close" onclick="closeStaffModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="staffForm" onsubmit="saveStaff(event)">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label class="form-label">First Name</label>
+                        <input name="first_name" type="text" class="form-input" placeholder="Priya" required>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-label">Last Name</label>
+                        <input name="last_name" type="text" class="form-input" placeholder="Sharma">
+                    </div>
+                    <div class="form-field full">
+                        <label class="form-label">Email Address</label>
+                        <input name="email" type="email" class="form-input" placeholder="priya@heelsup.in" required>
+                        <div class="form-hint">An invitation email will be sent to this address.</div>
+                    </div>
+                    <div class="form-field full">
+                        <label class="form-label">Role / Access Level</label>
+                        <select name="role" class="form-select" required
+                            onchange="updatePermissionsFromRole(this.value)">
+                            <option value="">â€” Select Role â€”</option>
+                            <option value="admin">Admin (Full Access)</option>
+                            <option value="editor">Editor (Catalogue & Content)</option>
+                            <option value="support">Support (Orders & Customers)</option>
+                            <option value="inventory">Inventory Manager</option>
+                        </select>
+                    </div>
+
+                    <!-- Permissions Checklist -->
+                    <div class="form-field full">
+                        <label class="form-label">Module Permissions</label>
+                        <div class="perms-grid" id="permsGrid">
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_orders" value="orders"> <label>Orders & Returns</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_products" value="products"> <label>Products & Inventory</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_customers" value="customers"> <label>Customers</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_marketing" value="marketing"> <label>Coupons & Banners</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_content" value="content"> <label>Blog & Pages</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_reports" value="reports"> <label>Reports & Analytics</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_shipping" value="shipping"> <label>Shipping & Taxes</label></label>
+                            <label class="perm-item" onclick="togglePerm(this)"><input type="checkbox"
+                                    name="perm_settings" value="settings"> <label>Settings & Staff</label></label>
+                        </div>
+                    </div>
+
+                    <div class="form-field full">
+                        <label class="form-label">Notes (Internal)</label>
+                        <input name="notes" type="text" class="form-input"
+                            placeholder="e.g. Part-time, handles returns only">
+                    </div>
+
+                    <div class="form-field full" style="margin-top:8px">
+                        <div
+                            style="display:flex;align-items:center;gap:12px;padding:12px;background:#f8fafc;border-radius:8px;border:1.5px solid var(--border);">
+                            <label class="toggle"><input type="checkbox" id="chkStaffActive" name="is_active"
+                                    checked><span class="toggle-slider"></span></label>
+                            <div>
+                                <div style="font-size:.87rem;font-weight:600;color:var(--text)">Account Active</div>
+                                <div style="font-size:.73rem;color:var(--muted)">Inactive accounts cannot log in.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeStaffModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveStaffBtn"><i
+                            class="fa-solid fa-floppy-disk"></i> Save Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     CONFIRM ACTION MODAL
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div class="modal-backdrop" id="confirmModal">
+        <div class="modal confirm-modal">
+            <div class="confirm-icon" id="confirmIcon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="confirm-title" id="confirmTitle">Are you sure?</div>
+            <div class="confirm-msg" id="confirmMsg">This action cannot be undone.</div>
+            <div class="confirm-actions">
+                <button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirmActionBtn" onclick="executeConfirmAction()">Yes,
+                    Proceed</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     PERMISSIONS DETAIL MODAL
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <div class="modal-backdrop" id="permsModal">
+        <div class="modal" style="max-width:480px;">
+            <div class="modal-header">
+                <div class="modal-title" id="permsModalTitle"><i class="fa-solid fa-shield-halved"
+                        style="color:var(--gold)"></i> Permissions</div>
+                <button class="modal-close" onclick="closePermsModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="permsModalBody" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closePermsModal()">Close</button>
+                <button class="btn btn-primary" id="savePermsBtn" onclick="savePermissions()"><i
+                        class="fa-solid fa-floppy-disk"></i> Update Permissions</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+  <script src="admin-enterprise.js"></script>
+    <script>
+        // â”€â”€ AUTH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        const currentUser = HeelsUpAuth.getUser();
+        if (!currentUser || currentUser.role !== 'admin') {
+            window.location = 'login.html?redirect=admin-staff.html';
+        }
+        const cName = (currentUser?.firstName || currentUser?.first_name || 'Admin');
+        document.getElementById('s-avatar').textContent = cName.charAt(0).toUpperCase();
+        document.getElementById('s-name').textContent = cName;
+
+        // â”€â”€ STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        let allStaff = [];
+        let filteredStaff = [];
+        let editingStaffId = null;
+        let editingPermsId = null;
+        let confirmCallback = null;
+        let currentPage = 1;
+        const PAGE_SIZE = 15;
+
+        // â”€â”€ UI HELPERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            const o = document.getElementById('mobOverlay');
+            s.classList.toggle('open');
+            o.style.display = s.classList.contains('open') ? 'block' : 'none';
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('mobOverlay').style.display = 'none';
+        }
+        function doLogout() { HeelsUpAuth.clearSession(); window.location = 'login.html'; }
+
+        function showToast(msg, type = 'success') {
+            const c = document.getElementById('toastWrap');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' };
+            t.innerHTML = `<i class="fa-solid ${icons[type] || 'fa-circle-info'}"></i><span>${msg}</span>`;
+            c.appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0'; t.style.transform = 'translateX(20px)';
+                t.style.transition = 'all .3s ease';
+                setTimeout(() => t.remove(), 300);
+            }, 4000);
+        }
+
+        function esc(s) {
+            return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function fmtDate(d) {
+            if (!d) return 'â€”';
+            const date = new Date(d);
+            const now = new Date();
+            const diff = now - date;
+            if (diff < 60000) return 'Just now';
+            if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
+            if (diff < 172800000) return 'Yesterday';
+            return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        // â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        async function loadAll() {
+            await loadStaff();
+            loadOrdersBadge();
+        }
+
+        async function loadOrdersBadge() {
+            try {
+                const r = await HeelsUpAuth.api('/api/admin/orders');
+                const pend = (r.orders || []).filter(o => o.order_status === 'placed').length;
+                if (pend > 0) {
+                    const b = document.getElementById('ordersBadge');
+                    b.textContent = pend; b.style.display = 'inline-block';
+                }
+            } catch (e) { }
+        }
+
+        // â”€â”€ LOAD STAFF â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        async function loadStaff() {
+            document.getElementById('staffTableBody').innerHTML = '<tr><td colspan="6"><div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Loading team...</div></td></tr>';
+
+            try {
+                const res = await HeelsUpAuth.api('/api/admin/staff');
+                allStaff = res.staff || res || [];
+                updateStats();
+                filterStaff();
+            } catch (e) {
+                document.getElementById('staffTableBody').innerHTML = `
+         <tr><td colspan="6">
+            <div class="empty-state" style="background:#fff8f8; border-radius:8px;">
+               <i class="fa-solid fa-triangle-exclamation" style="color:var(--danger)"></i>
+               <p style="color:var(--danger)">Failed to fetch staff data. Check API connection.</p>
+               <button class="btn btn-sm btn-outline" style="margin-top:12px" onclick="loadStaff()"><i class="fa-solid fa-rotate-right"></i> Retry</button>
+            </div>
+         </td></tr>`;
+                showToast('Failed to load staff data.', 'error');
+            }
+        }
+
+        // â”€â”€ STATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function updateStats() {
+            const total = allStaff.length;
+            const active = allStaff.filter(s => s.status === 'active' || s.is_active === 1 || s.is_active === true).length;
+            const invite = allStaff.filter(s => s.status === 'invite_sent').length;
+            const susp = allStaff.filter(s => s.status === 'suspended').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statActive').textContent = active;
+            document.getElementById('statInvite').textContent = invite;
+            document.getElementById('statSuspended').textContent = susp;
+        }
+
+        // â”€â”€ FILTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function filterStaff() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const role = document.getElementById('roleFilter').value;
+            const status = document.getElementById('statusFilter').value;
+
+            filteredStaff = allStaff.filter(s => {
+                const name = ((s.first_name || '') + ' ' + (s.last_name || '') + ' ' + (s.email || '')).toLowerCase();
+                if (q && !name.includes(q)) return false;
+                if (role && s.role !== role) return false;
+                if (status) {
+                    const st = getStatus(s);
+                    if (st !== status) return false;
+                }
+                return true;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        function getStatus(s) {
+            if (s.status) return s.status;
+            if (s.invite_pending || s.invite_sent) return 'invite_sent';
+            if (s.is_active === 0 || s.is_active === false || s.suspended) return 'suspended';
+            return 'active';
+        }
+
+        // â”€â”€ RENDER TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function renderTable() {
+            const tbody = document.getElementById('staffTableBody');
+            const total = filteredStaff.length;
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, total);
+            const pageData = filteredStaff.slice(start, end);
+
+            document.getElementById('paginationInfo').textContent = total
+                ? `Showing ${start + 1}â€“${end} of ${total} members`
+                : 'No members found';
+            document.getElementById('staffCountLabel').textContent = `${total} member${total !== 1 ? 's' : ''}`;
+            document.getElementById('prevBtn').disabled = currentPage <= 1;
+            document.getElementById('nextBtn').disabled = end >= total;
+
+            if (!pageData.length) {
+                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fa-solid fa-users-slash"></i><p>No staff members match your filter.</p></div></td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = pageData.map(s => {
+                const fullName = [s.first_name, s.last_name].filter(Boolean).join(' ') || 'Unnamed';
+                const initials = fullName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+                const status = getStatus(s);
+                const isCurrentUser = s.email === currentUser?.email;
+                const roleSafe = (s.role || 'editor').replace(/_/g, '-');
+
+                // Role badge config
+                const roleConfig = {
+                    super_admin: { cls: 'role-super-admin', icon: 'fa-shield-halved', label: 'Super Admin' },
+                    admin: { cls: 'role-admin', icon: 'fa-user-shield', label: 'Admin' },
+                    editor: { cls: 'role-editor', icon: 'fa-pen-nib', label: 'Editor' },
+                    support: { cls: 'role-support', icon: 'fa-headset', label: 'Support' },
+                    inventory: { cls: 'role-inventory', icon: 'fa-warehouse', label: 'Inventory' },
+                };
+                const rc = roleConfig[s.role] || { cls: 'role-editor', icon: 'fa-user', label: s.role || 'Staff' };
+
+                // Status badge
+                const statusBadges = {
+                    active: '<span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Active</span>',
+                    invite_sent: '<span class="badge badge-invite"><i class="fa-solid fa-envelope"></i> Invite Sent</span>',
+                    suspended: '<span class="badge badge-suspended"><i class="fa-solid fa-ban"></i> Suspended</span>',
+                };
+                const statusBadge = statusBadges[status] || statusBadges.active;
+
+                // TFA badge
+                const tfaBadge = s.tfa_enabled
+                    ? '<span class="badge badge-tfa-on"><i class="fa-solid fa-shield-check"></i> Enabled</span>'
+                    : '<span class="badge badge-tfa-off"><i class="fa-solid fa-shield"></i> Disabled</span>';
+
+                // Avatar role class
+                const avatarClass = { super_admin: 'admin-role', admin: 'admin-role', editor: 'editor-role', support: 'support-role', inventory: 'inventory-role' }[s.role] || '';
+                const inviteClass = status === 'invite_sent' ? 'invite' : avatarClass;
+
+                // Actions
+                let actions = `<button class="btn-icon btn-edit" onclick='editStaff(${JSON.stringify(s)})' title="Edit"><i class="fa-solid fa-pen"></i></button>`;
+                actions += `<button class="btn-icon" style="background:#f3e8ff;color:#7c3aed;" onclick='viewPermissions(${JSON.stringify(s)})' title="Permissions"><i class="fa-solid fa-shield-halved"></i></button>`;
+
+                if (!isCurrentUser) {
+                    if (status === 'active') {
+                        actions += `<button class="btn-icon btn-warn" onclick="confirmSuspend(${s.id},'${esc(fullName)}')" title="Suspend Access"><i class="fa-solid fa-ban"></i></button>`;
+                    } else if (status === 'suspended') {
+                        actions += `<button class="btn-icon btn-edit" onclick="confirmReactivate(${s.id},'${esc(fullName)}')" title="Reactivate"><i class="fa-solid fa-circle-play"></i></button>`;
+                    } else if (status === 'invite_sent') {
+                        actions += `<button class="btn-icon btn-edit" onclick="resendInvite(${s.id},'${esc(s.email)}')" title="Resend Invite"><i class="fa-solid fa-paper-plane"></i></button>`;
+                    }
+                    actions += `<button class="btn-icon btn-del" onclick="confirmDelete(${s.id},'${esc(fullName)}')" title="Remove Member"><i class="fa-solid fa-trash"></i></button>`;
+                }
+
+                return `
+         <tr>
+            <td>
+               <div style="display:flex;align-items:center;gap:12px">
+                  <div class="staff-avatar ${inviteClass}" style="${status === 'invite_sent' ? '' : ''}">
+                     ${status === 'invite_sent' ? '<i class="fa-regular fa-envelope"></i>' : initials}
+                  </div>
+                  <div>
+                     <div class="tbl-name">${esc(fullName)}${isCurrentUser ? ' <span style="font-size:.68rem;background:rgba(201,169,110,.15);color:var(--gold-dark);padding:2px 6px;border-radius:4px;font-weight:700;">YOU</span>' : ''}</div>
+                     <div class="tbl-sub">${esc(s.email || 'â€”')}</div>
+                  </div>
+               </div>
+            </td>
+            <td><span class="role-badge ${rc.cls}"><i class="fa-solid ${rc.icon}"></i> ${rc.label}</span></td>
+            <td>${tfaBadge}</td>
+            <td>
+               <div class="tbl-name">${fmtDate(s.last_login_at || s.last_login)}</div>
+               ${s.last_login_ip ? `<div class="tbl-sub">${esc(s.last_login_ip)}</div>` : ''}
+            </td>
+            <td>${statusBadge}</td>
+            <td><div class="act-cell">${actions}</div></td>
+         </tr>
+      `;
+            }).join('');
+        }
+
+        function changePage(dir) {
+            currentPage += dir;
+            renderTable();
+        }
+
+        // â”€â”€ ADD / EDIT STAFF â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function openAddModal() {
+            editingStaffId = null;
+            document.getElementById('staffForm').reset();
+            document.getElementById('staffModalTitle').innerHTML = '<i class="fa-solid fa-user-plus" style="color:var(--gold)"></i> Add Staff Member';
+            document.getElementById('chkStaffActive').checked = true;
+            document.getElementById('saveStaffBtn').innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Invite';
+            clearPermChecks();
+            document.getElementById('staffModal').classList.add('show');
+        }
+
+        function editStaff(s) {
+            editingStaffId = s.id;
+            document.getElementById('staffModalTitle').innerHTML = '<i class="fa-solid fa-user-pen" style="color:var(--gold)"></i> Edit Staff Member';
+            document.getElementById('saveStaffBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Changes';
+
+            const f = document.getElementById('staffForm');
+            f.first_name.value = s.first_name || '';
+            f.last_name.value = s.last_name || '';
+            f.email.value = s.email || '';
+            f.role.value = s.role || '';
+            f.notes.value = s.notes || '';
+            document.getElementById('chkStaffActive').checked = s.is_active !== 0 && s.is_active !== false;
+
+            // Load permissions
+            const perms = s.permissions || [];
+            clearPermChecks();
+            document.querySelectorAll('#permsGrid input[type=checkbox]').forEach(cb => {
+                if (perms.includes(cb.value)) { cb.checked = true; cb.closest('.perm-item').classList.add('checked'); }
+            });
+
+            document.getElementById('staffModal').classList.add('show');
+        }
+
+        function closeStaffModal() { document.getElementById('staffModal').classList.remove('show'); }
+
+        function clearPermChecks() {
+            document.querySelectorAll('#permsGrid input[type=checkbox]').forEach(cb => {
+                cb.checked = false; cb.closest('.perm-item').classList.remove('checked');
+            });
+        }
+
+        function togglePerm(el) {
+            // Called on click of perm-item; toggle checked class
+            setTimeout(() => {
+                const cb = el.querySelector('input[type=checkbox]');
+                if (cb && cb.checked) el.classList.add('checked');
+                else el.classList.remove('checked');
+            }, 0);
+        }
+
+        function updatePermissionsFromRole(role) {
+            const presets = {
+                admin: ['orders', 'products', 'customers', 'marketing', 'content', 'reports', 'shipping', 'settings'],
+                editor: ['products', 'content', 'marketing'],
+                support: ['orders', 'customers'],
+                inventory: ['products'],
+            };
+            const perms = presets[role] || [];
+            document.querySelectorAll('#permsGrid input[type=checkbox]').forEach(cb => {
+                cb.checked = perms.includes(cb.value);
+                if (cb.checked) cb.closest('.perm-item').classList.add('checked');
+                else cb.closest('.perm-item').classList.remove('checked');
+            });
+        }
+
+        async function saveStaff(e) {
+            e.preventDefault();
+            const f = e.target;
+            const btn = document.getElementById('saveStaffBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            // Collect permissions
+            const permissions = [];
+            f.querySelectorAll('#permsGrid input[type=checkbox]:checked').forEach(cb => permissions.push(cb.value));
+
+            const data = {
+                first_name: f.first_name.value.trim(),
+                last_name: f.last_name.value.trim(),
+                email: f.email.value.trim(),
+                role: f.role.value,
+                notes: f.notes.value.trim(),
+                is_active: f.is_active.checked ? 1 : 0,
+                permissions
+            };
+
+            try {
+                if (editingStaffId) {
+                    await HeelsUpAuth.api(`/api/admin/staff/${editingStaffId}`, { method: 'PUT', body: JSON.stringify(data) });
+                    showToast('Staff member updated successfully.');
+                } else {
+                    await HeelsUpAuth.api('/api/admin/staff', { method: 'POST', body: JSON.stringify(data) });
+                    showToast('Invitation sent! Member will receive an email shortly.', 'info');
+                }
+                closeStaffModal();
+                loadStaff();
+            } catch (err) {
+                showToast(err.message || 'Failed to save. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = editingStaffId
+                    ? '<i class="fa-solid fa-floppy-disk"></i> Save Changes'
+                    : '<i class="fa-solid fa-paper-plane"></i> Send Invite';
+            }
+        }
+
+        // â”€â”€ PERMISSIONS MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function viewPermissions(s) {
+            editingPermsId = s.id;
+            const fullName = [s.first_name, s.last_name].filter(Boolean).join(' ');
+            document.getElementById('permsModalTitle').innerHTML = `<i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> ${esc(fullName)}'s Permissions`;
+
+            const allPerms = [
+                { key: 'orders', label: 'Orders & Returns', icon: 'fa-bag-shopping' },
+                { key: 'products', label: 'Products & Inventory', icon: 'fa-box' },
+                { key: 'customers', label: 'Customers', icon: 'fa-users' },
+                { key: 'marketing', label: 'Coupons & Banners', icon: 'fa-bullhorn' },
+                { key: 'content', label: 'Blog & Pages', icon: 'fa-newspaper' },
+                { key: 'reports', label: 'Reports & Analytics', icon: 'fa-chart-bar' },
+                { key: 'shipping', label: 'Shipping & Taxes', icon: 'fa-truck-fast' },
+                { key: 'settings', label: 'Settings & Staff', icon: 'fa-gear' },
+            ];
+            const currentPerms = s.permissions || [];
+
+            document.getElementById('permsModalBody').innerHTML = allPerms.map(p => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f8fafc;border:1.5px solid var(--border);border-radius:9px;">
+         <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:34px;height:34px;border-radius:8px;background:rgba(201,169,110,.12);color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:.85rem;">
+               <i class="fa-solid ${p.icon}"></i>
+            </div>
+            <span style="font-size:.87rem;font-weight:600;color:var(--text)">${p.label}</span>
+         </div>
+         <label class="toggle">
+            <input type="checkbox" id="perm-modal-${p.key}" ${currentPerms.includes(p.key) ? 'checked' : ''}>
+            <span class="toggle-slider"></span>
+         </label>
+      </div>
+   `).join('');
+
+            document.getElementById('permsModal').classList.add('show');
+        }
+
+        function closePermsModal() { document.getElementById('permsModal').classList.remove('show'); }
+
+        async function savePermissions() {
+            const btn = document.getElementById('savePermsBtn');
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            const permissions = [];
+            ['orders', 'products', 'customers', 'marketing', 'content', 'reports', 'shipping', 'settings'].forEach(k => {
+                const el = document.getElementById(`perm-modal-${k}`);
+                if (el && el.checked) permissions.push(k);
+            });
+
+            try {
+                await HeelsUpAuth.api(`/api/admin/staff/${editingPermsId}/permissions`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ permissions })
+                });
+                showToast('Permissions updated successfully.');
+                closePermsModal();
+                loadStaff();
+            } catch (e) {
+                showToast(e.message || 'Failed to update permissions.', 'error');
+            } finally {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Update Permissions';
+            }
+        }
+
+        // â”€â”€ STAFF ACTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        async function resendInvite(id, email) {
+            try {
+                await HeelsUpAuth.api(`/api/admin/staff/${id}/resend-invite`, { method: 'POST' });
+                showToast(`Invitation resent to ${email}.`, 'info');
+            } catch (e) {
+                showToast('Failed to resend invitation.', 'error');
+            }
+        }
+
+        function confirmSuspend(id, name) {
+            showConfirmModal(
+                'danger',
+                'Suspend Access?',
+                `This will immediately revoke ${name}'s login access. They will be unable to log into the admin panel until reactivated.`,
+                'Suspend Account',
+                async () => {
+                    try {
+                        await HeelsUpAuth.api(`/api/admin/staff/${id}/suspend`, { method: 'PATCH', body: JSON.stringify({ status: 'suspended' }) });
+                        showToast(`${name}'s access has been suspended.`, 'warning');
+                        loadStaff();
+                    } catch (e) { showToast('Action failed.', 'error'); }
+                }
+            );
+        }
+
+        function confirmReactivate(id, name) {
+            showConfirmModal(
+                'info',
+                'Reactivate Account?',
+                `This will restore ${name}'s access to the admin panel with their existing role and permissions.`,
+                'Yes, Reactivate',
+                async () => {
+                    try {
+                        await HeelsUpAuth.api(`/api/admin/staff/${id}/activate`, { method: 'PATCH', body: JSON.stringify({ status: 'active' }) });
+                        showToast(`${name}'s account reactivated successfully.`, 'success');
+                        loadStaff();
+                    } catch (e) { showToast('Action failed.', 'error'); }
+                }
+            );
+        }
+
+        function confirmDelete(id, name) {
+            showConfirmModal(
+                'danger',
+                'Remove Staff Member?',
+                `DANGER: This permanently removes ${name} from the team. All their audit logs will be retained, but the account will be deleted. This cannot be undone.`,
+                'Delete Member',
+                async () => {
+                    try {
+                        await HeelsUpAuth.api(`/api/admin/staff/${id}`, { method: 'DELETE' });
+                        showToast(`${name} has been removed from the team.`, 'warning');
+                        loadStaff();
+                    } catch (e) { showToast('Deletion failed.', 'error'); }
+                }
+            );
+        }
+
+        // â”€â”€ CONFIRM MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function showConfirmModal(type, title, msg, btnLabel, callback) {
+            confirmCallback = callback;
+            const iconEl = document.getElementById('confirmIcon');
+            const btnEl = document.getElementById('confirmActionBtn');
+
+            iconEl.innerHTML = type === 'danger'
+                ? '<i class="fa-solid fa-triangle-exclamation"></i>'
+                : '<i class="fa-solid fa-circle-question"></i>';
+            iconEl.className = `confirm-icon ${type}`;
+
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMsg').textContent = msg;
+
+            btnEl.textContent = btnLabel;
+            btnEl.className = type === 'danger' ? 'btn btn-danger' : 'btn btn-primary';
+
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+            confirmCallback = null;
+        }
+
+        function executeConfirmAction() {
+            closeConfirmModal();
+            if (confirmCallback) confirmCallback();
+        }
+
+        // Close modals on backdrop click
+        ['staffModal', 'confirmModal', 'permsModal'].forEach(id => {
+            document.getElementById(id).addEventListener('click', function (e) {
+                if (e.target === this) this.classList.remove('show');
+            });
+        });
+
+        // â”€â”€ BOOT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        document.addEventListener('DOMContentLoaded', loadAll);
+    </script>
+</body>
+
+</html>

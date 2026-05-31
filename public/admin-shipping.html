@@ -1,0 +1,2630 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+   <title>Shipping & Logistics — HeelsUp Admin</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+   <style>
+      /* ═══ BRAND TOKENS ═══ */
+      :root {
+         --primary: #F29F67;
+         --primary-lt: #fcd5b5;
+         --primary-dk: #c97a3e;
+         --primary-glow: rgba(242, 159, 103, .20);
+         --navy: #1E1E2C;
+         --blue: #3B8FF3;
+         --teal: #34B1AA;
+         --yellow: #E0B50F;
+         --green: #22c55e;
+         --rose: #f43f5e;
+         --amber: #f59e0b;
+         --purple: #8b5cf6;
+         --indigo: #6366f1;
+
+         --sidebar-bg: #1E1E2C;
+         --sidebar-w: 256px;
+         --topbar-h: 60px;
+         --bg: #f2f4f8;
+         --surface: #ffffff;
+         --surface-2: #f7f8fc;
+         --border: #e4e8f0;
+         --text: #1E1E2C;
+         --text-2: #3a3a50;
+         --muted: #64748b;
+         --muted-lt: #94a3b8;
+
+         --font: 'Open Sans', Arial, Helvetica, sans-serif;
+         --font-mono: 'Courier New', Courier, monospace;
+
+         --r-sm: 6px;
+         --r-md: 10px;
+         --r-lg: 14px;
+         --r-xl: 20px;
+         --shadow-sm: 0 1px 3px rgba(0, 0, 0, .07), 0 1px 2px rgba(0, 0, 0, .04);
+         --shadow-md: 0 4px 16px rgba(0, 0, 0, .08), 0 2px 6px rgba(0, 0, 0, .04);
+         --shadow-lg: 0 12px 36px rgba(0, 0, 0, .12);
+         --shadow-brand: 0 8px 24px rgba(242, 159, 103, .28);
+         --ease: cubic-bezier(.4, 0, .2, 1);
+         --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+         --t: 200ms var(--ease);
+      }
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box
+      }
+
+      html {
+         -webkit-font-smoothing: antialiased;
+         text-rendering: optimizeLegibility
+      }
+
+      body {
+         font-family: var(--font);
+         background: var(--bg);
+         color: var(--text);
+         min-height: 100vh;
+         font-size: 14px;
+         line-height: 1.5
+      }
+
+      a {
+         text-decoration: none;
+         color: inherit
+      }
+
+      button {
+         cursor: pointer;
+         border: none;
+         background: none;
+         font-family: var(--font);
+         font-size: inherit
+      }
+
+      input,
+      select,
+      textarea {
+         font-family: var(--font)
+      }
+
+      /* ═══ LAYOUT ═══ */
+      .wrap {
+         display: grid;
+         grid-template-columns: var(--sidebar-w) 1fr;
+         min-height: 100vh
+      }
+
+      @media(max-width:900px) {
+         .wrap {
+            grid-template-columns: 1fr
+         }
+      }
+
+      /* ═══ SIDEBAR ═══ */
+      .sidebar {
+         background: var(--sidebar-bg);
+         color: #94a3b8;
+         display: flex;
+         flex-direction: column;
+         height: 100vh;
+         position: sticky;
+         top: 0;
+         overflow-y: auto;
+         overflow-x: hidden;
+         border-right: 1px solid rgba(255, 255, 255, .04)
+      }
+
+      .sidebar::-webkit-scrollbar {
+         width: 3px
+      }
+
+      .sidebar::-webkit-scrollbar-thumb {
+         background: rgba(255, 255, 255, .08);
+         border-radius: 2px
+      }
+
+      .sidebar-brand {
+         padding: 14px 18px;
+         border-bottom: 1px solid rgba(255, 255, 255, .06);
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         min-height: 60px
+      }
+
+      .sb-logo-wrap {
+         width: 38px;
+         height: 38px;
+         border-radius: 10px;
+         flex-shrink: 0;
+         overflow: hidden;
+         background: linear-gradient(135deg, var(--primary), var(--primary-dk));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         box-shadow: 0 4px 12px rgba(242, 159, 103, .28)
+      }
+
+      .sb-logo-wrap img {
+         width: 100%;
+         height: 100%;
+         object-fit: contain
+      }
+
+      .sb-logo-fallback {
+         font-size: 1.1rem;
+         font-weight: 800;
+         color: #fff;
+         display: none
+      }
+
+      .sb-brand-text {
+         font-size: .85rem;
+         font-weight: 700;
+         color: #f1f5f9
+      }
+
+      .sb-brand-sub {
+         font-size: .6rem;
+         color: #475569;
+         text-transform: uppercase;
+         letter-spacing: .14em;
+         margin-top: 1px
+      }
+
+      .sidebar-nav {
+         flex: 1;
+         padding: 8px 0
+      }
+
+      .nav-label {
+         font-size: .58rem;
+         font-weight: 700;
+         letter-spacing: .18em;
+         text-transform: uppercase;
+         color: #334155;
+         padding: 14px 16px 5px
+      }
+
+      .nav-item {
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         padding: 8px 16px;
+         color: #64748b;
+         font-size: .8rem;
+         font-weight: 500;
+         border-left: 2.5px solid transparent;
+         transition: var(--t);
+         text-decoration: none;
+         cursor: pointer
+      }
+
+      .nav-item:hover {
+         background: rgba(255, 255, 255, .04);
+         color: #cbd5e1
+      }
+
+      .nav-item.active {
+         background: rgba(242, 159, 103, .09);
+         color: var(--primary);
+         border-left-color: var(--primary)
+      }
+
+      .nav-item i {
+         width: 15px;
+         text-align: center;
+         font-size: .78rem;
+         flex-shrink: 0
+      }
+
+      .sidebar-footer {
+         padding: 12px;
+         border-top: 1px solid rgba(255, 255, 255, .05)
+      }
+
+      .sidebar-user {
+         display: flex;
+         align-items: center;
+         gap: 9px;
+         margin-bottom: 8px
+      }
+
+      .s-avatar {
+         width: 32px;
+         height: 32px;
+         border-radius: 50%;
+         flex-shrink: 0;
+         background: linear-gradient(135deg, var(--primary), var(--primary-dk));
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: #fff;
+         font-weight: 700;
+         font-size: .75rem
+      }
+
+      .s-name {
+         font-size: .78rem;
+         font-weight: 700;
+         color: #e2e8f0
+      }
+
+      .s-role {
+         font-size: .62rem;
+         color: #475569
+      }
+
+      .btn-logout {
+         width: 100%;
+         padding: 7px;
+         border-radius: var(--r-md);
+         background: rgba(255, 255, 255, .04);
+         color: #64748b;
+         font-size: .75rem;
+         display: flex;
+         align-items: center;
+         gap: 7px;
+         justify-content: center;
+         transition: var(--t)
+      }
+
+      .btn-logout:hover {
+         background: rgba(244, 63, 94, .12);
+         color: #f87171
+      }
+
+      @media(max-width:900px) {
+         .sidebar {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            bottom: 0;
+            z-index: 999;
+            transition: left .3s var(--ease);
+            width: var(--sidebar-w)
+         }
+
+         .sidebar.open {
+            left: 0
+         }
+      }
+
+      /* ═══ TOPBAR ═══ */
+      .topbar {
+         background: var(--surface);
+         border-bottom: 1px solid var(--border);
+         padding: 0 22px;
+         height: var(--topbar-h);
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         position: sticky;
+         top: 0;
+         z-index: 100;
+         box-shadow: var(--shadow-sm)
+      }
+
+      .topbar-title {
+         font-size: 1rem;
+         font-weight: 700;
+         color: var(--text)
+      }
+
+      .topbar-right {
+         margin-left: auto;
+         display: flex;
+         align-items: center;
+         gap: 8px
+      }
+
+      .btn-menu {
+         padding: 7px;
+         border-radius: var(--r-sm);
+         color: var(--muted);
+         display: none;
+         align-items: center;
+         justify-content: center
+      }
+
+      .btn-menu:hover {
+         background: var(--surface-2)
+      }
+
+      @media(max-width:900px) {
+         .btn-menu {
+            display: flex
+         }
+      }
+
+      /* ═══ MAIN ═══ */
+      .main {
+         min-height: 100vh;
+         display: flex;
+         flex-direction: column
+      }
+
+      .content {
+         padding: 22px 24px;
+         flex: 1
+      }
+
+      /* ═══ PAGE HEADER ═══ */
+      .page-header {
+         margin-bottom: 20px;
+         display: flex;
+         align-items: flex-end;
+         justify-content: space-between;
+         gap: 12px;
+         flex-wrap: wrap
+      }
+
+      .page-header h2 {
+         font-size: 1.4rem;
+         font-weight: 800;
+         color: var(--text);
+         margin-bottom: 3px;
+         letter-spacing: -.02em
+      }
+
+      .page-header p {
+         font-size: .8rem;
+         color: var(--muted)
+      }
+
+      /* ═══ MINI STATS ═══ */
+      .mini-stats {
+         display: grid;
+         grid-template-columns: repeat(5, 1fr);
+         gap: 12px;
+         margin-bottom: 18px
+      }
+
+      @media(max-width:1200px) {
+         .mini-stats {
+            grid-template-columns: repeat(3, 1fr)
+         }
+      }
+
+      @media(max-width:700px) {
+         .mini-stats {
+            grid-template-columns: repeat(2, 1fr)
+         }
+      }
+
+      .mini-card {
+         background: var(--surface);
+         border-radius: var(--r-lg);
+         padding: 14px 16px;
+         box-shadow: var(--shadow-sm);
+         border: 1px solid var(--border);
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         transition: transform .2s
+      }
+
+      .mini-card:hover {
+         transform: translateY(-2px);
+         box-shadow: var(--shadow-md)
+      }
+
+      .mini-icon {
+         width: 40px;
+         height: 40px;
+         border-radius: 10px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: .95rem;
+         flex-shrink: 0
+      }
+
+      .mi-orange {
+         background: rgba(242, 159, 103, .12);
+         color: var(--primary-dk)
+      }
+
+      .mi-blue {
+         background: rgba(59, 143, 243, .1);
+         color: var(--blue)
+      }
+
+      .mi-teal {
+         background: rgba(52, 177, 170, .1);
+         color: var(--teal)
+      }
+
+      .mi-green {
+         background: rgba(34, 197, 94, .1);
+         color: var(--green)
+      }
+
+      .mi-purple {
+         background: rgba(139, 92, 246, .1);
+         color: var(--purple)
+      }
+
+      .mini-val {
+         font-size: 1.3rem;
+         font-weight: 800;
+         color: var(--text);
+         line-height: 1
+      }
+
+      .mini-lbl {
+         font-size: .65rem;
+         text-transform: uppercase;
+         letter-spacing: .07em;
+         color: var(--muted-lt);
+         font-weight: 700;
+         margin-bottom: 2px
+      }
+
+      /* ═══ TAB NAV ═══ */
+      .tab-nav {
+         display: flex;
+         gap: 0;
+         border-bottom: 2px solid var(--border);
+         margin-bottom: 20px;
+         overflow-x: auto
+      }
+
+      .tab-btn {
+         padding: 10px 22px;
+         font-size: .82rem;
+         font-weight: 700;
+         color: var(--muted);
+         border-bottom: 2.5px solid transparent;
+         margin-bottom: -2px;
+         transition: var(--t);
+         background: none;
+         border-top: none;
+         border-left: none;
+         border-right: none;
+         display: flex;
+         align-items: center;
+         gap: 7px;
+         white-space: nowrap;
+         cursor: pointer
+      }
+
+      .tab-btn.active {
+         color: var(--primary);
+         border-bottom-color: var(--primary)
+      }
+
+      .tab-btn:hover:not(.active) {
+         color: var(--text)
+      }
+
+      .tab-pane {
+         display: none
+      }
+
+      .tab-pane.active {
+         display: block;
+         animation: fadeUp .25s var(--ease)
+      }
+
+      @keyframes fadeUp {
+         from {
+            opacity: 0;
+            transform: translateY(5px)
+         }
+
+         to {
+            opacity: 1;
+            transform: translateY(0)
+         }
+      }
+
+      /* ═══ CARD ═══ */
+      .card {
+         background: var(--surface);
+         border-radius: var(--r-lg);
+         padding: 18px;
+         box-shadow: var(--shadow-sm);
+         border: 1px solid var(--border);
+         margin-bottom: 16px
+      }
+
+      .card-header {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         margin-bottom: 14px;
+         gap: 10px;
+         flex-wrap: wrap
+      }
+
+      .card-title {
+         font-size: .88rem;
+         font-weight: 700;
+         color: var(--text);
+         display: flex;
+         align-items: center;
+         gap: 7px
+      }
+
+      .card-title i {
+         color: var(--primary);
+         font-size: .82rem
+      }
+
+      /* ═══ GRID LAYOUTS ═══ */
+      .zone-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+         gap: 14px
+      }
+
+      .courier-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+         gap: 14px
+      }
+
+      /* ═══ ZONE CARD ═══ */
+      .zone-card {
+         background: var(--surface);
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-lg);
+         padding: 16px;
+         transition: all .2s
+      }
+
+      .zone-card:hover {
+         border-color: var(--primary);
+         box-shadow: var(--shadow-md)
+      }
+
+      .zone-header {
+         display: flex;
+         align-items: flex-start;
+         justify-content: space-between;
+         margin-bottom: 10px
+      }
+
+      .zone-name {
+         font-size: .9rem;
+         font-weight: 700;
+         color: var(--text)
+      }
+
+      .zone-meta {
+         font-size: .72rem;
+         color: var(--muted);
+         margin-top: 2px
+      }
+
+      .zone-states {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 4px;
+         margin: 10px 0
+      }
+
+      .state-tag {
+         background: var(--surface-2);
+         color: var(--muted);
+         font-size: .68rem;
+         font-weight: 600;
+         padding: 2px 8px;
+         border-radius: 12px
+      }
+
+      .zone-rates {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 8px;
+         padding: 10px 0;
+         border-top: 1px solid var(--border);
+         border-bottom: 1px solid var(--border)
+      }
+
+      .rate-item {
+         text-align: center
+      }
+
+      .rate-label {
+         font-size: .65rem;
+         text-transform: uppercase;
+         letter-spacing: .05em;
+         color: var(--muted-lt);
+         margin-bottom: 2px
+      }
+
+      .rate-value {
+         font-size: .85rem;
+         font-weight: 700;
+         color: var(--text)
+      }
+
+      .zone-footer {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 8px;
+         padding-top: 10px
+      }
+
+      /* ═══ COURIER CARD ═══ */
+      .courier-card {
+         background: var(--surface);
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-lg);
+         padding: 16px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 12px;
+         transition: all .2s
+      }
+
+      .courier-card:hover {
+         border-color: var(--primary);
+         transform: translateY(-2px)
+      }
+
+      .courier-info {
+         flex: 1
+      }
+
+      .courier-name {
+         font-weight: 700;
+         font-size: .87rem;
+         color: var(--text);
+         display: flex;
+         align-items: center;
+         gap: 6px
+      }
+
+      .courier-sub {
+         font-size: .73rem;
+         color: var(--muted);
+         margin-top: 2px
+      }
+
+      .courier-actions {
+         display: flex;
+         gap: 6px
+      }
+
+      /* ═══ BADGES ═══ */
+      .badge {
+         display: inline-flex;
+         align-items: center;
+         gap: 4px;
+         padding: 3px 10px;
+         border-radius: 20px;
+         font-size: .68rem;
+         font-weight: 700;
+         letter-spacing: .03em;
+         text-transform: uppercase;
+         white-space: nowrap
+      }
+
+      .badge-active {
+         background: #dcfce7;
+         color: #15803d
+      }
+
+      .badge-inactive {
+         background: #f1f5f9;
+         color: #64748b
+      }
+
+      .badge-zone {
+         background: rgba(242, 159, 103, .15);
+         color: var(--primary-dk)
+      }
+
+      /* ═══ BUTTONS ═══ */
+      .btn {
+         display: inline-flex;
+         align-items: center;
+         gap: 7px;
+         padding: 8px 16px;
+         border-radius: var(--r-md);
+         font-size: .8rem;
+         font-weight: 700;
+         transition: var(--t);
+         cursor: pointer;
+         border: none;
+         white-space: nowrap
+      }
+
+      .btn-primary {
+         background: linear-gradient(135deg, var(--primary), var(--primary-dk));
+         color: #fff;
+         box-shadow: 0 2px 8px rgba(242, 159, 103, .25)
+      }
+
+      .btn-primary:hover {
+         opacity: .9;
+         transform: translateY(-1px);
+         box-shadow: var(--shadow-brand)
+      }
+
+      .btn-primary:disabled {
+         opacity: .5;
+         cursor: not-allowed;
+         transform: none
+      }
+
+      .btn-ghost {
+         background: var(--surface-2);
+         color: var(--text-2);
+         border: 1.5px solid var(--border)
+      }
+
+      .btn-ghost:hover {
+         border-color: var(--primary);
+         color: var(--primary)
+      }
+
+      .btn-sm {
+         padding: 5px 12px;
+         font-size: .73rem;
+         border-radius: var(--r-sm)
+      }
+
+      .btn-icon {
+         width: 30px;
+         height: 30px;
+         border-radius: var(--r-sm);
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         font-size: .76rem;
+         transition: var(--t);
+         cursor: pointer;
+         border: none
+      }
+
+      .btn-edit {
+         background: #f0f9ff;
+         color: #0284c7
+      }
+
+      .btn-edit:hover {
+         background: #0284c7;
+         color: #fff
+      }
+
+      .btn-del {
+         background: #fff1f2;
+         color: var(--rose)
+      }
+
+      .btn-del:hover {
+         background: var(--rose);
+         color: #fff
+      }
+
+      /* ═══ TOGGLE SWITCH ═══ */
+      .toggle {
+         position: relative;
+         display: inline-block;
+         width: 42px;
+         height: 22px;
+         flex-shrink: 0
+      }
+
+      .toggle input {
+         opacity: 0;
+         width: 0;
+         height: 0
+      }
+
+      .toggle-slider {
+         position: absolute;
+         inset: 0;
+         background: #cbd5e1;
+         border-radius: 34px;
+         cursor: pointer;
+         transition: .3s
+      }
+
+      .toggle-slider:before {
+         position: absolute;
+         content: '';
+         height: 16px;
+         width: 16px;
+         left: 3px;
+         bottom: 3px;
+         background: #fff;
+         border-radius: 50%;
+         transition: .3s
+      }
+
+      input:checked+.toggle-slider {
+         background: var(--primary)
+      }
+
+      input:checked+.toggle-slider:before {
+         transform: translateX(20px)
+      }
+
+      /* ═══ FORMS ═══ */
+      .form-grid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 12px
+      }
+
+      @media(max-width:600px) {
+         .form-grid {
+            grid-template-columns: 1fr
+         }
+      }
+
+      .form-field {
+         display: flex;
+         flex-direction: column;
+         gap: 4px
+      }
+
+      .form-field.full {
+         grid-column: 1/-1
+      }
+
+      .form-label {
+         font-size: .67rem;
+         font-weight: 700;
+         color: var(--muted);
+         letter-spacing: .06em;
+         text-transform: uppercase
+      }
+
+      .req {
+         color: var(--rose)
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+         padding: 9px 12px;
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-md);
+         font-size: .84rem;
+         background: var(--surface-2);
+         color: var(--text);
+         width: 100%;
+         transition: var(--t)
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+         outline: none;
+         border-color: var(--primary);
+         background: var(--surface);
+         box-shadow: 0 0 0 3px rgba(242, 159, 103, .12)
+      }
+
+      .form-textarea {
+         resize: vertical;
+         min-height: 76px
+      }
+
+      .form-hint {
+         font-size: .69rem;
+         color: var(--muted-lt);
+         margin-top: 2px
+      }
+
+      /* ═══ TABLES ═══ */
+      .tbl-wrap {
+         overflow-x: auto;
+         border-radius: var(--r-md);
+         border: 1px solid var(--border)
+      }
+
+      table {
+         width: 100%;
+         border-collapse: collapse;
+         font-size: .8rem
+      }
+
+      thead th {
+         text-align: left;
+         padding: 9px 12px;
+         font-size: .63rem;
+         font-weight: 700;
+         letter-spacing: .1em;
+         text-transform: uppercase;
+         color: var(--muted);
+         background: var(--surface-2);
+         border-bottom: 1.5px solid var(--border)
+      }
+
+      tbody tr {
+         border-bottom: 1px solid var(--surface-2);
+         transition: background .12s
+      }
+
+      tbody tr:last-child {
+         border-bottom: none
+      }
+
+      tbody tr:hover {
+         background: #f9fafb
+      }
+
+      tbody td {
+         padding: 10px 12px;
+         vertical-align: middle
+      }
+
+      .tbl-name {
+         font-weight: 600;
+         color: var(--text);
+         font-size: .82rem
+      }
+
+      .tbl-sub {
+         font-size: .7rem;
+         color: var(--muted-lt);
+         margin-top: 1px
+      }
+
+      .tbl-mono {
+         font-family: var(--font-mono);
+         font-size: .75rem;
+         background: var(--surface-2);
+         padding: 2px 6px;
+         border-radius: 4px;
+         color: var(--text-2);
+         display: inline-block
+      }
+
+      /* ═══ FILTER BAR ═══ */
+      .filter-bar {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         margin-bottom: 14px;
+         flex-wrap: wrap
+      }
+
+      .search-wrap {
+         position: relative;
+         flex: 1;
+         min-width: 180px
+      }
+
+      .search-wrap i {
+         position: absolute;
+         left: 9px;
+         top: 50%;
+         transform: translateY(-50%);
+         color: var(--muted-lt);
+         font-size: .75rem
+      }
+
+      .search-input {
+         width: 100%;
+         padding: 8px 9px 8px 28px;
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-md);
+         font-size: .8rem;
+         background: var(--surface-2);
+         transition: var(--t);
+         color: var(--text)
+      }
+
+      .search-input:focus {
+         outline: none;
+         border-color: var(--primary);
+         background: var(--surface);
+         box-shadow: 0 0 0 3px rgba(242, 159, 103, .1)
+      }
+
+      .filter-select {
+         padding: 7px 26px 7px 10px;
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-md);
+         font-size: .8rem;
+         background: var(--surface-2);
+         color: var(--text);
+         appearance: none;
+         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+         background-repeat: no-repeat;
+         background-position: right 8px center;
+         background-size: 13px;
+         transition: var(--t)
+      }
+
+      .filter-select:focus {
+         outline: none;
+         border-color: var(--primary)
+      }
+
+      /* ═══ MODALS ═══ */
+      .modal-backdrop {
+         position: fixed;
+         inset: 0;
+         background: rgba(0, 0, 0, .55);
+         backdrop-filter: blur(4px);
+         z-index: 1000;
+         display: none;
+         align-items: center;
+         justify-content: center;
+         padding: 20px
+      }
+
+      .modal-backdrop.show {
+         display: flex
+      }
+
+      .modal {
+         background: #fff;
+         border-radius: 18px;
+         padding: 24px;
+         max-width: 540px;
+         width: 100%;
+         max-height: 90vh;
+         overflow-y: auto;
+         box-shadow: 0 25px 60px rgba(0, 0, 0, .25);
+         animation: modalIn .3s var(--ease-spring)
+      }
+
+      @keyframes modalIn {
+         from {
+            opacity: 0;
+            transform: scale(.9) translateY(20px)
+         }
+
+         to {
+            opacity: 1;
+            transform: scale(1) translateY(0)
+         }
+      }
+
+      .modal-header {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         margin-bottom: 20px
+      }
+
+      .modal-title {
+         font-size: 1.05rem;
+         font-weight: 700;
+         color: var(--text)
+      }
+
+      .modal-close {
+         width: 32px;
+         height: 32px;
+         border-radius: 8px;
+         background: var(--surface-2);
+         color: var(--muted);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition: all .2s;
+         cursor: pointer;
+         border: none
+      }
+
+      .modal-close:hover {
+         background: #fee2e2;
+         color: var(--rose)
+      }
+
+      .modal-footer {
+         display: flex;
+         gap: 10px;
+         justify-content: flex-end;
+         margin-top: 20px;
+         padding-top: 18px;
+         border-top: 1px solid var(--border)
+      }
+
+      /* ═══ PINCODE CHECKER ═══ */
+      .checker-card {
+         background: linear-gradient(135deg, var(--navy), #2d3748);
+         border-radius: var(--r-lg);
+         padding: 20px;
+         color: #fff;
+         margin-bottom: 18px
+      }
+
+      .checker-title {
+         font-size: .95rem;
+         font-weight: 700;
+         margin-bottom: 12px;
+         display: flex;
+         align-items: center;
+         gap: 8px
+      }
+
+      .pincode-result {
+         margin-top: 14px;
+         padding: 12px;
+         border-radius: var(--r-md);
+         font-size: .85rem;
+         font-weight: 500;
+         display: none
+      }
+
+      .pincode-result.serviceable {
+         background: #dcfce7;
+         color: #15803d
+      }
+
+      .pincode-result.not-serviceable {
+         background: #fee2e2;
+         color: #b91c1c
+      }
+
+      /* ═══ DROP ZONE ═══ */
+      .drop-zone {
+         border: 2px dashed var(--border);
+         border-radius: var(--r-lg);
+         padding: 40px 20px;
+         text-align: center;
+         cursor: pointer;
+         transition: all .2s;
+         background: var(--surface-2)
+      }
+
+      .drop-zone:hover,
+      .drop-zone.drag-over {
+         border-color: var(--primary);
+         background: rgba(242, 159, 103, .05)
+      }
+
+      .drop-zone i {
+         font-size: 2.5rem;
+         color: var(--primary);
+         margin-bottom: 10px;
+         display: block
+      }
+
+      .drop-zone p {
+         font-size: .87rem;
+         color: var(--text);
+         font-weight: 600
+      }
+
+      .drop-zone small {
+         font-size: .75rem;
+         color: var(--muted);
+         margin-top: 4px;
+         display: block
+      }
+
+      /* ═══ UPLOAD RESULT ═══ */
+      .upload-result {
+         margin-top: 14px;
+         padding: 12px 16px;
+         border-radius: var(--r-md);
+         font-size: .82rem;
+         display: none;
+         align-items: center;
+         gap: 10px
+      }
+
+      .upload-result.success {
+         background: #dcfce7;
+         color: #15803d;
+         border: 1px solid #86efac
+      }
+
+      .upload-result.error {
+         background: #fee2e2;
+         color: #b91c1c;
+         border: 1px solid #fecaca
+      }
+
+      .upload-result.loading {
+         background: #f0f9ff;
+         color: #0284c7;
+         border: 1px solid #bae6fd
+      }
+
+      /* ═══ RATE EDITOR ═══ */
+      .rate-editor {
+         display: flex;
+         align-items: center;
+         gap: 6px
+      }
+
+      .rate-input {
+         width: 90px;
+         padding: 6px 8px;
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-sm);
+         font-size: .82rem;
+         background: var(--surface);
+         transition: var(--t)
+      }
+
+      .rate-input:focus {
+         outline: none;
+         border-color: var(--primary);
+         box-shadow: 0 0 0 2px rgba(242, 159, 103, .1)
+      }
+
+      /* ═══ SETTINGS BLOCK ═══ */
+      .settings-grid {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 16px
+      }
+
+      @media(max-width:700px) {
+         .settings-grid {
+            grid-template-columns: 1fr
+         }
+      }
+
+      .setting-block {
+         background: var(--surface-2);
+         border: 1.5px solid var(--border);
+         border-radius: var(--r-lg);
+         padding: 16px
+      }
+
+      .setting-label {
+         font-size: .72rem;
+         font-weight: 700;
+         text-transform: uppercase;
+         letter-spacing: .06em;
+         color: var(--muted);
+         margin-bottom: 10px
+      }
+
+      /* ═══ LOADING & EMPTY ═══ */
+      .loading-state {
+         text-align: center;
+         padding: 40px 20px;
+         color: var(--muted-lt);
+         font-size: .82rem
+      }
+
+      .loading-state i {
+         font-size: 1.8rem;
+         color: var(--primary);
+         display: block;
+         margin-bottom: 10px;
+         animation: spin 1s linear infinite
+      }
+
+      @keyframes spin {
+         to {
+            transform: rotate(360deg)
+         }
+      }
+
+      .empty-state {
+         text-align: center;
+         padding: 50px 20px;
+         color: var(--muted-lt)
+      }
+
+      .empty-state i {
+         font-size: 2.5rem;
+         display: block;
+         margin-bottom: 12px;
+         color: var(--border)
+      }
+
+      /* ═══ TOAST ═══ */
+      .toast-wrap {
+         position: fixed;
+         bottom: 20px;
+         right: 20px;
+         z-index: 9999;
+         display: flex;
+         flex-direction: column;
+         gap: 7px
+      }
+
+      .toast {
+         background: var(--navy);
+         color: #fff;
+         padding: 10px 16px;
+         border-radius: var(--r-md);
+         font-size: .78rem;
+         font-weight: 500;
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         box-shadow: var(--shadow-lg);
+         animation: toastIn .3s var(--ease-spring);
+         min-width: 230px;
+         max-width: 340px
+      }
+
+      .toast.success {
+         border-left: 3px solid var(--green)
+      }
+
+      .toast.error {
+         border-left: 3px solid var(--rose)
+      }
+
+      .toast.warning {
+         border-left: 3px solid var(--yellow)
+      }
+
+      .toast.info {
+         border-left: 3px solid var(--blue)
+      }
+
+      @keyframes toastIn {
+         from {
+            opacity: 0;
+            transform: translateX(30px)
+         }
+
+         to {
+            opacity: 1;
+            transform: translateX(0)
+         }
+      }
+
+      /* ═══ PAGINATION ═══ */
+      .pagination {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         margin-top: 16px;
+         font-size: .78rem;
+         color: var(--muted)
+      }
+
+      .pg-btn {
+         padding: 6px 14px;
+         border-radius: var(--r-sm);
+         border: 1.5px solid var(--border);
+         font-size: .74rem;
+         color: var(--muted);
+         background: var(--surface);
+         transition: var(--t)
+      }
+
+      .pg-btn:hover:not(:disabled) {
+         border-color: var(--primary);
+         color: var(--primary)
+      }
+
+      .pg-btn:disabled {
+         opacity: .4;
+         cursor: not-allowed
+      }
+
+      /* Mobile overlay */
+      .mob-overlay {
+         display: none;
+         position: fixed;
+         inset: 0;
+         background: rgba(0, 0, 0, .5);
+         z-index: 998
+      }
+   </style>
+</head>
+
+<body>
+
+   <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+   <div class="toast-wrap" id="toastWrap"></div>
+
+   <div class="wrap">
+      <!-- ══ SIDEBAR ══ -->
+      <aside class="sidebar" id="sidebar">
+         <div class="sidebar-brand">
+            <div class="sb-logo-wrap">
+               <img src="logo.png" alt="HeelsUp"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               <span class="sb-logo-fallback">H</span>
+            </div>
+            <div>
+               <div class="sb-brand-text">HeelsUp</div>
+               <div class="sb-brand-sub">Admin Panel</div>
+            </div>
+         </div>
+         <nav class="sidebar-nav">
+            <div class="nav-label">Main</div>
+            <a class="nav-item" href="admin.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+            <div class="nav-label">Catalogue</div>
+            <a class="nav-item" href="admin-products.html"><i class="fa-solid fa-box"></i> Products</a>
+            <a class="nav-item" href="admin-categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+            <a class="nav-item" href="admin-collections.html"><i class="fa-solid fa-swatchbook"></i>
+               Collections</a>
+            <a class="nav-item" href="admin-inventory.html"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+            <div class="nav-label">Sales & Customers</div>
+            <a class="nav-item" href="admin-orders.html"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+            <a class="nav-item" href="admin-customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+            <a class="nav-item" href="admin-coupons.html"><i class="fa-solid fa-ticket"></i> Coupons</a>
+            <a class="nav-item" href="admin-reviews.html"><i class="fa-solid fa-star"></i> Reviews</a>
+            <a class="nav-item" href="admin-orders.html?tab=exchange"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+            <a class="nav-item" href="admin-pos.html"><i class="fa-solid fa-cash-register"></i> POS / Offline
+               Sales</a>
+            <div class="nav-label">Marketing & Content</div>
+            <a class="nav-item" href="admin-banners.html"><i class="fa-solid fa-image"></i> Banners</a>
+            <a class="nav-item" href="admin-blog.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+            <a class="nav-item" href="admin-notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+            <div class="nav-label">Reports</div>
+            <a class="nav-item" href="admin-reports.html"><i class="fa-solid fa-chart-pie"></i> Reports</a>
+            <a class="nav-item" href="admin-analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+            <div class="nav-label">System</div>
+            <a class="nav-item active" href="admin-shipping.html"><i class="fa-solid fa-truck-fast"></i>
+               Shipping</a>
+            <a class="nav-item" href="admin-taxes.html"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+            <a class="nav-item" href="admin-staff.html"><i class="fa-solid fa-users-gear"></i> Staff</a>
+            <a class="nav-item" href="admin-settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+         </nav>
+         <div class="sidebar-footer">
+            <div class="sidebar-user">
+               <div class="s-avatar" id="s-avatar">A</div>
+               <div>
+                  <div class="s-name" id="s-name">Admin</div>
+                  <div class="s-role">Super Admin</div>
+               </div>
+            </div>
+            <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+               Logout</button>
+         </div>
+      </aside>
+
+      <!-- ══ MAIN ══ -->
+      <main class="main">
+         <header class="topbar">
+            <button class="btn-menu" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div class="topbar-title">Shipping & Logistics</div>
+            <div class="topbar-right">
+               <button class="btn btn-ghost btn-sm" onclick="window.open('index.html','_blank')"><i
+                     class="fa-solid fa-store"></i> View Store</button>
+            </div>
+         </header>
+
+         <section class="content">
+            <div class="page-header">
+               <div>
+                  <h2>Shipping Management</h2>
+                  <p>Complete logistics control — zones, rates, carriers, COD, and pincode mapping.</p>
+               </div>
+               <button class="btn btn-ghost" onclick="init()"><i class="fa-solid fa-rotate-right"></i> Sync
+                  All</button>
+            </div>
+
+            <!-- MINI STATS -->
+            <div class="mini-stats" id="miniStats">
+               <div class="mini-card">
+                  <div class="mini-icon mi-orange"><i class="fa-solid fa-map-location-dot"></i></div>
+                  <div>
+                     <div class="mini-lbl">Zones</div>
+                     <div class="mini-val" id="ms-zones">—</div>
+                  </div>
+               </div>
+               <div class="mini-card">
+                  <div class="mini-icon mi-blue"><i class="fa-solid fa-location-pin"></i></div>
+                  <div>
+                     <div class="mini-lbl">Pincodes</div>
+                     <div class="mini-val" id="ms-pincodes">—</div>
+                  </div>
+               </div>
+               <div class="mini-card">
+                  <div class="mini-icon mi-teal"><i class="fa-solid fa-truck-fast"></i></div>
+                  <div>
+                     <div class="mini-lbl">Methods</div>
+                     <div class="mini-val" id="ms-methods">—</div>
+                  </div>
+               </div>
+               <div class="mini-card">
+                  <div class="mini-icon mi-green"><i class="fa-solid fa-box-open"></i></div>
+                  <div>
+                     <div class="mini-lbl">Couriers</div>
+                     <div class="mini-val" id="ms-couriers">—</div>
+                  </div>
+               </div>
+               <div class="mini-card">
+                  <div class="mini-icon mi-purple"><i class="fa-solid fa-money-bill-wave"></i></div>
+                  <div>
+                     <div class="mini-lbl">COD Status</div>
+                     <div class="mini-val" id="ms-cod">—</div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- TAB NAV -->
+            <div class="tab-nav">
+               <button class="tab-btn active" onclick="switchTab('zones',this)"><i
+                     class="fa-solid fa-map-location-dot"></i> Zones</button>
+               <button class="tab-btn" onclick="switchTab('rates',this)"><i class="fa-solid fa-indian-rupee-sign"></i>
+                  Rates</button>
+               <button class="tab-btn" onclick="switchTab('methods',this)"><i class="fa-solid fa-truck-fast"></i>
+                  Methods</button>
+               <button class="tab-btn" onclick="switchTab('couriers',this)"><i class="fa-solid fa-box-open"></i>
+                  Couriers</button>
+               <button class="tab-btn" onclick="switchTab('cod',this)"><i class="fa-solid fa-money-bill-wave"></i>
+                  COD</button>
+               <button class="tab-btn" onclick="switchTab('pincodes',this)"><i class="fa-solid fa-location-pin"></i>
+                  Pincodes</button>
+            </div>
+
+            <!-- ══ TAB: ZONES ══ -->
+            <div class="tab-pane active" id="tab-zones">
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-map-location-dot"></i> Shipping Zones</div>
+                     <button class="btn btn-primary btn-sm" onclick="openZoneModal()"><i class="fa-solid fa-plus"></i>
+                        Add Zone</button>
+                  </div>
+                  <div id="zonesContainer">
+                     <div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading zones...</div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ══ TAB: RATES ══ -->
+            <div class="tab-pane" id="tab-rates">
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-indian-rupee-sign"></i> Shipping Rates</div>
+                     <div style="display:flex;align-items:center;gap:10px">
+                        <span style="font-size:.8rem;color:var(--muted)">Free shipping above:</span>
+                        <div class="rate-editor">
+                           <span style="font-size:.87rem;font-weight:600">₹</span>
+                           <input type="number" class="rate-input" id="freeShippingThreshold" placeholder="999"
+                              style="width:100px">
+                           <button class="btn btn-sm btn-ghost" onclick="saveFreeThreshold()">Save</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tbl-wrap">
+                     <table>
+                        <thead>
+                           <tr>
+                              <th>Zone</th>
+                              <th>Standard (₹)</th>
+                              <th>Express (₹)</th>
+                              <th>Same-Day (₹)</th>
+                              <th>Free Above (₹)</th>
+                              <th>Actions</th>
+                           </tr>
+                        </thead>
+                        <tbody id="ratesTableBody">
+                           <tr>
+                              <td colspan="6">
+                                 <div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading
+                                    rates...</div>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ══ TAB: METHODS ══ -->
+            <div class="tab-pane" id="tab-methods">
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-truck-fast"></i> Delivery Methods</div>
+                  </div>
+                  <div id="methodsContainer">
+                     <div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading methods...</div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ══ TAB: COURIERS ══ -->
+            <div class="tab-pane" id="tab-couriers">
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-box-open"></i> Courier Partners</div>
+                     <button class="btn btn-primary btn-sm" onclick="openCourierModal()"><i
+                           class="fa-solid fa-plus"></i> Add Courier</button>
+                  </div>
+                  <div class="courier-grid" id="couriersContainer">
+                     <div class="loading-state" style="grid-column:1/-1"><i class="fa-solid fa-spinner"></i>Loading
+                        couriers...</div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ══ TAB: COD ══ -->
+            <div class="tab-pane" id="tab-cod">
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-money-bill-wave"></i> COD Settings</div>
+                     <button class="btn btn-primary btn-sm" onclick="saveCodSettings()"><i
+                           class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+                  </div>
+                  <div id="codContainer">
+                     <div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading COD settings...</div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- ══ TAB: PINCODES ══ -->
+            <div class="tab-pane" id="tab-pincodes">
+               <!-- Checker -->
+               <div class="checker-card">
+                  <div class="checker-title"><i class="fa-solid fa-satellite-dish"></i> Check Pincode
+                     Serviceability</div>
+                  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                     <div class="search-wrap" style="max-width:280px">
+                        <i class="fa-solid fa-location-crosshairs"></i>
+                        <input type="text" class="search-input" id="pincodeCheck" placeholder="Enter pincode..."
+                           maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')"
+                           style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff">
+                     </div>
+                     <button class="btn btn-primary" onclick="checkPincode()"><i class="fa-solid fa-search"></i>
+                        Check</button>
+                  </div>
+                  <div class="pincode-result" id="pincodeResult"></div>
+               </div>
+
+               <!-- Upload -->
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-file-csv"></i> Bulk Pincode Upload</div>
+                     <a href="#" onclick="downloadSample()" class="btn btn-sm btn-ghost"><i
+                           class="fa-solid fa-download"></i> Sample CSV</a>
+                  </div>
+                  <div class="drop-zone" id="dropZone" onclick="document.getElementById('csvFile').click()"
+                     ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                     <i class="fa-solid fa-file-csv"></i>
+                     <p>Click or drag CSV file here</p>
+                     <small>Format: pincode,zone_id,city,state — max 10,000 rows</small>
+                  </div>
+                  <input type="file" id="csvFile" accept=".csv" style="display:none" onchange="handleCsvUpload(event)">
+                  <div class="upload-result" id="uploadResult"></div>
+               </div>
+
+               <!-- List -->
+               <div class="card">
+                  <div class="card-header">
+                     <div class="card-title"><i class="fa-solid fa-location-pin"></i> Pincode Directory</div>
+                     <div style="display:flex;gap:8px">
+                        <select class="filter-select" id="pincodeZoneFilter" onchange="loadPincodes()">
+                           <option value="">All Zones</option>
+                        </select>
+                        <button class="btn btn-sm btn-ghost" onclick="loadPincodes()"><i
+                              class="fa-solid fa-rotate-right"></i></button>
+                     </div>
+                  </div>
+                  <div class="filter-bar">
+                     <div class="search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" class="search-input" id="pincodeSearch" placeholder="Search pincode, city..."
+                           oninput="filterPincodes()">
+                     </div>
+                  </div>
+                  <div class="tbl-wrap">
+                     <table>
+                        <thead>
+                           <tr>
+                              <th>Pincode</th>
+                              <th>Zone</th>
+                              <th>City</th>
+                              <th>State</th>
+                              <th>Added</th>
+                              <th>Actions</th>
+                           </tr>
+                        </thead>
+                        <tbody id="pincodesTableBody">
+                           <tr>
+                              <td colspan="6">
+                                 <div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading
+                                    pincodes...</div>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="pagination">
+                     <span id="pincodeCount"></span>
+                     <div style="display:flex;gap:6px">
+                        <button class="pg-btn" id="prevPinBtn" onclick="pincodePage--;loadPincodes()" disabled>‹
+                           Prev</button>
+                        <button class="pg-btn" id="nextPinBtn" onclick="pincodePage++;loadPincodes()" disabled>Next
+                           ›</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </section>
+      </main>
+   </div>
+
+   <!-- ══ ZONE MODAL ══ -->
+   <div class="modal-backdrop" id="zoneModal">
+      <div class="modal">
+         <div class="modal-header">
+            <div class="modal-title" id="zoneModalTitle">Add Shipping Zone</div>
+            <button class="modal-close" onclick="closeZoneModal()"><i class="fa-solid fa-xmark"></i></button>
+         </div>
+         <form id="zoneForm" onsubmit="saveZone(event)">
+            <div class="form-grid">
+               <div class="form-field full">
+                  <label class="form-label">Zone Name <span class="req">*</span></label>
+                  <input name="name" type="text" class="form-input" placeholder="e.g. Rajasthan, Metro Cities" required>
+               </div>
+               <div class="form-field full">
+                  <label class="form-label">States / Regions</label>
+                  <input name="states" type="text" class="form-input"
+                     placeholder="Rajasthan, Gujarat, MP (comma separated)">
+               </div>
+               <div class="form-field">
+                  <label class="form-label">Delivery Days</label>
+                  <input name="delivery_days" type="text" class="form-input" placeholder="e.g. 3-5">
+               </div>
+               <div class="form-field">
+                  <label class="form-label">Sort Order</label>
+                  <input name="sort_order" type="number" class="form-input" value="0">
+               </div>
+               <div class="form-field full" style="margin-top:8px">
+                  <label class="toggle">
+                     <input type="checkbox" name="is_active" id="chkZoneActive" checked>
+                     <span class="toggle-slider"></span>
+                  </label>
+                  <span style="margin-left:10px;font-size:.82rem;color:var(--text)">Zone is active</span>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-ghost" onclick="closeZoneModal()">Cancel</button>
+               <button type="submit" class="btn btn-primary" id="saveZoneBtn"><i class="fa-solid fa-floppy-disk"></i>
+                  Save Zone</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <!-- ══ COURIER MODAL ══ -->
+   <div class="modal-backdrop" id="courierModal">
+      <div class="modal">
+         <div class="modal-header">
+            <div class="modal-title" id="courierModalTitle">Add Courier Partner</div>
+            <button class="modal-close" onclick="closeCourierModal()"><i class="fa-solid fa-xmark"></i></button>
+         </div>
+         <form id="courierForm" onsubmit="saveCourier(event)">
+            <div class="form-grid">
+               <div class="form-field full">
+                  <label class="form-label">Courier Name <span class="req">*</span></label>
+                  <input name="name" type="text" class="form-input" placeholder="e.g. Delhivery, Bluedart" required>
+               </div>
+               <div class="form-field">
+                  <label class="form-label">AWB Prefix</label>
+                  <input name="awb_prefix" type="text" class="form-input" placeholder="e.g. DLVR">
+               </div>
+               <div class="form-field">
+                  <label class="form-label">API Key</label>
+                  <input name="api_key" type="text" class="form-input" placeholder="Optional">
+               </div>
+               <div class="form-field full">
+                  <label class="form-label">Tracking URL Template</label>
+                  <input name="tracking_url" type="text" class="form-input"
+                     placeholder="https://track.example.com/?awb={awb}">
+               </div>
+               <div class="form-field full" style="margin-top:8px">
+                  <label class="toggle">
+                     <input type="checkbox" name="is_active" id="chkCourierActive" checked>
+                     <span class="toggle-slider"></span>
+                  </label>
+                  <span style="margin-left:10px;font-size:.82rem;color:var(--text)">Courier is active</span>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-ghost" onclick="closeCourierModal()">Cancel</button>
+               <button type="submit" class="btn btn-primary" id="saveCourierBtn"><i class="fa-solid fa-floppy-disk"></i>
+                  Save Courier</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <script src="app-config.js"></script>
+   <script src="app-auth.js"></script>
+   <script>
+      /* ═══════════════════════════════════════════════════
+         SHIPPING MANAGEMENT ENGINE — Enterprise Grade
+      ═══════════════════════════════════════════════════ */
+
+      // ── STATE ──────────────────────────────────────────
+      let allZones = [];
+      let allCouriers = [];
+      let allPincodes = [];
+      let editingZoneId = null;
+      let editingCourierId = null;
+      let pincodePage = 1;
+      const PINCODE_PAGE_SIZE = 50;
+
+      // ── AUTH ──────────────────────────────────────────
+      document.addEventListener('DOMContentLoaded', async () => {
+         const user = HeelsUpAuth.getUser();
+         if (!user || user.role !== 'admin') {
+            window.location = 'login.html?redirect=admin-shipping.html'; return;
+         }
+         const name = user.firstName || user.first_name || 'Admin';
+         document.getElementById('s-avatar').textContent = name.charAt(0).toUpperCase();
+         document.getElementById('s-name').textContent = name;
+
+         init();
+      });
+
+      async function init() {
+         await loadZones();
+         await loadSummaryStats();
+      }
+
+      // ── UI HELPERS ────────────────────────────────────
+      function toggleSidebar() {
+         document.getElementById('sidebar').classList.toggle('open');
+         document.getElementById('mobOverlay').style.display =
+            document.getElementById('sidebar').classList.contains('open') ? 'block' : 'none';
+      }
+      function closeSidebar() {
+         document.getElementById('sidebar').classList.remove('open');
+         document.getElementById('mobOverlay').style.display = 'none';
+      }
+      function doLogout() { HeelsUpAuth.clearSession(); window.location = 'login.html'; }
+
+      function showToast(msg, type = 'success', dur = 4000) {
+         const wrap = document.getElementById('toastWrap');
+         const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' };
+         const t = document.createElement('div');
+         t.className = `toast ${type}`;
+         t.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span>${msg}</span>`;
+         wrap.appendChild(t);
+         setTimeout(() => {
+            t.style.opacity = '0'; t.style.transform = 'translateX(30px)';
+            setTimeout(() => t.remove(), 300);
+         }, dur);
+      }
+
+      const esc = s => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const fmtDate = d => d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+
+      // ── TABS ──────────────────────────────────────────
+      function switchTab(name, btn) {
+         document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+         document.getElementById('tab-' + name).classList.add('active');
+         btn.classList.add('active');
+
+         if (name === 'zones') loadZones();
+         if (name === 'rates') loadRates();
+         if (name === 'methods') loadMethods();
+         if (name === 'couriers') loadCouriers();
+         if (name === 'cod') loadCodSettings();
+         if (name === 'pincodes') loadPincodes();
+      }
+
+      // ── SUMMARY STATS ─────────────────────────────────
+      async function loadSummaryStats() {
+         try {
+            const [zonesRes, pincodesRes, methodsRes, couriersRes, codRes] = await Promise.all([
+               HeelsUpAuth.api('/api/admin/shipping/zones').catch(() => ({ zones: [] })),
+               HeelsUpAuth.api('/api/admin/shipping/pincodes?count=1').catch(() => ({ total: 0 })),
+               HeelsUpAuth.api('/api/admin/shipping/methods').catch(() => ({ methods: [] })),
+               HeelsUpAuth.api('/api/admin/shipping/couriers').catch(() => ({ couriers: [] })),
+               HeelsUpAuth.api('/api/admin/shipping/cod').catch(() => ({ enabled: false }))
+            ]);
+
+            document.getElementById('ms-zones').textContent = (zonesRes.zones || []).length;
+            document.getElementById('ms-pincodes').textContent = (pincodesRes.total || 0).toLocaleString('en-IN');
+            document.getElementById('ms-methods').textContent = (methodsRes.methods || []).filter(m => m.is_active).length;
+            document.getElementById('ms-couriers').textContent = (couriersRes.couriers || []).filter(c => c.is_active).length;
+            document.getElementById('ms-cod').textContent = codRes.enabled ? 'ON' : 'OFF';
+         } catch (e) {
+            console.error('Stats load failed:', e);
+         }
+      }
+
+      // ── ZONES ─────────────────────────────────────────
+      async function loadZones() {
+         document.getElementById('zonesContainer').innerHTML = '<div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading zones...</div>';
+         try {
+            const res = await HeelsUpAuth.api('/api/admin/shipping/zones');
+            allZones = res.zones || [];
+            renderZones();
+         } catch (e) {
+            document.getElementById('zonesContainer').innerHTML = '<div class="empty-state"><i class="fa-solid fa-circle-exclamation"></i><p>Failed to load zones.</p></div>';
+         }
+      }
+
+      function renderZones() {
+         const el = document.getElementById('zonesContainer');
+         if (!allZones.length) {
+            el.innerHTML = '<div class="empty-state"><i class="fa-solid fa-map-location-dot"></i><p>No zones configured yet.</p><button class="btn btn-primary btn-sm" onclick="openZoneModal()" style="margin-top:10px"><i class="fa-solid fa-plus"></i> Create First Zone</button></div>';
+            return;
+         }
+
+         el.innerHTML = `<div class="zone-grid">${allZones.map(z => `
+                <div class="zone-card">
+                    <div class="zone-header">
+                        <div>
+                            <div class="zone-name">${esc(z.name)}</div>
+                            <div class="zone-meta">${z.delivery_days ? 'Delivery: ' + esc(z.delivery_days) + ' days' : ''}</div>
+                        </div>
+                        <span class="badge ${z.is_active ? 'badge-active' : 'badge-inactive'}">${z.is_active ? 'Active' : 'Inactive'}</span>
+                    </div>
+                    ${z.states ? `<div class="zone-states">${z.states.split(',').map(s => `<span class="state-tag">${esc(s.trim())}</span>`).join('')}</div>` : ''}
+                    <div class="zone-rates">
+                        <div class="rate-item">
+                            <div class="rate-label">Standard</div>
+                            <div class="rate-value">${z.standard_rate != null ? '₹' + Number(z.standard_rate).toLocaleString('en-IN') : 'N/A'}</div>
+                        </div>
+                        <div class="rate-item">
+                            <div class="rate-label">Express</div>
+                            <div class="rate-value">${z.express_rate != null ? '₹' + Number(z.express_rate).toLocaleString('en-IN') : 'N/A'}</div>
+                        </div>
+                    </div>
+                    <div class="zone-footer">
+                        <label class="toggle" title="Toggle Status">
+                            <input type="checkbox" ${z.is_active ? 'checked' : ''} onchange="toggleZoneStatus(${z.id},this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <div style="display:flex;gap:6px">
+                            <button class="btn-icon btn-edit" onclick='editZone(${JSON.stringify(z).replace(/'/g, "&#39;")})' title="Edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-icon btn-del" onclick="deleteZone(${z.id})" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('')}</div>`;
+      }
+
+      function openZoneModal() {
+         editingZoneId = null;
+         document.getElementById('zoneForm').reset();
+         document.getElementById('zoneModalTitle').textContent = 'Add Shipping Zone';
+         document.getElementById('chkZoneActive').checked = true;
+         document.getElementById('zoneModal').classList.add('show');
+      }
+
+      function editZone(z) {
+         editingZoneId = z.id;
+         document.getElementById('zoneModalTitle').textContent = 'Edit Zone';
+         const f = document.getElementById('zoneForm');
+         f.name.value = z.name || '';
+         f.states.value = z.states || '';
+         f.delivery_days.value = z.delivery_days || '';
+         f.sort_order.value = z.sort_order || 0;
+         document.getElementById('chkZoneActive').checked = !!z.is_active;
+         document.getElementById('zoneModal').classList.add('show');
+      }
+
+      function closeZoneModal() {
+         document.getElementById('zoneModal').classList.remove('show');
+      }
+
+      async function saveZone(e) {
+         e.preventDefault();
+         const f = e.target;
+         const btn = document.getElementById('saveZoneBtn');
+         btn.disabled = true;
+         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+         const data = {
+            name: f.name.value.trim(),
+            states: f.states.value.trim(),
+            delivery_days: f.delivery_days.value.trim(),
+            sort_order: Number(f.sort_order.value) || 0,
+            is_active: f.is_active.checked ? 1 : 0
+         };
+
+         try {
+            if (editingZoneId) {
+               await HeelsUpAuth.api(`/api/admin/shipping/zones/${editingZoneId}`, { method: 'PUT', body: JSON.stringify(data) });
+            } else {
+               await HeelsUpAuth.api('/api/admin/shipping/zones', { method: 'POST', body: JSON.stringify(data) });
+            }
+            showToast('Zone saved successfully!');
+            closeZoneModal();
+            loadZones();
+            loadSummaryStats();
+         } catch (err) {
+            showToast(err.message || 'Failed to save zone.', 'error');
+         } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Zone';
+         }
+      }
+
+      async function toggleZoneStatus(id, val) {
+         try {
+            await HeelsUpAuth.api(`/api/admin/shipping/zones/${id}`, {
+               method: 'PATCH',
+               body: JSON.stringify({ is_active: val ? 1 : 0 })
+            });
+            showToast(val ? 'Zone enabled.' : 'Zone disabled.');
+            loadZones();
+         } catch (e) {
+            showToast('Failed to update status.', 'error');
+         }
+      }
+
+      async function deleteZone(id) {
+         if (!confirm('Delete this zone? This will also remove associated rates and pincodes.')) return;
+         try {
+            await HeelsUpAuth.api(`/api/admin/shipping/zones/${id}`, { method: 'DELETE' });
+            showToast('Zone deleted successfully.');
+            loadZones();
+            loadSummaryStats();
+         } catch (e) {
+            showToast(e.message || 'Failed to delete zone.', 'error');
+         }
+      }
+
+      // ── RATES ─────────────────────────────────────────
+      async function loadRates() {
+         document.getElementById('ratesTableBody').innerHTML = '<tr><td colspan="6"><div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading rates...</div></td></tr>';
+         try {
+            const [zonesRes, settingsRes] = await Promise.all([
+               HeelsUpAuth.api('/api/admin/shipping/zones'),
+               HeelsUpAuth.api('/api/admin/shipping/settings').catch(() => ({}))
+            ]);
+            allZones = zonesRes.zones || [];
+            if (settingsRes.free_shipping_threshold) {
+               document.getElementById('freeShippingThreshold').value = settingsRes.free_shipping_threshold;
+            }
+            renderRates();
+         } catch (e) {
+            document.getElementById('ratesTableBody').innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa-solid fa-circle-exclamation"></i><p>Failed to load rates.</p></div></td></tr>';
+         }
+      }
+
+      function renderRates() {
+         const tbody = document.getElementById('ratesTableBody');
+         if (!allZones.length) {
+            tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa-solid fa-map-location-dot"></i><p>Create zones first to configure rates.</p></div></td></tr>';
+            return;
+         }
+
+         tbody.innerHTML = allZones.map(z => `
+                <tr id="rate-row-${z.id}">
+                    <td>
+                        <div class="tbl-name">${esc(z.name)}</div>
+                        <div class="tbl-sub">${esc(z.states || '')}</div>
+                    </td>
+                    <td><div class="rate-editor"><span>₹</span><input type="number" class="rate-input" id="std-${z.id}" value="${z.standard_rate || ''}" placeholder="0"></div></td>
+                    <td><div class="rate-editor"><span>₹</span><input type="number" class="rate-input" id="exp-${z.id}" value="${z.express_rate || ''}" placeholder="0"></div></td>
+                    <td><div class="rate-editor"><span>₹</span><input type="number" class="rate-input" id="smd-${z.id}" value="${z.sameday_rate || ''}" placeholder="0"></div></td>
+                    <td><div class="rate-editor"><span>₹</span><input type="number" class="rate-input" id="free-${z.id}" value="${z.free_above || ''}" placeholder="None"></div></td>
+                    <td><button class="btn btn-sm btn-ghost" onclick="saveZoneRate(${z.id})"><i class="fa-solid fa-check"></i> Save</button></td>
+                </tr>
+            `).join('');
+      }
+
+      async function saveZoneRate(zoneId) {
+         const data = {
+            standard_rate: document.getElementById(`std-${zoneId}`).value || null,
+            express_rate: document.getElementById(`exp-${zoneId}`).value || null,
+            sameday_rate: document.getElementById(`smd-${zoneId}`).value || null,
+            free_above: document.getElementById(`free-${zoneId}`).value || null
+         };
+
+         try {
+            await HeelsUpAuth.api(`/api/admin/shipping/zones/${zoneId}/rates`, {
+               method: 'PUT',
+               body: JSON.stringify(data)
+            });
+            showToast('Rates updated successfully!');
+            const row = document.getElementById(`rate-row-${zoneId}`);
+            if (row) {
+               row.style.background = '#f0fdf4';
+               setTimeout(() => row.style.background = '', 1500);
+            }
+         } catch (e) {
+            showToast(e.message || 'Failed to update rates.', 'error');
+         }
+      }
+
+      async function saveFreeThreshold() {
+         const val = document.getElementById('freeShippingThreshold').value;
+         if (!val) return showToast('Enter a valid amount.', 'warning');
+
+         try {
+            await HeelsUpAuth.api('/api/admin/shipping/settings', {
+               method: 'PATCH',
+               body: JSON.stringify({ free_shipping_threshold: Number(val) })
+            });
+            showToast('Free shipping threshold saved!');
+         } catch (e) {
+            showToast('Failed to save threshold.', 'error');
+         }
+      }
+
+      // ── METHODS ───────────────────────────────────────
+      async function loadMethods() {
+         document.getElementById('methodsContainer').innerHTML = '<div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading methods...</div>';
+         try {
+            const res = await HeelsUpAuth.api('/api/admin/shipping/methods');
+            renderMethods(res.methods || []);
+         } catch (e) {
+            document.getElementById('methodsContainer').innerHTML = '<div class="empty-state"><i class="fa-solid fa-circle-exclamation"></i><p>Failed to load methods.</p></div>';
+         }
+      }
+
+      function renderMethods(methods) {
+         if (!methods.length) {
+            document.getElementById('methodsContainer').innerHTML = '<div class="empty-state"><i class="fa-solid fa-truck-fast"></i><p>No delivery methods available.</p></div>';
+            return;
+         }
+
+         const icons = { standard: 'fa-truck', express: 'fa-truck-fast', sameday: 'fa-bolt' };
+         const colors = { standard: 'mi-blue', express: 'mi-orange', sameday: 'mi-green' };
+
+         document.getElementById('methodsContainer').innerHTML = methods.map(m => `
+                <div style="background:var(--surface-2);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:18px;margin-bottom:12px;display:flex;align-items:center;gap:16px">
+                    <div class="mini-icon ${colors[m.slug] || 'mi-blue'}"><i class="fa-solid ${icons[m.slug] || 'fa-truck'}"></i></div>
+                    <div style="flex:1">
+                        <div style="font-weight:700;font-size:.9rem;color:var(--text)">${esc(m.name)}</div>
+                        <div style="font-size:.75rem;color:var(--muted);margin-top:2px">${esc(m.description || '')}</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:14px">
+                        <div style="text-align:right">
+                            <div style="font-size:.68rem;text-transform:uppercase;color:var(--muted-lt);font-weight:700">SLA</div>
+                            <div style="font-weight:700;font-size:.85rem;color:var(--text)">${esc(m.delivery_days || 'N/A')}</div>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" ${m.is_active ? 'checked' : ''} onchange="toggleMethod(${m.id},this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            `).join('');
+      }
+
+      async function toggleMethod(id, val) {
+         try {
+            await HeelsUpAuth.api(`/api/admin/shipping/methods/${id}`, {
+               method: 'PATCH',
+               body: JSON.stringify({ is_active: val ? 1 : 0 })
+            });
+            showToast(val ? 'Method enabled.' : 'Method disabled.');
+            loadSummaryStats();
+         } catch (e) {
+            showToast('Failed to update method.', 'error');
+         }
+      }
+
+      // ── COURIERS ──────────────────────────────────────
+      async function loadCouriers() {
+         document.getElementById('couriersContainer').innerHTML = '<div class="loading-state" style="grid-column:1/-1"><i class="fa-solid fa-spinner"></i>Loading couriers...</div>';
+         try {
+            const res = await HeelsUpAuth.api('/api/admin/shipping/couriers');
+            allCouriers = res.couriers || [];
+            renderCouriers();
+         } catch (e) {
+            document.getElementById('couriersContainer').innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="fa-solid fa-circle-exclamation"></i><p>Failed to load couriers.</p></div>';
+         }
+      }
+
+      function renderCouriers() {
+         const el = document.getElementById('couriersContainer');
+         if (!allCouriers.length) {
+            el.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="fa-solid fa-box-open"></i><p>No courier partners configured.</p><button class="btn btn-primary btn-sm" onclick="openCourierModal()" style="margin-top:10px"><i class="fa-solid fa-plus"></i> Add Courier</button></div>';
+            return;
+         }
+
+         el.innerHTML = allCouriers.map(c => `
+                <div class="courier-card">
+                    <div class="courier-info">
+                        <div class="courier-name"><i class="fa-solid fa-box-open" style="color:var(--primary);margin-right:6px"></i>${esc(c.name)}</div>
+                        <div class="courier-sub">${c.awb_prefix ? 'AWB: ' + esc(c.awb_prefix) : 'No prefix'}</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+                        <span class="badge ${c.is_active ? 'badge-active' : 'badge-inactive'}">${c.is_active ? 'Active' : 'Inactive'}</span>
+                        <div class="courier-actions">
+                            <button class="btn-icon btn-edit" onclick='editCourier(${JSON.stringify(c).replace(/'/g, "&#39;")})' title="Edit"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-icon btn-del" onclick="deleteCourier(${c.id})" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+      }
+
+      function openCourierModal() {
+         editingCourierId = null;
+         document.getElementById('courierForm').reset();
+         document.getElementById('courierModalTitle').textContent = 'Add Courier Partner';
+         document.getElementById('chkCourierActive').checked = true;
+         document.getElementById('courierModal').classList.add('show');
+      }
+
+      function editCourier(c) {
+         editingCourierId = c.id;
+         document.getElementById('courierModalTitle').textContent = 'Edit Courier';
+         const f = document.getElementById('courierForm');
+         f.name.value = c.name || '';
+         f.awb_prefix.value = c.awb_prefix || '';
+         f.api_key.value = c.api_key || '';
+         f.tracking_url.value = c.tracking_url || '';
+         document.getElementById('chkCourierActive').checked = !!c.is_active;
+         document.getElementById('courierModal').classList.add('show');
+      }
+
+      function closeCourierModal() {
+         document.getElementById('courierModal').classList.remove('show');
+      }
+
+      async function saveCourier(e) {
+         e.preventDefault();
+         const f = e.target;
+         const btn = document.getElementById('saveCourierBtn');
+         btn.disabled = true;
+         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+         const data = {
+            name: f.name.value.trim(),
+            awb_prefix: f.awb_prefix.value.trim(),
+            api_key: f.api_key.value.trim(),
+            tracking_url: f.tracking_url.value.trim(),
+            is_active: f.is_active.checked ? 1 : 0
+         };
+
+         try {
+            if (editingCourierId) {
+               await HeelsUpAuth.api(`/api/admin/shipping/couriers/${editingCourierId}`, {
+                  method: 'PUT',
+                  body: JSON.stringify(data)
+               });
+            } else {
+               await HeelsUpAuth.api('/api/admin/shipping/couriers', {
+                  method: 'POST',
+                  body: JSON.stringify(data)
+               });
+            }
+            showToast('Courier saved successfully!');
+            closeCourierModal();
+            loadCouriers();
+            loadSummaryStats();
+         } catch (err) {
+            showToast(err.message || 'Failed to save courier.', 'error');
+         } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Courier';
+         }
+      }
+
+      async function deleteCourier(id) {
+         if (!confirm('Delete this courier partner?')) return;
+         try {
+            await HeelsUpAuth.api(`/api/admin/shipping/couriers/${id}`, { method: 'DELETE' });
+            showToast('Courier deleted successfully.');
+            loadCouriers();
+            loadSummaryStats();
+         } catch (e) {
+            showToast(e.message || 'Failed to delete courier.', 'error');
+         }
+      }
+
+      // ── COD SETTINGS ──────────────────────────────────
+      async function loadCodSettings() {
+         document.getElementById('codContainer').innerHTML = '<div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading COD settings...</div>';
+         try {
+            const res = await HeelsUpAuth.api('/api/admin/shipping/cod');
+            renderCodSettings(res);
+         } catch (e) {
+            document.getElementById('codContainer').innerHTML = '<div class="empty-state"><i class="fa-solid fa-circle-exclamation"></i><p>Failed to load COD settings.</p></div>';
+         }
+      }
+
+      function renderCodSettings(s) {
+         document.getElementById('codContainer').innerHTML = `
+                <div class="settings-grid">
+                    <div class="setting-block">
+                        <div class="setting-label">Global COD</div>
+                        <label class="toggle" style="transform:scale(1.2)">
+                            <input type="checkbox" id="codGlobalToggle" ${s.enabled ? 'checked' : ''}>
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <p style="font-size:.75rem;color:var(--muted);margin-top:10px">Enable Cash on Delivery across all zones</p>
+                    </div>
+
+                    <div class="setting-block">
+                        <div class="setting-label">COD Fee</div>
+                        <div class="rate-editor">
+                            <span>₹</span>
+                            <input type="number" class="rate-input" id="codCharge" value="${s.extra_charge || 0}" style="width:100px">
+                        </div>
+                        <p style="font-size:.75rem;color:var(--muted);margin-top:8px">Extra charge for COD orders</p>
+                    </div>
+
+                    <div class="setting-block">
+                        <div class="setting-label">Max Order Value</div>
+                        <div class="rate-editor">
+                            <span>₹</span>
+                            <input type="number" class="form-input" id="codMaxOrder" value="${s.max_order_amount || 10000}" style="max-width:140px">
+                        </div>
+                        <p style="font-size:.75rem;color:var(--muted);margin-top:8px">Maximum order value for COD</p>
+                    </div>
+
+                    <div class="setting-block">
+                        <div class="setting-label">Min Order Value</div>
+                        <div class="rate-editor">
+                            <span>₹</span>
+                            <input type="number" class="form-input" id="codMinOrder" value="${s.min_order_amount || 0}" style="max-width:140px">
+                        </div>
+                        <p style="font-size:.75rem;color:var(--muted);margin-top:8px">Minimum order value for COD</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:24px">
+                    <div class="setting-label" style="margin-bottom:12px"><i class="fa-solid fa-map-pin" style="color:var(--primary)"></i> Zone Overrides</div>
+                    <div id="codZoneSettings"><div class="loading-state"><i class="fa-solid fa-spinner"></i></div></div>
+                </div>
+            `;
+         loadCodZoneSettings(s.zone_overrides || {});
+      }
+
+      async function loadCodZoneSettings(overrides) {
+         if (!allZones.length) {
+            try {
+               const r = await HeelsUpAuth.api('/api/admin/shipping/zones');
+               allZones = r.zones || [];
+            } catch (e) { }
+         }
+
+         if (!allZones.length) {
+            document.getElementById('codZoneSettings').innerHTML = '<div class="empty-state"><i class="fa-solid fa-map-location-dot"></i><p>Create zones first.</p></div>';
+            return;
+         }
+
+         document.getElementById('codZoneSettings').innerHTML = `
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px">
+                    ${allZones.map(z => `
+                        <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-md);padding:14px;display:flex;justify-content:space-between;align-items:center">
+                            <div>
+                                <div style="font-size:.85rem;font-weight:700;color:var(--text)">${esc(z.name)}</div>
+                                <div style="font-size:.7rem;color:var(--muted);margin-top:2px">Zone Control</div>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="cod-zone-${z.id}" ${overrides[z.id] !== false ? 'checked' : ''}>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+      }
+
+      async function saveCodSettings() {
+         const zone_overrides = {};
+         allZones.forEach(z => {
+            const el = document.getElementById(`cod-zone-${z.id}`);
+            if (el) zone_overrides[z.id] = el.checked;
+         });
+
+         const data = {
+            enabled: document.getElementById('codGlobalToggle')?.checked ? 1 : 0,
+            extra_charge: Number(document.getElementById('codCharge')?.value || 0),
+            max_order_amount: Number(document.getElementById('codMaxOrder')?.value || 10000),
+            min_order_amount: Number(document.getElementById('codMinOrder')?.value || 0),
+            zone_overrides
+         };
+
+         try {
+            await HeelsUpAuth.api('/api/admin/shipping/cod', {
+               method: 'PUT',
+               body: JSON.stringify(data)
+            });
+            showToast('COD settings saved successfully!');
+            loadSummaryStats();
+         } catch (e) {
+            showToast(e.message || 'Failed to save COD settings.', 'error');
+         }
+      }
+
+      // ── PINCODES ──────────────────────────────────────
+      async function loadPincodes() {
+         document.getElementById('pincodesTableBody').innerHTML = '<tr><td colspan="6"><div class="loading-state"><i class="fa-solid fa-spinner"></i>Loading pincodes...</div></td></tr>';
+
+         const zone = document.getElementById('pincodeZoneFilter').value;
+         const q = document.getElementById('pincodeSearch')?.value || '';
+         const offset = (pincodePage - 1) * PINCODE_PAGE_SIZE;
+
+         try {
+            const url = `/api/admin/shipping/pincodes?limit=${PINCODE_PAGE_SIZE}&offset=${offset}${zone ? '&zone_id=' + zone : ''}${q ? '&q=' + encodeURIComponent(q) : ''}`;
+            const res = await HeelsUpAuth.api(url);
+            allPincodes = res.pincodes || [];
+            const total = res.total || 0;
+
+            renderPincodeTable(allPincodes);
+
+            document.getElementById('pincodeCount').textContent = `Showing ${offset + 1}-${Math.min(offset + PINCODE_PAGE_SIZE, total)} of ${total.toLocaleString('en-IN')}`;
+            document.getElementById('prevPinBtn').disabled = pincodePage <= 1;
+            document.getElementById('nextPinBtn').disabled = offset + PINCODE_PAGE_SIZE >= total;
+
+            const filterEl = document.getElementById('pincodeZoneFilter');
+            if (filterEl.options.length <= 1 && (res.zones || []).length) {
+               res.zones.forEach(z => {
+                  const o = document.createElement('option');
+                  o.value = z.id;
+                  o.textContent = z.name;
+                  filterEl.appendChild(o);
+               });
+            }
+         } catch (e) {
+            document.getElementById('pincodesTableBody').innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa-solid fa-circle-exclamation"></i><p>Failed to load pincodes.</p></div></td></tr>';
+         }
+      }
+
+      function renderPincodeTable(pincodes) {
+         const tbody = document.getElementById('pincodesTableBody');
+         if (!pincodes.length) {
+            tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa-solid fa-location-pin"></i><p>No pincodes found.</p></div></td></tr>';
+            return;
+         }
+
+         tbody.innerHTML = pincodes.map(p => `
+                <tr>
+                    <td><span class="tbl-mono">${esc(p.pincode)}</span></td>
+                    <td><span class="badge badge-zone">${esc(p.zone_name || 'Unmapped')}</span></td>
+                    <td class="tbl-name">${esc(p.city || '—')}</td>
+                    <td>${esc(p.state || '—')}</td>
+                    <td style="color:var(--muted);font-size:.75rem">${fmtDate(p.created_at)}</td>
+                    <td>
+                        <button class="btn-icon btn-del" onclick="deletePincode('${esc(p.pincode)}')" title="Delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+      }
+
+      let searchTimeout;
+      function filterPincodes() {
+         clearTimeout(searchTimeout);
+         searchTimeout = setTimeout(() => {
+            pincodePage = 1;
+            loadPincodes();
+         }, 400);
+      }
+
+      async function checkPincode() {
+         const pin = document.getElementById('pincodeCheck').value.trim();
+         const el = document.getElementById('pincodeResult');
+
+         if (pin.length !== 6) {
+            showToast('Enter a valid 6-digit pincode.', 'warning');
+            return;
+         }
+
+         el.style.display = 'block';
+         el.className = 'pincode-result';
+         el.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
+
+         try {
+            const res = await HeelsUpAuth.api(`/api/admin/shipping/pincodes/check?pincode=${pin}`);
+            if (res.serviceable) {
+               el.className = 'pincode-result serviceable';
+               el.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>${pin}</strong> is serviceable via <strong>${esc(res.zone_name || '—')}</strong>. Estimated delivery: <strong>${esc(res.delivery_days || '—')} days</strong>.`;
+            } else {
+               el.className = 'pincode-result not-serviceable';
+               el.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>${pin}</strong> is not serviceable.`;
+            }
+         } catch (e) {
+            el.style.display = 'none';
+            showToast('Check failed.', 'error');
+         }
+      }
+
+      async function deletePincode(pincode) {
+         if (!confirm(`Delete pincode ${pincode}?`)) return;
+         try {
+            await HeelsUpAuth.api(`/api/admin/shipping/pincodes/${pincode}`, { method: 'DELETE' });
+            showToast(`Pincode ${pincode} deleted.`);
+            loadPincodes();
+            loadSummaryStats();
+         } catch (e) {
+            showToast('Failed to delete pincode.', 'error');
+         }
+      }
+
+      // ── BULK CSV UPLOAD ───────────────────────────────
+      function handleDragOver(e) {
+         e.preventDefault();
+         document.getElementById('dropZone').classList.add('drag-over');
+      }
+
+      function handleDragLeave() {
+         document.getElementById('dropZone').classList.remove('drag-over');
+      }
+
+      function handleDrop(e) {
+         e.preventDefault();
+         document.getElementById('dropZone').classList.remove('drag-over');
+         const f = e.dataTransfer.files[0];
+         if (f) processCSV(f);
+      }
+
+      function handleCsvUpload(e) {
+         const f = e.target.files[0];
+         if (f) processCSV(f);
+      }
+
+      async function processCSV(file) {
+         if (!file.name.endsWith('.csv')) {
+            showToast('Please upload a valid CSV file.', 'warning');
+            return;
+         }
+
+         const resEl = document.getElementById('uploadResult');
+         resEl.className = 'upload-result loading';
+         resEl.style.display = 'flex';
+         resEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing CSV...';
+
+         try {
+            const text = await file.text();
+            const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+            const header = lines[0].toLowerCase();
+            const start = header.includes('pincode') ? 1 : 0;
+
+            const rows = [];
+            for (let i = start; i < lines.length; i++) {
+               const cols = lines[i].split(',');
+               if (cols[0] && cols[0].trim().length === 6 && /^\d+$/.test(cols[0].trim())) {
+                  rows.push({
+                     pincode: cols[0].trim(),
+                     zone_id: cols[1] ? Number(cols[1].trim()) : null,
+                     city: cols[2] ? cols[2].trim() : '',
+                     state: cols[3] ? cols[3].trim() : ''
+                  });
+               }
+            }
+
+            if (!rows.length) {
+               resEl.className = 'upload-result error';
+               resEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> No valid pincodes found in CSV.';
+               return;
+            }
+
+            resEl.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${rows.length} pincodes...`;
+
+            const res = await HeelsUpAuth.api('/api/admin/shipping/pincodes/bulk', {
+               method: 'POST',
+               body: JSON.stringify({ pincodes: rows })
+            });
+
+            resEl.className = 'upload-result success';
+            resEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> Successfully imported ${res.inserted || rows.length} pincodes!${res.skipped ? ` (${res.skipped} duplicates skipped)` : ''}`;
+
+            showToast('CSV uploaded successfully!');
+            pincodePage = 1;
+            loadPincodes();
+            loadSummaryStats();
+         } catch (e) {
+            resEl.className = 'upload-result error';
+            resEl.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Upload failed: ${esc(e.message)}`;
+            showToast('CSV upload failed.', 'error');
+         }
+      }
+
+      function downloadSample() {
+         const csv = 'pincode,zone_id,city,state\n302001,1,Jaipur,Rajasthan\n342001,1,Jodhpur,Rajasthan\n110001,2,New Delhi,Delhi\n400001,2,Mumbai,Maharashtra';
+         const blob = new Blob([csv], { type: 'text/csv' });
+         const a = document.createElement('a');
+         a.href = URL.createObjectURL(blob);
+         a.download = 'heelsup_pincode_sample.csv';
+         a.click();
+      }
+
+      // Close modals on backdrop click
+      ['zoneModal', 'courierModal'].forEach(id => {
+         document.getElementById(id).addEventListener('click', function (e) {
+            if (e.target === this) this.classList.remove('show');
+         });
+      });
+   </script>
+</body>
+
+</html>

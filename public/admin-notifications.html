@@ -1,0 +1,1024 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notifications â€” HeelsUp Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a96e;
+            --gold-dark: #8b6914;
+            --bg: #f1f5f9;
+            --sidebar: #0f172a;
+            --card: #fff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --muted: #64748b;
+            --success: #22c55e;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --info: #3b82f6;
+            --info-light: #dbeafe;
+            --admin-card-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--sidebar);
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 62px;
+        }
+
+        .sidebar-logo {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: .95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 10px 0;
+        }
+
+        .nav-label {
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: #475569;
+            padding: 13px 18px 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            color: #94a3b8;
+            font-size: .83rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all .2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: #1e293b;
+            color: var(--gold);
+            border-left-color: var(--gold);
+        }
+
+        .nav-item i {
+            width: 16px;
+            text-align: center;
+            font-size: .83rem;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--gold);
+            color: #0f172a;
+            font-size: .6rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 20px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .s-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: .8rem;
+            flex-shrink: 0;
+        }
+
+        .s-name {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .s-role {
+            font-size: .65rem;
+            color: #64748b;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 7px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .05);
+            color: #94a3b8;
+            font-size: .78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            transition: all .2s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, .15);
+            color: #f87171;
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                transition: left .3s;
+                width: 240px;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* Topbar */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .topbar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-menu {
+            padding: 8px;
+            border-radius: 8px;
+            color: #64748b;
+            display: none;
+        }
+
+        .btn-menu:hover {
+            background: #f1f5f9;
+        }
+
+        @media(max-width:900px) {
+            .btn-menu {
+                display: flex;
+            }
+        }
+
+        /* Main Content Area */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .page-header p {
+            font-size: .85rem;
+            color: var(--muted);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 600;
+            transition: all .2s;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--border);
+            color: var(--muted);
+            background: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: .76rem;
+            border-radius: 7px;
+        }
+
+        /* Notifications Specific Styles */
+        .notif-page-layout {
+            background: #fff;
+            border-radius: var(--admin-card-radius);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+            padding: 24px;
+        }
+
+        .notif-filter-bar {
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+            padding-bottom: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .notif-tabs {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+        }
+
+        .notif-tab {
+            font-size: .87rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            position: relative;
+            padding-bottom: 16px;
+            transition: color .2s;
+            white-space: nowrap;
+        }
+
+        .notif-tab:hover {
+            color: var(--text);
+        }
+
+        .notif-tab.active {
+            color: var(--gold);
+        }
+
+        .notif-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .notif-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .date-divider {
+            font-size: .75rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin: 16px 0 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin-left: 12px;
+        }
+
+        .notif-list-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all .2s;
+            background: #fff;
+            align-items: flex-start;
+        }
+
+        .notif-list-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+
+        .notif-list-item.unread {
+            background: #fefef8;
+            border-left: 4px solid var(--gold);
+        }
+
+        .notif-icon-lg {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .icon-order {
+            background: rgba(59, 130, 246, .1);
+            color: var(--info);
+        }
+
+        .icon-alert {
+            background: rgba(239, 68, 68, .1);
+            color: var(--danger);
+        }
+
+        .icon-success {
+            background: rgba(34, 197, 94, .1);
+            color: var(--success);
+        }
+
+        .icon-system {
+            background: rgba(148, 163, 184, .1);
+            color: var(--muted);
+        }
+
+        .notif-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notif-title {
+            font-weight: 600;
+            font-size: .9rem;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .notif-desc {
+            font-size: .83rem;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .notif-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .75rem;
+            color: #94a3b8;
+        }
+
+        .notif-action-btn {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .notif-action-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px dashed var(--border);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .empty-state p {
+            font-size: .9rem;
+        }
+
+        /* Toast */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: .83rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+            animation: toastIn .3s ease;
+            min-width: 240px;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+            font-size: .87rem;
+        }
+
+        .loading-spinner i {
+            font-size: 1.8rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .mob-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 998;
+        }
+
+        .badge-gold {
+            background: rgba(201, 169, 110, 0.15);
+            color: var(--gold-dark);
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mob-overlay" id="mobOverlay" onclick="closeSidebar()"></div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <div class="wrap">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">H</div>
+                <div>
+                    <div style="font-size:.87rem;font-weight:700;color:#f1f5f9">HeelsUp</div>
+                    <div style="font-size:.62rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em">Admin Panel
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-label">Main</div>
+                <a class="nav-item" href="admin.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                <div class="nav-label">Catalogue</div>
+                <a class="nav-item" href="admin-products.html"><i class="fa-solid fa-box"></i> Products</a>
+                <a class="nav-item" href="admin-categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+                <a class="nav-item" href="admin-collections.html"><i class="fa-solid fa-swatchbook"></i> Collections</a>
+                <a class="nav-item" href="admin-inventory.html"><i class="fa-solid fa-warehouse"></i> Inventory</a>
+
+                <div class="nav-label">Sales & Customers</div>
+                <a class="nav-item" href="admin-orders.html"><i class="fa-solid fa-bag-shopping"></i> Orders</a>
+                <a class="nav-item" href="admin-customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+                <a class="nav-item" href="admin-coupons.html"><i class="fa-solid fa-ticket"></i> Coupons</a>
+                <a class="nav-item" href="admin-reviews.html"><i class="fa-solid fa-star"></i> Reviews</a>
+                <a class="nav-item" href="admin-orders.html?tab=exchange"><i class="fa-solid fa-rotate-left"></i> Exchanges</a>
+                <a class="nav-item" href="admin-pos.html"><i class="fa-solid fa-cash-register"></i> POS / Offline
+                    Sales</a>
+
+                <div class="nav-label">Marketing & Content</div>
+                <a class="nav-item" href="admin-banners.html"><i class="fa-solid fa-image"></i> Banners</a>
+                <a class="nav-item" href="admin-blog.html"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                <a class="nav-item" href="admin-pages.html"><i class="fa-solid fa-file-lines"></i> Pages</a>
+                <a class="nav-item active" href="admin-notifications.html"><i class="fa-solid fa-bell"></i>
+                    Notifications</a>
+
+                <div class="nav-label">Reports</div>
+                <a class="nav-item" href="admin-reports.html"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a class="nav-item" href="admin-analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+
+                <div class="nav-label">System</div>
+                <a class="nav-item" href="admin-shipping.html"><i class="fa-solid fa-truck-fast"></i> Shipping</a>
+                <a class="nav-item" href="admin-taxes.html"><i class="fa-solid fa-file-invoice-dollar"></i> Taxes</a>
+                <a class="nav-item" href="admin-staff.html"><i class="fa-solid fa-users-gear"></i> Staff</a>
+                <a class="nav-item" href="admin-settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="s-avatar" id="s-avatar">A</div>
+                    <div>
+                        <div class="s-name" id="s-name">Admin</div>
+                        <div class="s-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <button class="btn-menu" id="menuBtn" onclick="toggleSidebar()"><i
+                        class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title">Notifications</div>
+                <div class="topbar-right">
+                    <button class="btn btn-sm btn-outline" onclick="loadNotifications()"><i
+                            class="fa-solid fa-rotate-right"></i> Refresh</button>
+                    <button class="btn btn-sm btn-outline" onclick="window.open('index.html','_blank')"><i
+                            class="fa-solid fa-store"></i> View Store</button>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="notif-page-layout">
+
+                    <div class="page-header" style="margin-bottom: 24px;">
+                        <div>
+                            <h2>Your Inbox</h2>
+                            <p>All system alerts, order updates, and messages in one place.</p>
+                        </div>
+                        <button class="btn btn-outline" onclick="markAllRead()">
+                            <i class="fa-solid fa-check-double"></i> Mark all as read
+                        </button>
+                    </div>
+
+                    <div class="notif-filter-bar">
+                        <div class="notif-tabs" id="notifTabs">
+                            <div class="notif-tab active" data-filter="all" onclick="setFilter('all', this)">All</div>
+                            <div class="notif-tab" data-filter="unread" onclick="setFilter('unread', this)">Unread <span
+                                    id="unreadBadge" class="badge-gold" style="display:none;">0</span></div>
+                            <div class="notif-tab" data-filter="order" onclick="setFilter('order', this)">Orders</div>
+                            <div class="notif-tab" data-filter="alert" onclick="setFilter('alert', this)">Alerts</div>
+                            <div class="notif-tab" data-filter="system" onclick="setFilter('system', this)">System</div>
+                        </div>
+                    </div>
+
+                    <div class="notif-timeline" id="notificationsContainer">
+                        <div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Fetching live notifications...
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app-config.js"></script>
+    <script src="app-auth.js"></script>
+  <script src="admin-enterprise.js"></script>
+    <script>
+        // State
+        let allNotifications = [];
+        let filteredNotifications = [];
+        let currentFilter = 'all';
+
+        // Auth
+        try {
+            const user = HeelsUpAuth.getUser();
+            if (!user || user.role !== 'admin') {
+                window.location = 'login.html?redirect=admin-notifications.html';
+            }
+            const uname = (user?.firstName || user?.first_name || 'Admin');
+            document.getElementById('s-avatar').textContent = uname.charAt(0).toUpperCase();
+            document.getElementById('s-name').textContent = uname;
+        } catch (e) {
+            console.error("Auth initialization failed", e);
+        }
+
+        // Sidebar logic
+        function toggleSidebar() {
+            const s = document.getElementById('sidebar');
+            s.classList.toggle('open');
+            document.getElementById('mobOverlay').style.display = s.classList.contains('open') ? 'block' : 'none';
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('mobOverlay').style.display = 'none';
+        }
+        function doLogout() {
+            try { HeelsUpAuth.clearSession(); } catch (e) { }
+            window.location = 'login.html';
+        }
+
+        function showToast(msg, type = 'success') {
+            const c = document.getElementById('toastWrap');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            const icon = type === 'error' ? 'fa-circle-xmark' : (type === 'warning' ? 'fa-triangle-exclamation' : 'fa-circle-check');
+            t.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+            c.appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0'; t.style.transition = 'opacity .3s';
+                setTimeout(() => t.remove(), 300);
+            }, 4000);
+        }
+
+        function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+        // Formatting utilities
+        function timeAgo(dateParam) {
+            if (!dateParam) return '';
+            const date = new Date(dateParam);
+            const seconds = Math.floor((new Date() - date) / 1000);
+            let interval = seconds / 31536000;
+            if (interval > 1) return Math.floor(interval) + " years ago";
+            interval = seconds / 2592000;
+            if (interval > 1) return Math.floor(interval) + " months ago";
+            interval = seconds / 86400;
+            if (interval > 1) return Math.floor(interval) + " days ago";
+            interval = seconds / 3600;
+            if (interval > 1) return Math.floor(interval) + " hours ago";
+            interval = seconds / 60;
+            if (interval > 1) return Math.floor(interval) + " minutes ago";
+            return Math.floor(seconds) + " seconds ago";
+        }
+
+        function getDateGroup(dateParam) {
+            const date = new Date(dateParam);
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            if (date.toDateString() === today.toDateString()) return 'Today';
+            if (date.toDateString() === yesterday.toDateString()) return 'Yesterday';
+            return date.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Live API Fetching
+        async function loadNotifications() {
+            const container = document.getElementById('notificationsContainer');
+            container.innerHTML = '<div class="loading-spinner"><i class="fa-solid fa-spinner"></i>Fetching live notifications...</div>';
+
+            try {
+                // Try fetching live notifications
+                const data = await HeelsUpAuth.api('/api/admin/notifications');
+                allNotifications = Array.isArray(data) ? data : (data.notifications || []);
+
+                // Sort newest first
+                allNotifications.sort((a, b) => new Date(b.created_at || Date.now()) - new Date(a.created_at || Date.now()));
+
+                updateUnreadBadge();
+                applyFilter();
+            } catch (e) {
+                console.error('API Error:', e);
+                // No dummy data. Show empty/error state.
+                allNotifications = [];
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-regular fa-bell-slash"></i>
+                        <h3>No Notifications</h3>
+                        <p>You're all caught up. No new alerts to display.</p>
+                    </div>`;
+                updateUnreadBadge();
+            }
+        }
+
+        function updateUnreadBadge() {
+            const unreadCount = allNotifications.filter(n => !n.is_read).length;
+            const badge = document.getElementById('unreadBadge');
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function setFilter(filterType, element) {
+            currentFilter = filterType;
+            // Update active tab UI
+            const tabs = document.querySelectorAll('.notif-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+
+            applyFilter();
+        }
+
+        function applyFilter() {
+            if (currentFilter === 'all') {
+                filteredNotifications = allNotifications;
+            } else if (currentFilter === 'unread') {
+                filteredNotifications = allNotifications.filter(n => !n.is_read);
+            } else {
+                // filtering by specific type (order, alert, system, etc)
+                filteredNotifications = allNotifications.filter(n => (n.type || '').toLowerCase() === currentFilter);
+            }
+            renderNotifications();
+        }
+
+        function renderNotifications() {
+            const container = document.getElementById('notificationsContainer');
+
+            if (filteredNotifications.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-regular fa-bell-slash"></i>
+                        <h3>No Notifications Found</h3>
+                        <p>There are no notifications matching this filter.</p>
+                    </div>`;
+                return;
+            }
+
+            let html = '';
+            let currentGroup = '';
+
+            const iconMap = {
+                order: { cls: 'icon-order', icon: 'fa-bag-shopping' },
+                alert: { cls: 'icon-alert', icon: 'fa-triangle-exclamation' },
+                review: { cls: 'icon-success', icon: 'fa-star' },
+                system: { cls: 'icon-system', icon: 'fa-cloud-arrow-down' },
+                return: { cls: 'icon-order', icon: 'fa-rotate-left' },
+                security: { cls: 'icon-system', icon: 'fa-shield-halved' }
+            };
+
+            filteredNotifications.forEach(notif => {
+                const group = getDateGroup(notif.created_at || new Date());
+                if (group !== currentGroup) {
+                    html += `<div class="date-divider">${group}</div>`;
+                    currentGroup = group;
+                }
+
+                const typeKey = (notif.type || 'system').toLowerCase();
+                const iconDef = iconMap[typeKey] || iconMap.system;
+                const unreadClass = notif.is_read ? '' : 'unread';
+
+                // Determine action text/link
+                let actionBtn = '';
+                if (notif.action_link) {
+                    actionBtn = `<a href="${esc(notif.action_link)}" class="notif-action-btn">View Details</a>`;
+                }
+
+                // Mark read button (if unread)
+                let markReadBtn = '';
+                if (!notif.is_read) {
+                    markReadBtn = `<button class="notif-action-btn" onclick="markAsRead(${notif.id})" title="Mark as Read"><i class="fa-solid fa-check"></i></button>`;
+                }
+
+                html += `
+                <div class="notif-list-item ${unreadClass}">
+                    <div class="notif-icon-lg ${iconDef.cls}"><i class="fa-solid ${iconDef.icon}"></i></div>
+                    <div class="notif-content">
+                        <div class="notif-title">${esc(notif.title || 'Notification')}</div>
+                        <div class="notif-desc">${esc(notif.message || '')}</div>
+                        <div class="notif-meta">
+                            <span><i class="fa-regular fa-clock"></i> ${timeAgo(notif.created_at || new Date())}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        ${actionBtn}
+                        ${markReadBtn}
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        async function markAsRead(id) {
+            try {
+                // Live API call
+                await HeelsUpAuth.api(`/api/admin/notifications/${id}/read`, { method: 'PUT' });
+
+                // Update local state instantly for snappy UI
+                const notif = allNotifications.find(n => n.id === id);
+                if (notif) notif.is_read = true;
+
+                updateUnreadBadge();
+                applyFilter();
+            } catch (e) {
+                showToast(e.message || 'Failed to mark as read', 'error');
+            }
+        }
+
+        async function markAllRead() {
+            const unreadExist = allNotifications.some(n => !n.is_read);
+            if (!unreadExist) {
+                showToast('All notifications are already read.', 'info');
+                return;
+            }
+
+            try {
+                // Live API call
+                await HeelsUpAuth.api('/api/admin/notifications/read-all', { method: 'PUT' });
+
+                // Update local state
+                allNotifications.forEach(n => n.is_read = true);
+
+                showToast('All notifications marked as read.');
+                updateUnreadBadge();
+                applyFilter();
+            } catch (e) {
+                showToast(e.message || 'Failed to update notifications', 'error');
+            }
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', loadNotifications);
+    </script>
+</body>
+
+</html>
