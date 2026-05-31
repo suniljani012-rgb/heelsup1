@@ -53,10 +53,12 @@ export async function authenticate(request, env) {
 
     // Slow path — check KV store
     try {
-        const blacklisted = await env.KV.get(`blacklist:${token}`);
-        if (blacklisted) {
-            _cacheBlacklist(token); // warm the cache so subsequent requests skip KV
-            return { user: null, error: unauthorized('Token revoked') };
+        if (env.KV) {
+            const blacklisted = await env.KV.get(`blacklist:${token}`);
+            if (blacklisted) {
+                _cacheBlacklist(token); // warm the cache so subsequent requests skip KV
+                return { user: null, error: unauthorized('Token revoked') };
+            }
         }
     } catch (e) {
         // KV unavailable — allow request to proceed rather than hard-blocking all users

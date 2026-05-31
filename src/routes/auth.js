@@ -233,6 +233,9 @@ export async function authRouter(request, env) {
             return ok({ email }, `OTP sent to ${masked(email)}`);
         } catch (e) {
             console.error('Send OTP error:', e);
+            if (e?.message?.includes('no such table')) {
+                return error('Database tables not found. Please run: wrangler d1 execute heelsup-live --local --file=schema/schema.sql', 500);
+            }
             return serverError('Failed to send OTP');
         }
     }
@@ -318,6 +321,9 @@ export async function authRouter(request, env) {
             return created({ token, user: mapped }, 'Registration successful');
         } catch (e) {
             console.error('Register error:', e);
+            if (e?.message?.includes('no such table')) {
+                return error('Database tables not found. Please run: wrangler d1 execute heelsup-live --local --file=schema/schema.sql', 500);
+            }
             return serverError('Registration failed');
         }
     }
@@ -335,20 +341,24 @@ export async function authRouter(request, env) {
             // Rate limit check (per IP)
             const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
             const rateLimitKey = `ratelimit:login:${ip}`;
-            const attempts = parseInt(await env.KV.get(rateLimitKey) || '0');
+            const attempts = env.KV ? parseInt(await env.KV.get(rateLimitKey) || '0') : 0;
             if (attempts >= 5) return error('Too many login attempts. Try after 1 minute.', 429);
 
             const user = await env.DB.prepare('SELECT * FROM users WHERE email = ?').bind(email).first();
 
             if (!user || !(await verifyPassword(password, user.password_hash))) {
-                await env.KV.put(rateLimitKey, String(attempts + 1), { expirationTtl: 60 });
+                if (env.KV) {
+                    await env.KV.put(rateLimitKey, String(attempts + 1), { expirationTtl: 60 });
+                }
                 return unauthorized('Invalid email or password');
             }
 
             if (user.is_blocked) return unauthorized('Your account has been suspended. Contact support.');
 
             // Reset rate limit on success
-            await env.KV.delete(rateLimitKey);
+            if (env.KV) {
+                await env.KV.delete(rateLimitKey);
+            }
 
             const mapped = mapUser(user);
             const isAdminUser = ['admin', 'staff', 'manager'].includes(mapped.role);
@@ -368,7 +378,7 @@ export async function authRouter(request, env) {
                 const otpKey = `otp:admin_login:${email}`;
 
                 const resendKey = `otp_resend:admin_login:${email}`;
-                const resendCount = parseInt(await env.KV.get(resendKey) || '0');
+                const resendCount = env.KV ? parseInt(await env.KV.get(resendKey) || '0') : 0;
                 if (resendCount >= 3) return error('Too many OTP requests. Wait 1 hour.', 429);
 
                 if (env.KV) {
@@ -431,6 +441,9 @@ export async function authRouter(request, env) {
             return ok({ token, user: mapped }, 'Login successful');
         } catch (e) {
             console.error('Login error:', e);
+            if (e?.message?.includes('no such table')) {
+                return error('Database tables not found. Please run: wrangler d1 execute heelsup-live --local --file=schema/schema.sql', 500);
+            }
             return serverError('Login failed');
         }
     }
@@ -532,7 +545,7 @@ export async function authRouter(request, env) {
     if (path === '/logout' && method === 'POST') {
         const authHeader = request.headers.get('Authorization') || '';
         const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
-        if (token) {
+        if (token && env.KV) {
             await env.KV.put(`blacklist:${token}`, '1', { expirationTtl: 86400 * 7 });
         }
         return ok(null, 'Logged out successfully');
@@ -569,6 +582,9 @@ export async function authRouter(request, env) {
             return ok({ email }, 'If this email exists, an OTP has been sent.');
         } catch (e) {
             console.error('Forgot password error:', e);
+            if (e?.message?.includes('no such table')) {
+                return error('Database tables not found. Please run: wrangler d1 execute heelsup-live --local --file=schema/schema.sql', 500);
+            }
             return serverError('Failed to process forgot password');
         }
     }
@@ -653,8 +669,6 @@ export async function authRouter(request, env) {
             if (!user) {
                 const randPw = Math.random().toString(36) + Math.random().toString(36);
                 const hash = await hashPassword(randPw);
-                const fname = data.given_name || data.name || 'Google User';
-                const lname = data.family_name || '';
 
                 const result = await env.DB.prepare(
                     "INSERT INTO users (first_name, last_name, email, password_hash, role, email_verified, staff_permissions, created_at, updated_at) VALUES (?, ?, ?, ?, 'customer', 1, '[]', ?, ?)"
@@ -694,6 +708,9 @@ export async function authRouter(request, env) {
             return ok({ token, user: mapped }, 'Login successful');
         } catch (e) {
             console.error('Google authentication error:', e);
+            if (e?.message?.includes('no such table')) {
+                return error('Database tables not found. Please run: wrangler d1 execute heelsup-live --local --file=schema/schema.sql', 500);
+            }
             return serverError('Google authentication failed');
         }
     }
