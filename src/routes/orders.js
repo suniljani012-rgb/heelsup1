@@ -94,6 +94,16 @@ function formatItem(it) {
 // ── Stock helpers ─────────────────────────────────────────────────────────────
 
 async function deductSizeStock(env, productId, sizeLabel, qty) {
+  let prodName = 'Product';
+  let qtyBefore = 0;
+  try {
+    const prod = await env.DB.prepare('SELECT name, stock FROM products WHERE id = ?').bind(productId).first();
+    if (prod) {
+      prodName = prod.name || 'Product';
+      qtyBefore = prod.stock || 0;
+    }
+  } catch (e) {}
+
   if (sizeLabel) {
     const row = await env.DB.prepare(
       'SELECT stock FROM product_size_stock WHERE product_id=? AND size_label=?'
@@ -105,9 +115,19 @@ async function deductSizeStock(env, productId, sizeLabel, qty) {
       ).bind(newStock, productId, sizeLabel).run();
     }
   }
+  
+  const qtyAfter = Math.max(0, qtyBefore - qty);
   await env.DB.prepare(
-    "UPDATE products SET stock=MAX(0, stock-?), sold_count=COALESCE(sold_count,0)+?, updated_at=datetime('now') WHERE id=?"
-  ).bind(qty, qty, productId).run();
+    "UPDATE products SET stock=?, sold_count=COALESCE(sold_count,0)+?, updated_at=datetime('now') WHERE id=?"
+  ).bind(qtyAfter, qty, productId).run();
+
+  try {
+    await env.DB.prepare(
+      "INSERT INTO inventory_log (product_id, product_name, change_type, quantity_before, quantity_change, quantity_after, reason, created_at) VALUES (?,?,'sale',?,?,?,?,datetime('now'))"
+    ).bind(productId, prodName, qtyBefore, -qty, qtyAfter, `Sale: size ${sizeLabel || 'default'}`).run();
+  } catch (e) {
+    console.error('Inventory log insert error:', e);
+  }
 }
 
 async function restoreSizeStock(env, orderId) {

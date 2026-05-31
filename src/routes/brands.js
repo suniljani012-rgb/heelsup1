@@ -15,15 +15,20 @@ export async function brandsRouter(request, env) {
     const path = url.pathname.replace('/api/brands', '') || '/';
     const method = request.method;
 
-    // ── GET /api/brands — public list of active brands ──────────────────────
+    // ── GET /api/brands — public or admin list of brands ─────────────────────
     if (path === '/' && method === 'GET') {
         try {
-            const rows = await env.DB.prepare(
-                `SELECT id, name, slug, description, logo_url, sort_order
-                 FROM brands
-                 WHERE is_active = 1
-                 ORDER BY sort_order ASC, name ASC`
-            ).all();
+            const isAll = url.searchParams.get('all') === 'true';
+            let query = `SELECT id, name, slug, description, logo_url, sort_order, is_active FROM brands ORDER BY sort_order ASC, name ASC`;
+            
+            if (!isAll) {
+                query = `SELECT id, name, slug, description, logo_url, sort_order, is_active FROM brands WHERE is_active = 1 ORDER BY sort_order ASC, name ASC`;
+            } else {
+                const { user, error: authError } = await requireAdmin(request, env);
+                if (authError) return authError;
+            }
+
+            const rows = await env.DB.prepare(query).all();
             return list(rows.results || []);
         } catch (e) {
             console.error('Brands list error:', e);

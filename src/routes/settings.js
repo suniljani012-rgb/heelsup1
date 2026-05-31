@@ -33,11 +33,12 @@ export async function settingsRouter(request, env) {
             }
             // Merge new values
             const merged = { ...current, ...body };
-            // Save each key individually
+            // Save each key individually, serializing objects/arrays correctly
             for (const [key, value] of Object.entries(merged)) {
+                const valStr = (typeof value === 'object' && value !== null) ? JSON.stringify(value) : String(value);
                 await env.DB.prepare(
                     "INSERT INTO settings (key, value, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at"
-                ).bind(key, typeof value === 'string' ? JSON.stringify(value) : String(value)).run();
+                ).bind(key, valStr).run();
             }
             return ok(null, 'Settings updated');
         } catch (e) { return serverError('Failed to update settings'); }

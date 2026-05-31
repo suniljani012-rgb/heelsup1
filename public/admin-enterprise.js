@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   const PAGE = (window.location.pathname.split('/').pop() || '').toLowerCase();
@@ -267,7 +267,19 @@
     });
   }
 
+  function injectBrandsLink() {
+    const categoriesLink = document.querySelector('.sidebar-nav a[href*="admin-categories.html"]');
+    if (categoriesLink && !document.querySelector('.sidebar-nav a[href*="admin-brands.html"]')) {
+      const brandsLink = document.createElement('a');
+      brandsLink.className = 'nav-item';
+      brandsLink.href = 'admin-brands.html';
+      brandsLink.innerHTML = '<i class="fa-solid fa-copyright"></i> Brands';
+      categoriesLink.parentNode.insertBefore(brandsLink, categoriesLink.nextSibling);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
+    injectBrandsLink();
     syncActiveNav();
     ensureSyncBadge();
     ensureNetworkBadge();

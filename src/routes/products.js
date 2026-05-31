@@ -553,6 +553,80 @@ export async function productsRouter(request, env) {
     }
   }
 
+  // ── POST /api/products/bulk — admin only ───────────────────────────────────
+  if (path === '/bulk' && method === 'POST') {
+    const { error: authError } = await requireAdmin(request, env);
+    if (authError) return authError;
+    try {
+      const body = await request.json();
+      const products = Array.isArray(body.products) ? body.products : [];
+      if (!products.length) return error('No products provided', 400);
+
+      let successCount = 0;
+      let failedCount = 0;
+      for (const p of products) {
+        try {
+          if (!p.name || !p.price) {
+            failedCount++;
+            continue;
+          }
+          const sku = p.sku || `HU-BULK-${Math.floor(100000 + Math.random() * 900000)}`;
+          const baseSlug = slugify(p.name);
+          const finalSlug = await uniqueSlug(env, baseSlug);
+          
+          // Check if SKU exists
+          const existing = await env.DB.prepare('SELECT id FROM products WHERE sku = ?').bind(sku).first();
+          if (existing) {
+            // Update product
+            await env.DB.prepare(`
+              UPDATE products SET
+                name = ?,
+                price = ?,
+                original_price = ?,
+                stock = ?,
+                active = ?,
+                updated_at = datetime('now')
+              WHERE id = ?
+            `).bind(
+              p.name,
+              parseFloat(p.price) || 0,
+              p.mrp ? parseFloat(p.mrp) : null,
+              parseInt(p.stock) || 0,
+              p.is_active !== undefined ? (p.is_active ? 1 : 0) : (p.active !== undefined ? (p.active ? 1 : 0) : 1),
+              existing.id
+            ).run();
+            
+            successCount++;
+          } else {
+            // Insert product
+            await env.DB.prepare(`
+              INSERT INTO products (name, slug, sku, category, price, original_price, stock, active, created_at, updated_at)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+            `).bind(
+              p.name,
+              finalSlug,
+              sku,
+              p.category || null,
+              parseFloat(p.price) || 0,
+              p.mrp ? parseFloat(p.mrp) : null,
+              parseInt(p.stock) || 0,
+              p.is_active !== undefined ? (p.is_active ? 1 : 0) : (p.active !== undefined ? (p.active ? 1 : 0) : 1)
+            ).run();
+            
+            successCount++;
+          }
+        } catch (e) {
+          console.error('Bulk import item error:', e);
+          failedCount++;
+        }
+      }
+      return ok({ success: successCount, failed: failedCount });
+    } catch (e) {
+      console.error('Bulk import error:', e);
+      return serverError('Failed to import products');
+    }
+  }
+
   // ── POST /api/products — admin only ──────────────────────────────────────
   if (path === '/' && method === 'POST') {
     const { error: authError } = await requireAdmin(request, env);

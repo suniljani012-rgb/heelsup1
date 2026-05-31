@@ -3115,7 +3115,7 @@
                 srchRes.innerHTML = prods.map(p => {
                     const img = esc((p.images && p.images[0]) || p.image_url || '');
                     const slug = encPath(p.slug || p.id);
-                    return `<a href="/product.html?id=" class="search-res-item" role="option">
+                    return `<a href="/product.html?id=${slug}" class="search-res-item" role="option">
             ${img ? `<img class="search-res-img" src="${img}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">` : '<div class="search-res-img"></div>'}
             <div style="flex:1;min-width:0">
               <div class="search-res-name">${esc(p.name)}</div>
@@ -3280,13 +3280,13 @@
             if (viewMode === 'list') {
                 return `<div class="prod-list-card" aria-label="${name}">
           <div class="list-img">
-            <a href="/product.html?id=">
+            <a href="/product.html?id=${slug}">
               <img src="${img}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=70'"/>
             </a>
           </div>
           <div class="list-body">
             <div class="prod-cat" style="font-size:11px;margin-bottom:6px">${cat}</div>
-            <h3 class="prod-name" style="font-size:18px;margin-bottom:12px"><a href="/product.html?id=">${name}</a></h3>
+            <h3 class="prod-name" style="font-size:18px;margin-bottom:12px"><a href="/product.html?id=${slug}">${name}</a></h3>
             <div class="prod-rating" style="margin-bottom:16px">
               <span class="prod-stars">${stars}</span>
               <span class="prod-rc">(${rc} Reviews)</span>
@@ -3311,7 +3311,7 @@
 
             return `<article class="prod-card" aria-label="${name}">
         <div class="prod-img-wrap">
-          <a href="/product.html?id=" aria-label="View ${name}">
+          <a href="/product.html?id=${slug}" aria-label="View ${name}">
             <img src="${img}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=70'"/>
           </a>
           <div class="prod-card-badges">
@@ -3326,14 +3326,14 @@
             <button class="prod-action-btn pab-primary" onclick="addToCartQuick(${id})">
               <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Add to Bag
             </button>
-            <a href="/product.html?id=" class="prod-action-btn pab-outline">
+            <a href="/product.html?id=${slug}" class="prod-action-btn pab-outline">
               <i class="fa-regular fa-eye" aria-hidden="true"></i> View
             </a>
           </div>
         </div>
         <div class="prod-body">
           <div class="prod-cat">${cat}</div>
-          <h3 class="prod-name"><a href="/product.html?id=">${name}</a></h3>
+          <h3 class="prod-name"><a href="/product.html?id=${slug}">${name}</a></h3>
           <div class="prod-rating">
             <span class="prod-stars" aria-label="${rating} out of 5 stars">${stars}</span>
             <span class="prod-rc">(${rc})</span>

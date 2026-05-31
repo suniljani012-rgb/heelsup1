@@ -98,25 +98,17 @@ Add this secret in GitHub → Settings → Secrets:
 
 ---
 
-## API Routes
+## Documentation
 
-```
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/products
-GET    /api/products/:id
-GET    /api/categories
-POST   /api/cart/sync
-POST   /api/orders
-POST   /api/payment/create-order
-POST   /api/payment/verify
-GET    /api/admin/dashboard     (admin only)
-```
-
-Full API docs: See each file in `src/routes/`
+Detailed references are available in the `docs` directory:
+* **[API Reference](file:///c:/Users/Cyrix%20HealthCare/Desktop/heelsup/docs/API.md)**: Specifications for auth, checkout, cart, payment, brands, and reviews endpoints.
+* **[Deployment & Configuration Guide](file:///c:/Users/Cyrix%20HealthCare/Desktop/heelsup/docs/DEPLOYMENT.md)**: Full steps for D1 database, KV storage, R2 buckets, environment variables, and Cloudflare Pages setup.
 
 ---
 
-## Payment Setup
-
-See `RAZORPAY_SETUP.md` for Razorpay integration guide.
+## Key Enterprise Features (v2.0)
+* **Dual Checkout Flow**: Seamless integration of Razorpay payment verification and Cash on Delivery (COD).
+* **Super Admin Dashboard**: Full product, category, brand, review, settings, sitemap, and coupon controls from the frontend without modifying code.
+* **Dynamic Brand Entity**: Complete database support and custom admin interface at `admin-brands.html`.
+* **Robust Edge Caching**: Advanced TTL cache structures on the Cloudflare Worker, lowering D1 query latency.
+* **PWA & Offline Support**: Client-side localStorage synchronizations and background cart updates with Service Workers.

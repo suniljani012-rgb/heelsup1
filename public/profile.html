@@ -3447,7 +3447,7 @@
                 if (!prods.length) { srchRes.innerHTML = '<p style="color:rgba(255,255,255,.28);font-size:13px;text-align:center;padding:20px">No results for "' + esc(q) + '"</p>'; return; }
                 srchRes.innerHTML = prods.map(p => {
                     const img = esc((p.images && p.images[0]) || p.image_url || '');
-                    return `<a href="/product/${encodeURIComponent(p.slug || p.id)}" class="search-res-item" role="option">
+                    return `<a href="/product.html?id=${encodeURIComponent(p.slug || p.id)}" class="search-res-item" role="option">
             ${img ? `<img class="search-res-img" src="${img}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">` : '<div class="search-res-img"></div>'}
             <div style="flex:1;min-width:0"><div class="search-res-name">${esc(p.name)}</div><div class="search-res-cat">${esc(p.category || '')}</div></div>
             <div class="search-res-price">₹${(p.price || 0).toLocaleString('en-IN')}</div>
@@ -3724,7 +3724,7 @@
                 body.innerHTML = `<div class="wishlist-grid">${wl.map((item, i) => `
           <div class="wishlist-item">
             <div class="wishlist-img">
-              <a href="/product/${encodeURIComponent(item.slug || item.id)}">
+              <a href="/product.html?id=${encodeURIComponent(item.slug || item.id)}">
                 <img src="${item.image || 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=300&q=70'}" alt="${item.name}" loading="lazy" />
               </a>
               <button class="wishlist-remove" onclick="removeFromWishlist(${i})" title="Remove">

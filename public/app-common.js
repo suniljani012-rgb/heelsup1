@@ -167,6 +167,27 @@
 
   // ── CORS-safe API fetch ─────────────────────────────────────────
   async function apiFetch(path, opts = {}) {
+    if (window.API) {
+      // Remove '/api' prefix from path if present, since window.API adds it
+      const cleanPath = path.startsWith('/api') ? path.slice(4) : path;
+      const method = (opts.method || 'GET').toLowerCase();
+      let res;
+      if (method === 'get') {
+        res = await window.API.get(cleanPath);
+      } else {
+        const bodyObj = opts.body ? (typeof opts.body === 'string' ? JSON.parse(opts.body) : opts.body) : undefined;
+        if (method === 'post') res = await window.API.post(cleanPath, bodyObj);
+        else if (method === 'put') res = await window.API.put(cleanPath, bodyObj);
+        else if (method === 'patch') res = await window.API.patch(cleanPath, bodyObj);
+        else if (method === 'delete') res = await window.API.delete(cleanPath);
+      }
+      if (!res.ok) {
+        const err = new Error((res.data && (res.data.error || res.data.message)) || 'Request failed');
+        err.status = res.status;
+        throw err;
+      }
+      return res.data;
+    }
     const token = localStorage.getItem('heelsup_token');
     const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
     if (token) headers['Authorization'] = `Bearer ${token}`;

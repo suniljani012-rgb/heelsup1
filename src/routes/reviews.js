@@ -232,17 +232,15 @@ export async function reviewsRouter(request, env) {
             ).bind(id).first();
             if (!review) return notFound('Review not found');
 
-            // helpful_votes column is optional — increment if it exists
-            // We use a safe COALESCE so it works even if the column is NULL
+            // helpful_count column matches schema
             await env.DB.prepare(
-                'UPDATE product_reviews SET helpful_votes = COALESCE(helpful_votes, 0) + 1 WHERE id = ?'
+                'UPDATE product_reviews SET helpful_count = COALESCE(helpful_count, 0) + 1 WHERE id = ?'
             ).bind(id).run();
 
             return ok({ id: parseInt(id) }, 'Helpful vote recorded');
         } catch (e) {
-            // If helpful_votes column doesn't exist yet, fail gracefully
-            console.warn('Helpful vote error (column may not exist):', e);
-            return ok({ id: parseInt(id) }, 'Helpful vote recorded');
+            console.error('Helpful vote error:', e);
+            return error('Failed to record helpful vote');
         }
     }
 

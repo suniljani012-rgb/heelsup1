@@ -1,7 +1,7 @@
 // worker/src/routes/payment.js
 import { razorpay } from '../utils/razorpay.js';
 import { ok, error as err } from '../utils/response.js';
-import { optionalAuth } from '../middleware/auth.js';
+import { requireAdmin, optionalAuth } from '../middleware/auth.js';
 import { createOrderRecord } from './orders.js';
 
 export async function paymentRouter(request, env) {
@@ -70,7 +70,7 @@ export async function paymentRouter(request, env) {
 
     // Insert payment record
     await env.DB.prepare(
-      "INSERT INTO payments (order_id, provider, provider_order_id, provider_payment_id, amount, currency, status, raw_payload, created_at) VALUES (?,'RAZORPAY',?,?,?,'INR','captured',?,?)"
+      "INSERT OR IGNORE INTO payments (order_id, provider, provider_order_id, provider_payment_id, amount, currency, status, raw_payload, created_at) VALUES (?,'RAZORPAY',?,?,?,'INR','captured',?,?)"
     ).bind(orderId, razorpay_order_id, razorpay_payment_id, pending.totalAmount, JSON.stringify(body), paidAt).run();
 
     // Increment coupon usage
@@ -78,21 +78,7 @@ export async function paymentRouter(request, env) {
       await env.DB.prepare("UPDATE coupons SET used_count = used_count + 1 WHERE code = ?").bind(pending.couponCode).run();
     }
 
-    // Decrement stock for products
-    for (const item of pending.items) {
-      if (item.productId) {
-        const prod = await env.DB.prepare("SELECT id, name, stock FROM products WHERE id=?").bind(item.productId).first();
-        if (prod) {
-          const newStock = Math.max(0, (prod.stock || 0) - (item.qty || 1));
-          await env.DB.prepare("UPDATE products SET stock=?, sold_count=sold_count+?, updated_at=? WHERE id=?").bind(newStock, item.qty || 1, paidAt, prod.id).run();
-          
-          const diff = - (item.qty || 1);
-          await env.DB.prepare(
-            "INSERT INTO inventory_log (product_id, product_name, change_type, quantity_before, quantity_change, quantity_after, reason, created_at) VALUES (?,?,'sale',?,?,?,?,datetime('now'))"
-          ).bind(prod.id, prod.name, prod.stock || 0, diff, newStock, `Razorpay sale: Order ${pending.orderNumber}`).run();
-        }
-      }
-    }
+    // Stock deduction and logging is now fully handled inside createOrderRecord -> deductSizeStock
 
     // Delete pending KV draft order
     await env.KV.delete(`pending_order:${razorpay_order_id}`).catch(() => {});
@@ -127,6 +113,87 @@ export async function paymentRouter(request, env) {
     }
 
     return ok({ ok: true });
+  }
+
+  // ── POST /api/payment/refund ─────────────────────────────
+  if (method === 'POST' && path === '/refund') {
+    const { user, error: authErr } = await requireAdmin(request, env);
+    if (authErr) return authErr;
+
+    let body;
+    try { body = await request.json(); }
+    catch { return err('Invalid JSON', 400); }
+
+    const { order_id, amount } = body;
+    if (!order_id) return err('Missing order_id', 400);
+
+    const order = await env.DB.prepare(
+      "SELECT * FROM orders WHERE id = ? OR order_number = ?"
+    ).bind(order_id, order_id).first();
+
+    if (!order) return err('Order not found', 404);
+    if (!order.razorpay_payment_id) return err('Order has no payment reference (cannot refund)', 400);
+
+    const refundAmount = amount ? Number(amount) : order.total_amount;
+    const amountInPaise = Math.round(refundAmount * 100);
+
+    const refundRes = await razorpay.createRefund(env, order.razorpay_payment_id, amountInPaise, {
+      reason: 'Admin initiated refund',
+      order_number: order.order_number
+    });
+
+    if (!refundRes) {
+      return err('Failed to process refund on Razorpay', 500);
+    }
+
+    const refundId = refundRes.id || 'rfnd_unknown';
+    const now = new Date().toISOString();
+
+    await env.DB.prepare(
+      "UPDATE orders SET payment_status='refunded', order_status='returned', updated_at=? WHERE id=?"
+    ).bind(now, order.id).run();
+
+    await env.DB.prepare(
+      "UPDATE payments SET status='refunded', refund_id=?, refund_amount=?, raw_payload=? WHERE order_id=?"
+    ).bind(refundId, refundAmount, JSON.stringify(refundRes), order.id).run();
+
+    return ok({
+      success: true,
+      refund_id: refundId,
+      amount: refundAmount,
+      message: 'Refund processed successfully.'
+    });
+  }
+
+  // ── GET /api/payment/transactions ────────────────────────
+  if (method === 'GET' && path === '/transactions') {
+    const { user, error: authErr } = await requireAdmin(request, env);
+    if (authErr) return authErr;
+
+    const page = parseInt(url.searchParams.get('page')) || 1;
+    const limit = parseInt(url.searchParams.get('limit')) || 20;
+    const offset = (page - 1) * limit;
+
+    const totalRow = await env.DB.prepare("SELECT COUNT(*) as count FROM payments").first();
+    const total = totalRow?.count || 0;
+
+    const results = await env.DB.prepare(
+      `SELECT p.*, o.order_number, o.customer_name, o.customer_email
+       FROM payments p
+       JOIN orders o ON p.order_id = o.id
+       ORDER BY p.created_at DESC
+       LIMIT ? OFFSET ?`
+    ).bind(limit, offset).all();
+
+    return ok({
+      data: results.results || [],
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
   }
 
   // ── POST /api/payment/webhook ────────────────────────────

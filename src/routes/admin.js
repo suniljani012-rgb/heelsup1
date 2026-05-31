@@ -16,6 +16,7 @@ import { productsRouter } from './products.js';
 import { customersRouter } from './customers.js';
 import { bannersRouter } from './banners.js';
 import { categoriesRouter } from './categories.js';
+import { brandsRouter } from './brands.js';
 import { couponsRouter } from './coupons.js';
 import { staffRouter } from './staff.js';
 import { settingsRouter } from './settings.js';
@@ -108,6 +109,13 @@ export async function adminRouter(request, env) {
         const sub = path.replace('/api/admin/categories', '') || '/';
         const req = rewritePath(request, '/api/categories' + sub);
         return categoriesRouter(req, env);
+    }
+
+    // ── /api/admin/brands/* → /api/brands/* ───────────────────
+    if (path.startsWith('/api/admin/brands')) {
+        const sub = path.replace('/api/admin/brands', '') || '/';
+        const req = rewritePath(request, '/api/brands' + sub);
+        return brandsRouter(req, env);
     }
 
     // ── /api/admin/coupons/* → /api/coupons/* ─────────────────

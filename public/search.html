@@ -2307,7 +2307,7 @@
         navSrchRes.innerHTML = prods.map(p => {
           const imgs = Array.isArray(p.images) ? p.images : [p.image_url];
           const img = esc(imgs[0] || 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=70');
-          return `<a href="/product/${encodeURIComponent(p.slug || p.id)}" class="search-res-item" role="option">
+          return `<a href="/product.html?id=${encodeURIComponent(p.slug || p.id)}" class="search-res-item" role="option">
             <img class="search-res-img" src="${img}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">
             <div style="flex:1;min-width:0"><div class="search-res-name">${esc(p.name)}</div><div class="search-res-cat">${esc(p.category || '')}</div></div>
             <div class="search-res-price">₹${(p.price || 0).toLocaleString('en-IN')}</div>
@@ -2409,7 +2409,7 @@
       return `
         <article class="prod-card" aria-label="${name}">
           <div class="prod-img-wrap">
-            <a href="/product.html?id=">
+            <a href="/product.html?id=${slug}">
               <img src="${img}" alt="${name}" loading="lazy">
             </a>
             <div class="prod-card-badges">
@@ -2422,12 +2422,12 @@
             </button>
             <div class="prod-hover-actions">
               <button onclick="quickAdd(${id})" class="prod-action-btn pab-primary"><i class="fa-solid fa-bag-shopping"></i> Add</button>
-              <a href="/product.html?id=" class="prod-action-btn pab-outline"><i class="fa-solid fa-eye"></i> View</a>
+              <a href="/product.html?id=${slug}" class="prod-action-btn pab-outline"><i class="fa-solid fa-eye"></i> View</a>
             </div>
           </div>
           <div class="prod-body">
             <div class="prod-cat">${cat}</div>
-            <h3 class="prod-name"><a href="/product.html?id=">${name}</a></h3>
+            <h3 class="prod-name"><a href="/product.html?id=${slug}">${name}</a></h3>
             <div class="prod-rating"><span class="prod-stars">${stars}</span> <span class="prod-rc">(${rc})</span></div>
             <div class="prod-price">
               <span class="price-now">${fmt(p.price)}</span>
@@ -2439,7 +2439,7 @@
 
     window.quickAdd = function (id) {
       toast('👠 Open product to select size', 'info');
-      setTimeout(() => location.href = `/product/${id}`, 1200);
+      setTimeout(() => location.href = `/product.html?id=${id}`, 1200);
     };
 
     window.toggleWish = function (id, btn) {
