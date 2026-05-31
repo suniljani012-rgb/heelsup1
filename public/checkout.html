@@ -1181,6 +1181,7 @@
   </div>
 
   <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="app-config.js"></script>
   <script src="app-auth.js"></script>
   <script src="js/cart.js"></script>
@@ -1216,12 +1217,12 @@
     try {
       if (typeof HeelsUpAuth !== 'undefined') {
         currentUser = HeelsUpAuth.getUser();
-        if (!currentUser && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-          window.location.href = '/login?redirect=checkout';
+        if (!currentUser) {
+          window.location.href = '/login.html?redirect=/checkout.html';
         }
       }
     } catch (e) {
-      console.warn("Auth check bypassed for local dev");
+      console.warn('Auth check failed', e);
     }
 
     /* ── INITIALIZATION ── */
@@ -1238,12 +1239,14 @@
       // Fetch user data if we have a token
       if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.getToken()) {
         try {
-          const res = await HeelsUpAuth.api('/api/me');
-          if (res && res.user) {
-            if (typeof HeelsUpAuth.setSession === 'function') HeelsUpAuth.setSession(HeelsUpAuth.getToken(), res.user);
-            currentUser = res.user;
+          const res = await HeelsUpAuth.api('/api/auth/me');
+          const userData = res?.data || res;
+          if (userData && (userData.user || userData.email)) {
+            const user = userData.user || userData;
+            if (typeof HeelsUpAuth.setSession === 'function') HeelsUpAuth.setSession(HeelsUpAuth.getToken(), user);
+            currentUser = user;
           }
-        } catch (e) { console.warn("Failed to fetch user:", e); }
+        } catch (e) { console.warn('Failed to fetch user:', e); }
       }
 
       // Pre-fill user data if available
@@ -1326,8 +1329,10 @@
     async function fetchSavedAddresses() {
       if (!currentUser || typeof HeelsUpAuth === 'undefined' || !HeelsUpAuth.api) return;
       try {
-        const data = await HeelsUpAuth.api('/api/me/addresses');
-        savedUserAddresses = data.addresses || [];
+        const res = await HeelsUpAuth.api('/api/auth/addresses');
+        const data = res?.data || res;
+        savedUserAddresses = data.addresses || data || [];
+        if (!Array.isArray(savedUserAddresses)) savedUserAddresses = [];
         if (savedUserAddresses.length > 0) {
           const group = $('saved-address-group');
           const select = $('saved-addresses');
@@ -1336,7 +1341,7 @@
           savedUserAddresses.forEach(addr => {
             const opt = document.createElement('option');
             opt.value = addr.id;
-            opt.textContent = `${addr.name || 'Saved'} — ${addr.address_line1 || addr.addressLine1}, ${addr.city}`;
+            opt.textContent = `${addr.name || 'Saved'} — ${addr.address_line1 || addr.addressLine1 || ''}, ${addr.city || ''}`;
             select.appendChild(opt);
           });
 
@@ -1399,20 +1404,12 @@
 
         let discount = 0;
 
-        // Mock API or actual API call depending on environment
-        if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api && window.location.hostname !== 'localhost') {
-          const res = await HeelsUpAuth.api('/api/coupons/validate', {
-            method: 'POST',
-            body: JSON.stringify({ code, subtotal })
-          });
-          discount = res.discount || 0;
-        } else {
-          // Fallback local logic for demo/preview
-          if (code === 'HEELS10') discount = Math.round(subtotal * 0.1);
-          else if (code === 'WELCOME20') discount = Math.round(subtotal * 0.2);
-          else if (code === 'FLAT100' && subtotal > 500) discount = 100;
-          else throw new Error('Invalid or expired coupon code');
-        }
+        const res = await HeelsUpAuth.api('/api/coupons/validate', {
+          method: 'POST',
+          body: JSON.stringify({ code, amount: subtotal })
+        });
+        const resData = res?.data || res;
+        discount = resData.discount || resData.discountAmount || 0;
 
         couponDiscountAmount = discount;
         appliedCouponCode = code;
@@ -1505,64 +1502,79 @@
           couponCode: appliedCouponCode || null
         };
 
-        // 3. Initiate Order Backend Call
-        let orderData;
-        if (typeof HeelsUpAuth !== 'undefined' && HeelsUpAuth.api && window.location.hostname !== 'localhost') {
-          orderData = await HeelsUpAuth.api('/api/orders/initiate', {
+        // 3. Determine payment method (COD vs Razorpay)
+        const selectedPayMethod = document.querySelector('input[name="payment-method"]:checked')?.value || 'razorpay';
+
+        if (selectedPayMethod === 'cod') {
+          // COD Flow
+          const codRes = await HeelsUpAuth.api('/api/orders/cod', {
             method: 'POST',
             body: JSON.stringify(payload)
           });
-        } else {
-          // Simulation for development
-          await new Promise(r => setTimeout(r, 1200));
-          toast('Simulating payment for development. Redirecting...', 'info');
           if (typeof HeelsUpCart !== 'undefined') HeelsUpCart.clearCart();
           localStorage.removeItem('heelsup_coupon');
-          setTimeout(() => { window.location.href = '/orders'; }, 1500);
+          const codOrderNum = codRes?.data?.order_number || codRes?.order_number || '';
+          toast('Order placed successfully! You will pay on delivery.', 'success');
+          setTimeout(() => {
+            window.location.href = '/order-confirmation.html?order_number=' + encodeURIComponent(codOrderNum);
+          }, 800);
           return;
         }
 
-        if (orderData.key === 'free_order') {
-           toast('Order confirmed successfully (Free Order)!', 'success');
+        // Razorpay Flow
+        const orderData = await HeelsUpAuth.api('/api/orders/initiate', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+
+        if (orderData.key === 'free_order' || (orderData.data && orderData.data.key === 'free_order')) {
+           const freeData = orderData.data || orderData;
+           toast('Order confirmed successfully!', 'success');
            if (typeof HeelsUpCart !== 'undefined') HeelsUpCart.clearCart();
            localStorage.removeItem('heelsup_coupon');
-           setTimeout(() => { window.location.href = '/orders'; }, 1500);
+           const freeOrderNum = freeData.order_number || freeData.orderNumber || '';
+           setTimeout(() => {
+             window.location.href = '/order-confirmation.html?order_number=' + encodeURIComponent(freeOrderNum);
+           }, 800);
            return;
         }
 
         // 4. Load Razorpay Script Dynamically
+        const rzpData = orderData.data || orderData;
         await injectScript('https://checkout.razorpay.com/v1/checkout.js');
 
         // 5. Configure Razorpay
         const options = {
-          key: orderData.key,
-          amount: orderData.razorpayOrder.amount, // in paise
+          key: rzpData.key,
+          amount: rzpData.razorpayOrder?.amount || rzpData.amount,
           currency: 'INR',
           name: 'HeelsUp',
-          description: `Order ${orderData.order.order_number}`,
-          image: '/logo.png', // Or absolute URL
-          order_id: orderData.razorpayOrder.id,
-          theme: { color: '#C0392B' }, // Match Primary Red
+          description: `Order ${rzpData.order?.order_number || rzpData.orderNumber || ''}`,
+          image: '/logo.png',
+          order_id: rzpData.razorpayOrder?.id || rzpData.razorpay_order_id,
+          theme: { color: '#C0392B' },
           prefill: { name: name, email: email, contact: phone },
           handler: async function (response) {
             btn.innerHTML = '<i class="fa-solid fa-shield-check"></i> Verifying...';
             try {
               // 6. Verify Payment Backend Call
-              const verifyRes = await HeelsUpAuth.api('/api/payments/razorpay/verify', {
+              const verifyRes = await HeelsUpAuth.api('/api/payment/verify', {
                 method: 'POST',
                 body: JSON.stringify({
-                  orderId: orderData.order.id,
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_signature: response.razorpay_signature
                 })
               });
 
-              // 7. Success
+              // 7. Success — clear cart and redirect
               if (typeof HeelsUpCart !== 'undefined') HeelsUpCart.clearCart();
-              window.location.href = `/order-confirmation?id=${verifyRes.orderId}&num=${verifyRes.orderNumber}`;
+              localStorage.removeItem('heelsup_coupon');
+              const verifyData = verifyRes.data || verifyRes;
+              const orderNum = verifyData.order_number || verifyData.orderNumber || rzpData.order?.order_number || '';
+              window.location.href = '/order-confirmation.html?order_number=' + encodeURIComponent(orderNum);
             } catch (e) {
-              toast('Verification failed. Please contact support with Order #' + orderData.order.order_number, 'error', 8000);
+              toast('Payment verified but confirmation failed. Please check your orders page.', 'error', 8000);
               resetPayBtn(btn, ogHtml);
             }
           },
@@ -1570,7 +1582,7 @@
             ondismiss: function () {
               toast('Payment cancelled', 'warning');
               resetPayBtn(btn, ogHtml);
-              HeelsUpAuth.api('/api/payments/razorpay/fail', { method: 'POST', body: JSON.stringify({ orderId: orderData.order.id, razorpay_order_id: orderData.razorpayOrder.id }) }).catch(() => { });
+              HeelsUpAuth.api('/api/payment/fail', { method: 'POST', body: JSON.stringify({ razorpay_order_id: rzpData.razorpayOrder?.id || rzpData.razorpay_order_id }) }).catch(() => { });
             }
           }
         };
@@ -1580,7 +1592,7 @@
         rzp.on('payment.failed', function (resp) {
           toast('Payment Failed: ' + (resp.error?.description || 'Unknown error'), 'error', 6000);
           resetPayBtn(btn, ogHtml);
-          HeelsUpAuth.api('/api/payments/razorpay/fail', { method: 'POST', body: JSON.stringify({ orderId: orderData.order.id, razorpay_order_id: orderData.razorpayOrder.id }) }).catch(() => { });
+          HeelsUpAuth.api('/api/payment/fail', { method: 'POST', body: JSON.stringify({ razorpay_order_id: rzpData.razorpayOrder?.id || rzpData.razorpay_order_id }) }).catch(() => { });
         });
         rzp.open();
 
